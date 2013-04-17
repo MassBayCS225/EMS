@@ -1,0 +1,15 @@
+Wed Apr 17 17:15:25 EDT 2013 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Wed Apr 17 17:15:26 EDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013e-19da-211c-00003917449e 
+on database directory /BIG/DOCUMENTS/CS225/EMS/Database/EMS_DB  with class loader sun.misc.Launcher$AppClassLoader@63644028 
+Loaded from file:/usr/java/jdk1.7.0_17/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_17-b02
+user.dir=/usr/java/jdk1.7.0_17/db
+derby.system.home=/BIG/DOCUMENTS/CS225/EMS/Database
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Apr 17 17:15:36 EDT 2013:
+Shutting down instance a816c00e-013e-19da-211c-00003917449e on database directory /BIG/DOCUMENTS/CS225/EMS/Database/EMS_DB with class loader sun.misc.Launcher$AppClassLoader@63644028 
+Wed Apr 17 17:15:36 EDT 2013 Thread[DRDAConnThread_4,5,main] (DATABASE = EMS_DB), (DRDAID = {2}), Database 'EMS_DB' shutdown.
