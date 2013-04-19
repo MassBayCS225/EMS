@@ -8,6 +8,6 @@ package EMS_Database;
  *
  * @author mike
  */
-public class Dummy_BudgetData {
+public class CalenderDataFactory {
     
 }
