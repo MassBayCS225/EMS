@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package Database;
 
 /**
  *
  * @author mike
  */
-public class Dummy_BudgetData {
+public class Dummy_UserData {
     
 }
