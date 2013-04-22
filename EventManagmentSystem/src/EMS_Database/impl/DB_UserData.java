@@ -52,6 +52,11 @@ public class DB_UserData extends InitDB implements Interface_UserData  {
     public ArrayList getUserByUID(int uid) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int getUserUIDByName(String uname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

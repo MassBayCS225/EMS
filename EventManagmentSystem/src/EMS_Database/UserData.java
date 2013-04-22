@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class UserData implements Interface_UserData {
 
     private Interface_UserData ud;
+
     public UserData(String userType) {
         ud = UserDataFactory.create(userType);
     }
@@ -26,6 +27,13 @@ public class UserData implements Interface_UserData {
     public ArrayList getUserByUID(int uid) {
         return ud.getUserByUID(uid);
     }
-    
-    
+
+    @Override
+    public int getUserUIDByName(String uname) {
+        try {
+            return ud.getUserUIDByName(uname);
+        } catch (DoesNotExistException dnee) {
+        }
+        return 0;
+    }
 }
