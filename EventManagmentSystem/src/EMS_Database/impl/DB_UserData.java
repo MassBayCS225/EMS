@@ -1,7 +1,9 @@
 package EMS_Database.impl;
 
+import EMS_Database.DoesNotExistException;
 import EMS_Database.InitDB;
 import EMS_Database.Interface_UserData;
+import EMS_Database.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -49,14 +51,33 @@ public class DB_UserData extends InitDB implements Interface_UserData  {
     }// end of addRow
 
     @Override
-    public ArrayList getUserByUID(int uid) {
+    public String getNameByUID(int uid) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getUserUIDByName(String uname) {
+    public int getUIDByName(String uname) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    @Override
+    public boolean createUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getEmailByUID(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getPwdByUID(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getLevelByUID(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
 }

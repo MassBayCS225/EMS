@@ -19,21 +19,33 @@ public class UserData implements Interface_UserData {
     }
 
     @Override
-    public boolean addUser(int uid, int level, String uname, String pwd, String email) {
-        return ud.addUser(uid, level, uname, pwd, email);
+    public String getNameByUID(int uid) throws DoesNotExistException {
+        return ud.getNameByUID(uid);
     }
 
     @Override
-    public ArrayList getUserByUID(int uid) {
-        return ud.getUserByUID(uid);
+    public int getUIDByName(String uname) throws DoesNotExistException {
+        return ud.getUIDByName(uname);
     }
 
     @Override
-    public int getUserUIDByName(String uname) {
-        try {
-            return ud.getUserUIDByName(uname);
-        } catch (DoesNotExistException dnee) {
-        }
-        return 0;
+    public boolean createUser(User user) throws DuplicateInsertionException {
+        return ud.createUser(user);
     }
+
+    @Override
+    public String getEmailByUID(int uid) throws DoesNotExistException {
+        return ud.getEmailByUID(uid);
+    }
+
+    @Override
+    public String getPwdByUID(int uid) throws DoesNotExistException {
+        return ud.getPwdByUID(uid);
+    }
+
+    @Override
+    public int getLevelByUID(int uid) throws DoesNotExistException {
+        return ud.getLevelByUID(uid);
+    }
+    
 }

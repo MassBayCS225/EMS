@@ -14,25 +14,30 @@ public class DB_Testing extends UserData {
     }
 
     public void run() {
-
-
-
-        ArrayList<String> user = new ArrayList();
-
-        //users are not permanantly stored. in temporary array
-        addUser(1, 1, "Gilmore", "password", "stupid@email.com");
-        addUser(2, 1, "Idiot", "password", "anotherStupid@email.com");
-
-        user = getUserByUID(2);
-
-        int userID = getUserUIDByName("Gilmore");
-        System.out.println("UID = " + userID);
-
-        if (user != null) {
-            System.out.println(user.get(0) + " " + user.get(1) + " " + user.get(2) + " " + user.get(3) + " " + user.get(4));
-        } else {
-            System.out.println("UID does not exist.");
+        
+        User user = new User(4, 2, "Rickey", "rickey's password", "retarded@email.com");
+        
+        //
+        try {
+            createUser(user);                        
+        } catch (DuplicateInsertionException e) {
+            System.out.println("Insertion Failed");
         }
+        
+        
+        //sample output
+        try {
+            System.out.println(getUIDByName("Thad"));
+            
+            System.out.println(getLevelByUID(2));
+            System.out.println(getNameByUID(2));                        
+            System.out.println(getPwdByUID(2));
+            System.out.println(getEmailByUID(2)); 
+                        
+        } catch (DoesNotExistException e) {
+            System.out.println("That user does not exist.");
+        }
+        
 
     }
 

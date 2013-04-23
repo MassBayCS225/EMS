@@ -11,7 +11,10 @@ import java.util.ArrayList;
  * @author mike
  */
 public interface Interface_UserData {
-    public boolean addUser(int uid, int level , String uname , String pwd , String email);
-    public ArrayList getUserByUID(int uid);
-    public int getUserUIDByName(String uname) throws DoesNotExistException;
+    public boolean createUser(User user) throws DuplicateInsertionException;
+    public int getUIDByName(String uname) throws DoesNotExistException;
+    public String getNameByUID(int uid) throws DoesNotExistException;
+    public String getEmailByUID(int uid) throws DoesNotExistException;
+    public String getPwdByUID(int uid) throws DoesNotExistException;
+    public int getLevelByUID(int uid) throws DoesNotExistException;
 }
