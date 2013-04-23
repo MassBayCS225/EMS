@@ -238,24 +238,24 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="EMS_GUI.CommitteePanel" name="committeePanel2">
+        <Component class="GUI.CommitteePanel" name="committeePanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="112" y="92" width="-1" height="-1"/>
+              <AbsoluteConstraints x="110" y="90" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="EMS_GUI.SubEventPanel" name="subEventPanel1">
+        <Component class="GUI.SubEventPanel" name="subEventPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="110" y="70" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="EMS_GUI.TaskPanel" name="taskPanel1">
+        <Component class="GUI.TaskPanel" name="taskPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="90" y="90" width="-1" height="-1"/>
+              <AbsoluteConstraints x="90" y="80" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
