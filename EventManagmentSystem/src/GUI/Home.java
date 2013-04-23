@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 package GUI;
+import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
+import javax.swing.undo.UndoManager;
 
 /**
  *
@@ -15,6 +17,8 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
+    private UndoManager undo = new UndoManager();
+    
     public Home() {
         initComponents();
         subEventPanel1.setVisible(false);
@@ -41,7 +45,11 @@ public class Home extends javax.swing.JFrame {
         taskPanel1 = new EMS_GUI.TaskPanel();
         emsMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        printMenuItem = new javax.swing.JMenuItem();
+        printPreviewMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         saveMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem(new DefaultEditorKit.CutAction());
@@ -92,6 +100,24 @@ public class Home extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
+        printMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        printMenuItem.setText("Print");
+        printMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(printMenuItem);
+
+        printPreviewMenuItem.setText("Print Preview");
+        printPreviewMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printPreviewMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(printPreviewMenuItem);
+        fileMenu.add(jSeparator1);
+
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveMenuItem.setText("Save");
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -100,9 +126,15 @@ public class Home extends javax.swing.JFrame {
             }
         });
         fileMenu.add(saveMenuItem);
+        fileMenu.add(jSeparator2);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(exitMenuItem);
 
         emsMenuBar.add(fileMenu);
@@ -115,11 +147,6 @@ public class Home extends javax.swing.JFrame {
 
         copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         copyMenuItem.setText("Copy");
-        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyMenuItemActionPerformed(evt);
-            }
-        });
         editMenu.add(copyMenuItem);
 
         pasteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
@@ -133,6 +160,11 @@ public class Home extends javax.swing.JFrame {
         reportsMenu.setText("Reports");
 
         committeeReportsMenuItem.setText("Committee");
+        committeeReportsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                committeeReportsMenuItemActionPerformed(evt);
+            }
+        });
         reportsMenu.add(committeeReportsMenuItem);
 
         registrationReportsMenuItem.setText("Registration");
@@ -144,6 +176,11 @@ public class Home extends javax.swing.JFrame {
         reportsMenu.add(registrationReportsMenuItem);
 
         budgetReportsMenuItem.setText("Budget");
+        budgetReportsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                budgetReportsMenuItemActionPerformed(evt);
+            }
+        });
         reportsMenu.add(budgetReportsMenuItem);
 
         toolsMenu.add(reportsMenu);
@@ -187,18 +224,17 @@ public class Home extends javax.swing.JFrame {
     
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Can't save yet!");
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Ask Julian...");
     }//GEN-LAST:event_aboutMenuItemActionPerformed
-
-    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_copyMenuItemActionPerformed
 
     private void registrationReportsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationReportsMenuItemActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Registration reports would be here");
     }//GEN-LAST:event_registrationReportsMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -223,6 +259,31 @@ public class Home extends javax.swing.JFrame {
         taskPanel1.setVisible(false);
         committeePanel2.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void printPreviewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPreviewMenuItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "You're still checking these?.");
+    }//GEN-LAST:event_printPreviewMenuItemActionPerformed
+
+    private void printMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Not implemented yet");
+    }//GEN-LAST:event_printMenuItemActionPerformed
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "You're stuck forever!");
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void committeeReportsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_committeeReportsMenuItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Committee reports would be here if they existed...");
+    }//GEN-LAST:event_committeeReportsMenuItemActionPerformed
+
+    private void budgetReportsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetReportsMenuItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Why does saying budget report make me giggle?");
+    }//GEN-LAST:event_budgetReportsMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,9 +335,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPanel linkPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JMenuItem printMenuItem;
+    private javax.swing.JMenuItem printPreviewMenuItem;
     private javax.swing.JMenuItem registrationReportsMenuItem;
     private javax.swing.JMenu reportsMenu;
     private javax.swing.JMenuItem saveMenuItem;
