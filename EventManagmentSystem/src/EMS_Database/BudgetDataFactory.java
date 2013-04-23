@@ -14,14 +14,10 @@ import EMS_Database.impl.Dummy_BudgetData;
 public class BudgetDataFactory {
 
     public static Interface_BudgetData create(String name) {
-        switch (name) {
-            case "db":
-                return new DB_BudgetData();
-            default:
-                return new Dummy_BudgetData();
-
-
-
+        if ("db".equals(name)) {
+            return new DB_BudgetData();
+        } else {
+            return new Dummy_BudgetData();
         }
 
     }

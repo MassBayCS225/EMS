@@ -14,11 +14,11 @@ import EMS_Database.impl.Dummy_UserData;
 public class UserDataFactory {
 
     public static Interface_UserData create(String name) {
-        switch (name) {
-            case "db":
-                return new DB_UserData();
-            default:
-                return new Dummy_UserData();
+        if ("db".equals(name)) {
+            return new DB_UserData();
+        } else {
+            return new Dummy_UserData();
         }
+
     }
 }
