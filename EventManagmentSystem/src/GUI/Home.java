@@ -19,11 +19,13 @@ public class Home extends javax.swing.JFrame {
      */
     private UndoManager undo = new UndoManager();
     
+    /**
+     *
+     */
     public Home() {
         initComponents();
         subEventPanel1.setVisible(false);
-        taskPanel1.setVisible(false);
-        committeePanel1.setVisible(false);
+        committeeListPanel1.setVisible(false);
     }
 
     /**
@@ -40,9 +42,8 @@ public class Home extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
-        committeePanel1 = new GUI.CommitteePanel();
         subEventPanel1 = new GUI.SubEventPanel();
-        taskPanel1 = new GUI.TaskPanel();
+        committeeListPanel1 = new GUI.CommitteeListPanel();
         emsMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         printMenuItem = new javax.swing.JMenuItem();
@@ -60,7 +61,7 @@ public class Home extends javax.swing.JFrame {
         committeeReportsMenuItem = new javax.swing.JMenuItem();
         registrationReportsMenuItem = new javax.swing.JMenuItem();
         budgetReportsMenuItem = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        databaseMenu = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
@@ -94,9 +95,8 @@ public class Home extends javax.swing.JFrame {
         linkPanel.add(jButton3);
 
         mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        mainPanel.add(committeePanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
         mainPanel.add(subEventPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
-        mainPanel.add(taskPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, -1, -1));
+        mainPanel.add(committeeListPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
         fileMenu.setText("File");
 
@@ -184,7 +184,9 @@ public class Home extends javax.swing.JFrame {
         reportsMenu.add(budgetReportsMenuItem);
 
         toolsMenu.add(reportsMenu);
-        toolsMenu.add(jMenu1);
+
+        databaseMenu.setText("Database");
+        toolsMenu.add(databaseMenu);
 
         emsMenuBar.add(toolsMenu);
 
@@ -209,7 +211,7 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(linkPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,24 +242,21 @@ public class Home extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         subEventPanel1.setVisible(true);
-        taskPanel1.setVisible(false);
-        committeePanel1.setVisible(false);
+        committeeListPanel1.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
         subEventPanel1.setVisible(false);
-        taskPanel1.setVisible(true);
-        committeePanel1.setVisible(false);
+        committeeListPanel1.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
         subEventPanel1.setVisible(false);
-        taskPanel1.setVisible(false);
-        committeePanel1.setVisible(true);
+        committeeListPanel1.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void printPreviewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPreviewMenuItemActionPerformed
@@ -322,10 +321,11 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem budgetReportsMenuItem;
-    private GUI.CommitteePanel committeePanel1;
+    private GUI.CommitteeListPanel committeeListPanel1;
     private javax.swing.JMenuItem committeeReportsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
+    private javax.swing.JMenu databaseMenu;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuBar emsMenuBar;
     private javax.swing.JMenuItem exitMenuItem;
@@ -334,7 +334,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPanel linkPanel;
@@ -346,7 +345,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu reportsMenu;
     private javax.swing.JMenuItem saveMenuItem;
     private GUI.SubEventPanel subEventPanel1;
-    private GUI.TaskPanel taskPanel1;
     private javax.swing.JMenu toolsMenu;
     // End of variables declaration//GEN-END:variables
 }
