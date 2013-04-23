@@ -43,9 +43,19 @@ public class CommitteePanel extends javax.swing.JPanel {
         budgetButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
+        addMemberButton = new javax.swing.JButton();
+        removeMemberButton = new javax.swing.JButton();
+        removeTaskButton = new javax.swing.JButton();
+        addTaskButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+
+        setMinimumSize(new java.awt.Dimension(387, 327));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         headerLabel.setText("Committee Name");
+        headerLabel.setPreferredSize(new java.awt.Dimension(200, 25));
+        add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 22, -1, -1));
 
         memberList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -54,11 +64,16 @@ public class CommitteePanel extends javax.swing.JPanel {
         });
         memberScrollPane.setViewportView(memberList);
 
+        add(memberScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 97, 150));
+
         membersLabel.setText("Members");
+        add(membersLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 79, -1, -1));
 
         headLabel.setText("Head: ");
+        add(headLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 57, -1, -1));
 
         headNameLabel.setText("committee head");
+        add(headNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 57, -1, -1));
 
         taskList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -72,7 +87,13 @@ public class CommitteePanel extends javax.swing.JPanel {
         });
         taskScrollPane.setViewportView(taskList);
 
+        add(taskScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 97, 150));
+
         tasksLabel.setText("Tasks");
+        add(tasksLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 79, -1, -1));
+
+        taskProgressBar.setOrientation(1);
+        add(taskProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 99, -1, -1));
 
         budgetButton.setText("Budget");
         budgetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +101,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                 budgetButtonActionPerformed(evt);
             }
         });
+        add(budgetButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 99, -1, -1));
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +109,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                 saveButtonActionPerformed(evt);
             }
         });
+        add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 293, -1, -1));
 
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -94,78 +117,49 @@ public class CommitteePanel extends javax.swing.JPanel {
                 closeButtonActionPerformed(evt);
             }
         });
+        add(closeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 293, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(budgetButton)
-                .addGap(32, 32, 32)
-                .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(closeButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(headLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(headNameLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(headerLabel)
-                                        .addGap(0, 72, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(membersLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tasksLabel)
-                                        .addGap(38, 38, 38)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(headerLabel)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(headLabel)
-                    .addComponent(headNameLabel))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(membersLabel)
-                    .addComponent(tasksLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(budgetButton)
-                    .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(closeButton))
-                .addContainerGap())
-        );
+        addMemberButton.setText("+");
+        addMemberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMemberButtonActionPerformed(evt);
+            }
+        });
+        add(addMemberButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
+
+        removeMemberButton.setText("-");
+        removeMemberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeMemberButtonActionPerformed(evt);
+            }
+        });
+        add(removeMemberButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, -1, -1));
+
+        removeTaskButton.setText("-");
+        removeTaskButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTaskButtonActionPerformed(evt);
+            }
+        });
+        add(removeTaskButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, -1, -1));
+
+        addTaskButton.setText("+");
+        addTaskButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTaskButtonActionPerformed(evt);
+            }
+        });
+        add(addTaskButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, -1, -1));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 99, 20, 146));
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setText(String text)
+    {
+        headerLabel.setText(text);
+    }
+    
     private void budgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "Not implemented yet.");
@@ -190,15 +184,40 @@ public class CommitteePanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Not implemented yet.");
     }//GEN-LAST:event_closeButtonActionPerformed
 
+    private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+    }//GEN-LAST:event_removeMemberButtonActionPerformed
+
+    private void removeTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTaskButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+    }//GEN-LAST:event_removeTaskButtonActionPerformed
+
+    private void addMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMemberButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+    }//GEN-LAST:event_addMemberButtonActionPerformed
+
+    private void addTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+    }//GEN-LAST:event_addTaskButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addMemberButton;
+    private javax.swing.JButton addTaskButton;
     private javax.swing.JButton budgetButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel headLabel;
     private javax.swing.JLabel headNameLabel;
     private javax.swing.JLabel headerLabel;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList memberList;
     private javax.swing.JScrollPane memberScrollPane;
     private javax.swing.JLabel membersLabel;
+    private javax.swing.JButton removeMemberButton;
+    private javax.swing.JButton removeTaskButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JList taskList;
     private javax.swing.JProgressBar taskProgressBar;

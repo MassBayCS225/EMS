@@ -132,7 +132,10 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu1">
+            <Menu class="javax.swing.JMenu" name="databaseMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Database"/>
+              </Properties>
             </Menu>
           </SubComponents>
         </Menu>
@@ -180,7 +183,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="linkPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="mainPanel" pref="632" max="32767" attributes="0"/>
+              <Component id="mainPanel" pref="750" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -238,13 +241,6 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="GUI.CommitteePanel" name="committeePanel1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="90" width="-1" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="GUI.SubEventPanel" name="subEventPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -252,10 +248,10 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="GUI.TaskPanel" name="taskPanel1">
+        <Component class="GUI.CommitteeListPanel" name="committeeListPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="90" y="80" width="-1" height="-1"/>
+              <AbsoluteConstraints x="0" y="10" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
