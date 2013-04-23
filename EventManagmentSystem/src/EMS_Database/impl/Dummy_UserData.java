@@ -6,7 +6,11 @@ import EMS_Database.Interface_UserData;
 import EMS_Database.User;
 import java.util.ArrayList;
 
-/**
+/** A dummy temporary database for managing user data.
+ * <p>
+ *      This class functions the same way that the actual database will function
+ * but without the need for a localhost database which would require complex
+ * setup.
  *
  * @author Mike Meding
  */

@@ -1,8 +1,15 @@
 package EMS_Database;
 
-/**
- *
- * @author mike
+/** An object class for use with implementing a new user into the database
+ * <p>
+ * @param uid The unique user identification number. Does not check for duplicates
+ * upon creation. 
+ * @param level The created users privilege level as an Integer.
+ * @param uname The String username of the user
+ * @param pwd The protected password of the user (should be hashed.) as a String
+ * @param email The email of the user as a String.
+ * 
+ * @author Mike Meding
  */
 public class User {
 
