@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Dummy_UserData implements Interface_UserData {
 
-    public ArrayList<User> userList = new ArrayList<>();
+    public ArrayList<User> userList = new ArrayList();
 
     public Dummy_UserData() {
         // temp data to be inserted
