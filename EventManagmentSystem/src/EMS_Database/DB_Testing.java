@@ -1,7 +1,5 @@
 package EMS_Database;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Mike Meding
@@ -10,29 +8,30 @@ import java.util.ArrayList;
 public class DB_Testing extends UserData {
 
     public DB_Testing() {
-        super("the dummy database class one :D");
+        super("db");
     }
 
     public void run() {
         
         User user = new User(4, 2, "Rickey", "rickey's password", "retarded@email.com");
+                
         
-        //
-        try {
-            createUser(user);                        
-        } catch (DuplicateInsertionException e) {
-            System.out.println("Insertion Failed");
-        }
+//        //
+//        try {
+//            createUser(user);                        
+//        } catch (DuplicateInsertionException e) {
+//            System.out.println("Insertion Failed");
+//        }
         
         
         //sample output
         try {
-            System.out.println(getUIDByName("Thad"));
+            //System.out.println(getUIDByName("Rickey"));
             
-            System.out.println(getLevelByUID(2));
-            System.out.println(getNameByUID(2));                        
-            System.out.println(getPwdByUID(2));
-            System.out.println(getEmailByUID(2)); 
+            //System.out.println(getLevelByUID(4));
+            System.out.println(getNameByUID(4));                        
+            //System.out.println(getPwdByUID(4));
+            //System.out.println(getEmailByUID(4)); 
                         
         } catch (DoesNotExistException e) {
             System.out.println("That user does not exist.");

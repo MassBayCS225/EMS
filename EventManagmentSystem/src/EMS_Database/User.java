@@ -1,14 +1,8 @@
 package EMS_Database;
 
-/** An object class for use with implementing a new user into the database
- * <p>
- * @param uid The unique user identification number. Does not check for duplicates
- * upon creation. 
- * @param level The created users privilege level as an Integer.
- * @param uname The String username of the user
- * @param pwd The protected password of the user (should be hashed.) as a String
- * @param email The email of the user as a String.
- * 
+/**
+ * An object class for use with implementing a new user into the database
+ *
  * @author Mike Meding
  */
 public class User {
@@ -22,6 +16,18 @@ public class User {
     public User() {
     }
 
+    /** 
+     * User function constructor creates new user with parameters specified
+     * 
+     * @param uid The unique user identification number. Does not check
+     * for duplicates upon creation.
+     * @param level The created users privilege level as an Integer.
+     * @param uname The String username of the user
+     * @param pwd The protected password of the user (should be hashed.) as a
+     * String
+     * @param email The email of the user as a String.
+     * 
+     */
     public User(int uid, int level, String uname, String pwd, String email) {
         this.uid = uid;
         this.level = level;
