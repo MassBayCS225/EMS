@@ -243,7 +243,14 @@ public class DB_UserData extends InitDB implements Interface_UserData {
 
     @Override
     public void setUID(int uid, int suid) throws DuplicateInsertionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET UID=? WHERE UID=?");
+            idQueryStmt.setInt(1, suid);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DuplicateInsertionException("UserData");            
+        }        
     }
 
     /**
@@ -256,7 +263,6 @@ public class DB_UserData extends InitDB implements Interface_UserData {
      */
     @Override
     public void setName(int uid, String uname) throws DoesNotExistException {
-        String updateQuery = "";
         try {
             PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET UNAME=? WHERE UID=?");
             idQueryStmt.setString(1, uname);
