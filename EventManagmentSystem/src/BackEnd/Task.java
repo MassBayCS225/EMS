@@ -29,6 +29,10 @@ public class Task extends ScheduleItem {
         return TASK_ID;
     }
     
+    public int getCOMMITTEE_ID() {
+        return COMMITTEE_ID;
+    }
+    
     public void setResponsibleList(ArrayList<User> responsibleList) {
         this.responsibleList = responsibleList;
     }
@@ -45,9 +49,11 @@ public class Task extends ScheduleItem {
         return completed;
     }
     
-    // Tentative.
     public boolean equals(Task task) {
-        if (this.getTASK_ID() == task.getTASK_ID())
+        if (this.getCOMMITTEE_ID() == task.getCOMMITTEE_ID() 
+                && this.getTASK_ID() == task.getTASK_ID() 
+                && this.getResponsibleList().equals(task.getResponsibleList()) 
+                && this.getCompleted() == task.getCompleted())
             return true;
         else
             return false;
