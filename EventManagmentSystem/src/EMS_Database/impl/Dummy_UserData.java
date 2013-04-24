@@ -29,7 +29,7 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
-    public String getNameByUID(int uid) throws DoesNotExistException {
+    public String getName(int uid) throws DoesNotExistException {
         /**
          * Returns the a User based on a given UID.
          * <p>         
@@ -81,7 +81,7 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
-    public String getEmailByUID(int uid) throws DoesNotExistException {
+    public String getEmail(int uid) throws DoesNotExistException {
         /**
          * Returns a String of the email of the user with the UID specified
          * <p>         
@@ -97,7 +97,7 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
-    public String getPwdByUID(int uid) throws DoesNotExistException {
+    public String getPwd(int uid) throws DoesNotExistException {
         /**
          * Returns a String of the password of the user with the UID specified
          * <p>         
@@ -113,7 +113,7 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
-    public int getLevelByUID(int uid) throws DoesNotExistException {
+    public int getLevel(int uid) throws DoesNotExistException {
         /**
          * Returns a String of the user privilege level of the user with the UID specified
          * <p>         
@@ -127,5 +127,37 @@ public class Dummy_UserData implements Interface_UserData {
         }
         throw new DoesNotExistException("UserData");
     }
+
+    @Override
+    public void setUID(int uid, int nuid) throws DuplicateInsertionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setName(int uid, String uname) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setEmail(int uid, String email) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setPwd(int uid, String pwd) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setLevel(int uid, int level) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String queryEntireTable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

@@ -12,31 +12,47 @@ public class DB_Testing extends UserData {
     }
 
     public void run() {
-        
+
         User user = new User(4, 2, "Rickey", "rickey's password", "retarded@email.com");
-                
-        
-//        //
+
+
+// can only be done once.
 //        try {
 //            createUser(user);                        
 //        } catch (DuplicateInsertionException e) {
 //            System.out.println("Insertion Failed");
 //        }
         
-        
+        System.out.println(queryEntireTable()); //debug method
+
         //sample output
-        try {
-            //System.out.println(getUIDByName("Rickey"));
-            
-            //System.out.println(getLevelByUID(4));
-            System.out.println(getNameByUID(4));                        
-            //System.out.println(getPwdByUID(4));
-            //System.out.println(getEmailByUID(4)); 
-                        
-        } catch (DoesNotExistException e) {
-            System.out.println("That user does not exist.");
-        }
-        
+//        try {
+//            //Testing get methods
+//            //System.out.println(getUIDByName("Rickey"));          
+//            
+//            int uid = 3;
+//            System.out.println("Level = " + getLevel(uid));
+//            System.out.println("Name = " + getName(uid));
+//            System.out.println("Password =  " + getPwd(uid));
+//            System.out.println("Email = " + getEmail(uid));            
+//
+//        } catch (DoesNotExistException e) {
+//            System.out.println("That user does not exist.");
+//        }
+//
+//
+//        try {
+//            setName(3, "CurrentTime=wayTooLate...");            
+//        } catch (DoesNotExistException dnee) {
+//            System.out.println("updating name failed.");
+//        }
+//        
+//        try {
+//            System.out.println(getName(3));
+//        } catch(DoesNotExistException f) {
+//            System.out.println("getting name failed.");            
+//        }
+
 
     }
 

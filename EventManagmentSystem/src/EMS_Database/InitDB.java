@@ -19,14 +19,7 @@ public abstract class InitDB {
     protected Connection dbConnection = null;
 
     public InitDB() {
-        //Connects to local javadb server.
-
-        //Just for now...
-        //strUrl = "jdbc:derby://localhost:1527/EMS_DB";
-
-        //Hardcoded for now...
-        //Should be made secure
-
+        
         Properties props = new Properties();
         props.put("user", "root");
         props.put("password", "ccaes1");
@@ -40,25 +33,25 @@ public abstract class InitDB {
             cnfe.printStackTrace();
         }
 
-        // connect to DB
+        // connect to DB if one already exists
         try {
             dbConnection = DriverManager.getConnection("jdbc:derby:EMS_DB", props); //if create is needed exception is thrown                                    
         } catch (SQLException sqle) {
 
             try {
-                //create connection
+                //create connection if no database exists
                 dbConnection = DriverManager.getConnection("jdbc:derby:EMS_DB;create=true", props);
                 System.out.println(dbConnection.toString());
 
-                //create tables
+                //create tables if none exist.
                 String createUserTable = "CREATE TABLE USERS (UID INT PRIMARY KEY, LEVEL INT NOT NULL, UNAME VARCHAR(50) NOT NULL, PWD VARCHAR(256) NOT NULL, EMAIL VARCHAR(256))";
               
                 Statement stmt = dbConnection.createStatement();
                 stmt.executeUpdate(createUserTable); //takes table string as argument
-                // add other tables to be created here when structure is known.
+                // ADD other tables to be created here when structure is known.
                 
-
-
+                
+                
 
             } catch (SQLException sqlee) { //serious errors if this gets thrown
                 sqlee.printStackTrace();

@@ -4,8 +4,6 @@
  */
 package EMS_Database;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author mike
@@ -19,8 +17,8 @@ public class UserData implements Interface_UserData {
     }
 
     @Override
-    public String getNameByUID(int uid) throws DoesNotExistException {
-        return ud.getNameByUID(uid);
+    public String getName(int uid) throws DoesNotExistException {
+        return ud.getName(uid);
     }
 
     @Override
@@ -34,18 +32,49 @@ public class UserData implements Interface_UserData {
     }
 
     @Override
-    public String getEmailByUID(int uid) throws DoesNotExistException {
-        return ud.getEmailByUID(uid);
+    public String getEmail(int uid) throws DoesNotExistException {
+        return ud.getEmail(uid);
     }
 
     @Override
-    public String getPwdByUID(int uid) throws DoesNotExistException {
-        return ud.getPwdByUID(uid);
+    public String getPwd(int uid) throws DoesNotExistException {
+        return ud.getPwd(uid);
     }
 
     @Override
-    public int getLevelByUID(int uid) throws DoesNotExistException {
-        return ud.getLevelByUID(uid);
+    public int getLevel(int uid) throws DoesNotExistException {
+        return ud.getLevel(uid);
     }
+
+    @Override
+    public void setUID(int uid, int suid) throws DuplicateInsertionException {
+        ud.setUID(uid, suid);
+    }
+
+    @Override
+    public void setName(int uid, String uname) throws DoesNotExistException {
+        ud.setName(uid, uname);
+    }
+
+    @Override
+    public void setEmail(int uid, String email) throws DoesNotExistException {
+        ud.setEmail(uid, email);
+    }
+
+    @Override
+    public void setPwd(int uid, String pwd) throws DoesNotExistException {
+        ud.setPwd(uid, pwd);
+    }
+
+    @Override
+    public void setLevel(int uid, int level) throws DoesNotExistException {
+        ud.setLevel(uid, level);
+    }
+
+    @Override
+    public String queryEntireTable() {
+        return ud.queryEntireTable();
+    }
+    
     
 }
