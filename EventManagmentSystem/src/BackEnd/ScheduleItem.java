@@ -52,4 +52,5 @@ public class ScheduleItem {
     public String toString() {
         return "Description: \n" + description + "\nLocation: \n" + location.toString() + 
                 "\nTime Schedule: \n" + timeSchedule.toString();
+    }
 }
