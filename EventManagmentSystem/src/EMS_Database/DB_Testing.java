@@ -23,24 +23,24 @@ public class DB_Testing extends UserData {
 //            System.out.println("Insertion Failed");
 //        }
         
-        System.out.println(queryEntireTable()); //debug method
+       // System.out.println(queryEntireTable()); //debug method
 
         //sample output
-//        try {
-//            //Testing get methods
-//            //System.out.println(getUIDByName("Rickey"));          
-//            
-//            int uid = 3;
-//            System.out.println("Level = " + getLevel(uid));
-//            System.out.println("Name = " + getName(uid));
-//            System.out.println("Password =  " + getPwd(uid));
-//            System.out.println("Email = " + getEmail(uid));            
-//
-//        } catch (DoesNotExistException e) {
-//            System.out.println("That user does not exist.");
-//        }
-//
-//
+        try {
+            //Testing get methods
+            //System.out.println(getUIDByName("Rickey"));          
+            
+            int uid = 4;
+            System.out.println("Level = " + getLevel(uid));
+            System.out.println("Name = " + getName(uid));
+            System.out.println("Password =  " + getPwd(uid));
+            System.out.println("Email = " + getEmail(uid));            
+
+        } catch (DoesNotExistException e) {
+            System.out.println("That user does not exist.");
+        }
+
+
 //        try {
 //            setName(3, "CurrentTime=wayTooLate...");            
 //        } catch (DoesNotExistException dnee) {
