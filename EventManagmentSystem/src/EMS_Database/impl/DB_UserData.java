@@ -264,9 +264,8 @@ public class DB_UserData extends InitDB implements Interface_UserData {
             int count = idQueryStmt.executeUpdate();
             System.out.println("executeUpdate count = " + count);
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        throw new DoesNotExistException("UserData");
+            throw new DoesNotExistException("UserData");            
+        }        
     }
 
     @Override
@@ -275,8 +274,15 @@ public class DB_UserData extends InitDB implements Interface_UserData {
     }
 
     @Override
-    public void setPwd(int uid, String pwd) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setPwd(int uid, String pwd) throws DoesNotExistException {        
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET PWD=? WHERE UID=?");
+            idQueryStmt.setString(1, pwd);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("UserData");            
+        }        
     }
 
     @Override
