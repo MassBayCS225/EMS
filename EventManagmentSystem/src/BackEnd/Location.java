@@ -1,10 +1,12 @@
+package BackEnd;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 /**
- * This class represents a location.
+ * This class represents a location.http://db.apache.org/derby/docs/10.1/ref/crefsqlj31068.html
  * @author anderson
  */
 public class Location extends Address{
