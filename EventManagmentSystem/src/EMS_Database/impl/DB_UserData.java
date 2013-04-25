@@ -10,7 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
+ * Database implementation of all user related data.
+ * <p>
+ *      This class implements all methods surrounding the table which holds
+ * the data for all the users in the EventManagmentSystem project. It functions
+ * as follows, there are 2 special case methods which allow you to insert a 
+ * user into the database based on the parameters specified by User class and 
+ * there is a special case to look up users by there effective username.
+ * Unless otherwise specified all Accessor/Mutator methods will reference the 
+ * UID of the user to access or mutate data.
+ * 
  * @author Mike Meding
  */
 public class DB_UserData extends InitDB implements Interface_UserData {
@@ -133,6 +142,8 @@ public class DB_UserData extends InitDB implements Interface_UserData {
 
         return returnQuery.toString();
     }
+    
+    ///////////////////// GETTERS ////////////////////////////
 
     /**
      * Returns the username of the user with the UID specified
@@ -260,6 +271,63 @@ public class DB_UserData extends InitDB implements Interface_UserData {
         throw new DoesNotExistException("UserData");
     }
 
+    /**
+     * Returns the users phone number as a String.
+     * @param uid
+     * @return String phone number
+     * @throws DoesNotExistException if user does not exist.
+     */
+    @Override
+    public String getPhone(int uid) throws DoesNotExistException {
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {
+                //UNAME = coulmn name.
+                returnQuery = rs.getString("PHONE"); //Should not have two uids with the same name                            
+            }
+            return returnQuery;
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UserData");
+    }
+
+    @Override
+    public String getStreet(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getCity(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getState(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getZipcode(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getCountry(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }        
+
+
+    ////////////////////// SETTERS ///////////////////////////////
+    
     @Override
     public void setUID(int uid, int suid) throws DuplicateInsertionException {
         try {
@@ -314,4 +382,35 @@ public class DB_UserData extends InitDB implements Interface_UserData {
     public void setLevel(int uid, int level) throws DoesNotExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void setPhone(int uid, String phone) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setStreet(int uid, String street) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setCity(int uid, String city) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setState(int uid, String state) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setCountry(int uid, String country) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

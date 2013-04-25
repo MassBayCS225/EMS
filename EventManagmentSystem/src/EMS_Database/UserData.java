@@ -16,6 +16,7 @@ public class UserData implements Interface_UserData {
         ud = UserDataFactory.create(userType);
     }
 
+    //GETTERS
     @Override
     public String getName(int uid) throws DoesNotExistException {
         return ud.getName(uid);
@@ -47,6 +48,39 @@ public class UserData implements Interface_UserData {
     }
 
     @Override
+    public String getPhone(int uid) throws DoesNotExistException {
+        return ud.getPhone(uid);        
+    }
+
+    @Override
+    public String getStreet(int uid) throws DoesNotExistException {
+        return ud.getStreet(uid);
+    }
+
+    @Override
+    public String getCity(int uid) throws DoesNotExistException {
+        return ud.getCity(uid);
+    }
+
+    @Override
+    public String getState(int uid) throws DoesNotExistException {
+        return ud.getState(uid);
+    }
+
+    @Override
+    public String getZipcode(int uid) throws DoesNotExistException {
+        return ud.getZipcode(uid);
+    }
+
+    @Override
+    public String getCountry(int uid) throws DoesNotExistException {
+        return ud.getCountry(uid);
+    }
+    
+    
+    
+    //SETTERS
+    @Override
     public void setUID(int uid, int suid) throws DuplicateInsertionException {
         ud.setUID(uid, suid);
     }
@@ -72,9 +106,43 @@ public class UserData implements Interface_UserData {
     }
 
     @Override
+    public void setPhone(int uid, String phone) throws DoesNotExistException {
+        ud.setPhone(uid, phone);
+    }
+
+    @Override
+    public void setStreet(int uid, String street) throws DoesNotExistException {
+        ud.setStreet(uid, street);
+    }
+
+    @Override
+    public void setCity(int uid, String city) throws DoesNotExistException {
+        ud.setCity(uid, city);
+    }
+
+    @Override
+    public void setState(int uid, String state) throws DoesNotExistException {
+        ud.setState(uid, state);
+    }
+
+    @Override
+    public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
+        ud.setZipcode(uid, zipcode);
+    }
+
+    @Override
+    public void setCountry(int uid, String country) throws DoesNotExistException {
+        ud.setCountry(uid, country);
+    }
+
+        
+    //Debug Methods
+    @Override
     public String queryEntireTable() {
         return ud.queryEntireTable();
     }
+    
+    
     
     
 }
