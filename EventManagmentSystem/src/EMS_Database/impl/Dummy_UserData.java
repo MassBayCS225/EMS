@@ -20,12 +20,7 @@ public class Dummy_UserData implements Interface_UserData {
 
     public Dummy_UserData() {
         // temp data to be inserted
-        User user1 = new User(1, 1, "Gilmore", "password", "insane@email.com");
-        User user2 = new User(2, 1, "Thad", "password", "insaneCrazy@email.com");
-        User user3 = new User(3, 1, "Haxzor", "password1", "bestEmail@email.com");
-        userList.add(user1);
-        userList.add(user2);
-        userList.add(user3);
+
     }
 
     @Override
