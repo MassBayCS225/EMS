@@ -44,7 +44,17 @@ public abstract class InitDB {
                 System.out.println(dbConnection.toString());
 
                 //create tables if none exist.
-                String createUserTable = "CREATE TABLE USERS (UID INT PRIMARY KEY, LEVEL INT NOT NULL, UNAME VARCHAR(50) NOT NULL, PWD VARCHAR(256) NOT NULL, EMAIL VARCHAR(256))";
+                String createUserTable = "CREATE TABLE USERS (UID INT PRIMARY KEY, "+
+                        "LEVEL INT NOT NULL, "+
+                        "UNAME VARCHAR(50) NOT NULL, "+
+                        "PWD VARCHAR(256) NOT NULL, "+
+                        "EMAIL VARCHAR(256) DEFAULT NULL, "+
+                        "PHONE VARCHAR(30) DEFAULT NULL, "+
+                        "STREET VARCHAR(100) DEFAULT NULL, "+
+                        "CITY VARCHAR(100) DEFAULT NULL, "+
+                        "STATE VARCHAR(50) DEFAULT NULL, "+
+                        "ZIPCODE VARCHAR(20) DEFAULT NULL, "+
+                        "COUNTRY VARCHAR(100) DEFAULT NULL)";
               
                 Statement stmt = dbConnection.createStatement();
                 stmt.executeUpdate(createUserTable); //takes table string as argument

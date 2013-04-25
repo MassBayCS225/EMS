@@ -35,12 +35,19 @@ public class DB_UserData extends InitDB implements Interface_UserData {
 
         try {
             //Creating Statement
-            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO USERS VALUES(?,?,?,?,?)");
+            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO USERS VALUES(?,?,?,?,?,?,?,?,?,?,?)");
             AddAddressStmt.setInt(1, user.getUid());
             AddAddressStmt.setInt(2, user.getLevel());
             AddAddressStmt.setString(3, user.getName());
             AddAddressStmt.setString(4, user.getPwd());
             AddAddressStmt.setString(5, user.getEmail());
+            AddAddressStmt.setString(6, user.getPhone());
+            AddAddressStmt.setString(7, user.getStreet());
+            AddAddressStmt.setString(8, user.getCity());
+            AddAddressStmt.setString(9, user.getState());
+            AddAddressStmt.setString(10, user.getZipcode());
+            AddAddressStmt.setString(11, user.getCountry());
+            
 
             //Execute Statement
             AddAddressStmt.executeUpdate();
@@ -103,7 +110,19 @@ public class DB_UserData extends InitDB implements Interface_UserData {
                 returnQuery.append(" , ");
                 returnQuery.append(rs.getString("PWD"));
                 returnQuery.append(" , ");
-                returnQuery.append(rs.getString("EMAIL"));             
+                returnQuery.append(rs.getString("EMAIL"));
+                returnQuery.append(" , ");
+                returnQuery.append(rs.getString("PHONE"));
+                returnQuery.append(" , ");
+                returnQuery.append(rs.getString("STREET"));
+                returnQuery.append(" , ");
+                returnQuery.append(rs.getString("CITY"));
+                returnQuery.append(" , ");
+                returnQuery.append(rs.getString("STATE"));
+                returnQuery.append(" , ");
+                returnQuery.append(rs.getString("ZIPCODE"));
+                returnQuery.append(" , ");
+                returnQuery.append(rs.getString("COUNTRY"));
                 returnQuery.append("\n");
             }
 
