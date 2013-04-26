@@ -5,11 +5,12 @@ package EMS_Database;
  *
  * @author Mike Meding
  */
-public class User {
+public class InputUser {
 
     private int uid;
     private int level;
-    private String uname;
+    private String fname;
+    private String lname;
     private String pwd;
     private String email;
     
@@ -19,17 +20,20 @@ public class User {
     private String state;
     private String zipcode;
     private String country;
+    private int eventLevel;    
+    
 
-    public User() {
+    public InputUser() {
     }
 
     /** 
-     * User function constructor creates new user with parameters specified
+     * User function creates a valid new user to create an insertion into the DB
      * 
      * @param uid The unique user identification number. Does not check
      * for duplicates upon creation.
      * @param level The created users privilege level as an Integer.
-     * @param uname The String username of the user
+     * @param fname The String of the first name of the user
+     * @param lname The String of the last name of the user
      * @param pwd The protected password of the user (should be hashed.) as a
      * String
      * @param email The email of the user as a String.
@@ -39,12 +43,15 @@ public class User {
      * @param state Personal info as a String default is null
      * @param zipcode Personal info as a String default is null
      * @param country Personal info as a String default is null
+     * @param eventLevel Event access level must be declared
      * 
      */
-    public User(int uid, int level, String uname, String pwd, String email, String phone, String street, String city , String state, String zipcode, String country) {
+    public InputUser(int uid, int level, String fname, String lname, String pwd, String email, String phone, String street, String city , String state, String zipcode, String country,
+            int eventLevel) {
         this.uid = uid;
         this.level = level;
-        this.uname = uname;
+        this.fname = fname;
+        this.lname = lname;
         this.pwd = pwd;
         this.email = email;
         
@@ -54,6 +61,7 @@ public class User {
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
+        this.eventLevel = eventLevel;
     }
 
     //GETTERS
@@ -65,9 +73,13 @@ public class User {
         return level;
     }
 
-    public String getName() {
-        return uname;
+    public String getFirstName() {        
+        return fname;
     }
+
+    public String getLastName() {
+        return lname;
+    }       
 
     public String getPwd() {
         return pwd;
@@ -100,6 +112,12 @@ public class User {
     public String getCountry() {
         return country;
     }
+
+    public int getEventLevel() {
+        return eventLevel;
+    }
+    
+    
     
 
     //SETTERS
@@ -111,10 +129,14 @@ public class User {
         this.level = level;
     }
 
-    public void setName(String uname) {
-        this.uname = uname;
+    public void setFirstName(String fname) {
+        this.fname = fname;
     }
 
+    public void setLastName(String lname) {
+        this.lname = lname;
+    }    
+    
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
@@ -146,5 +168,10 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public void setEventLevel(int eventLevel) {
+        this.eventLevel = eventLevel;
+    }
+    
     
 }

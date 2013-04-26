@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package EMS_Database;
 
 import java.util.ArrayList;
@@ -12,14 +8,19 @@ import java.util.ArrayList;
  */
 public interface Interface_UserData {
 
-    public boolean createUser(User user) throws DuplicateInsertionException;
+    // SPECIAL FUNCTIONS
+    public boolean createUser(InputUser user) throws DuplicateInsertionException;
     
     public String queryEntireTable();
+    
+    public int nextValidUID();
 
     // GETTERS
-    public int getUIDByName(String uname) throws DoesNotExistException;
+    public int getUIDByEmail(String email) throws DoesNotExistException;
 
-    public String getName(int uid) throws DoesNotExistException;
+    public String getFirstName(int uid) throws DoesNotExistException;
+    
+    public String getLastName(int uid) throws DoesNotExistException;
 
     public String getEmail(int uid) throws DoesNotExistException;
 
@@ -39,10 +40,15 @@ public interface Interface_UserData {
     
     public String getCountry(int uid) throws DoesNotExistException;
     
+    public int getEventCreationPrivilege(int uid) throws DoesNotExistException;
+    
+    
     //SETTERS
     public void setUID(int uid, int nuid) throws DuplicateInsertionException;
 
-    public void setName(int uid, String uname) throws DoesNotExistException;
+    public void setFirstName(int uid, String fname) throws DoesNotExistException;
+    
+    public void setLastName(int uid, String lname) throws DoesNotExistException;
 
     public void setEmail(int uid, String email) throws DoesNotExistException;
 
@@ -61,4 +67,7 @@ public interface Interface_UserData {
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException;
     
     public void setCountry(int uid, String country) throws DoesNotExistException;
+    
+    public void setEventCreationPrivilege(int uid, int level) throws DoesNotExistException;
+    
 }

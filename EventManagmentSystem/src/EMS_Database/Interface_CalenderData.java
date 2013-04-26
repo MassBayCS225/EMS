@@ -8,6 +8,6 @@ package EMS_Database;
  *
  * @author mike
  */
-public class Interface_CalenderData {
+public interface Interface_CalenderData {
     
 }

@@ -12,24 +12,37 @@ public class UserData implements Interface_UserData {
 
     private Interface_UserData ud;
 
-    public UserData(String userType) {
-        ud = UserDataFactory.create(userType);
-    }
-
-    //GETTERS
-    @Override
-    public String getName(int uid) throws DoesNotExistException {
-        return ud.getName(uid);
-    }
+    public UserData() {
+        ud = UserDataFactory.create("db");
+    }    
+    
+    // SPECIAL FUNCTIONS
 
     @Override
-    public int getUIDByName(String uname) throws DoesNotExistException {
-        return ud.getUIDByName(uname);
+    public int getUIDByEmail(String uname) throws DoesNotExistException {
+        return ud.getUIDByEmail(uname);
     }
 
     @Override
-    public boolean createUser(User user) throws DuplicateInsertionException {
+    public boolean createUser(InputUser user) throws DuplicateInsertionException {
         return ud.createUser(user);
+    }
+
+    @Override
+    public int nextValidUID() {
+        return ud.nextValidUID();
+    }
+    
+    // GETTERS
+    
+    @Override
+    public String getFirstName(int uid) throws DoesNotExistException {
+        return ud.getFirstName(uid);
+    }    
+    
+    @Override
+    public String getLastName(int uid) throws DoesNotExistException {
+        return ud.getLastName(uid);
     }
 
     @Override
@@ -75,6 +88,11 @@ public class UserData implements Interface_UserData {
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
         return ud.getCountry(uid);
+    }    
+
+    @Override
+    public int getEventCreationPrivilege(int uid) throws DoesNotExistException {
+        return ud.getEventCreationPrivilege(uid);
     }
     
     
@@ -86,9 +104,14 @@ public class UserData implements Interface_UserData {
     }
 
     @Override
-    public void setName(int uid, String uname) throws DoesNotExistException {
-        ud.setName(uid, uname);
+    public void setFirstName(int uid, String uname) throws DoesNotExistException {
+        ud.setFirstName(uid, uname);        
     }
+
+    @Override
+    public void setLastName(int uid, String lname) throws DoesNotExistException {
+        ud.setLastName(uid, lname);        
+    }        
 
     @Override
     public void setEmail(int uid, String email) throws DoesNotExistException {
@@ -134,6 +157,11 @@ public class UserData implements Interface_UserData {
     public void setCountry(int uid, String country) throws DoesNotExistException {
         ud.setCountry(uid, country);
     }
+
+    @Override
+    public void setEventCreationPrivilege(int uid, int level) throws DoesNotExistException {
+        ud.setEventCreationPrivilege(uid, level);
+    }    
 
         
     //Debug Methods

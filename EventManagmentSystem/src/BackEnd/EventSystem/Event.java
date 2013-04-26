@@ -85,10 +85,12 @@ public class Event extends ScheduleItem implements Reportable {
             organizerNames += user.getName() + "\n"; // Change.
         
         return "Description: \n" + super.getDescription() + "Event ID: " + EVENT_ID +
-                "\nOrganizer List:"
+                "\nOrganizer List:";
     }
     
     public ArrayList<String> getReport() {
-        
+        // I had to change this sorry. It was driving me crazy -MM
+        throw new UnsupportedOperationException("Not supported yet.");
+        // Just remove these lines when you are ready to implement this function -MM
     }
 }

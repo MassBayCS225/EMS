@@ -7,27 +7,21 @@ package EMS_Database;
  */
 public class DB_Testing extends UserData {
 
-    public DB_Testing() {
-        super("db");
-    }
 
     public void run() {
         //Bogus user data.
-        User user1 = new User(1, 2, "Name_1", "password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA");
-        User user2 = new User(2, 2, "Name_2", "password", "retarded@email.com", null, null, null, null, null, null);
-        User user3 = new User(3, 2, "Name_3", "password", "retarded@email.com", null, null, null, null, null, null);
-        User user4 = new User(4, 2, "Name_4", "password", "retarded@email.com", null, null, null, null, null, null);
-        User user5 = new User(5, 2, "Name_5", "password", "retarded@email.com", null, null, null, null, null, null);
-        User user6 = new User(6, 2, "Name_6", "password", "retarded@email.com", null, null, null, null, null, null);
+        InputUser user1 = new InputUser(1, 2, "FirstName_1", "LastName_1 ","password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA", 0);
+        InputUser user2 = new InputUser(2, 2, "FirstName_2", "LastName_2 ","password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA", 0);
+        InputUser user3 = new InputUser(3, 2, "FirstName_3", "LastName_3 ","password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA", 0);
+        
 
-// can only be done once.
+
+        //ONLY DO ONCE
 //        try {
 //            createUser(user1);
 //            createUser(user2);
 //            createUser(user3);
-//            createUser(user4);
-//            createUser(user5);
-//            createUser(user6);
+//
 //        } catch (DuplicateInsertionException e) {
 //            System.out.println("Insertion Failed");
 //        }
@@ -39,7 +33,7 @@ public class DB_Testing extends UserData {
         //sample output
 //        try {
 //            //Testing get methods
-//            //System.out.println(getUIDByName("Rickey"));          
+//            //System.out.println(getUIDByEmail("Rickey"));          
 //            
 //            int uid = 4;
 //            System.out.println("Level = " + getLevel(uid));
@@ -61,20 +55,47 @@ public class DB_Testing extends UserData {
         System.out.println(queryEntireTable()); //debug method
         System.out.println("");
         
+        //Testing GETTERS
         try {
-            System.out.println(getUIDByName("Name_1"));
-            System.out.println(getPhone(1));
+            int uid = 1;
+            System.out.println(getLevel(uid));
+            System.out.println(getFirstName(uid));
+            System.out.println(getLastName(uid));
+            System.out.println(getEmail(uid));
+            System.out.println(getPwd(uid));
+            System.out.println(getPhone(uid));
+            System.out.println(getStreet(uid));
+            System.out.println(getCity(uid));
+            System.out.println(getState(uid));
+            System.out.println(getZipcode(uid));
+            System.out.println(getCountry(uid));
+            System.out.println(nextValidUID());
             
-        } catch (DoesNotExistException e) {
-            System.out.println("User does not exist in the database.");
-            System.out.println(e.getMessage());
+        } catch (DoesNotExistException e) {            
+            System.err.println(e.getMessage());
         }
-//        
-//        try {
-//            System.out.println(getName(3));
-//        } catch(DoesNotExistException f) {
-//            System.out.println("getting name failed.");            
-//        }
+        
+        //Testing SETTERS
+        try {
+            int uid = 2;
+            setFirstName(uid,"NewFirstName2");
+            setLastName(uid,"NewLastName2");            
+            setPwd(uid, "bestPasswordEVER!");
+            setEmail(uid,"muffins@muffintop.hotmail.com");
+            setPhone(uid, "867-5309");
+            setStreet(uid, "Grove St.");
+            setCity(uid, "Maui");
+            setState(uid, "Calm.");
+            setZipcode(uid, "12345");
+            setCountry(uid,"MURICA!");
+            setEventCreationPrivilege(uid, 1);
+        } catch(DoesNotExistException blah) {
+            System.err.println(blah.getMessage());
+        }
+        
+        System.out.println(queryEntireTable()); //debug method
+        System.out.println("");
+
 
 
     }

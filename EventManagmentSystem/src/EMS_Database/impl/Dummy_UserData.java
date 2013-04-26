@@ -3,7 +3,7 @@ package EMS_Database.impl;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.DuplicateInsertionException;
 import EMS_Database.Interface_UserData;
-import EMS_Database.User;
+import EMS_Database.InputUser;
 import java.util.ArrayList;
 
 /** A dummy temporary database for managing user data.
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Dummy_UserData implements Interface_UserData {
 
-    public ArrayList<User> userList = new ArrayList();
+    public ArrayList<InputUser> userList = new ArrayList();
 
     public Dummy_UserData() {
         // temp data to be inserted
@@ -24,31 +24,31 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
-    public String getName(int uid) throws DoesNotExistException {
+    public String getFirstName(int uid) throws DoesNotExistException {
         /**
          * Returns the a User based on a given UID.
          * <p>         
          * @param uid Is the unique id of the user in question.
          */
         
-        for (User user : userList) {
+        for (InputUser user : userList) {
             if (user.getUid() == uid) {
-                return user.getName();
+                return user.getFirstName();
             }
         }
         throw new DoesNotExistException("UserData");
     }    
 
     @Override
-    public int getUIDByName(String uname) throws DoesNotExistException {
+    public int getUIDByEmail(String uname) throws DoesNotExistException {
         /**
          * Returns the UID of the specified user if it exists.
          * <p>         
          * @param uname The username of the user being searched for.
          */
         
-        for (User user : userList) {
-            if (user.getName().equals(uname)) {
+        for (InputUser user : userList) {
+            if (user.getFirstName().equals(uname)) {
                 return user.getUid();
             }
         }
@@ -56,7 +56,7 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
-    public boolean createUser(User user) throws DuplicateInsertionException {
+    public boolean createUser(InputUser user) throws DuplicateInsertionException {
         /**
          * Returns true upon successful creation and addition of a user to dummy
          * database.
@@ -66,7 +66,7 @@ public class Dummy_UserData implements Interface_UserData {
          */
         
         // Checks if user already exists in userList
-        for(User currUser : userList){
+        for(InputUser currUser : userList){
             if(currUser.getUid() == user.getUid())
                 throw new DuplicateInsertionException("UserData");
         }
@@ -76,6 +76,13 @@ public class Dummy_UserData implements Interface_UserData {
     }
 
     @Override
+    public int nextValidUID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+
+    @Override
     public String getEmail(int uid) throws DoesNotExistException {
         /**
          * Returns a String of the email of the user with the UID specified
@@ -83,7 +90,7 @@ public class Dummy_UserData implements Interface_UserData {
          * @param uid Is the unique id of the user in question.
          */
         
-        for (User user : userList) {
+        for (InputUser user : userList) {
             if (user.getUid() == uid) {
                 return user.getEmail();
             }
@@ -99,7 +106,7 @@ public class Dummy_UserData implements Interface_UserData {
          * @param uid Is the unique id of the user in question.
          */
         
-        for (User user : userList) {
+        for (InputUser user : userList) {
             if (user.getUid() == uid) {
                 return user.getPwd();
             }
@@ -115,7 +122,7 @@ public class Dummy_UserData implements Interface_UserData {
          * @param uid Is the unique id of the user in question.
          */
         
-        for (User user : userList) {
+        for (InputUser user : userList) {
             if (user.getUid() == uid) {
                 return user.getLevel();
             }
@@ -127,11 +134,7 @@ public class Dummy_UserData implements Interface_UserData {
     public void setUID(int uid, int nuid) throws DuplicateInsertionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void setName(int uid, String uname) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     public void setEmail(int uid, String email) throws DoesNotExistException {
@@ -210,6 +213,31 @@ public class Dummy_UserData implements Interface_UserData {
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getLastName(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getEventCreationPrivilege(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setFirstName(int uid, String fname) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setLastName(int uid, String lname) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setEventCreationPrivilege(int uid, int level) throws DoesNotExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
