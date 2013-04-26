@@ -51,14 +51,14 @@ public class CommitteeManager {
     
     public void addBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent) {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedCommittee.getBudgetAccessList.add(budgetAccess);
+            selectedCommittee.getBudgetAccessList().add(budgetAccess);
             // write to database
         }
     }
     
     public void removeBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent) {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedCommittee.getBudgetAccessList.remove(budgetAccess);
+            selectedCommittee.getBudgetAccessList().remove(budgetAccess);
             // write to database
             // remove all related database entries
         }
@@ -81,14 +81,14 @@ public class CommitteeManager {
 
     public void addTask(Task task, User loggedInUser, Event selectedEvent) {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedCommittee.getTaskList().addTask(task);
+            selectedCommittee.getTaskList().add(task);
             // write to database
         }
     }
 
     public void removeTask(Task task, User loggedInUser, Event selectedEvent) {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedCommittee.getTaskList().removeTask(task);
+            selectedCommittee.getTaskList().remove(task);
             // write to database
             // remove all related database entries
         }
