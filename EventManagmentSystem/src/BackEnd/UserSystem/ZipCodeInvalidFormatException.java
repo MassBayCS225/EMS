@@ -1,12 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+package BackEnd.UserSystem;
 
 /**
- *
- * @author anderson
+ *  ZipCodeInvalidFormatException Exception
+ *  @author Anderson Santana
  */
-public class ZipCodeInvalidFormatException extends RuntimeException{
-    
+public class  ZipCodeInvalidFormatException extends RuntimeException{
+  
+  /**
+   * Default Constructor.
+   */
+  public  ZipCodeInvalidFormatException(){}
+  
+  /**
+   * Constructor.
+   * @param reasoon The reason of the exception.
+   */
+  public  ZipCodeInvalidFormatException(String reason){
+    super(reason);
+  }
 }

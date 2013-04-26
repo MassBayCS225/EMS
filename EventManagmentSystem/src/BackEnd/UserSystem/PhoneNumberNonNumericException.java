@@ -1,12 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+package BackEnd.UserSystem;
 
 /**
- *
- * @author anderson
+ * PhoneNumberNonNumericException Exception
+ * @author Anderson Santana
  */
 public class PhoneNumberNonNumericException extends RuntimeException{
-    
+  
+  /**
+   * Default Constructor.
+   */
+  public PhoneNumberNonNumericException(){}
+  
+  /**
+   * Constructor.
+   * @param reasoon The reason of the exception.
+   */
+  public PhoneNumberNonNumericException(String reason){
+    super(reason);
+  }
 }

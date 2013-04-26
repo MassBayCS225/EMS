@@ -1,12 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+package BackEnd.UserSystem;
 
 /**
- *
- * @author anderson
+ * EmailAddressNonExistentException Exception
+ * @author Anderson Santana
  */
 public class EmailAddressNonExistentException extends RuntimeException{
-    
+  
+  /**
+   * Default Constructor.
+   */
+  public EmailAddressNonExistentException(){}
+  
+  /**
+   * Constructor.
+   * @param reasoon The reason of the exception.
+   */
+  public EmailAddressNonExistentException(String reason){
+    super(reason);
+  }
 }
