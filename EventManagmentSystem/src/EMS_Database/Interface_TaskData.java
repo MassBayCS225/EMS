@@ -7,8 +7,8 @@ import java.util.ArrayList;
  *
  * @author mike
  */
-public interface Interface_EventData {
-
+public interface Interface_TaskData {
+    
     // SPECIAL CASE FUNCTIONS
     public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
 
@@ -31,7 +31,7 @@ public interface Interface_EventData {
 
     public int getComplete() throws DoesNotExistException;
 
-    public ArrayList<Integer> getCommittee() throws DoesNotExistException;
+    public ArrayList<Integer> getAuthority() throws DoesNotExistException;
 
     // SETTERS      
     public void setDescription(int uid, String description) throws DoesNotExistException;
@@ -44,5 +44,5 @@ public interface Interface_EventData {
 
     public void setComplete(int uid, int complete) throws DoesNotExistException;
 
-    public void setCommittee(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException;
+    public void setAuthority(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException;
 }

@@ -22,7 +22,7 @@ import java.sql.SQLException;
  *
  * @author Mike Meding
  */
-public class DB_UserData extends InitDB implements Interface_UserData {
+public class UserData_Table extends InitDB implements Interface_UserData {
 
     ///////////////////// SPECIAL FUNCTIONS //////////////////////////////
     /**
@@ -767,7 +767,7 @@ public class DB_UserData extends InitDB implements Interface_UserData {
     @Override
     public void setEventCreationPrivilege(int uid, int level) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET EVENTLEVEL=? WHERE UID=?");
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET LEVEL=? WHERE UID=?");
             idQueryStmt.setInt(1, level);
             idQueryStmt.setInt(2, uid);
             idQueryStmt.executeUpdate();
