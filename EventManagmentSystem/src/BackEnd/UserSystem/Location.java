@@ -1,13 +1,8 @@
-package BackEnd;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+package BackEnd.UserSystem;
 
 /**
- * This class represents a location.http://db.apache.org/derby/docs/10.1/ref/crefsqlj31068.html
- * @author anderson
+ * This class represents a location.
+ * @author Anderson Santana
  */
 public class Location extends Address{
     private String details;
@@ -30,7 +25,7 @@ public class Location extends Address{
     }
     
     /**
-     * This method is a 
+     * It sets the details of the location.
      * @param details The details of the location
      */
     public void setDetails(String details){
@@ -38,6 +33,7 @@ public class Location extends Address{
     }
     
     /**
+     * It returns the details of the location.
      * @return The details of the location
      */
     public String getDetails(){

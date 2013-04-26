@@ -1,4 +1,6 @@
-package BackEnd;
+package BackEnd.UserSystem;
+
+import BackEnd.UserSystem.PhoneNumber;
 
 /**
  * This class represents a Participant of an event.
@@ -57,7 +59,7 @@ public class Participant{
   
  /**
   *  It verifies the participant's email address. By figuring out 
-  *  if it exists in the system or any other reason's not yet specified.
+  *  if it exists in the system or any other reason not yet specified.
   *  
   *  @param emailAddress The participant's email address
   *  @return true if the object's email address matches the 
@@ -80,7 +82,7 @@ public class Participant{
   }
   
  /**
-  *  It sets the participan't phone number.
+  *  It sets the participant's phone number.
   *  @param phoneNumber The participant's phone number
   */ 
   public void setPhoneNumber(PhoneNumber phoneNumber){
