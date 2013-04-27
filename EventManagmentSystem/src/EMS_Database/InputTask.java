@@ -1,5 +1,7 @@
 package EMS_Database;
 
+import java.sql.Timestamp;
+
 /**
  * This class is designed to gather all the data needed for the creation of a
  * task to be added to the task table.
@@ -8,61 +10,35 @@ package EMS_Database;
  */
 public class InputTask {
 
-    private int uid;
-    private String details;
-    private String location;
-    private String startTime;
-    private String endTime;
-    private int complete;
-    private String authority;
+    private String descripton;
     private String street;
     private String city;
     private String state;
     private String zipcode;
-    private String country;
+    private String country;    
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private int complete;
+    private String manager;
+    
 
-    public InputTask(int uid, String details, String location, String startTime, String endTime, int complete, String authority, String street, String city, String state, String zipcode, String country) {
-        this.uid = uid;
-        this.details = details;
-        this.location = location;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.complete = complete;
-        this.authority = authority;
+    public InputTask(String descripton, String street, String city, String state, String zipcode, String country, Timestamp startDate, Timestamp endDate, int complete, String manager) {        
+        this.descripton = descripton;
         this.street = street;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.complete = complete;
+        this.manager = manager;
     }
-
+    
     //GETTERS
-    public int getUid() {
-        return uid;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public int getComplete() {
-        return complete;
-    }
-
-    public String getAuthority() {
-        return authority;
+    
+    public String getDescripton() {
+        return descripton;
     }
 
     public String getStreet() {
@@ -84,34 +60,27 @@ public class InputTask {
     public String getCountry() {
         return country;
     }
-    
-    //SETTERS
-    public void setUid(int uid) {
-        this.uid = uid;
+
+    public Timestamp getStartDate() {
+        return startDate;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public Timestamp getEndDate() {
+        return endDate;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public int getComplete() {
+        return complete;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public String getManager() {
+        return manager;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
+    //SETTERS    
 
-    public void setComplete(int complete) {
-        this.complete = complete;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setDescripton(String descripton) {
+        this.descripton = descripton;
     }
 
     public void setStreet(String street) {
@@ -132,6 +101,21 @@ public class InputTask {
 
     public void setCountry(String country) {
         this.country = country;
-    }            
-    
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setComplete(int complete) {
+        this.complete = complete;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
+    }               
 }

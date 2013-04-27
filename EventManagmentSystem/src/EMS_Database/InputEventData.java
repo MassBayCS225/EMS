@@ -1,6 +1,7 @@
 package EMS_Database;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Designed to be a input structure into Event table
@@ -14,17 +15,18 @@ public class InputEventData {
     private Timestamp startDate;
     private Timestamp endDate;
     private int complete;
-    private String committee; // as a list of committees in charge of event
-    private String organizerList; // list of organizers
-    private String subEventList;
-    private String participantList;
+    private ArrayList<Integer> committee; // as a list of committees in charge of event
+    private ArrayList<Integer> organizerList; // list of organizers
+    private ArrayList<Integer> subEventList;
+    private ArrayList<Integer> participantList;
     private String street;
     private String city;
     private String state;
     private String zipcode;
     private String country;
 
-    public InputEventData(String description, String location, Timestamp startDate, Timestamp endDate, int complete, String committee, String organizerList, String subEventList, String participantList, String street, String city, String state, String zipcode, String country) {
+    public InputEventData(String description, String location, Timestamp startDate, Timestamp endDate, int complete, String street, 
+            String city, String state, String zipcode, String country, ArrayList<Integer> organizerList, ArrayList<Integer> subEventList, ArrayList<Integer> participantList , ArrayList<Integer> committee) {
         this.description = description;
         this.location = location;
         this.startDate = startDate;
@@ -62,19 +64,19 @@ public class InputEventData {
         return complete;
     }
 
-    public String getCommittee() {
+    public ArrayList<Integer> getCommittee() {
         return committee;
     }
 
-    public String getOrganizerList() {
+    public ArrayList<Integer> getOrganizerList() {
         return organizerList;
     }
 
-    public String getSubEventList() {
+    public ArrayList<Integer> getSubEventList() {
         return subEventList;
     }
 
-    public String getParticipantList() {
+    public ArrayList<Integer> getParticipantList() {
         return participantList;
     }
 
@@ -119,19 +121,19 @@ public class InputEventData {
         this.complete = complete;
     }
 
-    public void setCommittee(String committee) {
+    public void setCommittee(ArrayList<Integer> committee) {
         this.committee = committee;
     }
 
-    public void setOrganizerList(String organizerList) {
+    public void setOrganizerList(ArrayList<Integer> organizerList) {
         this.organizerList = organizerList;
     }
 
-    public void setSubEventList(String subEventList) {
+    public void setSubEventList(ArrayList<Integer> subEventList) {
         this.subEventList = subEventList;
     }
 
-    public void setParticipantList(String participantList) {
+    public void setParticipantList(ArrayList<Integer> participantList) {
         this.participantList = participantList;
     }
 

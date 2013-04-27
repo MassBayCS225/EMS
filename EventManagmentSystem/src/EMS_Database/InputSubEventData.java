@@ -6,20 +6,21 @@ import java.sql.Timestamp;
  *
  * @author mike
  */
-public class Input_SubEventData {
+public class InputSubEventData {
     
     private String description;    
+    private int complete;
     private String street;
     private String city;
     private String state;
     private String zipcode;
-    private String country;
+    private String country;        
     private Timestamp startTime;
     private Timestamp endTime;
-    private int complete;
 
-    public Input_SubEventData(String description, String street, String city, String state, String zipcode, String country, Timestamp startTime, Timestamp endTime, int complete) {
+    public InputSubEventData(String description, int complete, String street, String city, String state, String zipcode, String country, Timestamp startTime, Timestamp endTime) {
         this.description = description;
+        this.complete = complete;
         this.street = street;
         this.city = city;
         this.state = state;
@@ -27,7 +28,6 @@ public class Input_SubEventData {
         this.country = country;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.complete = complete;
     }
 
     //GETTERS

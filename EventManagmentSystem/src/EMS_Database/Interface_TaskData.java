@@ -13,8 +13,10 @@ public interface Interface_TaskData {
     public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
 
     public String listToString(ArrayList<Integer> list);
+    
+    public ArrayList<Integer> currentUIDList();
 
-    public int createSubEvent(InputEventData event) throws DuplicateInsertionException;
+    public int createTask(InputTask task) throws DuplicateInsertionException;
 
     public int nextValidUID();
 

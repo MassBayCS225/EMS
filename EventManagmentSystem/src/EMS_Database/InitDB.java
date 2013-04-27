@@ -60,8 +60,7 @@ public abstract class InitDB {
                         "EVENTLEVEL INT NOT NULL)";
                 
                 String createEventsTable = "CREATE TABLE EVENTS (UID INT PRIMARY KEY, "+
-                        "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "+
-                        "LOCATION VARCHAR(160) DEFAULT NULL, "+
+                        "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "+                        
                         "STARTDATE TIMESTAMP, "+
                         "ENDDATE TIMESTAMP, "+
                         "COMPLETE INT, "+
@@ -87,8 +86,7 @@ public abstract class InitDB {
                         "ENDDATE TIMESTAMP)";                        
                 
                 String createCommitteeTable = "CREATE TABLE COMMITTEE (UID INT PRIMARY KEY, "+
-                        "TITLE VARCHAR(160) DEFAULT NULL, "+
-                        "LOCATION VARCHAR(160) DEFAULT NULL, "+
+                        "TITLE VARCHAR(160) DEFAULT NULL, "+                        
                         "CHAIRMAN INT, "+
                         "BUDGETACCESS VARCHAR(1000) DEFAULT NULL, "+ //list of UID #'s
                         "MEMBERS VARCHAR(1000) DEFAULT NULL, "+ //list of UID #'s
