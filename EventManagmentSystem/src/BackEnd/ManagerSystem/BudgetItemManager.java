@@ -32,21 +32,21 @@ public class BudgetItemManager {
         return selectedBudgetItem;
     }
 
-    public void editValue(int value, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(value);
             // write to database
         }
     }
 
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(description);
             // write to database
         }
     }
 
-    public void editDate(Calendar date, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void editDate(Calendar date, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(date);
             // write to database
