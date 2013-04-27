@@ -1,6 +1,6 @@
 package BackEnd.EventSystem;
 
-import BackEnd.Location;
+import BackEnd.UserSystem.Location;
 
 /**
  *
