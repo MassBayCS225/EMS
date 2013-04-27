@@ -1,20 +1,27 @@
 package EMS_Database;
 
 /**
- * This class is designed to gather all the data needed for the creation of a task to be added to the task table.
- * 
+ * This class is designed to gather all the data needed for the creation of a
+ * task to be added to the task table.
+ *
  * @author mike
  */
 public class InputTask {
-   private int uid;
-   private String details;
-   private String location;
-   private String startTime;
-   private String endTime;
-   private int complete;
-   private String authority;
 
-    public InputTask(int uid, String details, String location, String startTime, String endTime, int complete, String authority) {
+    private int uid;
+    private String details;
+    private String location;
+    private String startTime;
+    private String endTime;
+    private int complete;
+    private String authority;
+    private String street;
+    private String city;
+    private String state;
+    private String zipcode;
+    private String country;
+
+    public InputTask(int uid, String details, String location, String startTime, String endTime, int complete, String authority, String street, String city, String state, String zipcode, String country) {
         this.uid = uid;
         this.details = details;
         this.location = location;
@@ -22,9 +29,14 @@ public class InputTask {
         this.endTime = endTime;
         this.complete = complete;
         this.authority = authority;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.country = country;
     }
 
-    // GETTERS
+    //GETTERS
     public int getUid() {
         return uid;
     }
@@ -52,8 +64,28 @@ public class InputTask {
     public String getAuthority() {
         return authority;
     }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
     
-    // SETTERS
+    //SETTERS
     public void setUid(int uid) {
         this.uid = uid;
     }
@@ -81,5 +113,25 @@ public class InputTask {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-   
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }            
+    
 }

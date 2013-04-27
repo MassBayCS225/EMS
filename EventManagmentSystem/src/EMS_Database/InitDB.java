@@ -64,8 +64,27 @@ public abstract class InitDB {
                         "LOCATION VARCHAR(160) DEFAULT NULL, "+
                         "STARTDATE TIMESTAMP, "+
                         "ENDDATE TIMESTAMP, "+
-                        "COMPLETE INT, "+                        
-                        "MANAGER VARCHAR(160) DEFAULT NULL)"; //committee list
+                        "COMPLETE INT, "+
+                        "STREET VARCHAR(100) DEFAULT NULL, "+
+                        "CITY VARCHAR(100) DEFAULT NULL, "+
+                        "STATE VARCHAR(50) DEFAULT NULL, "+
+                        "ZIPCODE VARCHAR(20) DEFAULT NULL, "+                        
+                        "COUNTRY VARCHAR(100) DEFAULT NULL, "+
+                        "ORGANIZER VARCHAR(160) DEFAULT NULL, "+ //organizer list
+                        "SUBEVENT VARCHAR(160) DEFAULT NULL, "+ //sub-event list
+                        "PARTICIPANT VARCHAR(500) DEFAULT NULL, "+ //participant list
+                        "COMMITTEE VARCHAR(160) DEFAULT NULL)"; //committee list
+                
+                String createSubEventTable = "CREATE TABLE SUBEVENTS (UID INT PRIMARY KEY, "+
+                        "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "+
+                        "COMPLETE INT, "+
+                        "STREET VARCHAR(100) DEFAULT NULL, "+
+                        "CITY VARCHAR(100) DEFAULT NULL, "+
+                        "STATE VARCHAR(50) DEFAULT NULL, "+
+                        "ZIPCODE VARCHAR(20) DEFAULT NULL, "+
+                        "COUNTRY VARCHAR(100) DEFAULT NULL, "+
+                        "STARTDATE TIMESTAMP, "+
+                        "ENDDATE TIMESTAMP)";                        
                 
                 String createCommitteeTable = "CREATE TABLE COMMITTEE (UID INT PRIMARY KEY, "+
                         "TITLE VARCHAR(160) DEFAULT NULL, "+
@@ -78,7 +97,11 @@ public abstract class InitDB {
                 
                 String createTasksTable = "CREATE TABLE TASKS (UID INT PRIMARY KEY, "+
                         "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "+
-                        "LOCATION VARCHAR(160) DEFAULT NULL, "+
+                        "STREET VARCHAR(100) DEFAULT NULL, "+
+                        "CITY VARCHAR(100) DEFAULT NULL, "+
+                        "STATE VARCHAR(50) DEFAULT NULL, "+
+                        "ZIPCODE VARCHAR(20) DEFAULT NULL, "+
+                        "COUNTRY VARCHAR(100) DEFAULT NULL, "+
                         "STARTDATE TIMESTAMP, "+
                         "ENDDATE TIMESTAMP, "+
                         "COMPLETE INT, "+                        
@@ -87,6 +110,7 @@ public abstract class InitDB {
                 Statement stmt = dbConnection.createStatement();                
                 stmt.executeUpdate(createUserTable); //takes table string as argument
                 stmt.executeUpdate(createEventsTable);
+                stmt.executeUpdate(createSubEventTable);
                 stmt.executeUpdate(createCommitteeTable);
                 stmt.executeUpdate(createTasksTable);
                                                 

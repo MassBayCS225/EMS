@@ -21,7 +21,7 @@ public class DB_Testing {
 
         Timestamp startDate = new Timestamp(1992, 03, 06, 12, 00, 00, 00);
         Timestamp endDate = new Timestamp(2013, 03, 06, 12, 00, 00, 00);
-        InputEventData ied = new InputEventData("first event", "The Woods", startDate, endDate, 0, "2,1,");
+        //InputEventData ied = new InputEventData("first event", "The Woods", startDate, endDate, 0, "2,1,");
 
         try {
             int uid = et.createSubEvent(ied);
