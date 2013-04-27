@@ -204,47 +204,254 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
     ////////////////////////GETTERS/////////////////////////
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("STREET"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("CITY"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("STATE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("ZIPCODE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("COUNTRY"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Timestamp returnQuery = null;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getTimestamp("STARTDATE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == null) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Timestamp returnQuery = null;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getTimestamp("ENDDATE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == null) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int returnQuery = 3;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getInt("COMPLETE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == 3) {
+                throw new DoesNotExistException("SubEvent");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        throw new DoesNotExistException("SubEvent");
     }
 
     /////////////////////SETTERS////////////////////////////
