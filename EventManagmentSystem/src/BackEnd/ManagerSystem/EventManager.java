@@ -38,7 +38,7 @@ public class EventManager {
         return selectedEvent;
     }
 
-    public void createEvent(Event newEvent, User loggedInUser) {
+    public void createEvent(Event newEvent, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             //eventList.add(newEvent);
             selectedEvent = newEvent; // remove this line when adding multiple event functionality
@@ -46,21 +46,21 @@ public class EventManager {
         }
     }
 
-    public void clearEvent(User loggedInUser) {
+    public void clearEvent(User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             //eventList.remove(selectedEvent);
             selectedEvent = null; // remove this line when adding multiple event functionality
         }
     }
 
-    public void addOrganizer(User organizer, User loggedInUser) {
+    public void addOrganizer(User organizer, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getOrganizerList().add(organizer);
             // write to database
         }
     }
 
-    public void removeOrganizer(User organizer, User loggedInUser) {
+    public void removeOrganizer(User organizer, User loggedInUser)throws PrivilegeInsufficientException  {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getOrganizerList().remove(organizer);
             // write to database
@@ -68,14 +68,14 @@ public class EventManager {
         }
     }
 
-    public void addSubEvent(SubEvent subEvent, User loggedInUser) {
+    public void addSubEvent(SubEvent subEvent, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getSubEventList().add(subEvent);
             // write to database
         }
     }
 
-    public void removeSubEvent(SubEvent subEvent, User loggedInUser) {
+    public void removeSubEvent(SubEvent subEvent, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getSubEventList().remove(subEvent);
             // write to database
@@ -83,14 +83,14 @@ public class EventManager {
         }
     }
 
-    public void addCommittee(Committee committee, User loggedInUser) {
+    public void addCommittee(Committee committee, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getCommitteeList().add(committee);
             // write to database
         }
     }
 
-    public void removeCommittee(Committee committee, User loggedInUser) {
+    public void removeCommittee(Committee committee, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getCommitteeList().remove(committee);
             // write to database
@@ -108,28 +108,28 @@ public class EventManager {
         // write to database
     }
 
-    public void editDescription(String description, User loggedInUser) {
+    public void editDescription(String description, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.setDescription(description);
             // write to database
         }
     }
 
-    public void editLocation(Location location, User loggedInUser) {
+    public void editLocation(Location location, User loggedInUser)throws PrivilegeInsufficientException  {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.setLocation(location);
             // write to database
         }
     }
 
-    public void editStartDateTime(Timestamp startDateTime, User loggedInUser) {
+    public void editStartDateTime(Timestamp startDateTime, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.setStartDateTime(startDateTime);
             // write to database
         }
     }
 
-    public void editEndDateTime(Timestamp endDateTime, User loggedInUser) {
+    public void editEndDateTime(Timestamp endDateTime, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.setEndDateTime(endDateTime);
             // write to database
