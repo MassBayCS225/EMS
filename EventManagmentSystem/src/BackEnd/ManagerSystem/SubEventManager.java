@@ -42,16 +42,16 @@ public class SubEventManager {
         }
     }
 
-    public void editStartTime(Timestamp startTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setStartTime(startTime);
+            selectedSubEvent.setStartDateTime(startDateTime);
             // write to database
         }
     }
 
-    public void editEndTime(Timestamp endTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setEndTime(endTime);
+            selectedSubEvent.setEndDateTime(endDateTime);
             // write to database
         }
     }

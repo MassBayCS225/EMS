@@ -122,16 +122,16 @@ public class EventManager {
         }
     }
 
-    public void editStartTime(Timestamp startTime, User loggedInUser) {
+    public void editStartDateTime(Timestamp startDateTime, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setStartTime(startTime);
+            selectedEvent.setStartDateTime(startDateTime);
             // write to database
         }
     }
 
-    public void editEndTime(Timestamp endTime, User loggedInUser) {
+    public void editEndDateTime(Timestamp endDateTime, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setEndTime(endTime);
+            selectedEvent.setEndDateTime(endDateTime);
             // write to database
         }
     }
