@@ -3,8 +3,7 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -16,12 +15,9 @@ import java.util.Calendar;
  */
 public class BudgetItemManager {
 
-    private ArrayList<BudgetItem> budgetItemList;
     private BudgetItem selectedBudgetItem;
 
     public BudgetItemManager() {
-        budgetItemList = new ArrayList<BudgetItem>();
-        // build list from database
     }
 
     public void setSelectedBudgetItem(BudgetItem selectedBudgetItem) {
@@ -32,23 +28,23 @@ public class BudgetItemManager {
         return selectedBudgetItem;
     }
 
-    public void editValue(int value, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(value);
             // write to database
         }
     }
 
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedBudgetItem.setValue(description);
+            selectedBudgetItem.setDescription(description);
             // write to database
         }
     }
 
-    public void editDate(Calendar date, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void editDate(Timestamp date, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedBudgetItem.setValue(date);
+            selectedBudgetItem.setDate(date);
             // write to database
         }
     }
