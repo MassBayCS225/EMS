@@ -48,7 +48,7 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void addIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void addIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getIncomeList().add(income);
             // write to database
@@ -64,7 +64,7 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void removeIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void removeIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getIncomeList().remove(income);
             // write to database
@@ -81,7 +81,7 @@ public class BudgetManager {
      * @param selectedEvent the selected event
      * @param selectedCommittee the selected committee
      */
-    public void addExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void addExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getExpenseList().add(expense);
             // write to database
@@ -97,7 +97,7 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void removeExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void removeExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getExpenseList().remove(expense);
             // write to database

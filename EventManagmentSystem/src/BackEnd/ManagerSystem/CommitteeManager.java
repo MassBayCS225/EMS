@@ -26,28 +26,28 @@ public class CommitteeManager {
         return selectedCommittee;
     }
 
-    public void editTitle(String title, User loggedInUser, Event selectedEvent) {
+    public void editTitle(String title, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.setTitle(title);
             // write to database
         }
     }
-    
-    public void editChair(User chair, User loggedInUser, Event selectedEvent) {
+
+    public void editChair(User chair, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.setChair(chair);
             // write to database
         }
     }
-    
-    public void addBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent) {
+
+    public void addBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getBudgetAccessList().add(budgetAccess);
             // write to database
         }
     }
-    
-    public void removeBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent) {
+
+    public void removeBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getBudgetAccessList().remove(budgetAccess);
             // write to database
@@ -55,14 +55,14 @@ public class CommitteeManager {
         }
     }
 
-    public void addMember(User member, User loggedInUser, Event selectedEvent) {
+    public void addMember(User member, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getMemberList().add(member);
             // write to database
         }
     }
 
-    public void removeMember(User member, User loggedInUser, Event selectedEvent) {
+    public void removeMember(User member, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getMemberList().remove(member);
             // write to database
@@ -70,14 +70,14 @@ public class CommitteeManager {
         }
     }
 
-    public void addTask(Task task, User loggedInUser, Event selectedEvent) {
+    public void addTask(Task task, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getTaskList().add(task);
             // write to database
         }
     }
 
-    public void removeTask(Task task, User loggedInUser, Event selectedEvent) {
+    public void removeTask(Task task, User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getTaskList().remove(task);
             // write to database
