@@ -457,46 +457,109 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
     /////////////////////SETTERS////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET DESCRIPTION=? WHERE UID=?");
+            idQueryStmt.setString(1, description);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET STREET=? WHERE UID=?");
+            idQueryStmt.setString(1, street);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET CITY=? WHERE UID=?");
+            idQueryStmt.setString(1, city);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET STATE=? WHERE UID=?");
+            idQueryStmt.setString(1, state);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET ZIPCODE=? WHERE UID=?");
+            idQueryStmt.setString(1, zipcode);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET COUNTRY=? WHERE UID=?");
+            idQueryStmt.setString(1, country);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET STARTDATE=? WHERE UID=?");
+            idQueryStmt.setTimestamp(1, time);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET ENDDATE=? WHERE UID=?");
+            idQueryStmt.setTimestamp(1, time);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 
     @Override
     public void setComplete(int uid, int complete) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET COMPLETE=? WHERE UID=?");
+            idQueryStmt.setInt(1, complete);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            throw new DoesNotExistException("User does not exist in SUBEVENTS table.");
+        }
     }
 }
