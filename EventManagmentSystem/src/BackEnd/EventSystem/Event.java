@@ -1,6 +1,7 @@
 package BackEnd.EventSystem;
 
 import BackEnd.User;
+import BackEnd.UserSystem.Participant;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,7 @@ public class Event extends ScheduleItem implements Reportable {
     private ArrayList<User> organizerList;
     private ArrayList<SubEvent> subEventList;
     private ArrayList<Committee> committeeList;
+    private ArrayList<Participant> participantList;
     
     public Event(int event_id, String description) {
         super(description);
@@ -20,20 +22,17 @@ public class Event extends ScheduleItem implements Reportable {
         organizerList = new ArrayList<User>();
         subEventList = new ArrayList<SubEvent>();
         committeeList = new ArrayList<Committee>();
+        participantList = new ArrayList<Participant>();
     }
     
     public boolean isReady() {
-        boolean subEventsReady = true, committeesFinished = true;
-        
-        for (SubEvent subEvent : subEventList)
-            if (subEvent.isReady() == false)
-                subEventsReady = false;
+        boolean eventReady = true;
         
         for (Committee committee : committeeList)
             if (committee.isFinished() == false)
-                committeesFinished = false;
+                eventReady = false;
         
-        return subEventsReady && committeesFinished;
+        return eventReady;
     }
     
     private void setEVENT_ID(int event_id) {
@@ -68,24 +67,28 @@ public class Event extends ScheduleItem implements Reportable {
         return committeeList;
     }
     
+    public void setParticipantList(ArrayList<Participant> participantList) {
+        this.participantList = participantList;
+    }
+    
+    public ArrayList<Participant> getParticipantList() {
+        return participantList;
+    }
+    
     public boolean equals(Event event) {
         if (this.getEVENT_ID() == event.getEVENT_ID()
                 && this.getOrganizerList().equals(event.getOrganizerList())
                 && this.getSubEventList().equals(event.getSubEventList())
-                && this.getCommitteeList().equals(event.getCommitteeList()))
+                && this.getCommitteeList().equals(event.getCommitteeList())
+                && this.getParticipantList().equals(event.getParticipantList()))
             return true;
         else
             return false;
     }
     
     public String toString() {
-        String organizerNames = "", subEvents = "", committees = "";
-        
-        for(User user : organizerList)
-            organizerNames += user.getName() + "\n"; // Change.
-        
-        return "Description: \n" + super.getDescription() + "Event ID: " + EVENT_ID +
-                "\nOrganizer List:";
+        return "Event Description: \n" + super.getDescription() + "\n\n" + super.getLocation().toString() + 
+                "\n\n" + super.getTimeSchedule().toString();
     }
     
     public ArrayList<String> getReport() {
