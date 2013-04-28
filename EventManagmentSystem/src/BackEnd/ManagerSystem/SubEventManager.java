@@ -28,28 +28,28 @@ public class SubEventManager {
         return selectedSubEvent;
     }
 
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.setDescription(description);
             // write to database
         }
     }
 
-    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.setLocation(location);
             // write to database
         }
     }
 
-    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.setStartDateTime(startDateTime);
             // write to database
         }
     }
 
-    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.setEndDateTime(endDateTime);
             // write to database

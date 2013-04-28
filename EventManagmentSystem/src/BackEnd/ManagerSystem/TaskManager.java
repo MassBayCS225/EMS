@@ -28,50 +28,50 @@ public class TaskManager {
         return selectedTask;
     }
 
-    public void addResponsible(User responsible) {
-        if (PrivilegeManager.hasTaskPrivilege()) {
+    public void addResponsible(User responsible, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.getResponsibleList().add(responsible);
             // write to database
         }
     }
 
-    public void removeResponsible(User responsible) {
-        if (PrivilegeManager.hasTaskPrivilege()) {
+    public void removeResponsible(User responsible, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.getResponsibleList().remove(responsible);
             // write to database
             // remove all related database entries
         }
     }
 
-    public void editCompleted(boolean completed) {
-        if (PrivilegeManager.hasTaskPrivilege()) {
+    public void editCompleted(boolean completed, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setCompleted(completed);
             // write to database
         }
     }
 
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setDescription(description);
             // write to database
         }
     }
 
-    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setLocation(location);
             // write to database
         }
     }
 
-    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setStartDateTime(startDateTime);
             // write to database
         }
     }
 
-    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setEndDateTime(endDateTime);
             // write to database
