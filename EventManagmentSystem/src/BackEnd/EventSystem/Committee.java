@@ -37,6 +37,10 @@ public class Committee implements Reportable {
         return completed;
     }
     
+    public int getEVENT_ID() {
+        return EVENT_ID;
+    }
+    
     private void setCOMMITTEE_ID(int committee_id) {
         COMMITTEE_ID = committee_id;
     }
@@ -94,11 +98,30 @@ public class Committee implements Reportable {
     }
     
     public boolean equals(Committee committee) {
-        
+        if (this.getEVENT_ID() == committee.getEVENT_ID()
+               && this.getCOMMITTEE_ID() == committee.getCOMMITTEE_ID()
+               && this.getTitle().equalsIgnoreCase(committee.getTitle())
+               && this.getMemberList().equals(committee.getMemberList())
+               && this.getBudgetAccessList().equals(committee.getBudgetAccessList())
+               && this.getChair().equals(committee.getChair())
+               && this.getTaskList().equals(committee.getTaskList())
+               && this.getBudget().equals(committee.getBudget()))
+            return true;
+        else
+            return false;    
     }
     
     public String toString() {
+        int totalBudget = 0;
+        String taskDescriptions = "";
         
+        for (int income : budget.getIncomeList())
+            totalBudget += income.getValue();
+        
+        for (Task task : taskList)
+            taskDescriptions += task.toString() + "\n";
+            
+        return "Committee Title: " + title + "\nTotal Budget: " + totalBudget + "\nTask List: \n" + taskDescriptions;
     }
     
     public ArrayList<String> getReport() {
