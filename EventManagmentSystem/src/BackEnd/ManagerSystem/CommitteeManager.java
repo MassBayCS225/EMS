@@ -3,8 +3,6 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
-import java.util.ArrayList;
-
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
  * It checks to see whether a user has the proper privileges to change
@@ -15,16 +13,9 @@ import java.util.ArrayList;
  */
 public class CommitteeManager {
 
-    private ArrayList<Committee> committeeList;
     private Committee selectedCommittee;
 
     public CommitteeManager() {
-        committeeList = new ArrayList<Committee>();
-        // get information from database
-    }
-
-    public ArrayList<Committee> getCommitteeList() {
-        return committeeList;
     }
 
     public void setSelectedCommittee(Committee selectedCommittee) {

@@ -3,8 +3,6 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
-import java.util.ArrayList;
-
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
  * It checks to see whether a user has the proper privileges to change
@@ -15,24 +13,12 @@ import java.util.ArrayList;
  */
 public class BudgetManager {
 
-    private ArrayList<Budget> budgetList;
     private Budget selectedBudget;
 
     /**
      * Default, no arg constructor. Builds the budget list.
      */
     public BudgetManager() {
-        budgetList = new ArrayList<Budget>();
-        // get information from database
-    }
-
-    /**
-     * Get the budget list.
-     *
-     * @return the budget list
-     */
-    public ArrayList<Budget> getBudgetList() {
-        return budgetList;
     }
 
     /**
@@ -62,7 +48,7 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void addIncome(Income income, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void addIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getIncomeList().add(income);
             // write to database
@@ -78,7 +64,7 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void removeIncome(Income income, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void removeIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getIncomeList().remove(income);
             // write to database
@@ -95,7 +81,7 @@ public class BudgetManager {
      * @param selectedEvent the selected event
      * @param selectedCommittee the selected committee
      */
-    public void addExpense(Expense expense, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void addExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getExpenseList().add(expense);
             // write to database
@@ -111,7 +97,7 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void removeExpense(Expense expense, User loggedInUser, Event selectedEvent, Committtee selectedCommittee) {
+    public void removeExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getExpenseList().remove(expense);
             // write to database

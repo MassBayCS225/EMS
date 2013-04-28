@@ -3,8 +3,7 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -15,12 +14,10 @@ import java.util.Calendar;
  * @author Julian Kuk
  */
 public class SubEventManager {
-    private ArrayList<SubEvent> subEventList;
+
     private SubEvent selectedSubEvent;
 
     public SubEventManager() {
-        subEventList = new ArrayList<SubEvent>();
-        // build sub event list
     }
 
     public void setSelectedSubEvent(SubEvent selectedSubEvent) {
@@ -30,12 +27,6 @@ public class SubEventManager {
     public SubEvent getSelectedSubEvent() {
         return selectedSubEvent;
     }
-    
-    public void addParticipant(){
-    }
-    
-    public void removeParticipant(){
-    }
 
     public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
@@ -44,37 +35,23 @@ public class SubEventManager {
         }
     }
 
-    public void editLocation(String location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.setLocation(location);
             // write to database
         }
     }
 
-    public void editStartDate(Calendar startDate, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setStartDate(startDate);
+            selectedSubEvent.setStartDateTime(startDateTime);
             // write to database
         }
     }
 
-    public void editEndDate(Calendar endDate, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setEndDate(endDate);
-            // write to database
-        }
-    }
-
-    public void editStartTime(Calendar startTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setStartTime(startTime);
-            // write to database
-        }
-    }
-
-    public void editEndTime(Calendar startTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setEndTime(startTime);
+            selectedSubEvent.setEndDateTime(endDateTime);
             // write to database
         }
     }
