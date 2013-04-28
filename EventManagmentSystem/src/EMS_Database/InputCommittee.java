@@ -5,9 +5,7 @@ package EMS_Database;
  * @author mike
  */
 public class InputCommittee {
-
-    
-    private int uid;
+        
     private String title;
     private int chairman;
     private String budgetAcess;
@@ -15,8 +13,7 @@ public class InputCommittee {
     private String taskList;
     private double budget;
 
-    public InputCommittee(int uid, String title, int chairman, String budgetAcess, String committeeMembers, String taskList, double budget) {
-        this.uid = uid;
+    public InputCommittee(String title, int chairman, String budgetAcess, String committeeMembers, String taskList, double budget) {        
         this.title = title;
         this.chairman = chairman;
         this.budgetAcess = budgetAcess;
@@ -25,9 +22,6 @@ public class InputCommittee {
         this.budget = budget;
     }
 
-    public int getUid() {
-        return uid;
-    }
 
     public String getTitle() {
         return title;
@@ -55,9 +49,6 @@ public class InputCommittee {
     
     
     //SETTERS
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
 
     public void setTitle(String title) {
         this.title = title;

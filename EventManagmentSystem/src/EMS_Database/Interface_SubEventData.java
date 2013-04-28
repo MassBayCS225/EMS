@@ -14,7 +14,9 @@ public interface Interface_SubEventData {
 
     public String listToString(ArrayList<Integer> list);
 
-    public int createSubEvent(InputEventData event) throws DuplicateInsertionException;
+    public ArrayList<Integer> currentUIDList();
+
+    public int createSubEvent(InputSubEventData subevent) throws DuplicateInsertionException;
 
     public int nextValidUID();
 

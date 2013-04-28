@@ -14,7 +14,9 @@ public interface Interface_EventData {
 
     public String listToString(ArrayList<Integer> list);
 
-    public int createSubEvent(InputEventData event) throws DuplicateInsertionException;
+    public ArrayList<Integer> currentUIDList();
+
+    public int createEvent(InputEventData event) throws DuplicateInsertionException;
 
     public int nextValidUID();
 
@@ -22,8 +24,6 @@ public interface Interface_EventData {
 
     // GETTERS
     public String getDescription(int uid) throws DoesNotExistException;
-
-    public String getLocation(int uid) throws DoesNotExistException;
 
     public Timestamp getStartDate(int uid) throws DoesNotExistException;
 
@@ -52,8 +52,6 @@ public interface Interface_EventData {
 
     // SETTERS      
     public void setDescription(int uid, String description) throws DoesNotExistException;
-
-    public void setLocation(int uid, String location) throws DoesNotExistException;
 
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException;
 
