@@ -3,8 +3,6 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
-import java.util.ArrayList;
-
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
  * It checks to see whether a user has the proper privileges to change
@@ -15,24 +13,12 @@ import java.util.ArrayList;
  */
 public class BudgetManager {
 
-    private ArrayList<Budget> budgetList;
     private Budget selectedBudget;
 
     /**
      * Default, no arg constructor. Builds the budget list.
      */
     public BudgetManager() {
-        budgetList = new ArrayList<Budget>();
-        // get information from database
-    }
-
-    /**
-     * Get the budget list.
-     *
-     * @return the budget list
-     */
-    public ArrayList<Budget> getBudgetList() {
-        return budgetList;
     }
 
     /**

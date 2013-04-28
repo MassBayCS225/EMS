@@ -4,7 +4,7 @@ import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -16,12 +16,12 @@ import java.util.Calendar;
  */
 public class EventManager {
 
-    private ArrayList<Event> eventList;
+    //private ArrayList<Event> eventList;
     private Event selectedEvent;
 
     public EventManager() {
         // not used in current version. may be utilized in future version
-        eventList = new ArrayList<Event>();
+        //eventList = new ArrayList<Event>();
         // get information from database
     }
 
@@ -40,14 +40,16 @@ public class EventManager {
 
     public void createEvent(Event newEvent, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent = newEvent;
+            //eventList.add(newEvent);
+            selectedEvent = newEvent; // remove this line when adding multiple event functionality
             // write to database
         }
     }
 
-    public void removeEvent(User loggedInUser) {
+    public void clearEvent(User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent = null;
+            //eventList.remove(selectedEvent);
+            selectedEvent = null; // remove this line when adding multiple event functionality
         }
     }
 
@@ -95,6 +97,16 @@ public class EventManager {
             // remove all related database entries
         }
     }
+       
+    public void addParticipant(Participant participant){
+        selectedEvent.getParticipantList().add(participant);
+        // write to database
+    }
+    
+    public void removeParticipant(Participant participant){
+        selectedEvent.getParticipantList().remove(participant);
+        // write to database
+    }
 
     public void editDescription(String description, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
@@ -103,37 +115,23 @@ public class EventManager {
         }
     }
 
-    public void editLocation(String location, User loggedInUser) {
+    public void editLocation(Location location, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.setLocation(location);
             // write to database
         }
     }
 
-    public void editStartDate(Calendar startDate, User loggedInUser) {
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setStartDate(startDate);
-            // write to database
-        }
-    }
-
-    public void editEndDate(Calendar endDate, User loggedInUser) {
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setEndDate(endDate);
-            // write to database
-        }
-    }
-
-    public void editStartTime(Calendar startTime, User loggedInUser) {
+    public void editStartTime(Timestamp startTime, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.setStartTime(startTime);
             // write to database
         }
     }
 
-    public void editEndTime(Calendar startTime, User loggedInUser) {
+    public void editEndTime(Timestamp endTime, User loggedInUser) {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setEndTime(startTime);
+            selectedEvent.setEndTime(endTime);
             // write to database
         }
     }

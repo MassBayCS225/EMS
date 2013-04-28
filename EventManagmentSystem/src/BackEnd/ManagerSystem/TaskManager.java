@@ -3,7 +3,7 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.*;
 import BackEnd.UserSystem.*;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -57,37 +57,23 @@ public class TaskManager {
         }
     }
 
-    public void editLocation(String location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setLocation(location);
             // write to database
         }
     }
 
-    public void editStartDate(Calendar startDate, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
-            selectedTask.setStartDate(startDate);
-            // write to database
-        }
-    }
-
-    public void editEndDate(Calendar endDate, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
-            selectedTask.setEndDate(endDate);
-            // write to database
-        }
-    }
-
-    public void editStartTime(Calendar startTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editStartTime(Timestamp startTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.setStartTime(startTime);
             // write to database
         }
     }
 
-    public void editEndTime(Calendar startTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editEndTime(Timestamp endTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
-            selectedTask.setEndTime(startTime);
+            selectedTask.setEndTime(endTime);
             // write to database
         }
     }
