@@ -30,7 +30,6 @@ public class Task extends ScheduleItem {
         return TASK_ID;
     }
     
-    // Not on UML; Added it.
     public int getCOMMITTEE_ID() {
         return COMMITTEE_ID;
     }
@@ -62,13 +61,6 @@ public class Task extends ScheduleItem {
     }
     
     public String toString() {
-        String responsibleListNames = "";
-        
-        for(User user: responsibleList)
-            responsibleListNames += user.getName() + "\n"; // Change.
-        
-        return "Description: \n" + super.getDescription() + "\nCommittee ID: " + COMMITTEE_ID + 
-                "\nTask ID: " + TASK_ID + "\nResponsible Participants: \n" + responsibleListNames + 
-                "\nTask Complete: " + completed;
+        return "Task Description: \n" + super.getDescription() + "\nTask Complete: " + completed;
     }
 }
