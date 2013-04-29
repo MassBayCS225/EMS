@@ -47,93 +47,104 @@ public class DB_Testing {
         //BOGUS Tasks table data
         InputTask it = new InputTask("Stop Programming So Much", "181 Bacon St.", "Natick", "MA", "01760", "MURICA!", startDate, endDate, 0, "2,1,");
         //BOGUS UserData table data
-
+        InputUser iu = new InputUser(); //can be declared with no data.
+        
+        
+        //CREATE USER INSERTION
+        
+        //udt.createUser(iu);
+//        try{            
+//            udt.removeUser(0);
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }
+//        System.out.println(udt.queryEntireTable());
 
         //CREATE EVENT INSERTION
-        try {
-            uid = et.createEvent(ied);
-            System.out.println("The created uid = " + uid);
-        } catch (DuplicateInsertionException die) {
-            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-        }
-        System.out.println(et.queryEntireTable());        
-        System.out.println(); //blank line.
-        try{
-            uid = 4;
-            System.out.println(et.getDescription(uid));
-            System.out.println(et.getStartDate(uid));
-            System.out.println(et.getEndDate(uid));
-            System.out.println(et.getComplete(uid));
-            System.out.println(et.getStreet(uid));
-            System.out.println(et.getCity(uid));
-            System.out.println(et.getState(uid));
-            System.out.println(et.getZipcode(uid));
-            System.out.println(et.getCountry(uid));
-            System.out.println(et.getOrganizerList(uid));  
-            System.out.println(et.getSubEventList(uid));  
-            System.out.println(et.getParticipantList(uid));  
-            System.out.println(et.getCommittee(uid));              
-            
-        }catch(DoesNotExistException dnee){
-            System.err.println("No user here.... :/");
-            System.err.println(dnee.getMessage());
-        }
-        
-        try{
-            uid = 4;
-            list.add(999);
-            et.setDescription(uid, "3 AM Coding. Wooo!");            
-            et.setStartDate(uid, startDate);
-            et.setEndDate(uid, endDate);
-            et.setComplete(uid, 1);
-            et.setStreet(uid, "Mulholland Drive");
-            et.setCity(uid, "Tokyo");
-            et.setState(uid, "XYZ");
-            et.setZipcode(uid, "90210");
-            et.setCountry(uid, "JAPAN!");
-            et.setOrganizerList(uid, list);
-            et.setSubEventList(uid, list);
-            et.setParticipantList(uid, list);
-            et.setCommittee(uid, list);                        
-            
-        }catch(DoesNotExistException dnee){            
-            System.err.println(dnee.getMessage());
-        }        
+//        try {
+//            uid = et.createEvent(ied);
+//            System.out.println("The created uid = " + uid);
+//        } catch (DuplicateInsertionException die) {
+//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+//        }
+//        System.out.println(et.queryEntireTable());        
+//        System.out.println(); //blank line.
+//        try{
+//            uid = 4;
+//            System.out.println(et.getDescription(uid));
+//            System.out.println(et.getStartDate(uid));
+//            System.out.println(et.getEndDate(uid));
+//            System.out.println(et.getComplete(uid));
+//            System.out.println(et.getStreet(uid));
+//            System.out.println(et.getCity(uid));
+//            System.out.println(et.getState(uid));
+//            System.out.println(et.getZipcode(uid));
+//            System.out.println(et.getCountry(uid));
+//            System.out.println(et.getOrganizerList(uid));  
+//            System.out.println(et.getSubEventList(uid));  
+//            System.out.println(et.getParticipantList(uid));  
+//            System.out.println(et.getCommittee(uid));              
+//            
+//        }catch(DoesNotExistException dnee){
+//            System.err.println("No user here.... :/");
+//            System.err.println(dnee.getMessage());
+//        }
+//        
+//        try{
+//            uid = 4;
+//            list.add(999);
+//            et.setDescription(uid, "3 AM Coding. Wooo!");            
+//            et.setStartDate(uid, startDate);
+//            et.setEndDate(uid, endDate);
+//            et.setComplete(uid, 1);
+//            et.setStreet(uid, "Mulholland Drive");
+//            et.setCity(uid, "Tokyo");
+//            et.setState(uid, "XYZ");
+//            et.setZipcode(uid, "90210");
+//            et.setCountry(uid, "JAPAN!");
+//            et.setOrganizerList(uid, list);
+//            et.setSubEventList(uid, list);
+//            et.setParticipantList(uid, list);
+//            et.setCommittee(uid, list);                        
+//            
+//        }catch(DoesNotExistException dnee){            
+//            System.err.println(dnee.getMessage());
+//        }        
         
 
         //CREATE SUBEVENT INSERTION
-/*        try {
-            uid = set.createSubEvent(ised);
-            System.out.println("The created uid = " + uid);
-        } catch (DuplicateInsertionException die) {
-            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-        }
-        System.out.println(set.queryEntireTable());
-        
-        try{
-            uid = 2;
-            System.out.println(set.getDescription(uid));
-            System.out.println(set.getComplete(uid));
-            System.out.println(set.getStreet(uid));
-            System.out.println(set.getCity(uid));
-            System.out.println(set.getState(uid));
-            System.out.println(set.getZipcode(uid));
-            System.out.println(set.getStartDate(uid));
-            System.out.println(set.getEndDate(uid));
-            set.setDescription(uid, "Better Description!");
-            set.setStreet(uid,"28 Mullholand Drive");
-            set.setCity(uid,"Amherst");
-            set.setState(uid, "Massachusetts");
-            set.setZipcode(uid, "12345");
-            set.setCountry(uid, "USA");
-            set.setStartDate(uid, startDate);
-            set.setEndDate(uid, endDate);
-            set.setComplete(uid, 1);
-            
-        } catch(DoesNotExistException dnee) {
-            System.err.println(dnee.getMessage());
-        }        
-        System.out.println(set.queryEntireTable()); */
+//        try {
+//            uid = set.createSubEvent(ised);
+//            System.out.println("The created uid = " + uid);
+//        } catch (DuplicateInsertionException die) {
+//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+//        }
+//        System.out.println(set.queryEntireTable());
+//        
+//        try{
+//            uid = 2;
+//            System.out.println(set.getDescription(uid));
+//            System.out.println(set.getComplete(uid));
+//            System.out.println(set.getStreet(uid));
+//            System.out.println(set.getCity(uid));
+//            System.out.println(set.getState(uid));
+//            System.out.println(set.getZipcode(uid));
+//            System.out.println(set.getStartDate(uid));
+//            System.out.println(set.getEndDate(uid));
+//            set.setDescription(uid, "Better Description!");
+//            set.setStreet(uid,"28 Mullholand Drive");
+//            set.setCity(uid,"Amherst");
+//            set.setState(uid, "Massachusetts");
+//            set.setZipcode(uid, "12345");
+//            set.setCountry(uid, "USA");
+//            set.setStartDate(uid, startDate);
+//            set.setEndDate(uid, endDate);
+//            set.setComplete(uid, 1);
+//            
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }        
+//        System.out.println(set.queryEntireTable()); 
 
         //CREATE COMMITTEE INSERTION
 //        try{
