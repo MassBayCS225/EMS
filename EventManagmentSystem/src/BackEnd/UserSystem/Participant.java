@@ -7,46 +7,67 @@ import BackEnd.UserSystem.PhoneNumber;
  * @author Anderson Santana
  */
 public class Participant{
-  private String name;
+  private String firstName;
+  private String lastName;
   private String emailAddress;
   private PhoneNumber phoneNumber;
   private Address address;
   
  /**
   * Constructor.
- *  This constructor initializes the participant object with a name.
- *  @param name The participant's name
- */
-  public Participant(String name){
-    this.name = name;
+  *  This constructor initializes the participant object with a name.
+  *  @param firstName The participant's first name
+  *  @param lastName The participant's last name
+  */
+  public Participant(String firstName, String lastName){
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
  
  /**
   *  Overloaded Constructor.
   *  This constructor initializes the Participant object with a name
   *  and an email address
-  *  @param name The participant's name
+  *  @param firstName The participant's first name
+  *  @param lastName The participant's last name
   *  @param address The participant's email address
   */
-  public Participant(String name, String emailAddress){
-    this.name = name;
+  public Participant(String firstName, String lastName, String emailAddress){
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.emailAddress = emailAddress;
   }
   
  /**
-  *  It sets the participant's name.
-  *  @param name The participant's name
+  *  It sets the participant's first name.
+  *  @param name The participant's first name
   */ 
-  public void setName(String name){
-    this.name = name; 
+  public void setFirstName(String firstName){
+    this.firstName = firstName; 
   }
   
  /**
-  *  It returns the participant's name.
-  *  @return The participant's name
+  *  It returns the participant's first name.
+  *  @return The participant's first name
   */ 
-  public String getName(){
-    return name;
+  public String getFirstName(){
+    return firstName;
+  }
+  
+ /**
+  *  It sets the participant's last name.
+  *  @param name The participant's last name
+  */ 
+  public void setLastName(String lastName){
+    this.lastName = lastName;
+  }
+  
+ /**
+  *  It returns the participant's last name.
+  *  @return The participant's last name
+  */ 
+  public String getLastName(){
+    return lastName;
   }
   
  /**
@@ -124,8 +145,9 @@ public class Participant{
     if(obj == null) return false;
     if(this.getClass() == obj.getClass()){
       Participant other = (Participant) obj;
-      return name.equals(other.name) && emailAddress.equals(other.emailAddress) &&
-        phoneNumber.equals(other.phoneNumber) && address.equals(other.address);
+      return firstName.equals(other.firstName) && lastName.equals(other.lastName) &&
+              emailAddress.equals(other.emailAddress) && 
+              phoneNumber.equals(other.phoneNumber) && address.equals(other.address);
         } else {
           return false;
         }
@@ -137,7 +159,8 @@ public class Participant{
    */
   @Override
   public String toString(){
-    String info = "Name: " + name +
+    String info = "First name: " + firstName +
+                  "\nLast name: " + lastName +
                   "\nEmail: " + emailAddress + 
                   "\nPhone: " + phoneNumber + 
                   "\nAddress: " + address;
