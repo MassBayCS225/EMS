@@ -11,7 +11,6 @@ package BackEnd.UserSystem;
  */
 public class User extends Participant
 {
-    private int USER_ID = 1;
     private String userName;
     private String password;
     private boolean adminPrivilege;
@@ -23,15 +22,11 @@ public class User extends Participant
      * @param pword         the desired password
      * @param pwordMatch    the password entered a second time to verify it
      */
-    public User(int user_ID, String firstName, String lastName, String emailAddress, String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+    public User(String firstName, String lastName, String emailAddress, String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
-        setUserID(user_ID);
-        super(firstName, lastName, emailAddress)
+        super(firstName, lastName, emailAddress);
         setUserName(uName);
-        if(verifyPassword(pword, pwordMatch))
-            setPassword(pword);
-        else
-            throw new PasswordMismatchError("The passwords do not match.");
+        setPassword(pword, pwordMatch);
             
     }
     /**
@@ -145,26 +140,12 @@ public class User extends Participant
     {
         return eventCreationPrivilege;
     }
-    private void setUserID(int id)
-    {
-        USER_ID = id;
-    }
-    private int getUSER_ID()
-    {
-        return USER_ID;
-    }
     public boolean equals(User user)
     {
-        if(USER_ID == user.getUSER_ID() && userName == user.getUserName())
-            return true;
-        else
-            return false;
+        
     }
     public String toString()
     {
-        String output = ("User ID: " + USER_ID + "\n User Name: " + userName + 
-                "\nAdmin Privileges: " + adminPrivilege + "\n Event Creation "
-                + "Privileges: "+ eventCreationPrivilege);
-        return output;
+        
     }
 }
