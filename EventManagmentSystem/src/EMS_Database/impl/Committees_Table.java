@@ -196,29 +196,62 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
     ///////////////////GETTERS////////////////////
     @Override
     public String getTitle(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("TITLE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
     }
 
     @Override
     public int getChairman(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int returnQuery = 0;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getInt("CHAIRMAN"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == 0) {
+                throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
     }
 
-    @Override
-    public String getBudgetAccessList(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getCommitteeMembers(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTaskList(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
+    
     @Override
     public double getBudget(int uid) throws DoesNotExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -235,21 +268,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void setBudgetAccessList(int uid, String accessList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setCommitteeMembers(int uid, String memberList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setTaskList(int uid, String taskList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public void setBudget(int uid, double budget) throws DoesNotExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

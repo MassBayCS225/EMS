@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Apr 28 16:38:32 EDT 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-013e-525e-4de7-00000366fd88 
+Sun Apr 28 17:02:21 EDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-013e-5274-1a88-00000366c018 
 on database directory /home/mike/Projects/CS225/EMS2/EventManagmentSystem/EMS_DB with class loader sun.misc.Launcher$AppClassLoader@126b249 
 Loaded from file:/home/mike/Projects/CS225/EMS2/Database/db-derby-10.10.1.1-lib/lib/derby.jar
 java.vendor=Sun Microsystems Inc.

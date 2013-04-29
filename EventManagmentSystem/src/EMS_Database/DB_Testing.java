@@ -50,63 +50,64 @@ public class DB_Testing {
 
 
         //CREATE EVENT INSERTION
-//        try {
-//            uid = et.createEvent(ied);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
-//        System.out.println(et.queryEntireTable());        
-//        System.out.println(); //blank line.
-//        try{
-//            uid = 4;
-//            System.out.println(et.getDescription(uid));
-//            System.out.println(et.getStartDate(uid));
-//            System.out.println(et.getEndDate(uid));
-//            System.out.println(et.getComplete(uid));
-//            System.out.println(et.getStreet(uid));
-//            System.out.println(et.getCity(uid));
-//            System.out.println(et.getState(uid));
-//            System.out.println(et.getZipcode(uid));
-//            System.out.println(et.getCountry(uid));
-//            System.out.println(et.getOrganizerList(uid));  
-//            System.out.println(et.getSubEventList(uid));  
-//            System.out.println(et.getParticipantList(uid));  
-//            System.out.println(et.getCommittee(uid));              
-//            
-//        }catch(DoesNotExistException dnee){
-//            System.err.println("No user here.... :/");
-//            System.err.println(dnee.getMessage());
-//        }
-//        
-//        try{
-//            uid = 4;
-//            list.add(999);
-//            et.setDescription(uid, "3 AM Coding. Wooo!");            
-//            et.setStartDate(uid, startDate);
-//            et.setEndDate(uid, endDate);
-//            et.setComplete(uid, 1);
-//            et.setStreet(uid, "Mulholland Drive");
-//            et.setCity(uid, "Tokyo");
-//            et.setState(uid, "XYZ");
-//            et.setZipcode(uid, "90210");
-//            et.setCountry(uid, "JAPAN!");
-//            et.setOrganizerList(uid, list);
-//            et.setSubEventList(uid, list);
-//            et.setParticipantList(uid, list);
-//            et.setCommittee(uid, list);                        
-//            
-//        }catch(DoesNotExistException dnee){            
-//            System.err.println(dnee.getMessage());
-//        }                              
+/*        try {
+            uid = et.createEvent(ied);
+            System.out.println("The created uid = " + uid);
+        } catch (DuplicateInsertionException die) {
+            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+        }
+        System.out.println(et.queryEntireTable());        
+        System.out.println(); //blank line.
+        try{
+            uid = 4;
+            System.out.println(et.getDescription(uid));
+            System.out.println(et.getStartDate(uid));
+            System.out.println(et.getEndDate(uid));
+            System.out.println(et.getComplete(uid));
+            System.out.println(et.getStreet(uid));
+            System.out.println(et.getCity(uid));
+            System.out.println(et.getState(uid));
+            System.out.println(et.getZipcode(uid));
+            System.out.println(et.getCountry(uid));
+            System.out.println(et.getOrganizerList(uid));  
+            System.out.println(et.getSubEventList(uid));  
+            System.out.println(et.getParticipantList(uid));  
+            System.out.println(et.getCommittee(uid));              
+            
+        }catch(DoesNotExistException dnee){
+            System.err.println("No user here.... :/");
+            System.err.println(dnee.getMessage());
+        }
+        
+        try{
+            uid = 4;
+            list.add(999);
+            et.setDescription(uid, "3 AM Coding. Wooo!");            
+            et.setStartDate(uid, startDate);
+            et.setEndDate(uid, endDate);
+            et.setComplete(uid, 1);
+            et.setStreet(uid, "Mulholland Drive");
+            et.setCity(uid, "Tokyo");
+            et.setState(uid, "XYZ");
+            et.setZipcode(uid, "90210");
+            et.setCountry(uid, "JAPAN!");
+            et.setOrganizerList(uid, list);
+            et.setSubEventList(uid, list);
+            et.setParticipantList(uid, list);
+            et.setCommittee(uid, list);                        
+            
+        }catch(DoesNotExistException dnee){            
+            System.err.println(dnee.getMessage());
+        }        
+        */
 
         //CREATE SUBEVENT INSERTION
-//        try {
-//            uid = set.createSubEvent(ised);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
+/*        try {
+            uid = set.createSubEvent(ised);
+            System.out.println("The created uid = " + uid);
+        } catch (DuplicateInsertionException die) {
+            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+        }
         System.out.println(set.queryEntireTable());
         
         try{
@@ -132,7 +133,7 @@ public class DB_Testing {
         } catch(DoesNotExistException dnee) {
             System.err.println(dnee.getMessage());
         }        
-        System.out.println(set.queryEntireTable());
+        System.out.println(set.queryEntireTable()); */
 
         //CREATE COMMITTEE INSERTION
 //        try{
@@ -141,7 +142,13 @@ public class DB_Testing {
 //        } catch(DuplicateInsertionException die) {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
-//        System.out.println(ct.queryEntireTable());
+        System.out.println(ct.queryEntireTable());
+        try{
+            uid = 1;
+            System.out.println(ct.getTitle(uid));
+        } catch(DoesNotExistException dnee) {
+            System.err.println(dnee.getMessage());
+        }
 
         //CREATE TASKS INSERTION
 //        try {
