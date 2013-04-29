@@ -273,4 +273,36 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
     public void setBudget(int uid, double budget) throws DoesNotExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList<Integer> getBudgetAccessList(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Integer> getCommitteeMembers(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Integer> getTaskList(int uid) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setBudgetAccessList(int uid, ArrayList<Integer> accessList) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setCommitteeMembers(int uid, ArrayList<Integer> memberList) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setTaskList(int uid, ArrayList<Integer> taskList) throws DoesNotExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

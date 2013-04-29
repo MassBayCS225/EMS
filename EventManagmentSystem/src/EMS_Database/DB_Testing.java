@@ -50,7 +50,7 @@ public class DB_Testing {
 
 
         //CREATE EVENT INSERTION
-/*        try {
+        try {
             uid = et.createEvent(ied);
             System.out.println("The created uid = " + uid);
         } catch (DuplicateInsertionException die) {
@@ -99,7 +99,7 @@ public class DB_Testing {
         }catch(DoesNotExistException dnee){            
             System.err.println(dnee.getMessage());
         }        
-        */
+        
 
         //CREATE SUBEVENT INSERTION
 /*        try {
@@ -142,13 +142,13 @@ public class DB_Testing {
 //        } catch(DuplicateInsertionException die) {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
-        System.out.println(ct.queryEntireTable());
-        try{
-            uid = 1;
-            System.out.println(ct.getTitle(uid));
-        } catch(DoesNotExistException dnee) {
-            System.err.println(dnee.getMessage());
-        }
+//        System.out.println(ct.queryEntireTable());
+//        try{
+//            uid = 1;
+//            System.out.println(ct.getTitle(uid));
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }
 
         //CREATE TASKS INSERTION
 //        try {
