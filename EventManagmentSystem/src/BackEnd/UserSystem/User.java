@@ -11,7 +11,7 @@ package BackEnd.UserSystem;
  */
 public class User extends Participant
 {
-    private final int USER_ID = 1;
+    private int USER_ID = 1;
     private String userName;
     private String password;
     private boolean adminPrivilege;
@@ -25,7 +25,7 @@ public class User extends Participant
      */
     public User(int user_ID, String firstName, String lastName, String emailAddress, String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
-        
+        setUserID(user_ID);
         super(firstName, lastName, emailAddress)
         setUserName(uName);
         if(verifyPassword(pword, pwordMatch))
@@ -49,15 +49,23 @@ public class User extends Participant
             throw new IllegalCharacterException("Username contains illegal characters");
     }
     /**
-     * Sets the password of a User
-     * @param pword The new password
-     * @throws IllegalCharacterException throws exception if the password
-     * contains illegal characters
+     * 
+     * @param pword         The new password
+     * @param pwordMatch    repeated password, for verification
+     * @throws IllegalCharacterException    throws exception if the password contains illegal characters
+     * @throws PasswordMismatchError        throws exception if the passwords don't match.
      */
-    public void setPassword(String pword)throws IllegalCharacterException
+    public void setPassword(String pword, String pwordMatch)throws IllegalCharacterException, PasswordMismatchError
     {
         if(checkCharacters(pword))
-            password = pword;
+        {
+            if(verifyPassword(pword, pwordMatch))
+            {
+                password = pword;
+            }
+            else
+                throw new PasswordMismatchError();
+        }
         else
             throw new IllegalCharacterException("Password contains illegal characters");
     }
@@ -68,10 +76,18 @@ public class User extends Participant
         else
             return false;
     }
+    /**
+     * 
+     * @return username
+     */
     public String getUserName()
     {
         return userName;
     }
+    /**
+     * 
+     * @return password
+     */
     public String getPassword()
     {
         return password;
@@ -97,20 +113,58 @@ public class User extends Participant
         }
         return b;
     }
+    /**
+     * 
+     * @param b boolean value determining if the user has admin privileges
+     */
     public void setAdminPrivilege(boolean b)
     {
         adminPrivilege = b;
     }
+    /**
+     * 
+     * @return the user's admin privileges.
+     */
     public boolean getAdminPrivilege()
     {
         return adminPrivilege;
     }
+    /**
+     * 
+     * @param b boolean value determining if the user has event creation privileges
+     */
     public void setEventCreationPrivilege(boolean b)
     {
         eventCreationPrivilege = b;
     }
-    public boolean getEventCreationPrivilege(boolean b)
+    /**
+     * 
+     * @return the user's event creation privileges
+     */
+    public boolean getEventCreationPrivilege()
     {
         return eventCreationPrivilege;
+    }
+    private void setUserID(int id)
+    {
+        USER_ID = id;
+    }
+    private int getUSER_ID()
+    {
+        return USER_ID;
+    }
+    public boolean equals(User user)
+    {
+        if(USER_ID == user.getUSER_ID() && userName == user.getUserName())
+            return true;
+        else
+            return false;
+    }
+    public String toString()
+    {
+        String output = ("User ID: " + USER_ID + "\n User Name: " + userName + 
+                "\nAdmin Privileges: " + adminPrivilege + "\n Event Creation "
+                + "Privileges: "+ eventCreationPrivilege);
+        return output;
     }
 }
