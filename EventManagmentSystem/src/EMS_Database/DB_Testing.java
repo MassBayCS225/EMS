@@ -101,12 +101,12 @@ public class DB_Testing {
 //        }                              
 
         //CREATE SUBEVENT INSERTION
-        try {
-            uid = set.createSubEvent(ised);
-            System.out.println("The created uid = " + uid);
-        } catch (DuplicateInsertionException die) {
-            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-        }
+//        try {
+//            uid = set.createSubEvent(ised);
+//            System.out.println("The created uid = " + uid);
+//        } catch (DuplicateInsertionException die) {
+//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+//        }
         System.out.println(set.queryEntireTable());
         
         try{
@@ -119,10 +119,20 @@ public class DB_Testing {
             System.out.println(set.getZipcode(uid));
             System.out.println(set.getStartDate(uid));
             System.out.println(set.getEndDate(uid));
+            set.setDescription(uid, "Better Description!");
+            set.setStreet(uid,"28 Mullholand Drive");
+            set.setCity(uid,"Amherst");
+            set.setState(uid, "Massachusetts");
+            set.setZipcode(uid, "12345");
+            set.setCountry(uid, "USA");
+            set.setStartDate(uid, startDate);
+            set.setEndDate(uid, endDate);
+            set.setComplete(uid, 1);
             
         } catch(DoesNotExistException dnee) {
             System.err.println(dnee.getMessage());
-        }
+        }        
+        System.out.println(set.queryEntireTable());
 
         //CREATE COMMITTEE INSERTION
 //        try{

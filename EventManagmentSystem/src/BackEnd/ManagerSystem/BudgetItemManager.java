@@ -28,21 +28,21 @@ public class BudgetItemManager {
         return selectedBudgetItem;
     }
 
-    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(value);
             // write to database
         }
     }
 
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setDescription(description);
             // write to database
         }
     }
 
-    public void editDate(Timestamp date, User loggedInUser, Event selectedEvent, Committee selectedCommittee) {
+    public void editDate(Timestamp date, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setDate(date);
             // write to database
