@@ -11,9 +11,11 @@ package BackEnd.UserSystem;
  */
 public class User extends Participant
 {
+    private final int USER_ID = 1;
     private String userName;
     private String password;
-    private boolean adminPrivelege;
+    private boolean adminPrivilege;
+    private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
     /**
      * Constructor, creates a User object
@@ -21,10 +23,12 @@ public class User extends Participant
      * @param pword         the desired password
      * @param pwordMatch    the password entered a second time to verify it
      */
-    public User(String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+    public User(int user_ID, String firstName, String lastName, String emailAddress, String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
+        
+        super(firstName, lastName, emailAddress)
         setUserName(uName);
-        if(pword.equals(pwordMatch))
+        if(verifyPassword(pword, pwordMatch))
             setPassword(pword);
         else
             throw new PasswordMismatchError("The passwords do not match.");
@@ -57,6 +61,21 @@ public class User extends Participant
         else
             throw new IllegalCharacterException("Password contains illegal characters");
     }
+    private boolean verifyPassword(String pword, String pwordMatch)
+    {
+        if(pword.equals(pwordMatch))
+            return true;
+        else
+            return false;
+    }
+    public String getUserName()
+    {
+        return userName;
+    }
+    public String getPassword()
+    {
+        return password;
+    }
     /**
      * Checks a String object such as a username or password to see whether or
      * not it contains any illegal characters.
@@ -77,5 +96,21 @@ public class User extends Participant
             }
         }
         return b;
+    }
+    public void setAdminPrivilege(boolean b)
+    {
+        adminPrivilege = b;
+    }
+    public boolean getAdminPrivilege()
+    {
+        return adminPrivilege;
+    }
+    public void setEventCreationPrivilege(boolean b)
+    {
+        eventCreationPrivilege = b;
+    }
+    public boolean getEventCreationPrivilege(boolean b)
+    {
+        return eventCreationPrivilege;
     }
 }
