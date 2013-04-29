@@ -17,7 +17,6 @@ public class PhoneNumber{
   private char[] localNumber = new char[LOCAL_NUMBER_LENGTH];
   private ArrayList<Character> extensionNumber;
 
-public class PhoneNumber{
   
 public PhoneNumber(String digits){
     
