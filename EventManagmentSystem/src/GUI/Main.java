@@ -55,9 +55,9 @@ public class Main extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         SwitchingPanelHolder = new javax.swing.JPanel();
         MainPanel = new javax.swing.JPanel();
-        calendarPanel1 = new project.CalendarPanel();
         schedulePanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        calendarPanel2 = new GUI.CalendarPanel();
         budget1 = new GUI.Budget();
         committeeListPanel1 = new GUI.CommitteeListPanel();
         userManagementPanel1 = new project.UserManagementPanel();
@@ -312,9 +312,6 @@ public class Main extends javax.swing.JPanel {
         MainPanel.setBackground(new java.awt.Color(255, 255, 255));
         MainPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        calendarPanel1.setMinimumSize(new java.awt.Dimension(64, 48));
-        calendarPanel1.setPreferredSize(new java.awt.Dimension(640, 240));
-
         jLabel9.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel9.setText("Schedule");
 
@@ -325,14 +322,14 @@ public class Main extends javax.swing.JPanel {
             .add(schedulePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel9)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(641, Short.MAX_VALUE))
         );
         schedulePanelLayout.setVerticalGroup(
             schedulePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(schedulePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 39, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(264, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout MainPanelLayout = new org.jdesktop.layout.GroupLayout(MainPanel);
@@ -340,13 +337,13 @@ public class Main extends javax.swing.JPanel {
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(schedulePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .add(calendarPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)
+            .add(calendarPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(MainPanelLayout.createSequentialGroup()
-                .add(calendarPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(calendarPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 400, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(schedulePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -461,7 +458,7 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JPanel SwitchingPanelHolder;
     private GUI.Budget budget1;
     private javax.swing.JPanel budgetPanel;
-    private project.CalendarPanel calendarPanel1;
+    private GUI.CalendarPanel calendarPanel2;
     private javax.swing.JButton changeBudgetButton;
     private javax.swing.JButton changeCommitteesButton;
     private javax.swing.JButton changeEmailButton;
