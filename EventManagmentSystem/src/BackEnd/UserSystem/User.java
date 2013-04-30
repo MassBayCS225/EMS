@@ -13,7 +13,8 @@ public class User extends Participant
 {
     private String userName;
     private String password;
-    private boolean adminPrivelege;
+    private boolean adminPrivilege;
+    private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
     /**
      * Constructor, creates a User object
@@ -21,13 +22,11 @@ public class User extends Participant
      * @param pword         the desired password
      * @param pwordMatch    the password entered a second time to verify it
      */
-    public User(String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+    public User(String firstName, String lastName, String emailAddress, String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
+        super(firstName, lastName, emailAddress);
         setUserName(uName);
-        if(pword.equals(pwordMatch))
-            setPassword(pword);
-        else
-            throw new PasswordMismatchError("The passwords do not match.");
+        setPassword(pword, pwordMatch);
             
     }
     /**
@@ -45,17 +44,48 @@ public class User extends Participant
             throw new IllegalCharacterException("Username contains illegal characters");
     }
     /**
-     * Sets the password of a User
-     * @param pword The new password
-     * @throws IllegalCharacterException throws exception if the password
-     * contains illegal characters
+     * 
+     * @param pword         The new password
+     * @param pwordMatch    repeated password, for verification
+     * @throws IllegalCharacterException    throws exception if the password contains illegal characters
+     * @throws PasswordMismatchError        throws exception if the passwords don't match.
      */
-    public void setPassword(String pword)throws IllegalCharacterException
+    public void setPassword(String pword, String pwordMatch)throws IllegalCharacterException, PasswordMismatchError
     {
         if(checkCharacters(pword))
-            password = pword;
+        {
+            if(verifyPassword(pword, pwordMatch))
+            {
+                password = pword;
+            }
+            else
+                throw new PasswordMismatchError();
+        }
         else
             throw new IllegalCharacterException("Password contains illegal characters");
+    }
+    private boolean verifyPassword(String pword, String pwordMatch)
+    {
+        if(pword.equals(pwordMatch))
+            return true;
+        else
+            return false;
+    }
+    /**
+     * 
+     * @return username
+     */
+    public String getUserName()
+    {
+        return userName;
+    }
+    /**
+     * 
+     * @return password
+     */
+    public String getPassword()
+    {
+        return password;
     }
     /**
      * Checks a String object such as a username or password to see whether or
@@ -77,5 +107,45 @@ public class User extends Participant
             }
         }
         return b;
+    }
+    /**
+     * 
+     * @param b boolean value determining if the user has admin privileges
+     */
+    public void setAdminPrivilege(boolean b)
+    {
+        adminPrivilege = b;
+    }
+    /**
+     * 
+     * @return the user's admin privileges.
+     */
+    public boolean getAdminPrivilege()
+    {
+        return adminPrivilege;
+    }
+    /**
+     * 
+     * @param b boolean value determining if the user has event creation privileges
+     */
+    public void setEventCreationPrivilege(boolean b)
+    {
+        eventCreationPrivilege = b;
+    }
+    /**
+     * 
+     * @return the user's event creation privileges
+     */
+    public boolean getEventCreationPrivilege()
+    {
+        return eventCreationPrivilege;
+    }
+    public boolean equals(User user)
+    {
+        
+    }
+    public String toString()
+    {
+        
     }
 }

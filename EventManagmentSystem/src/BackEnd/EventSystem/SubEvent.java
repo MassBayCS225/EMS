@@ -41,6 +41,6 @@ public class SubEvent extends ScheduleItem implements Reportable {
     }
     
     public ArrayList<String> getReport() {
-       
+       return null;
     }
 }

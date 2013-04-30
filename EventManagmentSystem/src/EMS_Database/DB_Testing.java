@@ -47,7 +47,18 @@ public class DB_Testing {
         //BOGUS Tasks table data
         InputTask it = new InputTask("Stop Programming So Much", "181 Bacon St.", "Natick", "MA", "01760", "MURICA!", startDate, endDate, 0, "2,1,");
         //BOGUS UserData table data
-
+        InputUser iu = new InputUser(); //can be declared with no data.
+        
+        
+        //CREATE USER INSERTION
+        
+        //udt.createUser(iu);
+//        try{            
+//            udt.removeUser(0);
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }
+//        System.out.println(udt.queryEntireTable());
 
         //CREATE EVENT INSERTION
 //        try {
@@ -98,7 +109,8 @@ public class DB_Testing {
 //            
 //        }catch(DoesNotExistException dnee){            
 //            System.err.println(dnee.getMessage());
-//        }                              
+//        }        
+        
 
         //CREATE SUBEVENT INSERTION
 //        try {
@@ -107,32 +119,32 @@ public class DB_Testing {
 //        } catch (DuplicateInsertionException die) {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
-        System.out.println(set.queryEntireTable());
-        
-        try{
-            uid = 2;
-            System.out.println(set.getDescription(uid));
-            System.out.println(set.getComplete(uid));
-            System.out.println(set.getStreet(uid));
-            System.out.println(set.getCity(uid));
-            System.out.println(set.getState(uid));
-            System.out.println(set.getZipcode(uid));
-            System.out.println(set.getStartDate(uid));
-            System.out.println(set.getEndDate(uid));
-            set.setDescription(uid, "Better Description!");
-            set.setStreet(uid,"28 Mullholand Drive");
-            set.setCity(uid,"Amherst");
-            set.setState(uid, "Massachusetts");
-            set.setZipcode(uid, "12345");
-            set.setCountry(uid, "USA");
-            set.setStartDate(uid, startDate);
-            set.setEndDate(uid, endDate);
-            set.setComplete(uid, 1);
-            
-        } catch(DoesNotExistException dnee) {
-            System.err.println(dnee.getMessage());
-        }        
-        System.out.println(set.queryEntireTable());
+//        System.out.println(set.queryEntireTable());
+//        
+//        try{
+//            uid = 2;
+//            System.out.println(set.getDescription(uid));
+//            System.out.println(set.getComplete(uid));
+//            System.out.println(set.getStreet(uid));
+//            System.out.println(set.getCity(uid));
+//            System.out.println(set.getState(uid));
+//            System.out.println(set.getZipcode(uid));
+//            System.out.println(set.getStartDate(uid));
+//            System.out.println(set.getEndDate(uid));
+//            set.setDescription(uid, "Better Description!");
+//            set.setStreet(uid,"28 Mullholand Drive");
+//            set.setCity(uid,"Amherst");
+//            set.setState(uid, "Massachusetts");
+//            set.setZipcode(uid, "12345");
+//            set.setCountry(uid, "USA");
+//            set.setStartDate(uid, startDate);
+//            set.setEndDate(uid, endDate);
+//            set.setComplete(uid, 1);
+//            
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }        
+//        System.out.println(set.queryEntireTable()); 
 
         //CREATE COMMITTEE INSERTION
 //        try{
@@ -142,6 +154,12 @@ public class DB_Testing {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
 //        System.out.println(ct.queryEntireTable());
+//        try{
+//            uid = 1;
+//            System.out.println(ct.getTitle(uid));
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }
 
         //CREATE TASKS INSERTION
 //        try {

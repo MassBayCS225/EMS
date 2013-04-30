@@ -1,6 +1,7 @@
 package BackEnd.EventSystem;
 
-import BackEnd.UserSystem.*;
+import BackEnd.UserSystem.User;
+import BackEnd.UserSystem.Participant;
 import java.util.ArrayList;
 
 /**

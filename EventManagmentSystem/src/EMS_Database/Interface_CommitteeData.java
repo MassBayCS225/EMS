@@ -26,11 +26,11 @@ public interface Interface_CommitteeData {
 
     public int getChairman(int uid) throws DoesNotExistException;
 
-    public String getBudgetAccessList(int uid) throws DoesNotExistException;
+    public ArrayList<Integer> getBudgetAccessList(int uid) throws DoesNotExistException;
 
-    public String getCommitteeMembers(int uid) throws DoesNotExistException;
+    public ArrayList<Integer> getCommitteeMembers(int uid) throws DoesNotExistException;
 
-    public String getTaskList(int uid) throws DoesNotExistException;
+    public ArrayList<Integer> getTaskList(int uid) throws DoesNotExistException;
 
     public double getBudget(int uid) throws DoesNotExistException;
 
@@ -39,11 +39,11 @@ public interface Interface_CommitteeData {
 
     public void setChairman(int uid, int nuid) throws DoesNotExistException;
 
-    public void setBudgetAccessList(int uid, String accessList) throws DoesNotExistException;
+    public void setBudgetAccessList(int uid, ArrayList<Integer> accessList) throws DoesNotExistException;
 
-    public void setCommitteeMembers(int uid, String memberList) throws DoesNotExistException;
+    public void setCommitteeMembers(int uid, ArrayList<Integer> memberList) throws DoesNotExistException;
 
-    public void setTaskList(int uid, String taskList) throws DoesNotExistException;
+    public void setTaskList(int uid, ArrayList<Integer> taskList) throws DoesNotExistException;
 
     public void setBudget(int uid, double budget) throws DoesNotExistException;
 }

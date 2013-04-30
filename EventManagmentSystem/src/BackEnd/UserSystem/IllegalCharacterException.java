@@ -5,7 +5,7 @@
 package BackEnd.UserSystem;
 
 /**
- *
+ * 
  * @author David Tersoff
  */
 public class IllegalCharacterException extends Exception {

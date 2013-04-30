@@ -19,7 +19,8 @@ public class Address {
     }
     
     /**
-     * Constructor.
+     * This constructor initializes the address object with a
+     * street, a city, a state, a zip code, and a country.
      * @param street The street of the address
      * @param city  The city of the address
      * @param state The state of the address
@@ -31,6 +32,7 @@ public class Address {
         this.street = street;
         this.city = city;
         this.state = state;
+        verifyZipCodeFormat(zipCode);
         this.zipCode = zipCode;
         this.country = country;
     }
@@ -88,12 +90,8 @@ public class Address {
      * @param zipCode The zip code of the address
      */
     public void setZipCode(String zipCode){
-        //THROWS Exception
-        //try
-        {
-        }
-        //catch ZipCodeInvalidFormatException
-                
+        verifyZipCodeFormat(zipCode);
+        this.zipCode = zipCode;
     }
     
     /**
@@ -105,38 +103,71 @@ public class Address {
     }
     
     /**
-     * 
+     * It verifies if the zip code has five integers.
      * @param zipCode
-     * @return true if 
+     * @return true if the zip code format has five digits;
+     *   otherwise throws an exception
      */
     private boolean verifyZipCodeFormat(String zipCode){
+        if(zipCode.length() == ZIP_CODE_LENGTH){
+            for(int i = 0; i < zipCode.length(); i++){
+                if(Character.isDigit(zipCode.charAt(i)) == false)
+                    throw new ZipCodeInvalidFormatException(
+                      "Invalid zip code format");
+            }
+        } else throw new ZipCodeInvalidLengthException(
+                      "Invalid zip code length");
         return true;
     }
     
+    /**
+     * It sets the country of the address.
+     * @param country The country of the address
+     */
     public void setCountry(String country){
+        this.country = country;
     }
     
+    /**
+     * It returns the country of the address.
+     * @return The country of the address
+     */
     public String getCountry(){
         return country;
     }
-    
-   /** Determines whether the current object matches its argument.
-    * @param obj The object to be compared to the current object
-    * @return true if the object has the same street, city, state,
-    *      zip code and country; otherwise, return false     
-    */    
-  @Override    
-  public boolean equals(Object obj){
-    if(obj == this) return true;
-    if(obj == null) return false;
-    if(this.getClass() == obj.getClass()){
-      Address other = (Address) obj;
-      return street.equals(other.street) && city.equals(other.city) && 
-                 state.equals(other.state) && zipCode.equals(other.zipCode);
+    /** 
+     * Determines whether the current object matches its argument.
+     * @param obj The object to be compared to the current object
+     * @return true if the object has the same street, city, state,
+     *      zip code and country; otherwise, return false     
+     */    
+    @Override    
+    public boolean equals(Object obj){
+        if(obj == this) return true;
+        if(obj == null) return false;
+        if(this.getClass() == obj.getClass()){
+            Address other = (Address) obj;
+            return street.equals(other.street) &&
+                     city.equals(other.city) && 
+                     state.equals(other.state) && 
+                    zipCode.equals(other.zipCode);
         } else {
-          return false;
+            return false;
         }
-  }
+    }
+  
+    /** It generates a hash code for the address object.
+     *  @return The hash code
+     */
+    @Override
+    public int hashCode(){
+        int hash = 3;
+        hash = 97 * hash + (this.street != null ? this.street.hashCode() : 0);
+        hash = 97 * hash + (this.city != null ? this.city.hashCode() : 0);
+        hash = 97 * hash + (this.state != null ? this.state.hashCode() : 0);
+        hash = 97 * hash + (this.zipCode != null ? this.zipCode.hashCode() : 0);
+        return hash;
+    }
   
   /**
    * Creates a string representation of the address.

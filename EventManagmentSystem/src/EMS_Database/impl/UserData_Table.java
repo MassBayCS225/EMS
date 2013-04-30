@@ -39,14 +39,14 @@ public class UserData_Table extends InitDB implements Interface_UserData {
      * @return true upon successful insertion of user into database
      */
     @Override
-    public boolean createUser(InputUser user) throws DuplicateInsertionException {
+    public boolean createUser(InputUser user) {
 
         boolean complete = false;
 
         try {
             //Creating Statement
             PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO USERS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            AddAddressStmt.setInt(1, user.getUid());
+            AddAddressStmt.setInt(1, nextValidUID());
             AddAddressStmt.setInt(2, user.getLevel());
             AddAddressStmt.setString(3, user.getFirstName());
             AddAddressStmt.setString(4, user.getLastName());
@@ -66,7 +66,7 @@ public class UserData_Table extends InitDB implements Interface_UserData {
             complete = true;
 
         } catch (SQLException sqle) {
-            throw new DuplicateInsertionException("UserData");
+            System.err.println(sqle.getMessage());
         } finally {
             return complete;
         }
@@ -175,6 +175,31 @@ public class UserData_Table extends InitDB implements Interface_UserData {
         }
         return newUID; // should not be zero
     }
+    /**
+     * This function is used to remove a user from the database with the specified
+     * UID
+     * @param uid the UID of the user to be removed.
+     * @return true, upon successful removal from the database.
+     * @throws DoesNotExistException if the user you are trying to delete does not exist.
+     */
+
+    @Override
+    public boolean removeUser(int uid) throws DoesNotExistException {
+        
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM USERS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);            
+            idQueryStmt.executeUpdate();                        
+            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist.");
+        }
+        return true;
+    }
+    
+    
 
     ///////////////////// GETTERS ////////////////////////////
     /**
