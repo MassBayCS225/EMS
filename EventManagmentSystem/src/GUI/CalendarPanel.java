@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package GUI;
+
+import java.util.Calendar;
 
 /**
  *
@@ -10,11 +12,82 @@ package project;
  */
 public class CalendarPanel extends javax.swing.JPanel {
 
+    private Calendar tempCalendar = Calendar.getInstance(); // gets the current day and time
+    private int month = Calendar.getInstance().get(Calendar.MONTH);
+    private int year = Calendar.getInstance().get(Calendar.YEAR);
     /**
      * Creates new form CalendarPanel
      */
     public CalendarPanel() {
         initComponents();
+        populateCalendar();
+    }
+    
+    public void populateCalendar() {
+        System.out.println(month);
+        System.out.println(year);
+        tempCalendar.set(year, month, 1); // sets the current month to its first day
+        tempCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        tempCalendar.set(Calendar.MINUTE, 0);
+        tempCalendar.set(Calendar.SECOND, 0);
+        tempCalendar.set(Calendar.MILLISECOND, 0);
+
+        // tempCalendar.set(Calendar.MONTH, Calendar.MARCH); // set the month to the one you want, first param will stay the same, second is the month
+
+        int maxWeeksInMonth = tempCalendar.getActualMaximum(tempCalendar.WEEK_OF_MONTH); // gets the max number of weeks in a month
+        int maxDaysInWeek = tempCalendar.getActualMaximum(tempCalendar.DAY_OF_WEEK); // gets the max number of days in a week, which should be 7 regardless
+
+        int firstDayInMonth = tempCalendar.get(tempCalendar.DAY_OF_WEEK); // gets the ordinal value of where the day falls in the week
+        int maxDaysInMonth = tempCalendar.getActualMaximum(tempCalendar.DAY_OF_MONTH); // gets the max number of days in a month
+
+        for (int weekOfMonth = 0, calendarSlot = 0, day = 1; weekOfMonth < 6; weekOfMonth++) { // weekOfMonth is also the row number
+            //System.out.println("WEEK: " + weekOfMonth);
+            for (int dayOfWeek = 0; dayOfWeek < maxDaysInWeek; dayOfWeek++) { // dayOfWeek is also the column number
+
+                if ((weekOfMonth == 0 && dayOfWeek + 1 >= firstDayInMonth) || // if in week 0, check to make sure you add only if at the proper point in the week
+                        (weekOfMonth > 0 && day <= maxDaysInMonth)){ // or if week is not 0, make sure you don't go over the max number of days
+
+                    /**
+                     * This is the algorithm for determining whether a
+                     * scheduleItem falls on a certain day. It goes through all
+                     * the elements of say, a sub event list. If you want it to
+                     * check just the main event, then you don't need the for
+                     * loop.
+           *
+                     */
+                    /**
+                     * int tempMillis; // temporary value used in for loop that
+                     * saves a time in milliseconds for (int i = 0; i <
+                     * selectedEvent.getSubEventList().size(); i++){ tempMillis
+                     * =
+                     * selectedEvent.getSubEventList().get(i).getStartTime().getTime();
+                     * // set the date for the current element // if you want to
+                     * check end time, use getEndTime() instead of getStartTime
+                     *
+                     * if (tempMillis >= tempCalendar.getTimeInMillis()){ // if
+                     * the current element's time greater than or equal to the
+                     * tempCalendar's tempCalendar.set(Calendar.DAY_OF_MONTH,
+                     * tempCalendar.get(DAY_OF_MONTH) + 1); // move calendar +1
+                     * day if (tempMillis < tempCalendar.getTimeInMillis()){ //
+                     * if the current element's time is less than tempCalendar's
+                     * // add event, or subEvent, or Task, or whatever to the
+                     * specific day of the calendar }
+                     * tempCalendar.set(Calendar.DAY_OF_MONTH,
+                     * tempCalendar.get(DAY_OF_MONTH) - 1); // reset the day
+                     * back to original } }
+                     */
+                    //System.out.println(tempCalendar);
+                    tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH) + 1);
+                    String dayString = "" + day;
+                    day++;
+                    CalendarTable.setValueAt(dayString, weekOfMonth, dayOfWeek);
+
+                } else {
+                    CalendarTable.setValueAt("-", weekOfMonth, dayOfWeek);
+                }
+                calendarSlot++;
+            }
+        }
     }
 
     /**
@@ -32,9 +105,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        monthLabel = new javax.swing.JLabel();
+        lastMonthButton = new javax.swing.JButton();
+        nextMonthButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 204, 255));
@@ -43,17 +116,25 @@ public class CalendarPanel extends javax.swing.JPanel {
         CalendarTable.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         CalendarTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"31", "1", "2", "3", "4", "5", "6"},
-                {"7", "8", "9", "10", "11", "12", "13"},
-                {"14", "15", "16", "17", "18", "19", "20"},
-                {"21", "22", "23", "24", "25", "26", "27"},
-                {"28", "29", "30", "31", "1", "2", "3"},
-                {"4", "5", "6", "7", "8", "9", null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
                 "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(CalendarTable);
         CalendarTable.getColumnModel().getColumn(0).setMinWidth(48);
         CalendarTable.getColumnModel().getColumn(1).setMinWidth(48);
@@ -95,14 +176,24 @@ public class CalendarPanel extends javax.swing.JPanel {
 
         jButton1.setText("Add an Event");
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("April");
+        monthLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        monthLabel.setForeground(new java.awt.Color(255, 255, 255));
+        monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        monthLabel.setText("April");
 
-        jButton2.setText("<");
+        lastMonthButton.setText("<");
+        lastMonthButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastMonthButtonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText(">");
+        nextMonthButton.setText(">");
+        nextMonthButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextMonthButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,11 +213,11 @@ public class CalendarPanel extends javax.swing.JPanel {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
-                                .addComponent(jButton2)
+                                .addComponent(lastMonthButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(monthLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
+                                .addComponent(nextMonthButton)
                                 .addGap(12, 12, 12)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -144,9 +235,9 @@ public class CalendarPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jButton3))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(nextMonthButton))
+                    .addComponent(monthLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lastMonthButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -157,16 +248,39 @@ public class CalendarPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lastMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastMonthButtonActionPerformed
+        if (month > 0)
+            month--;
+        else {
+            year --;
+            month = 11;
+        }
+        populateCalendar();
+        monthLabel.setText("" + (month+1));
+    }//GEN-LAST:event_lastMonthButtonActionPerformed
+
+    private void nextMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMonthButtonActionPerformed
+        if (month < 11)
+            month++;
+        else {
+            year ++;
+            month = 0;
+        }
+        populateCalendar();
+        monthLabel.setText("" + (month+1));
+    }//GEN-LAST:event_nextMonthButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CalendarTable;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lastMonthButton;
+    private javax.swing.JLabel monthLabel;
+    private javax.swing.JButton nextMonthButton;
     // End of variables declaration//GEN-END:variables
 }

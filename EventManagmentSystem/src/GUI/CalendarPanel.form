@@ -31,11 +31,11 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="lastMonthButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" max="32767" attributes="0"/>
+                              <Component id="monthLabel" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                              <Component id="nextMonthButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -61,10 +61,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nextMonthButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="monthLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="lastMonthButton" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -100,62 +100,13 @@
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="7" rowCount="6">
-                <Column editable="true" title="SUN" type="java.lang.Object">
-                  <Data value="31"/>
-                  <Data value="7"/>
-                  <Data value="14"/>
-                  <Data value="21"/>
-                  <Data value="28"/>
-                  <Data value="4"/>
-                </Column>
-                <Column editable="true" title="MON" type="java.lang.Object">
-                  <Data value="1"/>
-                  <Data value="8"/>
-                  <Data value="15"/>
-                  <Data value="22"/>
-                  <Data value="29"/>
-                  <Data value="5"/>
-                </Column>
-                <Column editable="true" title="TUE" type="java.lang.Object">
-                  <Data value="2"/>
-                  <Data value="9"/>
-                  <Data value="16"/>
-                  <Data value="23"/>
-                  <Data value="30"/>
-                  <Data value="6"/>
-                </Column>
-                <Column editable="true" title="WED" type="java.lang.Object">
-                  <Data value="3"/>
-                  <Data value="10"/>
-                  <Data value="17"/>
-                  <Data value="24"/>
-                  <Data value="31"/>
-                  <Data value="7"/>
-                </Column>
-                <Column editable="true" title="THU" type="java.lang.Object">
-                  <Data value="4"/>
-                  <Data value="11"/>
-                  <Data value="18"/>
-                  <Data value="25"/>
-                  <Data value="1"/>
-                  <Data value="8"/>
-                </Column>
-                <Column editable="true" title="FRI" type="java.lang.Object">
-                  <Data value="5"/>
-                  <Data value="12"/>
-                  <Data value="19"/>
-                  <Data value="26"/>
-                  <Data value="2"/>
-                  <Data value="9"/>
-                </Column>
-                <Column editable="true" title="SAT" type="java.lang.Object">
-                  <Data value="6"/>
-                  <Data value="13"/>
-                  <Data value="20"/>
-                  <Data value="27"/>
-                  <Data value="3"/>
-                  <Data value="null"/>
-                </Column>
+                <Column editable="true" title="SUN" type="java.lang.String"/>
+                <Column editable="true" title="MON" type="java.lang.String"/>
+                <Column editable="true" title="TUE" type="java.lang.String"/>
+                <Column editable="true" title="WED" type="java.lang.String"/>
+                <Column editable="true" title="THU" type="java.lang.String"/>
+                <Column editable="true" title="FRI" type="java.lang.String"/>
+                <Column editable="true" title="SAT" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -201,6 +152,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="CalendarPanel_CalendarTable"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -259,7 +213,7 @@
         <Property name="text" type="java.lang.String" value="Add an Event"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="monthLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="36" style="1"/>
@@ -271,15 +225,21 @@
         <Property name="text" type="java.lang.String" value="April"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="lastMonthButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lastMonthButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="nextMonthButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextMonthButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
