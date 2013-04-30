@@ -44,14 +44,14 @@ public class SubEventManager {
 
     public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setStartDateTime(startDateTime);
+            selectedSubEvent.getTimeSchedule().setStartDateTime(startDateTime);
             // write to database
         }
     }
 
     public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setEndDateTime(endDateTime);
+            selectedSubEvent.getTimeSchedule().setEndDateTime(endDateTime);
             // write to database
         }
     }
