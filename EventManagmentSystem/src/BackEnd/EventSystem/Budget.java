@@ -9,24 +9,14 @@ import java.util.ArrayList;
 
 public class Budget {
     
-    private int COMMITTEE_ID;
     private int BUDGET_ID;
     ArrayList<Income> incomeList;
     ArrayList<Expense> expenseList;
     
-    public Budget(int commitee_id, int budget_id) {
-        this.COMMITTEE_ID = commitee_id;
+    public Budget(int budget_id) {
         this.BUDGET_ID = budget_id;
         this.incomeList = new ArrayList<Income>();
         this.expenseList = new ArrayList<Expense>();
-    }
-
-    public int getCOMMITTEE_ID() {
-        return COMMITTEE_ID;
-    }
-
-    public void setCOMMITTEE_ID(int COMMITTEE_ID) {
-        this.COMMITTEE_ID = COMMITTEE_ID;
     }
 
     public void setBUDGET_ID(int BUDGET_ID) {
@@ -67,7 +57,7 @@ public class Budget {
     
     @Override
     public String toString() {
-        return "Budget{" + "COMMITTEE_ID=" + COMMITTEE_ID + ", BUDGET_ID=" + 
+        return "Budget{" + "BUDGET_ID=" + 
                 BUDGET_ID + ", incomeList=" + incomeList + ", expenseList=" + 
                 expenseList + '}';
     }
@@ -81,9 +71,6 @@ public class Budget {
             return false;
         }
         final Budget other = (Budget) obj;
-        if (this.COMMITTEE_ID != other.COMMITTEE_ID) {
-            return false;
-        }
         if (this.BUDGET_ID != other.BUDGET_ID) {
             return false;
         }
