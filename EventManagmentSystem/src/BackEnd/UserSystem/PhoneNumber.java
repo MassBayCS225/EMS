@@ -24,8 +24,10 @@ public class PhoneNumber{
      * @param digits The phone number
      */
     public PhoneNumber(String digits){
-        final int maxNumberOfSymbolsPerPhoneNumber = 3; //() -
-        final int minNumberOfSymbolsPerPhoneNumber = 3; //. . or space space
+	//() and  -
+        final int maxNumberOfSymbolsPerPhoneNumber = 3; 
+        //two periods or two space characters
+        final int minNumberOfSymbolsPerPhoneNumber = 2; 
         
         if(digits.length() > TOTAL_NUMBER_LENGTH + 
                 maxNumberOfSymbolsPerPhoneNumber)
@@ -77,7 +79,7 @@ public class PhoneNumber{
            digits.charAt(8) == VALID_SYMBOLS[0]){
             for(int i = 0; i < digits.length(); i++){
                 if(Character.isDigit(digits.charAt(i)))
-                    actualNumber+=digits.charAt(i);
+                    actualNumber+=digits.charAt(i); // else do nothing
             }
         }
         else if((digits.charAt(3) == VALID_SYMBOLS[1] ||
@@ -85,7 +87,7 @@ public class PhoneNumber{
                 digits.charAt(3) == digits.charAt(7)){
             for(int i = 0; i < digits.length(); i++){
                 if(Character.isDigit(digits.charAt(i)))
-                    actualNumber+=digits.charAt(i);
+                    actualNumber+=digits.charAt(i); // else do nothing
             }
         }
         else throw new PhoneNumberInvalidLengthException(

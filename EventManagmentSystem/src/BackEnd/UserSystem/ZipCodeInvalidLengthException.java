@@ -13,7 +13,7 @@ public class  ZipCodeInvalidLengthException extends RuntimeException{
   
   /**
    * Constructor.
-   * @param reasoon The reason of the exception.
+   * @param reason The reason of the exception.
    */
   public  ZipCodeInvalidLengthException(String reason){
     super(reason);
