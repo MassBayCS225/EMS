@@ -11,37 +11,21 @@ package BackEnd.UserSystem;
  */
 public class User extends Participant
 {
-    private String userName;
+
     private String password;
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
     /**
      * Constructor, creates a User object
-     * @param uName         the desired username
      * @param pword         the desired password
      * @param pwordMatch    the password entered a second time to verify it
      */
-    public User(String firstName, String lastName, String emailAddress, String uName, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+    public User(String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
         super(firstName, lastName, emailAddress);
-        setUserName(uName);
         setPassword(pword, pwordMatch);
             
-    }
-    /**
-     * Sets the username of a User
-     * 
-     * @param uName The new username
-     * @throws IllegalCharacterException throws exception if the username
-     * contains illegal characters
-     */
-    public void setUserName(String uName) throws IllegalCharacterException
-    {
-        if(checkCharacters(uName))
-            userName = uName;
-        else
-            throw new IllegalCharacterException("Username contains illegal characters");
     }
     /**
      * 
@@ -75,10 +59,6 @@ public class User extends Participant
      * 
      * @return username
      */
-    public String getUserName()
-    {
-        return userName;
-    }
     /**
      * 
      * @return password
@@ -142,10 +122,19 @@ public class User extends Participant
     }
     public boolean equals(User user)
     {
-        
+        String s = this.getEmailAddress();
+        if(s.equals(user.getEmailAddress()))
+            return true;
+        else
+            return false;
     }
     public String toString()
     {
-        
+        String output = super.toString();
+        output += "\nPassword: " + password +
+                "\nAdmin Privileges: " + adminPrivilege +
+                "\nEvent Creation Privileges: " + eventCreationPrivilege;
+        return output;
+                
     }
 }
