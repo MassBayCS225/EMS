@@ -6,9 +6,9 @@ package BackEnd.UserSystem;
  */
 public class Location extends Address{
     private String details;
-    
+   
     /**
-     * Constructor.
+     * This constructor initializes the location object details. 
      * @param details The details of the location
      */
     public Location(String details){
@@ -16,11 +16,18 @@ public class Location extends Address{
     }
     
     /**
-     * Overloaded Constructor.
-     * @param details The details of the location
-     * @param address The address location
+     * This constructor initializes the location object with a 
+     * street, city, state, zip code, country, and details.
+     * @param street
+     * @param city
+     * @param state
+     * @param zipCode
+     * @param country
+     * @param details 
      */
-    public Location(String details, Address address){
+    public Location(String street, String city, String state, 
+            String zipCode, String country, String details){
+        super(street, city, state, zipCode, country);
         this.details = details;
     }
     
@@ -52,10 +59,18 @@ public class Location extends Address{
         if(obj == null) return false;
         if(this.getClass() == obj.getClass()){
             Location other = (Location) obj;
-            return details.equals(other.details);
+            return super.equals(obj) && details.equals(other.details);
         } else {
             return false;
         }
+    }
+    
+    /** It generates a hash code for the location object.
+     *  @return The hash code
+     */
+    @Override
+    public int hashCode(){
+        return super.hashCode();
     }
     
     /**
@@ -64,6 +79,6 @@ public class Location extends Address{
      */
     @Override
     public String toString(){
-        return super.toString() + ": location details is " + details;
+        return super.toString() + "\nDetails: " + details;
     }
 }
