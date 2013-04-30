@@ -1,5 +1,7 @@
 package EMS_Database;
 
+import BackEnd.UserSystem.User;
+
 /**
  * An object class for use with implementing a new user into the database
  *
@@ -22,10 +24,6 @@ public class InputUser {
     private String country;
     private int eventLevel;    
     
-
-    public InputUser() {
-    }
-
     /** 
      * User function creates a valid new user to create an insertion into the DB
      * 
@@ -46,8 +44,55 @@ public class InputUser {
      * @param eventLevel Event access level must be declared
      * 
      */
+    
+    public InputUser(){        
+        //if nothing is specified.
+        this.level = 1;
+        this.fname = "default firstname";
+        this.lname = "default lastname";
+        this.pwd = "password";
+        this.email = "user@email.com";
+        
+        this.phone = "8675309";
+        this.street = "default streetname";
+        this.city = "default city";
+        this.state = "default state";
+        this.zipcode = "AAAAAA";
+        this.country = "default country";
+        this.eventLevel = 1;
+    }
+    
+    public InputUser(User user) {
+        //from actual backend user class
+        if(user.getAdminPrivilege()){
+            this.level = 1;
+        } else {
+            this.level = 0;
+        }        
+        //Add firstname field here
+        //Add lastname field here
+        this.fname = user.getFirstName();
+        this.lname = user.getLastName();
+        this.pwd = user.getPassword();
+                
+        this.email = user.getEmailAddress();  
+        this.phone = user.getPhoneNumber().toString();
+        this.street = user.getAddress().getStreet();
+        this.city = user.getAddress().getCity();
+        this.state = user.getAddress().getState();
+        this.zipcode = user.getAddress().getZipCode();
+        this.country = user.getAddress().getCountry();
+        if(user.getEventCreationPrivilege()){
+            this.eventLevel = 1;
+        } else {
+            this.eventLevel = 0;
+        }
+                                
+    }
+    
     public InputUser(int uid, int level, String fname, String lname, String pwd, String email, String phone, String street, String city , String state, String zipcode, String country,
             int eventLevel) {
+        //manual insertion
         this.uid = uid;
         this.level = level;
         this.fname = fname;
@@ -115,10 +160,7 @@ public class InputUser {
 
     public int getEventLevel() {
         return eventLevel;
-    }
-    
-    
-    
+    }            
 
     //SETTERS
     public void setUid(int uid) {

@@ -24,7 +24,9 @@ public class Committee implements Reportable {
         budgetAccessList = new ArrayList<User>();
         chair = null;
         taskList = new ArrayList<Task>();
+        /** temporarily commented out
         budget = new Budget();
+        * */
     }
     
     public boolean isFinished() {
@@ -115,16 +117,19 @@ public class Committee implements Reportable {
         int totalBudget = 0;
         String taskDescriptions = "";
         
+        /** commenting this out temporarily just so it compiles
         for (int income : budget.getIncomeList())
             totalBudget += income.getValue();
+            * */
         
         for (Task task : taskList)
             taskDescriptions += task.toString() + "\n";
             
-        return "Committee Title: " + title + "\nTotal Budget: " + totalBudget + "\nTask List: \n" + taskDescriptions;
+        return "Committee Title: " + title +"\nTotal Budget: " + totalBudget + "\nTask List: \n" + taskDescriptions;
     }
     
     public ArrayList<String> getReport() {
-        
+        //TODO
+        return null;
     }
 }

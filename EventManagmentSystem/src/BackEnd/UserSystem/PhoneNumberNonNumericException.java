@@ -13,7 +13,7 @@ public class PhoneNumberNonNumericException extends RuntimeException{
   
   /**
    * Constructor.
-   * @param reasoon The reason of the exception.
+   * @param reason The reason of the exception.
    */
   public PhoneNumberNonNumericException(String reason){
     super(reason);

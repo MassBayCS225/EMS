@@ -87,7 +87,7 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
             return UIDList;
 
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            System.err.println(sqle.getMessage());
             System.exit(1);
         }
         return UIDList; // should not be zero
@@ -158,7 +158,7 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
             return (newUID + 1);
 
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            System.err.println(sqle.getMessage());
             System.exit(1);
         }
         return newUID; // should not be zero
@@ -201,114 +201,444 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
             }
 
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            System.err.println(sqle.getMessage());
             System.exit(1);
         }
 
         return returnQuery.toString();
     }       
+
+    @Override
+    public boolean removeTask(int uid) throws DoesNotExistException {
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM TASK WHERE UID=?");
+            idQueryStmt.setInt(1, uid);            
+            idQueryStmt.executeUpdate();                        
+            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist.");
+        }
+        return true;
+    }
+    
+    
+    
     
     ///////////////////////////GETTERS/////////////////////////////
     @Override
-    public String getDescription() throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public String getDescription(int uid) throws DoesNotExistException {
+        String returnQuery = "";
+        try {
 
-    @Override
-    public Timestamp getStartDate() throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
 
-    @Override
-    public Timestamp getEndDate() throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
 
-    @Override
-    public int getComplete() throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
     }
-
-    @Override
-    public ArrayList<Integer> getAuthority() throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("STREET"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("CITY"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("STATE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("ZIPCODE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("COUNTRY"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
     }
+
+    @Override
+    public Timestamp getStartDate(int uid) throws DoesNotExistException {
+        Timestamp returnQuery = null;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getTimestamp("STARTDATE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery.equals(null)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
+    }
+
+    @Override
+    public Timestamp getEndDate(int uid) throws DoesNotExistException {
+        Timestamp returnQuery = null;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getTimestamp("ENDDATE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery.equals(null)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
+    }
+
+    @Override
+    public int getComplete(int uid) throws DoesNotExistException {
+        int returnQuery = 3;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getInt("COMPLETE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == 3) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
+    }
+
+    @Override
+    public ArrayList<Integer> getAuthority(int uid) throws DoesNotExistException {
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("MANAGER"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+                throw new DoesNotExistException("UID does not exist in TASKS table.");
+            } else {
+                return stringToList(returnQuery);
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.exit(1);
+        }
+        throw new DoesNotExistException("UID does not exist in TASKS table.");
+    }    
+
+    
+    
     
     /////////////////////////////SETTERS//////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setComplete(int uid, int complete) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setAuthority(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET DESCRIPTION=? WHERE UID=?");
+            idQueryStmt.setString(1, description);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
     }
 
     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET STREET=? WHERE UID=?");
+            idQueryStmt.setString(1, street);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET CITY=? WHERE UID=?");
+            idQueryStmt.setString(1, city);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET STATE=? WHERE UID=?");
+            idQueryStmt.setString(1, state);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET ZIPCODE=? WHERE UID=?");
+            idQueryStmt.setString(1, zipcode);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET COUNTRY=? WHERE UID=?");
+            idQueryStmt.setString(1, country);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
     }
+    
+    @Override
+    public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET STARTDATE=? WHERE UID=?");
+            idQueryStmt.setTimestamp(1, time);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
+    }
+
+    @Override
+    public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET ENDDATE=? WHERE UID=?");
+            idQueryStmt.setTimestamp(1, time);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
+    }
+
+    @Override
+    public void setComplete(int uid, int complete) throws DoesNotExistException {
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET COMPLETE=? WHERE UID=?");
+            idQueryStmt.setInt(1, complete);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
+    }
+
+    @Override
+    public void setAuthority(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {
+        try {            
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET COUNTRY=? WHERE UID=?");
+            idQueryStmt.setString(1, listToString(committeeList));
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in TASKS table.");
+        }
+    }    
     
 
 }

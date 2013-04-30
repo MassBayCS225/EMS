@@ -13,7 +13,7 @@ public class PhoneNumberInvalidLengthException extends RuntimeException{
   
   /**
    * Constructor.
-   * @param reasoon The reason of the exception.
+   * @param reason The reason of the exception.
    */
   public PhoneNumberInvalidLengthException(String reason){
     super(reason);

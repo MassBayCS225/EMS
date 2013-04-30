@@ -14,6 +14,8 @@ public interface Interface_UserData {
     public String queryEntireTable();
     
     public int nextValidUID();
+    
+    public boolean removeUser(int uid) throws DoesNotExistException;        
 
     // GETTERS
     public int getUIDByEmail(String email) throws DoesNotExistException;
