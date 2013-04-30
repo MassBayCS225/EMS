@@ -1,7 +1,5 @@
 package BackEnd.UserSystem;
 
-import BackEnd.UserSystem.PhoneNumber;
-
 /**
  * This class represents a Participant of an event.
  * @author Anderson Santana
@@ -14,8 +12,8 @@ public class Participant{
   private Address address;
   
  /**
-  * Constructor.
-  *  This constructor initializes the participant object with a name.
+  *  This constructor initializes the participant object with a first 
+  *  name and a last name.
   *  @param firstName The participant's first name
   *  @param lastName The participant's last name
   */
@@ -25,9 +23,8 @@ public class Participant{
   }
  
  /**
-  *  Overloaded Constructor.
-  *  This constructor initializes the Participant object with a name
-  *  and an email address
+  *  This constructor initializes the Participant object with a first 
+  *  name, a last name and an email address.
   *  @param firstName The participant's first name
   *  @param lastName The participant's last name
   *  @param address The participant's email address
@@ -40,7 +37,7 @@ public class Participant{
   
  /**
   *  It sets the participant's first name.
-  *  @param name The participant's first name
+  *  @param firstName The participant's first name
   */ 
   public void setFirstName(String firstName){
     this.firstName = firstName; 
@@ -56,7 +53,7 @@ public class Participant{
   
  /**
   *  It sets the participant's last name.
-  *  @param name The participant's last name
+  *  @param lastName The participant's last name
   */ 
   public void setLastName(String lastName){
     this.lastName = lastName;
@@ -79,27 +76,24 @@ public class Participant{
   }
   
  /**
-  *  It verifies the participant's email address. By figuring out 
-  *  if it exists in the system or any other reason not yet specified.
-  *  
-  *  @param emailAddress The participant's email address
-  *  @return true if the object's email address matches the 
-  *    current object, false otherwise
-  */ 
-  private boolean verifyEmailAddress(String emailAddress){
-    // NOT COMPLETE //
-    //if(this.emailAddress.equals(emailAddress))
-      return true;
-    //else
-      //return false;
-  }
-  
- /**
   *  It returns the participant's email address.
   *  @return The participant's email address
   */ 
   public String getEmailAddress(){
     return emailAddress;
+  }
+  
+ /**
+  *  It verifies the participant's email address by making sure 
+  *  that it does not already exists in the system (or any other
+  *  reason not yet specified).
+  *  @param emailAddress The participant's email address
+  *  @return true
+  */ 
+  private boolean verifyEmailAddress(String emailAddress){
+    /* This method sole purpose is listed above and is 
+     * NOT YET COMPLETE */
+      return true;
   }
   
  /**
@@ -144,14 +138,31 @@ public class Participant{
     if(obj == this) return true;
     if(obj == null) return false;
     if(this.getClass() == obj.getClass()){
-      Participant other = (Participant) obj;
-      return firstName.equals(other.firstName) && lastName.equals(other.lastName) &&
-              emailAddress.equals(other.emailAddress) && 
-              phoneNumber.equals(other.phoneNumber) && address.equals(other.address);
+      Participant other = (Participant)obj;
+      return firstName.equals(other.firstName) && 
+             lastName.equals(other.lastName) &&
+             emailAddress.equals(other.emailAddress) && 
+             phoneNumber.equals(other.phoneNumber) && 
+             address.equals(other.address);
         } else {
           return false;
         }
   }
+
+  /**
+   *  It generates a hash code for the participant object.
+   *  @return The hash code
+   */
+   @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.firstName != null ? this.firstName.hashCode() : 0);
+        hash = 53 * hash + (this.lastName != null ? this.lastName.hashCode() : 0);
+        hash = 53 * hash + (this.emailAddress != null ? this.emailAddress.hashCode() : 0);
+        hash = 53 * hash + (this.phoneNumber != null ? this.phoneNumber.hashCode() : 0);
+        hash = 53 * hash + (this.address != null ? this.address.hashCode() : 0);
+        return hash;
+    }
   
   /**
    * Creates a string representation of the participant.
