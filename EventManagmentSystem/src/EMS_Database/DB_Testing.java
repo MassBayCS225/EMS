@@ -16,16 +16,11 @@ import java.util.Date;
  */
 public class DB_Testing {
 
-    public void run() {
-        //Bogus user data.
-//        InputUser user1 = new InputUser(1, 2, "FirstName_1", "LastName_1 ", "password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA", 0);
-//        InputUser user2 = new InputUser(2, 2, "FirstName_2", "LastName_2 ", "password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA", 0);
-//        InputUser user3 = new InputUser(3, 2, "FirstName_3", "LastName_3 ", "password", "retarded@email.com", "2143341905", "181 Bacon St.", "Natick", "MA", "01760", "USA", 0);
-
+    public void run() {       
         // THIS IS THE EFFECTIVE API FOR TABLES
 
         int uid;
-
+        
         // Create table objects.
         Events_Table et = new Events_Table();
         SubEvent_Table set = new SubEvent_Table();

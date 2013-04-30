@@ -34,8 +34,7 @@ public interface Interface_EventData {
     public int getComplete(int uid) throws DoesNotExistException;
 
     public ArrayList<Integer> getCommittee(int uid) throws DoesNotExistException;
-
-    //TO BE ADDED TO TABLE
+    
     public ArrayList<Integer> getOrganizerList(int uid) throws DoesNotExistException;
 
     public ArrayList<Integer> getSubEventList(int uid) throws DoesNotExistException;
@@ -62,8 +61,7 @@ public interface Interface_EventData {
     public void setComplete(int uid, int complete) throws DoesNotExistException;
 
     public void setCommittee(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException;
-
-    //TO BE ADDED TO TABLE
+    
     public void setOrganizerList(int uid, ArrayList<Integer> organizerList) throws DoesNotExistException;
 
     public void setSubEventList(int uid, ArrayList<Integer> subEventList) throws DoesNotExistException;
