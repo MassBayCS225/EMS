@@ -13,7 +13,7 @@ public class PhoneNumberInvalidFormatException extends RuntimeException{
   
   /**
    * Constructor.
-   * @param reasoon The reason of the exception.
+   * @param reason The reason of the exception.
    */
   public PhoneNumberInvalidFormatException(String reason){
     super(reason);

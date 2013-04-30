@@ -193,6 +193,24 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
         return returnQuery.toString();
     }
 
+    @Override
+    public boolean removeCommittee(int uid) throws DoesNotExistException {
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);            
+            idQueryStmt.executeUpdate();                        
+            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist.");
+        }
+        return true;
+    }
+
+        
+    
+    
     ///////////////////GETTERS////////////////////
     @Override
     public String getTitle(int uid) throws DoesNotExistException {
@@ -250,58 +268,197 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
         throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
     }
 
-    
-    
-    @Override
-    public double getBudget(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /////////////////////////SETTERS///////////////////////////
-    @Override
-    public void setTitle(int uid, String title) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setChairman(int uid, int nuid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-    @Override
-    public void setBudget(int uid, double budget) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
+     @Override
     public ArrayList<Integer> getBudgetAccessList(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("BUDGETACCESS"); //Should not have two uids with the same name                            
+            }
+            
+            if("".equals(returnQuery)){
+                throw new DoesNotExistException("This Committee does not exist in COMMITTEE table.");
+            } else {
+                return stringToList(returnQuery); //return an arraylist
+            }            
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return stringToList(returnQuery); //should never get here.
     }
 
     @Override
     public ArrayList<Integer> getCommitteeMembers(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("MEMBERS"); //Should not have two uids with the same name                            
+            }
+            
+            if("".equals(returnQuery)){
+                throw new DoesNotExistException("This Committee does not exist in COMMITTEE table.");
+            } else {
+                return stringToList(returnQuery); //return an arraylist
+            }            
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return stringToList(returnQuery); //should never get here.
     }
 
     @Override
     public ArrayList<Integer> getTaskList(int uid) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("TASKS"); //Should not have two uids with the same name                            
+            }
+            
+            if("".equals(returnQuery)){
+                throw new DoesNotExistException("This Committee does not exist in COMMITTEE table.");
+            } else {
+                return stringToList(returnQuery); //return an arraylist
+            }            
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return stringToList(returnQuery); //should never get here.
+    }    
+    
+    @Override
+    public double getBudget(int uid) throws DoesNotExistException {
+        double returnQuery = 0.0;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getDouble("BUDGET"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == 0.0) {
+                throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+        throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
+    }
+    
+    
+    
+    
+    /////////////////////////SETTERS///////////////////////////
+    @Override
+    public void setTitle(int uid, String title) throws DoesNotExistException {
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET TITLE=? WHERE UID=?");
+            idQueryStmt.setString(1, title);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
+        }
     }
 
     @Override
+    public void setChairman(int uid, int nuid) throws DoesNotExistException {
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET CHAIRMAN=? WHERE UID=?");
+            idQueryStmt.setInt(1, nuid);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
+        }
+    }
+    
+    @Override
+    public void setBudget(int uid, double budget) throws DoesNotExistException {
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET BUDGET=? WHERE UID=?");
+            idQueryStmt.setDouble(1, budget);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
+        }
+    }  
+
+    @Override
     public void setBudgetAccessList(int uid, ArrayList<Integer> accessList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String budgetInput = listToString(accessList);
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET BUDGETACCESS=? WHERE UID=?");
+            idQueryStmt.setString(1, budgetInput);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
+        }
     }
 
     @Override
     public void setCommitteeMembers(int uid, ArrayList<Integer> memberList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String membersInput = listToString(memberList);
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET MEMBERS=? WHERE UID=?");
+            idQueryStmt.setString(1, membersInput);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
+        }
     }
 
     @Override
     public void setTaskList(int uid, ArrayList<Integer> taskList) throws DoesNotExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String taskInput = listToString(taskList);
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET TASKS=? WHERE UID=?");
+            idQueryStmt.setString(1, taskInput);
+            idQueryStmt.setInt(2, uid);
+            idQueryStmt.executeUpdate();            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
+        }
     }
     
     

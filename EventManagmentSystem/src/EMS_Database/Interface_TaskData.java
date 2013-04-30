@@ -21,17 +21,19 @@ public interface Interface_TaskData {
     public int nextValidUID();
 
     public String queryEntireTable();
+    
+    public boolean removeTask(int uid) throws DoesNotExistException;
 
     // GETTERS
-    public String getDescription() throws DoesNotExistException;    
+    public String getDescription(int uid) throws DoesNotExistException;    
 
-    public Timestamp getStartDate() throws DoesNotExistException;
+    public Timestamp getStartDate(int uid) throws DoesNotExistException;
 
-    public Timestamp getEndDate() throws DoesNotExistException;
+    public Timestamp getEndDate(int uid) throws DoesNotExistException;
 
-    public int getComplete() throws DoesNotExistException;
+    public int getComplete(int uid) throws DoesNotExistException;
 
-    public ArrayList<Integer> getAuthority() throws DoesNotExistException;
+    public ArrayList<Integer> getAuthority(int uid) throws DoesNotExistException;
     
     public String getStreet(int uid) throws DoesNotExistException; //location info
 

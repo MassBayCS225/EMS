@@ -157,9 +157,29 @@ public class DB_Testing {
 //        try{
 //            uid = 1;
 //            System.out.println(ct.getTitle(uid));
+//            System.out.println(ct.getChairman(uid));
+//            System.out.println(ct.getBudgetAccessList(uid));
+//            System.out.println(ct.getCommitteeMembers(uid));
+//            System.out.println(ct.getTaskList(uid));
+//            System.out.println(ct.getBudget(uid));
+//            
 //        } catch(DoesNotExistException dnee) {
 //            System.err.println(dnee.getMessage());
 //        }
+//        try{
+//            uid = 3;
+//            ct.setTitle(uid, "Better Title");
+//            ct.setChairman(uid, 2);
+//            ct.setBudgetAccessList(uid, list);
+//            ct.setCommitteeMembers(uid, list);
+//            ct.setTaskList(uid, list);
+//            ct.setBudget(uid, 59.52);
+//            
+//        } catch(DoesNotExistException dnee) {
+//            System.err.println(dnee.getMessage());
+//        }
+//        System.out.println(ct.queryEntireTable());
+        
 
         //CREATE TASKS INSERTION
 //        try {
@@ -168,52 +188,44 @@ public class DB_Testing {
 //        } catch (DuplicateInsertionException die) {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
-//        System.out.println(tt.queryEntireTable());
-
-
-//        //Testing GETTERS
-//        try {
-//            int uid = 1;
-//            System.out.println(getLevel(uid));
-//            System.out.println(getFirstName(uid));
-//            System.out.println(getLastName(uid));
-//            System.out.println(getEmail(uid));
-//            System.out.println(getPwd(uid));
-//            System.out.println(getPhone(uid));
-//            System.out.println(getStreet(uid));
-//            System.out.println(getCity(uid));
-//            System.out.println(getState(uid));
-//            System.out.println(getZipcode(uid));
-//            System.out.println(getCountry(uid));
-//            System.out.println(nextValidUID());
-//            
-//        } catch (DoesNotExistException e) {            
-//            System.err.println(e.getMessage());
-//        }
-
-//        //Testing SETTERS
-//        try {
-//            int uid = 2;
-//            setFirstName(uid,"NewFirstName2");
-//            setLastName(uid,"NewLastName2");            
-//            setPwd(uid, "bestPasswordEVER!");
-//            setEmail(uid,"muffins@muffintop.hotmail.com");
-//            setPhone(uid, "867-5309");
-//            setStreet(uid, "Grove St.");
-//            setCity(uid, "Maui");
-//            setState(uid, "Calm.");
-//            setZipcode(uid, "12345");
-//            setCountry(uid,"MURICA!");
-//            setEventCreationPrivilege(uid, 1);
-//        } catch(DoesNotExistException blah) {
-//            System.err.println(blah.getMessage());
-//        }
-//        
-//        System.out.println(queryEntireTable()); //debug method
-//        System.out.println("");
-
-
-
+        
+        System.out.println(tt.queryEntireTable());
+        try{
+            uid = 1;
+            System.out.println(tt.getDescription(uid));
+            System.out.println(tt.getStreet(uid));
+            System.out.println(tt.getCity(uid));
+            System.out.println(tt.getState(uid));
+            System.out.println(tt.getZipcode(uid));
+            System.out.println(tt.getCountry(uid));
+            System.out.println(tt.getStartDate(uid));
+            System.out.println(tt.getEndDate(uid));
+            System.out.println(tt.getComplete(uid));
+            System.out.println(tt.getAuthority(uid));
+            
+        } catch (DoesNotExistException dnee) {
+            System.err.println(dnee.getMessage());
+        }
+        try{
+            list.add(4);
+            uid = 1;
+            
+            tt.setDescription(uid, "set description");
+            tt.setStreet(uid, "set street");
+            tt.setCity(uid, "set city");
+            tt.setState(uid, "set state");
+            tt.setZipcode(uid, "set zipcode");
+            tt.setCountry(uid, "se country");
+            tt.setStartDate(uid, startDate);
+            tt.setEndDate(uid, endDate);
+            tt.setComplete(uid, 1);
+            tt.setAuthority(uid, list);
+            
+        } catch(DoesNotExistException dnee) {            
+            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+        }
+        System.out.println(tt.queryEntireTable());
+        
     }
 
     public static void main(String[] args) {
