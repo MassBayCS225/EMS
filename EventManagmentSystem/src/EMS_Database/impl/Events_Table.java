@@ -218,6 +218,24 @@ public class Events_Table extends InitDB implements Interface_EventData {
         return returnQuery.toString();
     }
 
+    @Override
+    public boolean removeEvent(int uid) throws DoesNotExistException {
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM EVENT WHERE UID=?");
+            idQueryStmt.setInt(1, uid);            
+            idQueryStmt.executeUpdate();                        
+            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist.");
+        }
+        return true;
+    }
+    
+    
+    
+
     //////////////////////GETTERS////////////////////////////
     /**
      * Returns the specified users description.
@@ -587,6 +605,9 @@ public class Events_Table extends InitDB implements Interface_EventData {
         }
         return stringToList(returnQuery); //should never get here.
     }
+    
+    
+    
 
     ////////////////////////SETTERS///////////////////////////////
     @Override

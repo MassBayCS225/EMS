@@ -175,6 +175,7 @@ public class UserData_Table extends InitDB implements Interface_UserData {
         }
         return newUID; // should not be zero
     }
+    
     /**
      * This function is used to remove a user from the database with the specified
      * UID
@@ -182,10 +183,8 @@ public class UserData_Table extends InitDB implements Interface_UserData {
      * @return true, upon successful removal from the database.
      * @throws DoesNotExistException if the user you are trying to delete does not exist.
      */
-
     @Override
-    public boolean removeUser(int uid) throws DoesNotExistException {
-        
+    public boolean removeUser(int uid) throws DoesNotExistException {        
         try {
 
             PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM USERS WHERE UID=?");
@@ -231,6 +230,7 @@ public class UserData_Table extends InitDB implements Interface_UserData {
         }
         throw new DoesNotExistException("UserData");
     }
+    
     /**
      * Returns the Last Name of the user with the specified UID.
      * @param uid

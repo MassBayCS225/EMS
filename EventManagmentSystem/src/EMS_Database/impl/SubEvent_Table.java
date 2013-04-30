@@ -201,6 +201,24 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
         return returnQuery.toString();
     }
 
+    @Override
+    public boolean removeSubEvent(int uid) throws DoesNotExistException {
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM SUBEVENT WHERE UID=?");
+            idQueryStmt.setInt(1, uid);            
+            idQueryStmt.executeUpdate();                        
+            
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            throw new DoesNotExistException("User does not exist.");
+        }
+        return true;
+    }
+    
+    
+    
+
     ////////////////////////GETTERS/////////////////////////
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
@@ -453,6 +471,9 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
         }
         throw new DoesNotExistException("SubEvent");
     }
+    
+    
+    
 
     /////////////////////SETTERS////////////////////////////
     @Override

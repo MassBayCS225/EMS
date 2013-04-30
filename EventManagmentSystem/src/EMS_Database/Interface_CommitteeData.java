@@ -20,6 +20,8 @@ public interface Interface_CommitteeData {
     public int nextValidUID();
 
     public String queryEntireTable();
+    
+    public boolean removeCommittee(int uid) throws DoesNotExistException;
 
     // GETTERS
     public String getTitle(int uid) throws DoesNotExistException;

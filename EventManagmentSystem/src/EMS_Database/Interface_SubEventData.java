@@ -21,6 +21,8 @@ public interface Interface_SubEventData {
     public int nextValidUID();
 
     public String queryEntireTable();
+    
+    public boolean removeSubEvent(int uid) throws DoesNotExistException;
 
     //GETTERS
     public String getDescription(int uid) throws DoesNotExistException;
