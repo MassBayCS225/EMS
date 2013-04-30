@@ -29,6 +29,14 @@ public class PrivilegeManager {
         }
     }
 
+    public static boolean hasUserPrivilege(User loggedInUser, User selectedUser) throws PrivilegeInsufficientException {
+        if (loggedInUser.equals(selectedUser)) {
+            return true;
+        } else {
+            return hasAdminPrivilege(loggedInUser);
+        }
+    }
+
     public static boolean hasEventCreationPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (loggedInUser.getEventCreationPrivilege()) {
             return true;

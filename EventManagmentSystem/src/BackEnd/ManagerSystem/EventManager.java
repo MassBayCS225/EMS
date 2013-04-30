@@ -124,14 +124,14 @@ public class EventManager {
 
     public void editStartDateTime(Timestamp startDateTime, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setStartDateTime(startDateTime);
+            selectedEvent.getTimeSchedule().setStartDateTime(startDateTime);
             // write to database
         }
     }
 
     public void editEndDateTime(Timestamp endDateTime, User loggedInUser) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setEndDateTime(endDateTime);
+            selectedEvent.getTimeSchedule().setEndDateTime(endDateTime);
             // write to database
         }
     }
