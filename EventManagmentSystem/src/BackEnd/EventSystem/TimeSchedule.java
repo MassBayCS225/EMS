@@ -13,8 +13,8 @@ public class TimeSchedule {
     private Timestamp startDateTime, endDateTime;
     
     TimeSchedule() {
-        startDateTime = ;
-        endDateTime = ;
+        startDateTime = null;
+        endDateTime = null;
     }
     
     public void setStartDateTime(Timestamp startDateTime){
@@ -42,6 +42,6 @@ public class TimeSchedule {
     }
     
     public String toString() {
-        
+        return null;
     }
 }
