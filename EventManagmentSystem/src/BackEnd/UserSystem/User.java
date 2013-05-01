@@ -31,6 +31,13 @@ public class User extends Participant
         setPassword(pword, pwordMatch);
             
     }
+    public User(int uid, String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+    {
+        super(firstName, lastName, emailAddress);
+        UID = uid;
+        setPassword(pword, pwordMatch);
+            
+    }
     /**
      * 
      * @param pword         The new password
