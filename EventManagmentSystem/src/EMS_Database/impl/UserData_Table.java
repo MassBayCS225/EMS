@@ -3,11 +3,14 @@ package EMS_Database.impl;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
+import static EMS_Database.InitDB.debugLog;
 import EMS_Database.Interface_UserData;
 import EMS_Database.InputUser;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
 
 /**
  * Database implementation of all user related data.
@@ -39,14 +42,14 @@ public class UserData_Table extends InitDB implements Interface_UserData {
      * @return true upon successful insertion of user into database
      */
     @Override
-    public boolean createUser(InputUser user) {
+    public int createUser(InputUser user) {
 
-        boolean complete = false;
+        int uid = nextValidUID();
 
         try {
             //Creating Statement
             PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO USERS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            AddAddressStmt.setInt(1, nextValidUID());
+            AddAddressStmt.setInt(1, uid);
             AddAddressStmt.setInt(2, user.getLevel());
             AddAddressStmt.setString(3, user.getFirstName());
             AddAddressStmt.setString(4, user.getLastName());
@@ -63,12 +66,12 @@ public class UserData_Table extends InitDB implements Interface_UserData {
 
             //Execute Statement
             AddAddressStmt.executeUpdate();
-            complete = true;
+            
 
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         } finally {
-            return complete;
+            return uid;
         }
     }
 
@@ -196,6 +199,32 @@ public class UserData_Table extends InitDB implements Interface_UserData {
             throw new DoesNotExistException("User does not exist.");
         }
         return true;
+    }
+    
+    /**
+     * A function to generate a list of the current UID's in a table
+     *
+     * @return ArrayList<Integer> of the current UID's in the table
+     */    
+    public ArrayList<Integer> currentUIDList() {
+        int newUID = 0;
+        ArrayList<Integer> UIDList = new ArrayList<Integer>();
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS");
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            while (rs.next()) {
+                newUID = rs.getInt("UID");
+                UIDList.add(newUID);
+            }
+            return UIDList;
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return UIDList; // should not be zero
     }
     
     
@@ -567,20 +596,36 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     /**
      * Resets the UID of the user specified by the first argument to the UID of
      * the second argument.
+     * BE VERY CAUTIOUS WHEN USING THIS FUNCTION. It throws multiple errors for a reason.
+     * You are messing with a function that changes the index value of a user.
      * @param uid The original UID
      * @param suid The new UID
      * @throws DuplicateInsertionException if the new UID already exists.
      */
     @Override
-    public void setUID(int uid, int suid) throws DuplicateInsertionException {
+    public void setUID(int uid, int suid) throws DuplicateInsertionException , DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET UID=? WHERE UID=?");
-            idQueryStmt.setInt(1, suid);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DuplicateInsertionException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET UID=? WHERE UID=?");
+		idQueryStmt.setInt(1, suid);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -594,13 +639,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setFirstName(int uid, String fname) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET FNAME=? WHERE UID=?");
-            idQueryStmt.setString(1, fname);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET FNAME=? WHERE UID=?");
+		idQueryStmt.setString(1, fname);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -612,13 +671,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setLastName(int uid, String lname) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET LNAME=? WHERE UID=?");
-            idQueryStmt.setString(1, lname);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET LNAME=? WHERE UID=?");
+		idQueryStmt.setString(1, lname);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }      
 
     /**
@@ -630,13 +703,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setEmail(int uid, String email) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET EMAIL=? WHERE UID=?");
-            idQueryStmt.setString(1, email);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET EMAIL=? WHERE UID=?");
+		idQueryStmt.setString(1, email);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -648,13 +735,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setPwd(int uid, String pwd) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET PWD=? WHERE UID=?");
-            idQueryStmt.setString(1, pwd);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET PWD=? WHERE UID=?");
+		idQueryStmt.setString(1, pwd);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
     
     /**
@@ -665,14 +766,28 @@ public class UserData_Table extends InitDB implements Interface_UserData {
      */
     @Override
     public void setLevel(int uid, int level) throws DoesNotExistException {
-        try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET LEVEL=? WHERE UID=?");
-            idQueryStmt.setInt(1, level);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+       try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET LEVEL=? WHERE UID=?");
+		idQueryStmt.setInt(1, level);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
     
     /**
@@ -684,13 +799,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setPhone(int uid, String phone) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET PHONE=? WHERE UID=?");
-            idQueryStmt.setString(1, phone);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET PHONE=? WHERE UID=?");
+		idQueryStmt.setString(1, phone);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -702,13 +831,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET STREET=? WHERE UID=?");
-            idQueryStmt.setString(1, street);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET STREET=? WHERE UID=?");
+		idQueryStmt.setString(1, street);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -720,13 +863,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET CITY=? WHERE UID=?");
-            idQueryStmt.setString(1, city);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET CITY=? WHERE UID=?");
+		idQueryStmt.setString(1, city);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -738,13 +895,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET STATE=? WHERE UID=?");
-            idQueryStmt.setString(1, state);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET STATE=? WHERE UID=?");
+		idQueryStmt.setString(1, state);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -756,13 +927,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET ZIPCODE=? WHERE UID=?");
-            idQueryStmt.setString(1, zipcode);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET ZIPCODE=? WHERE UID=?");
+		idQueryStmt.setString(1, zipcode);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -774,13 +959,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET COUNTRY=? WHERE UID=?");
-            idQueryStmt.setString(1, country);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET COUNTRY=? WHERE UID=?");
+		idQueryStmt.setString(1, country);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
 
     /**
@@ -792,13 +991,27 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     @Override
     public void setEventCreationPrivilege(int uid, int level) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET LEVEL=? WHERE UID=?");
-            idQueryStmt.setInt(1, level);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();
-        } catch (SQLException sqle) {
-            throw new DoesNotExistException("UserData");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE USERS SET EVENTLEVEL=? WHERE UID=?");
+		idQueryStmt.setInt(1, level);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in USERS table.", uid);
+		throw new DoesNotExistException("User does not exist in USERS table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in USERS table.");
+	    throw new DoesNotExistException("User does not exist in USERS table.");
+	}
     }
     
     

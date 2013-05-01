@@ -35,11 +35,12 @@ public abstract class InitDB {
             System.err.println(e.getMessage());
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        }
-
+        }	
         fh.setFormatter(new SimpleFormatter());
         debugLog.addHandler(fh);
         debugLog.setUseParentHandlers(false); //do not use default outputs (console and such)
+	
+	
     }
 
     public InitDB() {
@@ -65,13 +66,14 @@ public abstract class InitDB {
         try {
             dbConnection = DriverManager.getConnection("jdbc:derby:EMS_DB", props); //if create is needed exception is thrown
             //System.out.println("Database Connection Established.");
-            debugLog.info("Database Connection Established.");
+            //debugLog.info("Database Connection Established.");
         } catch (SQLException sqle) {
 
             try {
                 //create connection if no database exists
                 dbConnection = DriverManager.getConnection("jdbc:derby:EMS_DB;create=true", props);
                 System.out.println("Database Created Successfully.");
+		debugLog.info("Database Created Successfully.");
 
                 //create tables if none exist.
                 String createUserTable = "CREATE TABLE USERS (UID INT PRIMARY KEY, "
@@ -168,7 +170,7 @@ public abstract class InitDB {
         public void run() {
             fh.flush();
             fh.close();
-            System.out.println("closed logger");
+            //System.out.println("closed logger");
         }
     }
 

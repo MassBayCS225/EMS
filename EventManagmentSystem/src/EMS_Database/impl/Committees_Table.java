@@ -3,12 +3,14 @@ package EMS_Database.impl;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
+import static EMS_Database.InitDB.debugLog;
 import EMS_Database.InputCommittee;
 import EMS_Database.Interface_CommitteeData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 /**
  *
@@ -193,6 +195,12 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
         return returnQuery.toString();
     }
 
+    /**
+     * This function removes a committee specified by the UID.
+     * @param uid the UID of the committee to be removed.
+     * @return a boolean. true if removal was successful.
+     * @throws DoesNotExistException if the uid does not exist in the table.
+     */
     @Override
     public boolean removeCommittee(int uid) throws DoesNotExistException {
         try {
@@ -228,6 +236,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             
             //checking for existance of that uid
             if ("".equals(returnQuery)) {
+		debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
                 throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
             } else {
                 return returnQuery;
@@ -237,6 +246,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             sqle.printStackTrace();
             System.exit(1);
         }
+	debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
         throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
     }
 
@@ -256,6 +266,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             
             //checking for existance of that uid
             if (returnQuery == 0) {
+		debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
                 throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
             } else {
                 return returnQuery;
@@ -265,6 +276,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             sqle.printStackTrace();
             System.exit(1);
         }
+	debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
         throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
     }
 
@@ -283,6 +295,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             }
             
             if("".equals(returnQuery)){
+		debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
                 throw new DoesNotExistException("This Committee does not exist in COMMITTEE table.");
             } else {
                 return stringToList(returnQuery); //return an arraylist
@@ -292,6 +305,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             sqle.printStackTrace();
             System.exit(1);
         }
+	debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
         return stringToList(returnQuery); //should never get here.
     }
 
@@ -310,6 +324,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             }
             
             if("".equals(returnQuery)){
+		debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
                 throw new DoesNotExistException("This Committee does not exist in COMMITTEE table.");
             } else {
                 return stringToList(returnQuery); //return an arraylist
@@ -319,6 +334,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             sqle.printStackTrace();
             System.exit(1);
         }
+	debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
         return stringToList(returnQuery); //should never get here.
     }
 
@@ -337,6 +353,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             }
             
             if("".equals(returnQuery)){
+		debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
                 throw new DoesNotExistException("This Committee does not exist in COMMITTEE table.");
             } else {
                 return stringToList(returnQuery); //return an arraylist
@@ -346,6 +363,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             sqle.printStackTrace();
             System.exit(1);
         }
+	debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
         return stringToList(returnQuery); //should never get here.
     }    
     
@@ -365,6 +383,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
             
             //checking for existance of that uid
             if (returnQuery == 0.0) {
+		debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
                 throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
             } else {
                 return returnQuery;
@@ -373,6 +392,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         }
+	debugLog.warning("UID="+uid+" does not exist in COMMITTEE table.");
         throw new DoesNotExistException("UID does not exist in COMMITTEE table.");
     }
     
@@ -383,82 +403,157 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
     @Override
     public void setTitle(int uid, String title) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET TITLE=? WHERE UID=?");
-            idQueryStmt.setString(1, title);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET TITLE=? WHERE UID=?");
+		idQueryStmt.setString(1, title);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
     }
 
     @Override
     public void setChairman(int uid, int nuid) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET CHAIRMAN=? WHERE UID=?");
-            idQueryStmt.setInt(1, nuid);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET CHAIRMAN=? WHERE UID=?");
+		idQueryStmt.setInt(1, nuid);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
     }
     
     @Override
     public void setBudget(int uid, double budget) throws DoesNotExistException {
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET BUDGET=? WHERE UID=?");
-            idQueryStmt.setDouble(1, budget);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET BUDGET=? WHERE UID=?");
+		idQueryStmt.setDouble(1, budget);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
     }  
 
     @Override
     public void setBudgetAccessList(int uid, ArrayList<Integer> accessList) throws DoesNotExistException {
-        String budgetInput = listToString(accessList);
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET BUDGETACCESS=? WHERE UID=?");
-            idQueryStmt.setString(1, budgetInput);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET BUDGETACCESS=? WHERE UID=?");
+		idQueryStmt.setString(1, listToString(accessList));
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
     }
 
     @Override
     public void setCommitteeMembers(int uid, ArrayList<Integer> memberList) throws DoesNotExistException {
-        String membersInput = listToString(memberList);
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET MEMBERS=? WHERE UID=?");
-            idQueryStmt.setString(1, membersInput);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET MEMBERS=? WHERE UID=?");
+		idQueryStmt.setString(1, listToString(memberList));
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
     }
 
     @Override
     public void setTaskList(int uid, ArrayList<Integer> taskList) throws DoesNotExistException {
-        String taskInput = listToString(taskList);
         try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET TASKS=? WHERE UID=?");
-            idQueryStmt.setString(1, taskInput);
-            idQueryStmt.setInt(2, uid);
-            idQueryStmt.executeUpdate();            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist in COMMITTEE table.");
-        }
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET TASKS=? WHERE UID=?");
+		idQueryStmt.setString(1, listToString(taskList));
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
     }
     
     
