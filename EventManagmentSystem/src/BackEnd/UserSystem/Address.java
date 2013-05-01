@@ -175,11 +175,10 @@ public class Address {
    */
   @Override
   public String toString(){
-    String info = "Street: " + street +
-                  "\nCity: " + city + 
-                  "\nState: " + state + 
-                  "\nZip Code: " + zipCode + 
-                  "\nCountry: " + country;    
+    String info = street + "\n" + 
+                  city + ", " + state + 
+                  " " + zipCode + "\n" + 
+                  country;    
     return info;
   }
 }

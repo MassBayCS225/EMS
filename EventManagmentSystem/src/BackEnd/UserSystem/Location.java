@@ -79,6 +79,6 @@ public class Location extends Address{
      */
     @Override
     public String toString(){
-        return super.toString() + "\nDetails: " + details;
+        return super.toString() + "\n" + details;
     }
 }
