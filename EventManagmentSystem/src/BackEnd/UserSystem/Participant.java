@@ -182,11 +182,10 @@ public class Participant{
    */
   @Override
   public String toString(){
-    String info = "First name: " + firstName +
-                  "\nLast name: " + lastName +
-                  "\nEmail: " + emailAddress + 
-                  "\nPhone: " + phoneNumber + 
-                  "\nAddress: " + address;
+    String info = firstName + " " + lastName + "\n" + 
+                    emailAddress + "\n" + 
+                    phoneNumber + "\n" +
+                    address;
     
     return info;
   }
