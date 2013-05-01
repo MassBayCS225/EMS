@@ -24,7 +24,7 @@ public class Participant{
  
  /**
   *  This constructor initializes the Participant object with a first 
-  *  name, a last name and an email address.
+  *  name, a last name, and an email address.
   *  @param firstName The participant's first name
   *  @param lastName The participant's last name
   *  @param address The participant's email address
