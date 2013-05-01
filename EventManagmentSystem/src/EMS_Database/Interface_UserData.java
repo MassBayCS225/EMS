@@ -1,6 +1,7 @@
 package EMS_Database;
 
-import java.util.ArrayList;
+import BackEnd.UserSystem.Address;
+import BackEnd.UserSystem.User;
 
 /**
  *
@@ -15,9 +16,12 @@ public interface Interface_UserData {
     
     public int nextValidUID();
     
-    public boolean removeUser(int uid) throws DoesNotExistException;        
+    public boolean removeUser(int uid) throws DoesNotExistException;   
+        
 
     // GETTERS
+    public User getUser(int uid) throws DoesNotExistException;
+    
     public int getUIDByEmail(String email) throws DoesNotExistException;
 
     public String getFirstName(int uid) throws DoesNotExistException;
@@ -46,7 +50,13 @@ public interface Interface_UserData {
     
     
     //SETTERS
+<<<<<<< HEAD
     public void setUID(int uid, int nuid) throws DuplicateInsertionException , DoesNotExistException;
+=======
+    public void setAddress(int uid , Address address) throws DoesNotExistException;
+    
+    public void setUID(int uid, int nuid) throws DuplicateInsertionException;
+>>>>>>> c9cda426642b5f46a090fcfd2f8709b5fedb7c46
 
     public void setFirstName(int uid, String fname) throws DoesNotExistException;
     

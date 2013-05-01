@@ -414,16 +414,22 @@ public class PhoneNumber{
         return hash;
     }
   
-    /**
+     /**
      * Creates a string representation of the phone number.
      * @return A string representation of the phone number
      */
     @Override
     public String toString(){
-        String info = "Area code: " + new String(areaCode) +
-                    "\nExchange number: " + new String(exchangeNumber) +
-                    "\nLocal number: " + new String(localNumber) + 
-                    "\nExtension number: " + extensionNumber;
+      String info = "[";
+        if(extensionNumber == null || extensionNumber.size() == 0)
+           return new String(areaCode) + new String(exchangeNumber) +
+                new String(localNumber);
+        else{
+          for(int i = 0; i < extensionNumber.size(); i++)
+            info+= extensionNumber.get(i);
+          info+= "]" + new String(areaCode) + new String(exchangeNumber) +
+                new String(localNumber);
+        }
         return info;
     }
 }

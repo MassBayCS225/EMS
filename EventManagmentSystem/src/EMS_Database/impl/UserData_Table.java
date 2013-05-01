@@ -1,5 +1,8 @@
 package EMS_Database.impl;
 
+import BackEnd.UserSystem.Address;
+import BackEnd.UserSystem.IllegalCharacterException;
+import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
@@ -230,6 +233,71 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     
 
     ///////////////////// GETTERS ////////////////////////////
+
+    @Override
+    public User getUser(int uid) throws DoesNotExistException {        
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+            
+            User user = new User(null,null,null,null,null);
+            Address address = new Address();
+            
+            while (rs.next()) {                                
+                
+                if(rs.getInt("LEVEL") == 1){
+                    user.setAdminPrivilege(true);
+                } else {
+                    user.setAdminPrivilege(false);
+                }                
+                
+                user.setFirstName(rs.getString("FNAME"));
+
+                user.setLastName(rs.getString("LNAME"));
+
+                try{
+                user.setPassword(rs.getString("PWD"),rs.getString("PWD")); //fix this
+                } catch (IllegalCharacterException ice) {
+                    
+                } catch (PasswordMismatchError pme){
+                    
+                }
+
+                user.setEmailAddress(rs.getString("EMAIL"));
+                
+                user.setPhoneNumber(null);
+
+                address.setStreet(rs.getString("STREET"));
+
+                address.setCity(rs.getString("CITY"));
+
+                address.setState(rs.getString("STATE"));
+
+                address.setZipCode(rs.getString("ZIPCODE"));
+                
+                address.setCountry(rs.getString("COUNTRY"));
+                
+                user.setAddress(address); //insert address into user.
+                
+                if(rs.getInt("EVENTLEVEL")==1){
+                    user.setEventCreationPrivilege(true);
+                } else {
+                    user.setEventCreationPrivilege(false);
+                }
+                
+                
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+
+        throw new DoesNotExistException("User does not exist in USERS table");
+    }    
+    
     /**
      * Returns the First Name of the user with the UID specified
      *
@@ -593,6 +661,22 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     
 
     ////////////////////// SETTERS ///////////////////////////////
+
+    /**
+     * A method to update the address that takes a type of address. WRAPPER FUNCTION
+     * @param uid the uid to be updated
+     * @param address the address of type Address to use for data to be updated.
+     * @throws DoesNotExistException if the UID does not exist in the table.
+     */
+    @Override
+    public void setAddress(int uid, Address address) throws DoesNotExistException {
+        setStreet(uid,address.getStreet());
+        setCity(uid,address.getCity());
+        setState(uid,address.getState());
+        setZipcode(uid,address.getZipCode());
+        setCountry(uid,address.getCountry());
+    }    
+    
     /**
      * Resets the UID of the user specified by the first argument to the UID of
      * the second argument.

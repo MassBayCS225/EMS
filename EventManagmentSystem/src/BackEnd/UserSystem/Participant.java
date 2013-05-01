@@ -1,27 +1,27 @@
 package BackEnd.UserSystem;
 
+import EMS_Database.impl.UserData_Table;
+
+
 /**
  * This class represents a Participant of an event.
  * @author Anderson Santana
  */
 public class Participant{
+  private int UID;
   private String firstName;
   private String lastName;
   private String emailAddress;
   private PhoneNumber phoneNumber;
+  private UserData_Table table;
   private Address address;
   
- /**
-  *  This constructor initializes the participant object with a first 
-  *  name and a last name.
-  *  @param firstName The participant's first name
-  *  @param lastName The participant's last name
-  */
-  public Participant(String firstName, String lastName){
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
- 
+/**
+ * Default Constructor.
+ * @author Anderson Santana
+ */
+  public Participant(){}
+
  /**
   *  This constructor initializes the Participant object with a first 
   *  name, a last name, and an email address.
@@ -29,10 +29,22 @@ public class Participant{
   *  @param lastName The participant's last name
   *  @param address The participant's email address
   */
-  public Participant(String firstName, String lastName, String emailAddress){
+  public Participant(int UID, String firstName, String lastName, String emailAddress){
+    this.UID = UID;
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
+  }
+  
+  public Participant(String firstName, String lastName, String emailAddress){
+    UID = table.nextValidUID();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.emailAddress = emailAddress;
+  }
+  
+  public int getUserId(){
+    return UID;
   }
   
  /**
@@ -170,11 +182,10 @@ public class Participant{
    */
   @Override
   public String toString(){
-    String info = "First name: " + firstName +
-                  "\nLast name: " + lastName +
-                  "\nEmail: " + emailAddress + 
-                  "\nPhone: " + phoneNumber + 
-                  "\nAddress: " + address;
+    String info = firstName + " " + lastName + "\n" + 
+                    emailAddress + "\n" + 
+                    phoneNumber + "\n" +
+                    address;
     
     return info;
   }

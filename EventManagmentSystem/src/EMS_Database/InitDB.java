@@ -135,6 +135,8 @@ public abstract class InitDB {
                         + "ENDDATE TIMESTAMP, "
                         + "COMPLETE INT, "
                         + "MANAGER VARCHAR(160) DEFAULT NULL)"; //users in charge of task
+		
+		String createBudgetTable = "";
 
                 Statement stmt = dbConnection.createStatement();
                 stmt.executeUpdate(createUserTable); //takes table string as argument
