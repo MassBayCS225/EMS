@@ -24,7 +24,7 @@ public class LoginManager
     {
         int uid = table.getUIDByEmail(email);
         if (password.equals(table.getPwd(uid)))
-                loggedInUser = new User(table.getFirstName(uid), table.getLastName(uid), table.getEmail(uid), table.getPwd(uid), table.getPwd(uid));
+                loggedInUser =
     }
     
     

@@ -1,5 +1,7 @@
 package BackEnd.UserSystem;
 
+import EMS_Database.impl.UserData_Table;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,11 +13,12 @@ package BackEnd.UserSystem;
  */
 public class User extends Participant
 {
-
+    private int UID;
     private String password;
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
+    private UserData_Table table;
     /**
      * Constructor, creates a User object
      * @param pword         the desired password
@@ -24,6 +27,7 @@ public class User extends Participant
     public User(String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
         super(firstName, lastName, emailAddress);
+        UID = table.nextValidUID();
         setPassword(pword, pwordMatch);
             
     }
@@ -128,10 +132,15 @@ public class User extends Participant
         else
             return false;
     }
+    public int getUID()
+    {
+        return UID;
+    }
     public String toString()
     {
-        String output = super.toString();
-        output += "\nPassword: " + password +
+        String output = "User ID: " + UID + "\n" +
+                super.toString() +
+                "\nPassword: " + password +
                 "\nAdmin Privileges: " + adminPrivilege +
                 "\nEvent Creation Privileges: " + eventCreationPrivilege;
         return output;
