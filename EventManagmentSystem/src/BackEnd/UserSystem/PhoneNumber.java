@@ -11,39 +11,23 @@ public class PhoneNumber{
     private final int AREA_CODE_LENGTH = 3;
     private final int EXCHANGE_NUMBER_LENGTH = 3;
     private final int LOCAL_NUMBER_LENGTH = 4;
-    private final int TOTAL_NUMBER_LENGTH = 10;
+    private final int TOTAL_NUMBER_LENGTH = AREA_CODE_LENGTH + 
+            EXCHANGE_NUMBER_LENGTH + LOCAL_NUMBER_LENGTH;
     private final char[] VALID_SYMBOLS = {'-', '.', '(', ')', ' '};
+    private String digits;
     private char[] areaCode = new char[AREA_CODE_LENGTH];
     private char[] exchangeNumber = new char[EXCHANGE_NUMBER_LENGTH];
     private char[] localNumber = new char[LOCAL_NUMBER_LENGTH];
     private ArrayList<Character> extensionNumber;
   
-    /**
+   /**
      * This constructor initializes the Phone Number object with
      * a string of digits.
      * @param digits The phone number
      */
     public PhoneNumber(String digits){
-	//() and  -
-        final int maxNumberOfSymbolsPerPhoneNumber = 3; 
-        //two periods or two space characters
-        final int minNumberOfSymbolsPerPhoneNumber = 2; 
-        
-        if(digits.length() > TOTAL_NUMBER_LENGTH + 
-                maxNumberOfSymbolsPerPhoneNumber)
-            throw new PhoneNumberInvalidLengthException(
-                "Invalid phone number length");
-        else if(digits.length() == TOTAL_NUMBER_LENGTH + 
-                maxNumberOfSymbolsPerPhoneNumber  || digits.length() ==
-                TOTAL_NUMBER_LENGTH + minNumberOfSymbolsPerPhoneNumber)
-           setDigits(stripSymbols(digits));
-        else if(digits.length() > TOTAL_NUMBER_LENGTH)
-            throw new PhoneNumberInvalidFormatException(
-                "Invalid phone number format");
-        else{
-           verifyNumeric(digits);
-           setDigits(digits);
-        }
+        setDigits(digits);
+        verifyNumeric(this.digits);
     }
     
     /**
@@ -55,12 +39,12 @@ public class PhoneNumber{
      */
     public PhoneNumber(char[] areaCode, char[] exchangeNumber,
                          char[] localNumber){
-        verifyNumeric(areaCode);
-        verifyNumeric(exchangeNumber);
-        verifyNumeric(localNumber);
         verifyAreaCodeLength(areaCode);
         verifyExchangeNumberLength(exchangeNumber);
         verifyLocalNumberLength(localNumber);
+        verifyNumeric(areaCode);
+        verifyNumeric(exchangeNumber);
+        verifyNumeric(localNumber);
         this.areaCode = areaCode; 
         this.exchangeNumber = exchangeNumber;
         this.localNumber = localNumber;
@@ -69,8 +53,7 @@ public class PhoneNumber{
     /**
      * It removes all symbols from the phone number.
      * @param digits
-     * @return All digits from the phone number without
-     *           symbols
+     * @return All digits from the phone number without symbols
      */
     private String stripSymbols(String digits){
         String actualNumber = "";
@@ -83,7 +66,8 @@ public class PhoneNumber{
             }
         }
         else if((digits.charAt(3) == VALID_SYMBOLS[1] ||
-                digits.charAt(3) == VALID_SYMBOLS[4]) && 
+                 digits.charAt(3) == VALID_SYMBOLS[4] ||
+                 digits.charAt(3) == VALID_SYMBOLS[0]) &&
                 digits.charAt(3) == digits.charAt(7)){
             for(int i = 0; i < digits.length(); i++){
                 if(Character.isDigit(digits.charAt(i)))
@@ -92,6 +76,9 @@ public class PhoneNumber{
         }
         else throw new PhoneNumberInvalidLengthException(
                 "Invalid phone number length");
+        if(actualNumber.length() < TOTAL_NUMBER_LENGTH)
+                throw new PhoneNumberNonNumericException(
+                    "Digits entered are not numeric");
         verifyNumeric(actualNumber);
         return actualNumber;
     }
@@ -104,6 +91,9 @@ public class PhoneNumber{
      */
     public void setDigits(char[] areaCode, char[] exchangeNumber,
                           char[] localNumber){
+        verifyAreaCodeLength(areaCode);
+        verifyExchangeNumberLength(exchangeNumber);
+        verifyLocalNumberLength(localNumber);
         verifyNumeric(areaCode);
         verifyNumeric(exchangeNumber);
         verifyNumeric(localNumber);
@@ -114,24 +104,27 @@ public class PhoneNumber{
     
     /**
      * It sets all the digits of the phone number.
-     * @param digits 
+     * @param digits The digits of the phone number
      */
     public void setDigits(String digits){
-        for(int i = 0; i < digits.length(); i++){
+        this.digits = formatPhoneNumber(digits);
+        verifyPhoneNumberLength(this.digits);
+        verifyNumeric(this.digits);
+        for(int i = 0; i < this.digits.length(); i++){
             if(i < AREA_CODE_LENGTH)
-                areaCode[i] = digits.charAt(i);
+                areaCode[i] = this.digits.charAt(i);
             else if(i < AREA_CODE_LENGTH + EXCHANGE_NUMBER_LENGTH)
-                exchangeNumber[i - AREA_CODE_LENGTH] = digits.charAt(i);
+                exchangeNumber[i - AREA_CODE_LENGTH] = this.digits.charAt(i);
             else
                 localNumber[i - (AREA_CODE_LENGTH + EXCHANGE_NUMBER_LENGTH)] = 
-                        digits.charAt(i);
+                        this.digits.charAt(i);
         }
     }
     
     /**
-     * It verifies if the phone number is numeric.
+     * It verifies if the digits are numeric.
      * @param digits
-     * @return true if the phone number is numeric; otherwise 
+     * @return true if the digits are numeric; otherwise 
      * throws an exception
      */
     private boolean verifyNumeric(char[] digits){
@@ -141,22 +134,63 @@ public class PhoneNumber{
                     "Digits entered are not numeric");
         return true;
     }
-  
+    
     /**
-     * It verifies if the phone number is numeric.
+     * It verifies if the digits are numeric.
      * @param digits
-     * @return true if the phone number is numeric; otherwise 
+     * @return true if the digits are numeric; otherwise 
      * throws an exception
      */
     private boolean verifyNumeric(String digits){
-        if(digits.length() < TOTAL_NUMBER_LENGTH)
-            throw new PhoneNumberNonNumericException(
-                    "Digits entered are not numeric");
         for(int i = 0; i < digits.length(); i++)
             if(!Character.isDigit(digits.charAt(i)))
-                 throw new PhoneNumberNonNumericException(
+                throw new PhoneNumberNonNumericException(
                     "Digits entered are not numeric");
-            return true;
+        return true;
+    }
+    
+    /**
+     * It verifies if the digits are numeric.
+     * @param digits
+     * @return true if the digits are numeric; otherwise 
+     * throws an exception
+     */
+    private boolean verifyNumeric(ArrayList<Character> digits){
+        for(int i = 0; i < digits.size(); i++)
+            if(!Character.isDigit(digits.get(i)))
+                throw new PhoneNumberNonNumericException(
+                    "Digits entered are not numeric");
+        return true;
+    }
+    
+    /**
+     * It verifies that the phone number length is correct.
+     * @param digits
+     * @return true if the phone number length is correct; otherwise 
+     *   throws an exception
+     */
+    private boolean verifyPhoneNumberLength(String digits){
+          if(digits.length() > TOTAL_NUMBER_LENGTH || 
+                  digits.length() < TOTAL_NUMBER_LENGTH)
+              throw new PhoneNumberInvalidLengthException(
+                    "Invalid phone number length");
+          else return true;
+    }
+    
+    /**
+     * Helper method that decides when to strip symbols from phone
+     * number.
+     * @param digits
+     * @return The formatted phone number without any symbols.
+     */
+    private String formatPhoneNumber(String digits){
+        /* If phone number is of 2 common US formats:
+         * (xxx)xxx-xxxx, xxx%xxx%xxxx, containing 3 or 2 symbols. */
+        if(digits.length() == TOTAL_NUMBER_LENGTH + 3  || 
+            digits.length() == TOTAL_NUMBER_LENGTH + 2)
+            return stripSymbols(digits);
+        else
+            return digits;
     }
   
     /**
@@ -164,17 +198,44 @@ public class PhoneNumber{
      * @param areaCode The area code.
      */
     public void setAreaCode(char[] areaCode){
+          verifyAreaCodeLength(areaCode);
+          verifyNumeric(areaCode);
           this.areaCode = areaCode; 
+    }
+    
+    /**
+     * It sets the area code.
+     * @param areaCode The area code.
+     */
+    public void setAreaCode(String areaCode){
+          verifyAreaCodeLength(areaCode);
+          verifyNumeric(areaCode);
+          for(int i = 0; i < areaCode.length(); i++){
+                this.areaCode[i] = areaCode.charAt(i);
+          }
     }
   
     /**
      * It verifies if the area code length is correct.
      * @param areaCode
      * @return true if the area code length is correct; otherwise 
-     *   return false
+     *   throws an exception
      */
     private boolean verifyAreaCodeLength(char[] areaCode){
           if(areaCode.length == AREA_CODE_LENGTH)
+            return true;
+          else throw new PhoneNumberInvalidLengthException(
+                    "Invalid area code length");
+    }
+    
+    /**
+     * It verifies if the area code length is correct.
+     * @param areaCode
+     * @return true if the area code length is correct; otherwise 
+     *   throws an exception
+     */
+    private boolean verifyAreaCodeLength(String areaCode){
+          if(areaCode.length() == AREA_CODE_LENGTH)
             return true;
           else throw new PhoneNumberInvalidLengthException(
                     "Invalid area code length");
@@ -193,18 +254,45 @@ public class PhoneNumber{
      * @param exchangeNumber The exchange number
      */
     public void setExchangeNumber(char[] exchangeNumber){
+        verifyExchangeNumberLength(exchangeNumber);
+        verifyNumeric(exchangeNumber);
         this.exchangeNumber = exchangeNumber;
+    }
+    
+    /**
+     * It sets the exchange number.
+     * @param exchangeNumber The exchange number
+     */
+    public void setExchangeNumber(String exchangeNumber){
+          verifyExchangeNumberLength(exchangeNumber);
+          verifyNumeric(exchangeNumber);
+          for(int i = 0; i < exchangeNumber.length(); i++){
+                this.exchangeNumber[i] = exchangeNumber.charAt(i);
+          }
     }
   
     /**
      * It verifies if the exchange number length is correct.
      * @param exchangeNumber
      * @return true if the exchange number length is correct; otherwise 
-     *   return false
+     *   throws an exception
      */
     private boolean verifyExchangeNumberLength(char[] exchangeNumber){
           if(exchangeNumber.length == EXCHANGE_NUMBER_LENGTH)
               return true;
+          else throw new PhoneNumberInvalidLengthException(
+                    "Invalid exchange number length");
+    }
+    
+    /**
+     * It verifies if the exchange number length is correct.
+     * @param exchangeNumber
+     * @return true if the exchange number length is correct; otherwise 
+     *   throws an exception
+     */
+    private boolean verifyExchangeNumberLength(String exchangeNumber){
+          if(exchangeNumber.length() == EXCHANGE_NUMBER_LENGTH)
+            return true;
           else throw new PhoneNumberInvalidLengthException(
                     "Invalid exchange number length");
     }
@@ -222,18 +310,45 @@ public class PhoneNumber{
      * @param localNumber The local number
      */
     public void setLocalNumber(char[] localNumber){
-          this.localNumber = localNumber;
+        verifyLocalNumberLength(localNumber);
+        verifyNumeric(localNumber);
+        this.localNumber = localNumber;
+    }
+    
+    /**
+     * It sets the local number.
+     * @param localNumber The local number
+     */
+    public void setLocalNumber(String localNumber){
+          verifyLocalNumberLength(localNumber);
+          verifyNumeric(localNumber);
+          for(int i = 0; i < localNumber.length(); i++){
+                this.localNumber[i] = localNumber.charAt(i);
+          }
     }
     
     /**
      * It verifies if the local number length is correct.
      * @param localNumber
      * @return true if the local number length is correct; otherwise 
-     *   return false
+     *   throws an exception
      */
     private boolean verifyLocalNumberLength(char[] localNumber){
           if(localNumber.length == LOCAL_NUMBER_LENGTH)
            return true;
+          else throw new PhoneNumberInvalidLengthException(
+                    "Invalid local number length");
+    }
+    
+    /**
+     * It verifies if the local number length is correct.
+     * @param localNumber
+     * @return true if the local number length is correct; otherwise 
+     *   throws an exception
+     */
+    private boolean verifyLocalNumberLength(String localNumber){
+          if(localNumber.length() == LOCAL_NUMBER_LENGTH)
+            return true;
           else throw new PhoneNumberInvalidLengthException(
                     "Invalid local number length");
     }
@@ -251,6 +366,7 @@ public class PhoneNumber{
      * @param extensionNumber The extension number
      */
     public void setExtensionNumber(ArrayList<Character> extensionNumber){
+        verifyNumeric(extensionNumber);
         this.extensionNumber = extensionNumber;
     }
   
