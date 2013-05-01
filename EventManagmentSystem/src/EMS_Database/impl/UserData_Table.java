@@ -1,5 +1,6 @@
 package EMS_Database.impl;
 
+import BackEnd.UserSystem.Address;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
@@ -564,6 +565,22 @@ public class UserData_Table extends InitDB implements Interface_UserData {
     
 
     ////////////////////// SETTERS ///////////////////////////////
+
+    /**
+     * A method to update the address that takes a type of address. WRAPPER FUNCTION
+     * @param uid the uid to be updated
+     * @param address the address of type Address to use for data to be updated.
+     * @throws DoesNotExistException if the UID does not exist in the table.
+     */
+    @Override
+    public void setAddress(int uid, Address address) throws DoesNotExistException {
+        setStreet(uid,address.getStreet());
+        setCity(uid,address.getCity());
+        setState(uid,address.getState());
+        setZipcode(uid,address.getZipCode());
+        setCountry(uid,address.getCountry());
+    }    
+    
     /**
      * Resets the UID of the user specified by the first argument to the UID of
      * the second argument.
