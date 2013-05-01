@@ -1,6 +1,7 @@
 package EMS_Database;
 
 import BackEnd.UserSystem.Address;
+import BackEnd.UserSystem.User;
 
 /**
  *
@@ -19,6 +20,8 @@ public interface Interface_UserData {
         
 
     // GETTERS
+    public User getUser(int uid) throws DoesNotExistException;
+    
     public int getUIDByEmail(String email) throws DoesNotExistException;
 
     public String getFirstName(int uid) throws DoesNotExistException;
