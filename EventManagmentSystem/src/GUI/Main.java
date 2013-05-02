@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BackEnd.ManagerSystem.EventManager;
 import java.awt.CardLayout;
 
 /**
@@ -12,13 +13,19 @@ import java.awt.CardLayout;
  */
 public class Main extends javax.swing.JPanel {
 
+    
+    private EventManager manager;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
+        manager = new EventManager();
     }
-
+    public void setEventManager(EventManager manager){
+        this.manager = manager;
+        committeeListPanel1.setEventManager(manager);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

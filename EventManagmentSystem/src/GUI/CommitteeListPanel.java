@@ -3,10 +3,13 @@
  * and open the template in the editor.
  */
 package GUI;
+import GUI.Dialog.NewCommitteeDialog;
 import GUI.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import BackEnd.ManagerSystem.EventManager;
+import BackEnd.EventSystem.Committee;
 /**
  *
  * @author Sid
@@ -16,10 +19,28 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     /**
      * Creates new form CommitteeListPanel
      */
+    EventManager manager;
     public CommitteeListPanel() {
         initComponents();
+        manager = new EventManager();
     }
-
+    public void setEventManager(EventManager manager){
+        this.manager = manager;
+        updateInfo();
+    }
+    
+    public void updateInfo()
+    {
+        DefaultListModel model = new DefaultListModel();
+        model.clear();
+        for(Committee c : manager.getSelectedEvent().getCommitteeList()){
+            model.addElement(c.getTitle());
+        }
+        committeeList.setModel(model);
+        committeeList.setSelectedIndex(0);
+        committeePanel1.setCommittee(manager.getSelectedEvent().getCommitteeList().get(0));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -195,13 +216,19 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
     private void committeeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_committeeListValueChanged
         // TODO add your handling code here:
-        committeePanel1.setText((String)committeeList.getSelectedValue());
+        if(committeeList.getSelectedIndex() > 0){
+        committeePanel1.setCommittee(manager.getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex()));
+        }
     }//GEN-LAST:event_committeeListValueChanged
 
     private void addCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCommitteeButtonActionPerformed
         // TODO add your handling code here:
         NewCommitteeDialog cd = new NewCommitteeDialog((JFrame)SwingUtilities.windowForComponent(this), true);
         cd.setVisible(true);
+        if(cd.getConfirm()){
+            manager.getSelectedEvent().getCommitteeList().add(cd.createCommittee());
+            updateInfo();
+        }
     }//GEN-LAST:event_addCommitteeButtonActionPerformed
 
     private void removeCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCommitteeButtonActionPerformed

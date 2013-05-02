@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 package GUI;
+import BackEnd.EventSystem.Event;
+import BackEnd.ManagerSystem.EventManager;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
@@ -18,16 +20,23 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     private UndoManager undo = new UndoManager();
+    private EventManager manager;
     
     /**
      *
      */
-    public Home() {
+    public Home(EventManager manager) {
         initComponents();
-        subEventPanel1.setVisible(false);
-        committeeListPanel1.setVisible(false);
+        this.manager = manager;
+        main1.setEventManager(manager);
     }
-
+    public void setEvent(Event e){
+        manager.setSelectedEvent(e);
+    }
+    public void setEventManager(EventManager manager)
+    {
+        this.manager = manager;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,13 +46,8 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        linkPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
-        subEventPanel1 = new GUI.SubEventPanel();
-        committeeListPanel1 = new GUI.CommitteeListPanel();
+        main1 = new GUI.Main();
         emsMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         printMenuItem = new javax.swing.JMenuItem();
@@ -67,36 +71,8 @@ public class Home extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        linkPanel.setLayout(new java.awt.GridLayout(0, 1, 0, 75));
-
-        jButton1.setText("jButton1");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 100));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        linkPanel.add(jButton1);
-
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        linkPanel.add(jButton2);
-
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        linkPanel.add(jButton3);
-
         mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        mainPanel.add(subEventPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
-        mainPanel.add(committeeListPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
+        mainPanel.add(main1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         fileMenu.setText("File");
 
@@ -209,15 +185,11 @@ public class Home extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(linkPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(linkPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -238,26 +210,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "Registration reports would be here");
     }//GEN-LAST:event_registrationReportsMenuItemActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        subEventPanel1.setVisible(true);
-        committeeListPanel1.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
-        subEventPanel1.setVisible(false);
-        committeeListPanel1.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
-        subEventPanel1.setVisible(false);
-        committeeListPanel1.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void printPreviewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPreviewMenuItemActionPerformed
         // TODO add your handling code here:
@@ -284,44 +236,10 @@ public class Home extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Why does saying budget report make me giggle?");
     }//GEN-LAST:event_budgetReportsMenuItemActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem budgetReportsMenuItem;
-    private GUI.CommitteeListPanel committeeListPanel1;
     private javax.swing.JMenuItem committeeReportsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -331,12 +249,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPanel linkPanel;
+    private GUI.Main main1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem printMenuItem;
@@ -344,7 +259,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem registrationReportsMenuItem;
     private javax.swing.JMenu reportsMenu;
     private javax.swing.JMenuItem saveMenuItem;
-    private GUI.SubEventPanel subEventPanel1;
     private javax.swing.JMenu toolsMenu;
     // End of variables declaration//GEN-END:variables
 }
