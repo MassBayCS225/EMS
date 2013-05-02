@@ -14,6 +14,7 @@ import java.sql.Timestamp;
  * @author Julian Kuk
  */
 public class BudgetItemManager {
+    
 
     private BudgetItem selectedBudgetItem;
 
