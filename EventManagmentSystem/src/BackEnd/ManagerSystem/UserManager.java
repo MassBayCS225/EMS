@@ -75,7 +75,7 @@ public class UserManager
     public void editAddress(Address address) throws PrivilegeInsufficientException, DoesNotExistException
     {
         if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setAddress(selectedUser.getUID(), address)
+            table.setAddress(selectedUser.getUID(), address);
     }
     public void editPhoneNumber(PhoneNumber phoneNumber) throws PrivilegeInsufficientException, DoesNotExistException
     {

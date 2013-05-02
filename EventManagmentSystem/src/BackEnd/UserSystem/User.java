@@ -38,6 +38,10 @@ public class User extends Participant
         setPassword(pword, pwordMatch);
             
     }
+    public User()
+    {
+        super(null, null, null);
+    }
     /**
      * 
      * @param pword         The new password
@@ -93,7 +97,7 @@ public class User extends Participant
         {
             for(int x = 0; x < s.length(); x++)
             {
-                if(ic == s.charAt(x))
+                if(ic ==s.charAt(x))
                     b = false;
             }
         }
