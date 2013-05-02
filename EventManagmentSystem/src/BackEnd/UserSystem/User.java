@@ -89,11 +89,11 @@ public class User extends Participant
     public boolean checkCharacters(String s)
     {
         boolean b = true;
-        for(int ic : ILLEGAL_CHARACTERS)
+        for(char ic : ILLEGAL_CHARACTERS)
         {
             for(int x = 0; x < s.length(); x++)
             {
-                if(ILLEGAL_CHARACTERS[ic]==s.charAt(x))
+                if(ic == s.charAt(x))
                     b = false;
             }
         }
