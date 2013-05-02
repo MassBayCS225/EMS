@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.Dialog;
+
+import BackEnd.EventSystem.Task;
 
 /**
  *
@@ -17,13 +19,12 @@ public class TaskDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    
+   
     public TaskDialog(java.awt.Frame parent, boolean modal, String task){
         super(parent, modal);
         initComponents();
         taskPanel1.setText(task);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

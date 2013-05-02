@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.Dialog;
 
+import BackEnd.EventSystem.Committee;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,9 +16,20 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
     /**
      * Creates new form NewCommitteeDialog
      */
+    private boolean confirm;
     public NewCommitteeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        confirm = false;
+    }
+    
+    public boolean getConfirm()
+    { return confirm; }
+    
+    public Committee createCommittee()
+    {
+        Committee c = new Committee(1,1,nameField.getText());
+        return c;
     }
 
     /**
@@ -34,11 +46,11 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
         headLabel = new javax.swing.JLabel();
         selectedHealLabel = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
-        descriptionLabel = new javax.swing.JLabel();
-        descriptionScrollPane = new javax.swing.JScrollPane();
-        descriptionTextArea = new javax.swing.JTextArea();
+        membersLabel = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -55,11 +67,7 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
             }
         });
 
-        descriptionLabel.setText("Description");
-
-        descriptionTextArea.setColumns(20);
-        descriptionTextArea.setRows(5);
-        descriptionScrollPane.setViewportView(descriptionTextArea);
+        membersLabel.setText("Members");
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +83,13 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
             }
         });
 
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +97,10 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(descriptionScrollPane)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancelButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -95,12 +113,9 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
                                 .addComponent(selectedHealLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchButton))
-                            .addComponent(descriptionLabel))
-                        .addGap(0, 157, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelButton)))
+                            .addComponent(membersLabel)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 157, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -116,10 +131,10 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
                     .addComponent(selectedHealLabel)
                     .addComponent(searchButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionLabel)
+                .addComponent(membersLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(cancelButton)))
@@ -135,12 +150,16 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        confirm = true;
+        dispose();
+        //JOptionPane.showMessageDialog(this, "Not implemented yet.");
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        confirm = false;
+        dispose();
+        //JOptionPane.showMessageDialog(this, "Not implemented yet.");
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -186,10 +205,10 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JScrollPane descriptionScrollPane;
-    private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JLabel headLabel;
+    private javax.swing.JList jList1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel membersLabel;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JButton saveButton;

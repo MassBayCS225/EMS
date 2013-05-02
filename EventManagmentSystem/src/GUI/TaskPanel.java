@@ -38,8 +38,6 @@ public class TaskPanel extends javax.swing.JPanel {
         memberScrollPane = new javax.swing.JScrollPane();
         membersLit = new javax.swing.JList();
         membersLabel = new javax.swing.JLabel();
-        saveButton = new javax.swing.JButton();
-        closeButton = new javax.swing.JButton();
         completeCheckBox = new javax.swing.JCheckBox();
         startDateLabel = new javax.swing.JLabel();
         dueDateLabel = new javax.swing.JLabel();
@@ -61,20 +59,6 @@ public class TaskPanel extends javax.swing.JPanel {
 
         membersLabel.setText("Members");
 
-        saveButton.setText("Save");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-
-        closeButton.setText("Close");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeButtonActionPerformed(evt);
-            }
-        });
-
         completeCheckBox.setText("Is Complete");
 
         startDateLabel.setText("Start Date: MM/DD/YY - 00:00 AM");
@@ -89,12 +73,7 @@ public class TaskPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(descriptionScrollPane)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(saveButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(closeButton))))
+                        .addComponent(descriptionScrollPane))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(headerLabel))
@@ -133,26 +112,11 @@ public class TaskPanel extends javax.swing.JPanel {
                             .addComponent(completeCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dueDateLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(closeButton))
-                .addGap(8, 8, 8))
+                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
-    }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
-    }//GEN-LAST:event_closeButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton closeButton;
     private javax.swing.JCheckBox completeCheckBox;
     private javax.swing.JScrollPane descriptionScrollPane;
     private javax.swing.JTextArea descriptionTextArea;
@@ -161,7 +125,6 @@ public class TaskPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane memberScrollPane;
     private javax.swing.JLabel membersLabel;
     private javax.swing.JList membersLit;
-    private javax.swing.JButton saveButton;
     private javax.swing.JLabel startDateLabel;
     // End of variables declaration//GEN-END:variables
 }
