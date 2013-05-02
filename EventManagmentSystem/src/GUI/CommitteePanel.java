@@ -10,6 +10,7 @@ import BackEnd.EventSystem.Task;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
 import GUI.Dialog.EmailExceptionDialog;
+import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTaskDialog;
 /**
  *
@@ -168,7 +169,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         updateInfo();
     }
     
-    private void updateInfo()
+    public void updateInfo()
     {
         Committee c = manager.getCommitteeManager().getSelectedCommittee();
         
@@ -220,7 +221,15 @@ public class CommitteePanel extends javax.swing.JPanel {
 
     private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        try
+        {
+        manager.getCommitteeManager().removeMember(manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(memberList.getSelectedIndex()), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        updateInfo();
     }//GEN-LAST:event_removeMemberButtonActionPerformed
 
     private void removeTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTaskButtonActionPerformed
@@ -239,7 +248,20 @@ public class CommitteePanel extends javax.swing.JPanel {
 
     private void addMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMemberButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        FindMemberDialog fmd = new FindMemberDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        fmd.setVisible(true);
+        if(fmd.getConfirm())
+        {
+            try
+            {
+                manager.getCommitteeManager().addMember(fmd.createUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        updateInfo();
     }//GEN-LAST:event_addMemberButtonActionPerformed
 
     private void addTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskButtonActionPerformed

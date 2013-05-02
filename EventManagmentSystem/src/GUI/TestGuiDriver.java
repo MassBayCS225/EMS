@@ -39,9 +39,17 @@ public class TestGuiDriver
         MainManager manager = MainManager.getInstance();
         manager.getEventManager().setSelectedEvent(e);            
         User u = new User(1,"A","B","AB@AB.com","ab","ab");
+        User u2 = new User(2,"B","C","BC@BC.com","bc","bc");
+        User u3 = new User(3,"C","D","CD@CD.com","cd","cd");
+        User u4 = new User(4,"D","E","DE@DE.com","de","de");
         u.setAdminPrivilege(true);
-        manager.getUserManager().setSelectedUser(u);
         manager.getUserManager().setLoggedInUser(u);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u2);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u3);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u4);
+        manager.getUserManager().setSelectedUser(u);
+        
         
 //        Home home = new Home();
 //        home.setVisible(true);

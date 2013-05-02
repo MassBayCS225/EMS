@@ -34,7 +34,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         }
         committeeList.setModel(model);
         committeeList.setSelectedIndex(0);
-        committeePanel1.setCommittee(manager.getEventManager().getSelectedEvent().getCommitteeList().get(0));
+        committeePanel1.updateInfo();
     }
     
     /**
@@ -224,12 +224,10 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         cd.setVisible(true);
         if(cd.getConfirm()){
             try{
-            User u = new User(1,"A","B","AB@AB.com","ab","ab");
-            u.setAdminPrivilege(true);
-            manager.getEventManager().addCommittee(cd.createCommittee(),u);
+            manager.getEventManager().addCommittee(cd.createCommittee(),manager.getUserManager().getSelectedUser());
             }
             catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
             updateInfo();
         }
