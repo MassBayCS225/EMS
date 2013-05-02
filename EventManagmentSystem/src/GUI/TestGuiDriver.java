@@ -49,12 +49,12 @@ public class TestGuiDriver
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u3);
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u4);
         manager.getUserManager().setSelectedUser(u);
-        
-        
 //        Home home = new Home();
 //        home.setVisible(true);
-        JFrame frame = new JFrame();
-        frame.add(new Main());
-        frame.setVisible(true);
+        //JFrame frame = new JFrame();
+        //frame.add(new Main());
+        //frame.setVisible(true);
+        Home home = new Home();
+        home.setVisible(true);
     }
 }
