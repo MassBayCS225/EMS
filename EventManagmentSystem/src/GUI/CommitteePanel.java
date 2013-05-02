@@ -3,10 +3,15 @@
  * and open the template in the editor.
  */
 package GUI;
+import GUI.Dialog.TaskDialog;
 import GUI.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import BackEnd.ManagerSystem.CommitteeManager;
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Task;
+import BackEnd.UserSystem.User;
 /**
  *
  * @author Sid
@@ -16,8 +21,11 @@ public class CommitteePanel extends javax.swing.JPanel {
     /**
      * Creates new form CommitteePanel
      */
+    private CommitteeManager manager;
+    
     public CommitteePanel() {
         initComponents();
+        manager = new CommitteeManager();
         
     }
 
@@ -158,6 +166,38 @@ public class CommitteePanel extends javax.swing.JPanel {
     public void setText(String text)
     {
         headerLabel.setText(text);
+    }
+    
+    public void setCommittee(Committee c)
+    {
+        manager.setSelectedCommittee(c);
+        updateInfo();
+    }
+    
+    private void updateInfo()
+    {
+        Committee c = manager.getSelectedCommittee();
+        
+        headerLabel.setText(c.getTitle());
+        
+        if(c.getChair() != null){
+            headNameLabel.setText(c.getChair().getFirstName() + " " + c.getChair().getLastName());
+        }
+        else{
+            headNameLabel.setText("");
+        }
+            
+        DefaultListModel tModel = new DefaultListModel();
+        DefaultListModel mModel = new DefaultListModel();
+        for(User m : c.getMemberList()){
+            mModel.addElement(m.getFirstName() + " " + m.getLastName());
+        }
+        for(Task t : c.getTaskList()){
+            tModel.addElement(t.getDescription());
+        }
+        taskList.setModel(tModel);
+        memberList.setModel(mModel);
+        
     }
     
     private void budgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetButtonActionPerformed
