@@ -14,15 +14,15 @@ public class InputUser {
     private String fname;
     private String lname;
     private String pwd;
-    private String email;
-    
+    private String email;    
     private String phone;
     private String street;
     private String city;
     private String state;
     private String zipcode;
     private String country;
-    private int eventLevel;    
+    private int eventLevel;   
+    private int participant;
     
     /** 
      * User function creates a valid new user to create an insertion into the DB
@@ -51,8 +51,7 @@ public class InputUser {
         this.fname = "default firstname";
         this.lname = "default lastname";
         this.pwd = "password";
-        this.email = "user@email.com";
-        
+        this.email = "user@email.com";        
         this.phone = "8675309";
         this.street = "default streetname";
         this.city = "default city";
@@ -60,6 +59,7 @@ public class InputUser {
         this.zipcode = "AAAAAA";
         this.country = "default country";
         this.eventLevel = 1;
+	this.participant = 0;
     }
     
     public InputUser(User user) {
@@ -87,11 +87,12 @@ public class InputUser {
         } else {
             this.eventLevel = 0;
         }
+	//add participant function here.
                                 
     }
     
     public InputUser(int uid, int level, String fname, String lname, String pwd, String email, String phone, String street, String city , String state, String zipcode, String country,
-            int eventLevel) {
+            int eventLevel, int participant) {
         //manual insertion
         this.uid = uid;
         this.level = level;
@@ -107,6 +108,7 @@ public class InputUser {
         this.zipcode = zipcode;
         this.country = country;
         this.eventLevel = eventLevel;
+	this.participant = participant;
     }
 
     //GETTERS
@@ -160,7 +162,12 @@ public class InputUser {
 
     public int getEventLevel() {
         return eventLevel;
-    }            
+    } 
+
+    public int getParticipant() {
+	return participant;
+    }
+        
 
     //SETTERS
     public void setUid(int uid) {
@@ -214,6 +221,10 @@ public class InputUser {
     public void setEventLevel(int eventLevel) {
         this.eventLevel = eventLevel;
     }
+
+    public void setParticipant(int participant) {
+	this.participant = participant;
+    }        
     
     
 }

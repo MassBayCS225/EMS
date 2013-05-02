@@ -1,7 +1,7 @@
 package EMS_Database;
 
 import BackEnd.UserSystem.Address;
-import BackEnd.UserSystem.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,11 +16,13 @@ public interface Interface_UserData {
     
     public int nextValidUID();
     
-    public boolean removeUser(int uid) throws DoesNotExistException;   
+    public boolean removeUser(int uid) throws DoesNotExistException;        
         
 
     // GETTERS
-    public User getUser(int uid) throws DoesNotExistException;
+    //public User getUser(int uid) throws DoesNotExistException;
+    
+    public ArrayList<Integer> getParticipantList() throws DoesNotExistException;
     
     public int getUIDByEmail(String email) throws DoesNotExistException;
 
@@ -48,15 +50,14 @@ public interface Interface_UserData {
     
     public int getEventCreationPrivilege(int uid) throws DoesNotExistException;
     
+    public boolean getParticipant(int uid) throws DoesNotExistException;
+    
     
     //SETTERS
-<<<<<<< HEAD
+
     public void setUID(int uid, int nuid) throws DuplicateInsertionException , DoesNotExistException;
-=======
-    public void setAddress(int uid , Address address) throws DoesNotExistException;
-    
-    public void setUID(int uid, int nuid) throws DuplicateInsertionException;
->>>>>>> c9cda426642b5f46a090fcfd2f8709b5fedb7c46
+
+    public void setAddress(int uid , Address address) throws DoesNotExistException;   
 
     public void setFirstName(int uid, String fname) throws DoesNotExistException;
     
@@ -81,5 +82,7 @@ public interface Interface_UserData {
     public void setCountry(int uid, String country) throws DoesNotExistException;
     
     public void setEventCreationPrivilege(int uid, int level) throws DoesNotExistException;
+    
+    public void setParticipant(int uid , boolean status) throws DoesNotExistException;
     
 }

@@ -60,48 +60,53 @@ public class DB_Testing {
 
 	//CREATE USER INSERTION
 	
-//	try{
-//	    uid = udt.createUser(iu); 
-//	    System.out.println(udt.getLevel(uid));
-//	    System.out.println(udt.getFirstName(uid));
-//	    System.out.println(udt.getLastName(uid));
-//	    System.out.println(udt.getPwd(uid));
-//	    System.out.println(udt.getEmail(uid));
-//	    System.out.println(udt.getPhone(uid));
-//	    System.out.println(udt.getState(uid));
-//	    System.out.println(udt.getCity(uid));
-//	    System.out.println(udt.getZipcode(uid));
-//	    System.out.println(udt.getCountry(uid));
-//	    System.out.println(udt.getEventCreationPrivilege(uid));
-//	    
-//	    udt.setLevel(uid, 5);
-//	    udt.setFirstName(uid, "new firstname");
-//	    udt.setLastName(uid, "new lastname");
-//	    udt.setPwd(uid, "new pwd");
-//	    udt.setEmail(uid, "new email");
-//	    udt.setPhone(uid, "new phone");
-//	    udt.setStreet(uid, "new street");
-//	    udt.setCity(uid, "new city");
-//	    udt.setState(uid, "new state");
-//	    udt.setZipcode(uid, "new zipcode");
-//	    udt.setCountry(uid, "new country");
-//	    udt.setEventCreationPrivilege(uid, 12);
-//	    
-//	    System.out.println(udt.getLevel(uid));
-//	    System.out.println(udt.getFirstName(uid));
-//	    System.out.println(udt.getLastName(uid));
-//	    System.out.println(udt.getPwd(uid));
-//	    System.out.println(udt.getEmail(uid));
-//	    System.out.println(udt.getPhone(uid));
-//	    System.out.println(udt.getState(uid));
-//	    System.out.println(udt.getCity(uid));
-//	    System.out.println(udt.getZipcode(uid));
-//	    System.out.println(udt.getCountry(uid));
-//	    System.out.println(udt.getEventCreationPrivilege(uid));
-//	    
-//	}catch(DoesNotExistException dnee) {
-//	    System.out.println(dnee.getMessage());
-//	}
+	try{
+	    uid = udt.createUser(iu); 
+	    System.out.println(udt.getLevel(uid));
+	    System.out.println(udt.getFirstName(uid));
+	    System.out.println(udt.getLastName(uid));
+	    System.out.println(udt.getPwd(uid));
+	    System.out.println(udt.getEmail(uid));
+	    System.out.println(udt.getPhone(uid));
+	    System.out.println(udt.getState(uid));
+	    System.out.println(udt.getCity(uid));
+	    System.out.println(udt.getZipcode(uid));
+	    System.out.println(udt.getCountry(uid));
+	    System.out.println(udt.getEventCreationPrivilege(uid));
+	    System.out.println(udt.getParticipant(uid));
+	    
+	    udt.setLevel(uid, 5);
+	    udt.setFirstName(uid, "new firstname");
+	    udt.setLastName(uid, "new lastname");
+	    udt.setPwd(uid, "new pwd");
+	    udt.setEmail(uid, "new email");
+	    udt.setPhone(uid, "new phone");
+	    udt.setStreet(uid, "new street");
+	    udt.setCity(uid, "new city");
+	    udt.setState(uid, "new state");
+	    udt.setZipcode(uid, "new zipcode");
+	    udt.setCountry(uid, "new country");
+	    udt.setEventCreationPrivilege(uid, 12);
+	    udt.setParticipant(uid, true);
+	    
+	    System.out.println(udt.getLevel(uid));
+	    System.out.println(udt.getFirstName(uid));
+	    System.out.println(udt.getLastName(uid));
+	    System.out.println(udt.getPwd(uid));
+	    System.out.println(udt.getEmail(uid));
+	    System.out.println(udt.getPhone(uid));
+	    System.out.println(udt.getState(uid));
+	    System.out.println(udt.getCity(uid));
+	    System.out.println(udt.getZipcode(uid));
+	    System.out.println(udt.getCountry(uid));
+	    System.out.println(udt.getEventCreationPrivilege(uid));
+	    System.out.println(udt.getParticipant(uid));
+	    
+	    System.out.println(udt.getParticipantList());
+	    
+	}catch(DoesNotExistException dnee) {
+	    System.out.println(dnee.getMessage());
+	}
 	
 
 	//CREATE EVENT INSERTION

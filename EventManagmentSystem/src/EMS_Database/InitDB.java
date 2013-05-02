@@ -88,6 +88,7 @@ public abstract class InitDB {
                         + "STATE VARCHAR(50) DEFAULT NULL, "
                         + "ZIPCODE VARCHAR(20) DEFAULT NULL, "
                         + "COUNTRY VARCHAR(100) DEFAULT NULL, "
+			+ "PARTICIPANT VARCHAR(100) DEFAULT NULL, "
                         + "EVENTLEVEL INT NOT NULL)";
 
                 String createEventsTable = "CREATE TABLE EVENTS (UID INT PRIMARY KEY, "
@@ -136,7 +137,7 @@ public abstract class InitDB {
                         + "COMPLETE INT, "
                         + "MANAGER VARCHAR(160) DEFAULT NULL)"; //users in charge of task
 		
-		String createBudgetTable = "";
+		//String createBudgetTable = "";
 
                 Statement stmt = dbConnection.createStatement();
                 stmt.executeUpdate(createUserTable); //takes table string as argument
