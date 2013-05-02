@@ -28,6 +28,11 @@ public class UserManager
     {
         
     }
+    public void setLoggedInUser(User u)
+    {
+        loggedInUser = u;
+    }
+    
     public void addUser() throws PrivilegeInsufficientException
     {
         if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
@@ -43,7 +48,7 @@ public class UserManager
     }
     public void setSelectedUser(User u) throws PrivilegeInsufficientException, DoesNotExistException
     {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
+        //if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
             selectedUser = u;
         
     }
