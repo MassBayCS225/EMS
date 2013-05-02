@@ -4,12 +4,11 @@
  */
 package GUI;
 import GUI.Dialog.NewCommitteeDialog;
-import GUI.*;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import BackEnd.ManagerSystem.EventManager;
 import BackEnd.EventSystem.Committee;
+import BackEnd.ManagerSystem.MainManager;
+import BackEnd.UserSystem.User;
 /**
  *
  * @author Sid
@@ -19,13 +18,10 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     /**
      * Creates new form CommitteeListPanel
      */
-    EventManager manager;
+    MainManager manager;
     public CommitteeListPanel() {
         initComponents();
-        manager = new EventManager();
-    }
-    public void setEventManager(EventManager manager){
-        this.manager = manager;
+        manager = MainManager.getInstance();
         updateInfo();
     }
     
@@ -33,12 +29,12 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     {
         DefaultListModel model = new DefaultListModel();
         model.clear();
-        for(Committee c : manager.getSelectedEvent().getCommitteeList()){
+        for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
             model.addElement(c.getTitle());
         }
         committeeList.setModel(model);
         committeeList.setSelectedIndex(0);
-        committeePanel1.setCommittee(manager.getSelectedEvent().getCommitteeList().get(0));
+        committeePanel1.setCommittee(manager.getEventManager().getSelectedEvent().getCommitteeList().get(0));
     }
     
     /**
@@ -216,8 +212,9 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
     private void committeeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_committeeListValueChanged
         // TODO add your handling code here:
-        if(committeeList.getSelectedIndex() > 0){
-        committeePanel1.setCommittee(manager.getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex()));
+        if(committeeList.getSelectedIndex() >= 0){
+            Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
+            committeePanel1.setCommittee(c);
         }
     }//GEN-LAST:event_committeeListValueChanged
 
@@ -226,14 +223,32 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         NewCommitteeDialog cd = new NewCommitteeDialog((JFrame)SwingUtilities.windowForComponent(this), true);
         cd.setVisible(true);
         if(cd.getConfirm()){
-            manager.getSelectedEvent().getCommitteeList().add(cd.createCommittee());
+            try{
+            User u = new User(1,"A","B","AB@AB.com","ab","ab");
+            u.setAdminPrivilege(true);
+            manager.getEventManager().addCommittee(cd.createCommittee(),u);
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
             updateInfo();
         }
     }//GEN-LAST:event_addCommitteeButtonActionPerformed
 
     private void removeCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCommitteeButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
+        System.out.println(c);
+        try
+        {
+            manager.getEventManager().removeCommittee(c, manager.getUserManager().getSelectedUser());
+        }
+        catch (Exception e)
+        {
+                System.out.println(e);
+                e.printStackTrace();
+        }
+        updateInfo();
     }//GEN-LAST:event_removeCommitteeButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed

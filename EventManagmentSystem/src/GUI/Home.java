@@ -5,6 +5,7 @@
 package GUI;
 import BackEnd.EventSystem.Event;
 import BackEnd.ManagerSystem.EventManager;
+import BackEnd.ManagerSystem.MainManager;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
@@ -20,22 +21,18 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     private UndoManager undo = new UndoManager();
-    private EventManager manager;
+    private MainManager manager;
     
     /**
      *
      */
-    public Home(EventManager manager) {
+    public Home() {
         initComponents();
-        this.manager = manager;
-        main1.setEventManager(manager);
+        manager = MainManager.getInstance();
+        //main1.setEventManager(manager);
     }
     public void setEvent(Event e){
-        manager.setSelectedEvent(e);
-    }
-    public void setEventManager(EventManager manager)
-    {
-        this.manager = manager;
+        manager.getEventManager().setSelectedEvent(e);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,7 +44,6 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        main1 = new GUI.Main();
         emsMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         printMenuItem = new javax.swing.JMenuItem();
@@ -72,7 +68,6 @@ public class Home extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        mainPanel.add(main1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         fileMenu.setText("File");
 
@@ -186,11 +181,11 @@ public class Home extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
         );
 
         pack();
@@ -251,7 +246,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private GUI.Main main1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem printMenuItem;
