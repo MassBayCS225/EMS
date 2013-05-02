@@ -77,10 +77,12 @@ public class EventManager {
             selectedEvent.getOrganizerList().add(organizer);
             // write to database
 
+            /*
             Integer organizerUserID = new Integer(userDataTable.getUIDByEmail(organizer.getEmailAddress()));
             ArrayList<Integer> newOrganizerList = eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
             newOrganizerList.add(organizerUserID);
             eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(), newOrganizerList);
+            * */
 
         }
     }
@@ -90,12 +92,14 @@ public class EventManager {
             selectedEvent.getOrganizerList().remove(organizer);
             // write to database
 
+            /*
             Integer organizerUserID = new Integer(userDataTable.getUIDByEmail(organizer.getEmailAddress()));
             ArrayList<Integer> newOrganizerList = eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
             newOrganizerList.remove(organizerUserID);
             eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(), newOrganizerList);
 
             // remove all related database entries
+            * */
 
         }
     }
@@ -105,10 +109,12 @@ public class EventManager {
             selectedEvent.getSubEventList().add(subEvent);
             // write to database
 
+            /*
             Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
             ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
             newSubEventList.add(subEventID);
             eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
+            * */
         }
     }
 
@@ -117,12 +123,14 @@ public class EventManager {
             selectedEvent.getSubEventList().remove(subEvent);
             // write to database
 
+            /*
             Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
             ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
             newSubEventList.remove(subEventID);
             eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
 
             // remove all related database entries
+            * */
         }
     }
 
@@ -132,10 +140,12 @@ public class EventManager {
 
             // write to database
 
+            /*
             Integer committeeID = new Integer(committee.getCOMMITTEE_ID());
             ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
             newCommitteeList.add(committeeID);
             eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
+            * */
         }
     }
 
@@ -144,6 +154,7 @@ public class EventManager {
             selectedEvent.getCommitteeList().remove(committee);
             // write to database
 
+            /*
             Integer committeeID = new Integer(committee.getCOMMITTEE_ID());
             ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
             newCommitteeList.remove(committeeID);
@@ -151,6 +162,7 @@ public class EventManager {
 
             // remove all related database entries
 
+* */
         }
     }
 
@@ -183,7 +195,9 @@ public class EventManager {
             selectedEvent.setDescription(description);
             // write to database
 
+            /*
             eventsTable.setDescription(selectedEvent.getEVENT_ID(), description);
+            * */
         }
     }
 
@@ -192,12 +206,14 @@ public class EventManager {
             selectedEvent.setLocation(location);
             // write to database
 
+            /*
             // eventsTable.setDetails(selectedEvent.getEVENT_ID(), location.getDetails());
             eventsTable.setStreet(selectedEvent.getEVENT_ID(), location.getStreet());
             eventsTable.setCity(selectedEvent.getEVENT_ID(), location.getCity());
             eventsTable.setState(selectedEvent.getEVENT_ID(), location.getState());
             eventsTable.setZipcode(selectedEvent.getEVENT_ID(), location.getZipCode());
             eventsTable.setCountry(selectedEvent.getEVENT_ID(), location.getCountry());
+            * */
         }
     }
 
@@ -207,7 +223,9 @@ public class EventManager {
             selectedEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
             // write to database
 
+            /*
             eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
+            * */
         }
     }
 
@@ -217,7 +235,10 @@ public class EventManager {
             selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
             // write to database
             
+            /*
             eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getEndDateTimeTimestamp());
+            * */
         }
     }
+    
 }
