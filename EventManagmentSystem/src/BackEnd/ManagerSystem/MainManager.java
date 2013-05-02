@@ -31,6 +31,13 @@ public class MainManager {
         userManager = new UserManager();
 
     }
+    	private static class Main {
+		public static MainManager instance = new MainManager();
+	}
+
+	public static MainManager getInstance() {
+		return Main.instance;
+	}
 
     public BudgetItemManager getBudgetItemManager() {
         return budgetItemManager;
