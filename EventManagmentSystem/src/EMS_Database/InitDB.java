@@ -137,7 +137,13 @@ public abstract class InitDB {
                         + "COMPLETE INT, "
                         + "MANAGER VARCHAR(160) DEFAULT NULL)"; //users in charge of task
 		
-		//String createBudgetTable = "";
+		String createIncomeTable = "CREATE TABLE INCOME (UID INT PRIMARY KEY, "
+			+"DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
+			+"VALUE DOUBLE)";
+		
+		String createExpenseTable = "CREATE TABLE EXPENSE (UID INT PRIMARY KEY, "
+			+"DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
+			+"VALUE DOUBLE)";
 
                 Statement stmt = dbConnection.createStatement();
                 stmt.executeUpdate(createUserTable); //takes table string as argument
@@ -150,6 +156,10 @@ public abstract class InitDB {
                 debugLog.info("COMMITTEE table created successfully");
                 stmt.executeUpdate(createTasksTable);
                 debugLog.info("TASKS table created successfully");
+		stmt.executeUpdate(createIncomeTable);
+		debugLog.info("INCOME table created successfully");
+		stmt.executeUpdate(createExpenseTable);
+		debugLog.info("EXPENSE table created successfully");
 
 
             } catch (SQLException sqlee) { //serious errors if this gets thrown

@@ -2,6 +2,7 @@ package EMS_Database.impl;
 
 import BackEnd.UserSystem.Address;
 import BackEnd.UserSystem.IllegalCharacterException;
+import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.DuplicateInsertionException;
@@ -111,7 +112,7 @@ public class UserData_Table extends InitDB implements Interface_UserData {
 	    AddAddressStmt.setString(11, user.getZipcode());
 	    AddAddressStmt.setString(12, user.getCountry());
 	    AddAddressStmt.setInt(13, user.getParticipant());
-	    AddAddressStmt.setInt(14, user.getEventLevel());	    
+	    AddAddressStmt.setInt(14, user.getEventLevel());
 
 	    //Execute Statement
 	    AddAddressStmt.executeUpdate();
@@ -281,71 +282,70 @@ public class UserData_Table extends InitDB implements Interface_UserData {
 	return UIDList; // should not be zero
     }
 
-    ///////////////////// GETTERS ////////////////////////////
-    //    @Override
-    //    public User getUser(int uid) throws DoesNotExistException {
-    //        try {
-    //
-    //            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS WHERE UID=?");
-    //            idQueryStmt.setInt(1, uid);
-    //            ResultSet rs = idQueryStmt.executeQuery();
-    //
-    //            User user = new User();
-    //            Address address = new Address();
-    //
-    //            while (rs.next()) {
-    //
-    //                if(rs.getInt("LEVEL") == 1){
-    //                    user.setAdminPrivilege(true);
-    //                } else {
-    //                    user.setAdminPrivilege(false);
-    //                }
-    //
-    //                user.setFirstName(rs.getString("FNAME"));
-    //
-    //                user.setLastName(rs.getString("LNAME"));
-    //
-    //                try{
-    //                user.setPassword(rs.getString("PWD"),rs.getString("PWD")); //fix this
-    //                } catch (IllegalCharacterException ice) {
-    //
-    //                } catch (PasswordMismatchError pme){
-    //
-    //                }
-    //
-    //                user.setEmailAddress(rs.getString("EMAIL"));
-    //
-    //                user.setPhoneNumber(null);
-    //
-    //                address.setStreet(rs.getString("STREET"));
-    //
-    //                address.setCity(rs.getString("CITY"));
-    //
-    //                address.setState(rs.getString("STATE"));
-    //
-    //                address.setZipCode(rs.getString("ZIPCODE"));
-    //
-    //                address.setCountry(rs.getString("COUNTRY"));
-    //
-    //                user.setAddress(address); //insert address into user.
-    //
-    //                if(rs.getInt("EVENTLEVEL")==1){
-    //                    user.setEventCreationPrivilege(true);
-    //                } else {
-    //                    user.setEventCreationPrivilege(false);
-    //                }
-    //
-    //
-    //            }
-    //
-    //        } catch (SQLException sqle) {
-    //            sqle.printStackTrace();
-    //            System.exit(1);
-    //        }
-    //
-    //        throw new DoesNotExistException("User does not exist in USERS table");
-    //    }
-    
+    ///////////////////// GETTERS ////////////////////////////        
+    public User getUser(int uid) throws DoesNotExistException {
+	try {
+
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    User user = new User();
+	    Address address = new Address();
+
+	    while (rs.next()) {
+
+		if (rs.getInt("LEVEL") == 1) {
+		    user.setAdminPrivilege(true);
+		} else {
+		    user.setAdminPrivilege(false);
+		}
+
+		user.setFirstName(rs.getString("FNAME"));
+
+		user.setLastName(rs.getString("LNAME"));
+
+		try {
+		    user.setPassword(rs.getString("PWD"), rs.getString("PWD")); //fix this
+		} catch (IllegalCharacterException ice) {
+		    debugLog.severe("password issues");
+		} catch (PasswordMismatchError pme) {
+		    debugLog.severe("password issues");
+		}
+
+		user.setEmailAddress(rs.getString("EMAIL"));
+
+		user.setPhoneNumber(null);
+
+		address.setStreet(rs.getString("STREET"));
+
+		address.setCity(rs.getString("CITY"));
+
+		address.setState(rs.getString("STATE"));
+
+		address.setZipCode(rs.getString("ZIPCODE"));
+
+		address.setCountry(rs.getString("COUNTRY"));
+
+		user.setAddress(address); //insert address into user.
+
+		if (rs.getInt("EVENTLEVEL") == 1) {
+		    user.setEventCreationPrivilege(true);
+		} else {
+		    user.setEventCreationPrivilege(false);
+		}
+
+
+	    }
+
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+
+	throw new DoesNotExistException("User does not exist in USERS table");
+    }
+
     /**
      * A function to that returns true or false if the user is a participant.
      *
