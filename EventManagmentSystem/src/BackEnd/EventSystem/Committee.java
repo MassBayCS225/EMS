@@ -67,6 +67,19 @@ public class Committee implements Reportable {
         return memberList;
     }
     
+    public ArrayList<User> getMemberListWithChair() throws NullChairException {
+        for (User member : memberList)
+            if (member.equals(chair))
+                return memberList;
+        
+        if (chair != null)
+            memberList.add(chair);
+        else
+            throw new NullChairException("Error: Object chair is currently null. Unable to add to member list.");
+        
+        return memberList;
+    }
+    
     public void setBudgetAccessList(ArrayList<User> budgetAccessList) {
         this.budgetAccessList = budgetAccessList;
     }
@@ -114,18 +127,12 @@ public class Committee implements Reportable {
     }
     
     public String toString() {
-        int totalBudget = 0;
         String taskDescriptions = "";
-        
-        /** commenting this out temporarily just so it compiles
-        for (int income : budget.getIncomeList())
-            totalBudget += income.getValue();
-            * */
         
         for (Task task : taskList)
             taskDescriptions += task.toString() + "\n";
             
-        return "Committee Title: " + title +"\nTotal Budget: " + totalBudget + "\nTask List: \n" + taskDescriptions;
+        return "Committee Title: " + title + "\nTotal Budget: $" + budget.getTotalBudget() + "\nTask List: \n" + taskDescriptions;
     }
     
     public ArrayList<String> getReport() {

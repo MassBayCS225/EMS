@@ -96,7 +96,6 @@ public class TimeSchedule {
             return false;
     }
     
-    // Edit.
     public String toString() {
         return "Start Date & Time: " + startDateTime.get(Calendar.MONTH) + "/" + startDateTime.get(Calendar.DAY_OF_MONTH) +
                 "/" + startDateTime.get(Calendar.YEAR) + " " + String.format("%02d", startDateTime.get(Calendar.HOUR_OF_DAY)) + ":" +
