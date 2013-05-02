@@ -9,6 +9,7 @@ import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Task;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import GUI.Dialog.EmailExceptionDialog;
 import GUI.Dialog.NewTaskDialog;
 /**
  *
@@ -230,7 +231,8 @@ public class CommitteePanel extends javax.swing.JPanel {
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            EmailExceptionDialog eed = new EmailExceptionDialog((JFrame)SwingUtilities.windowForComponent(this), true, e);
+            eed.setVisible(true);
         }
         updateInfo();
     }//GEN-LAST:event_removeTaskButtonActionPerformed
