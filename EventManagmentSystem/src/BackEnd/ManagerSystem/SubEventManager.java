@@ -42,16 +42,16 @@ public class SubEventManager {
         }
     }
 
-    public void editStartDateTime(Timestamp startDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.getTimeSchedule().setStartDateTime(startDateTime);
+            selectedSubEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
             // write to database
         }
     }
 
-    public void editEndDateTime(Timestamp endDateTime, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.getTimeSchedule().setEndDateTime(endDateTime);
+            selectedSubEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
             // write to database
         }
     }
