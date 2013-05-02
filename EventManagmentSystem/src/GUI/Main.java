@@ -22,6 +22,7 @@ public class Main extends javax.swing.JPanel {
     public Main() {
         initComponents();
         manager = MainManager.getInstance();
+        setSize(850,650);
     }
 
     /**

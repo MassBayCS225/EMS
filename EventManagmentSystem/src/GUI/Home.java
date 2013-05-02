@@ -29,7 +29,9 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
-        //main1.setEventManager(manager);
+        Main m = new Main();
+        add(m);
+        setVisible(true);
     }
     public void setEvent(Event e){
         manager.getEventManager().setSelectedEvent(e);
@@ -43,7 +45,6 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
         emsMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         printMenuItem = new javax.swing.JMenuItem();
@@ -66,8 +67,7 @@ public class Home extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setPreferredSize(new java.awt.Dimension(900, 700));
 
         fileMenu.setText("File");
 
@@ -179,13 +179,11 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE))
+            .addGap(0, 620, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+            .addGap(0, 374, Short.MAX_VALUE)
         );
 
         pack();
@@ -246,7 +244,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem printMenuItem;
     private javax.swing.JMenuItem printPreviewMenuItem;
