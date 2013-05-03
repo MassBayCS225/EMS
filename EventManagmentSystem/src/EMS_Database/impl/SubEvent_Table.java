@@ -79,7 +79,7 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
         ArrayList<Integer> UIDList = new ArrayList<Integer>();
         try {
 
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS");
             ResultSet rs = idQueryStmt.executeQuery();
 
             while (rs.next()) {
@@ -107,17 +107,18 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
 
         try {
             //Creating Statement
-            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO SUBEVENTS VALUES(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO SUBEVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)");
             AddAddressStmt.setInt(1, newUID);
             AddAddressStmt.setString(2, subevent.getDescription());
-            AddAddressStmt.setInt(3, subevent.getComplete());
-            AddAddressStmt.setString(4, subevent.getStreet());
-            AddAddressStmt.setString(5, subevent.getCity());
-            AddAddressStmt.setString(6, subevent.getState());
-            AddAddressStmt.setString(7, subevent.getZipcode());
-            AddAddressStmt.setString(8, subevent.getCountry());
-            AddAddressStmt.setTimestamp(9, subevent.getStartTime());
-            AddAddressStmt.setTimestamp(10, subevent.getEndTime());
+	    AddAddressStmt.setString(3, subevent.getDetails());
+            AddAddressStmt.setInt(4, subevent.getComplete());
+            AddAddressStmt.setString(5, subevent.getStreet());
+            AddAddressStmt.setString(6, subevent.getCity());
+            AddAddressStmt.setString(7, subevent.getState());
+            AddAddressStmt.setString(8, subevent.getZipcode());
+            AddAddressStmt.setString(9, subevent.getCountry());
+            AddAddressStmt.setTimestamp(10, subevent.getStartTime());
+            AddAddressStmt.setTimestamp(11, subevent.getEndTime());
 
             //Execute Statement
             AddAddressStmt.executeUpdate();
@@ -177,6 +178,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
                 returnQuery.append(",");
                 returnQuery.append(rs.getString("DESCRIPTION"));
                 returnQuery.append(",");
+		returnQuery.append(rs.getString("DETAILS"));
+                returnQuery.append(",");
                 returnQuery.append(rs.getInt("COMPLETE"));
                 returnQuery.append(",");
                 returnQuery.append(rs.getString("STREET"));
@@ -230,7 +233,7 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
     ////////////////////////GETTERS/////////////////////////
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-        String returnQuery = "";
+        String returnQuery = null;
         try {
 
             PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
@@ -243,8 +246,9 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             }
             
             //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-                throw new DoesNotExistException("SubEvent");
+            if (returnQuery == null) {
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent description");
             } else {
                 return returnQuery;
             }
@@ -255,6 +259,35 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
         }
         return null;
     }
+
+    @Override
+    public String getDetails(int uid) throws DoesNotExistException {
+	String returnQuery = "";
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getString("DETAILS"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if ("".equals(returnQuery)) {
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent details");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return null;
+    }        
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
@@ -272,7 +305,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if ("".equals(returnQuery)) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent street");
             } else {
                 return returnQuery;
             }
@@ -300,7 +334,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if ("".equals(returnQuery)) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent city");
             } else {
                 return returnQuery;
             }
@@ -328,7 +363,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if ("".equals(returnQuery)) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent state");
             } else {
                 return returnQuery;
             }
@@ -356,7 +392,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if ("".equals(returnQuery)) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent zipcode");
             } else {
                 return returnQuery;
             }
@@ -384,7 +421,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if ("".equals(returnQuery)) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent country");
             } else {
                 return returnQuery;
             }
@@ -412,7 +450,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if (returnQuery == null) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent startdate");
             } else {
                 return returnQuery;
             }
@@ -440,7 +479,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if (returnQuery == null) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent enddate");
             } else {
                 return returnQuery;
             }
@@ -468,7 +508,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             
             //checking for existance of that uid
             if (returnQuery == 3) {
-                throw new DoesNotExistException("SubEvent");
+		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
+                throw new DoesNotExistException("SubEvent complete");
             } else {
                 return returnQuery;
             }
@@ -477,7 +518,7 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
             sqle.printStackTrace();
             System.exit(1);
         }
-        throw new DoesNotExistException("SubEvent");
+        throw new DoesNotExistException("SubEvent complete");
     }
     
     
@@ -497,6 +538,32 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
 	    if (exists) {
 		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET DESCRIPTION=? WHERE UID=?");
 		idQueryStmt.setString(1, description);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
+	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
+	}
+    }
+
+    @Override
+    public void setDetails(int uid, String details) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET DETAILS=? WHERE UID=?");
+		idQueryStmt.setString(1, details);
 		idQueryStmt.setInt(2, uid);
 		idQueryStmt.executeUpdate();
 	    } else {

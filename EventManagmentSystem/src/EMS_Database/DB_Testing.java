@@ -38,19 +38,21 @@ public class DB_Testing {
 	ArrayList<Integer> list = new ArrayList<Integer>();
 	list.add(3);
 	list.add(4);
-	InputEventData ied = new InputEventData("first event", "The Woods", startDate, endDate, 0, "181 Bacon St.", "Natick", "MA", "01760", "MURICA!", list, list, list, list);
+	InputEventData ied = new InputEventData();
 	//BOGUS SubEvents table data
-	InputSubEventData ised = new InputSubEventData("awesome event", 1, "181 Bacon St.", "Natick", "MA", "01760", "MURICA!", startDate, endDate);
+	InputSubEventData ised = new InputSubEventData();
 	//BOGUS Committees table data
-	InputCommittee ic = new InputCommittee("Knights Of The Round Table", 1, "1,2", "1,2", "1,2", 100000.1);
+	InputCommittee ic = new InputCommittee();
 	//BOGUS Tasks table data
-	InputTask it = new InputTask("Stop Programming So Much", "181 Bacon St.", "Natick", "MA", "01760", "MURICA!", startDate, endDate, 0, "2,1,");
+	InputTask it = new InputTask();
 	//BOGUS UserData table data
 	InputUser iu = new InputUser(); //can be declared with no data.
 	//BOGUS Income data
-	InputIncome in = new InputIncome("some large sum of money", 0.01);
+	//InputIncome in = new InputIncome("some large sum of money", 0.01);
+	InputIncome in = new InputIncome();
 	//BOGUS Expense data
-	InputExpense ex = new InputExpense("something expensive", 0.02);
+	//InputExpense ex = new InputExpense("something expensive", 0.02);
+	InputExpense ex = new InputExpense();
 
 
 
@@ -73,29 +75,25 @@ public class DB_Testing {
 //	    inTable.insertBudgetItem(in);	    
 //	}
 	//System.out.print(inTable.queryEntireTable());
-	try {
-	    uid = 1;
-//	System.out.println(exTable.queryEntireTable());
-//	System.out.println("Total Expences: " + exTable.total());
-//	System.out.println(inTable.queryEntireTable());
-//	System.out.println("Total Income: " + inTable.total());
-
-	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
-	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
-	    
-	    exTable.setDescription(uid, "new expense");
-	    inTable.setDescription(uid, "new income");
-	    exTable.setValue(uid, 100.55);
-	    inTable.setValue(uid, 564.8);
-	    
-	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
-	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
-	    
-	    
-
-	} catch (DoesNotExistException dnee) {
-	    System.err.println(dnee.getMessage());
-	}
+//	try {
+//	    uid = 1;
+//
+//	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
+//	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
+//	    
+//	    exTable.setDescription(uid, "new expense");
+//	    inTable.setDescription(uid, "new income");
+//	    exTable.setValue(uid, 100.55);
+//	    inTable.setValue(uid, 564.8);
+//	    
+//	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
+//	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
+//	    
+//	    
+//
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
 
 
 
@@ -159,9 +157,10 @@ public class DB_Testing {
 	// System.out.println(et.queryEntireTable());        
 	// System.out.println(); //blank line.
 //        try{
-//            uid = 6;
-//	    list.add(12);
+//            uid = 3;
+//	    list.add(46);
 //            System.out.println(et.getDescription(uid));
+//	    System.out.println(et.getDetails(uid));
 //            System.out.println(et.getStartDate(uid));
 //            System.out.println(et.getEndDate(uid));
 //            System.out.println(et.getComplete(uid));
@@ -173,23 +172,25 @@ public class DB_Testing {
 //            System.out.println(et.getOrganizerList(uid));  
 //            System.out.println(et.getSubEventList(uid));  
 //            System.out.println(et.getParticipantList(uid));  
-//            System.out.println(et.getCommittee(uid));   
-//	    
-//	    et.setDescription(uid, "new description");
-//	    et.setStartDate(uid, startDate);
-//	    et.setEndDate(uid, endDate);
-//            et.setComplete(uid, 1);
-//            et.setStreet(uid, "Mulholland Drive");
-//            et.setCity(uid, "Tokyo");
-//            et.setState(uid, "XYZ");
-//            et.setZipcode(uid, "90210");
-//            et.setCountry(uid, "JAPAN!");
-//            et.setOrganizerList(uid, list);
-//            et.setSubEventList(uid, list);
-//            et.setParticipantList(uid, list);
-//            et.setCommittee(uid, list);           
+//            System.out.println(et.getCommittee(uid));   	    
+//	   
+//	    et.setDescription(uid, "new description");	   
+//	    et.setDetails(uid, "new details");	   
+//	    et.setStartDate(uid, startDate);	   
+//	    et.setEndDate(uid, endDate);	   
+//            et.setComplete(uid, 1);	   
+//            et.setStreet(uid, "Mulholland Drive");	   
+//            et.setCity(uid, "Tokyo");	   
+//            et.setState(uid, "XYZ");	   
+//            et.setZipcode(uid, "90210");	   
+//            et.setCountry(uid, "JAPAN!");	   
+//            et.setOrganizerList(uid, list);	   
+//            et.setSubEventList(uid, list);	   
+//            et.setParticipantList(uid, list);	   
+//            et.setCommittee(uid, list);       	   
 //	    
 //	    System.out.println(et.getDescription(uid));
+//	    System.out.println(et.getDetails(uid));
 //            System.out.println(et.getStartDate(uid));
 //            System.out.println(et.getEndDate(uid));
 //            System.out.println(et.getComplete(uid));
@@ -204,9 +205,10 @@ public class DB_Testing {
 //            System.out.println(et.getCommittee(uid));   
 //	    
 //	                
-//        }catch(DoesNotExistException dnee){            
+//        }catch(DoesNotExistException dnee){	    
 //            System.err.println(dnee.getMessage());
 //        }
+//	System.out.println("\n\n");
 
 
 	//CREATE SUBEVENT INSERTION
@@ -219,8 +221,9 @@ public class DB_Testing {
 	//System.out.println(set.queryEntireTable());
 
 //        try{
-//            uid = 4;
+//            uid = 2;
 //            System.out.println(set.getDescription(uid));
+//	    System.out.println(set.getDetails(uid));
 //            System.out.println(set.getComplete(uid));
 //            System.out.println(set.getStreet(uid));
 //            System.out.println(set.getCity(uid));
@@ -228,18 +231,20 @@ public class DB_Testing {
 //            System.out.println(set.getZipcode(uid));
 //            System.out.println(set.getStartDate(uid));
 //            System.out.println(set.getEndDate(uid));
-//	    
-//            set.setDescription(uid, "Better Description!");
-//            set.setStreet(uid,"28 Mullholand Drive");
-//            set.setCity(uid,"Amherst");
-//            set.setState(uid, "Massachusetts");
-//            set.setZipcode(uid, "12345");
-//            set.setCountry(uid, "USA");
-//            set.setStartDate(uid, startDate);
-//            set.setEndDate(uid, endDate);
-//            set.setComplete(uid, 1);
+//	    	    
+//            set.setDescription(uid, "Better Description!");	    
+//	    set.setDetails(uid, "new details");	    
+//            set.setStreet(uid,"28 Mullholand Drive");	    
+//            set.setCity(uid,"Amherst");	    
+//            set.setState(uid, "Massachusetts");	    
+//            set.setZipcode(uid, "12345");	    
+//            set.setCountry(uid, "USA");	    
+//            set.setStartDate(uid, startDate);	    
+//            set.setEndDate(uid, endDate);	    
+//            set.setComplete(uid, 1);	    
 //	    
 //	    System.out.println(set.getDescription(uid));
+//	    System.out.println(set.getDetails(uid));
 //            System.out.println(set.getComplete(uid));
 //            System.out.println(set.getStreet(uid));
 //            System.out.println(set.getCity(uid));
@@ -249,9 +254,11 @@ public class DB_Testing {
 //            System.out.println(set.getEndDate(uid));
 //            
 //        } catch(DoesNotExistException dnee) {
+//	    System.err.println("an error has occured.");
 //            System.err.println(dnee.getMessage());
-//        }        
-//	    System.out.println(set.queryEntireTable()); 
+//        }   
+
+	//System.out.println("\n\n");	    
 
 	//CREATE COMMITTEE INSERTION
 //        try{
@@ -262,7 +269,7 @@ public class DB_Testing {
 //        }
 //        //System.out.println(ct.queryEntireTable());
 //        try{
-//            uid = 2;
+//            uid = 5;
 //            System.out.println(ct.getTitle(uid));
 //            System.out.println(ct.getChairman(uid));
 //            System.out.println(ct.getBudgetAccessList(uid));
@@ -291,50 +298,106 @@ public class DB_Testing {
 
 
 	//CREATE TASKS INSERTION
-//        try {
-//            uid = tt.createTask(it);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
+//	try {
+//	    uid = tt.createTask(it);
+//	    System.out.println("The created uid = " + uid);
+//	} catch (DuplicateInsertionException die) {
+//	    System.err.println("Duplicate Insertion? that shouldn't be happening :/");
+//	}
 
 //        System.out.println(tt.queryEntireTable());
-//        try{
-//            uid = 0;
-//            System.out.println(tt.getDescription(uid));
-//            System.out.println(tt.getStreet(uid));
-//            System.out.println(tt.getCity(uid));
-//            System.out.println(tt.getState(uid));
-//            System.out.println(tt.getZipcode(uid));
-//            System.out.println(tt.getCountry(uid));
-//            System.out.println(tt.getStartDate(uid));
-//            System.out.println(tt.getEndDate(uid));
-//            System.out.println(tt.getComplete(uid));
-//            System.out.println(tt.getAuthority(uid));
-//            
-//        } catch (DoesNotExistException dnee) {
-//            System.err.println(dnee.getMessage());
-//        }
-//        try{
-//            
-//            uid = 6;
-//            
-//            tt.setDescription(uid, "set description");
-//            tt.setStreet(uid, "set street");
-//            tt.setCity(uid, "set city");
-//            tt.setState(uid, "set state");
-//            tt.setZipcode(uid, "set zipcode");
-//            tt.setCountry(uid, "se country");
-//            tt.setStartDate(uid, startDate);
-//            tt.setEndDate(uid, endDate);
-//            tt.setComplete(uid, 1);
-//            tt.setAuthority(uid, list);
-//            
-//        } catch(DoesNotExistException dnee) {            
-//            System.err.println(dnee.getMessage());
-//        }
-//        System.out.println(tt.queryEntireTable());
-//        
+//	try {
+//	    uid = 1;
+//	    System.out.println(tt.getDescription(uid));
+//	    System.out.println(tt.getDetails(uid));
+//	    System.out.println(tt.getStreet(uid));
+//	    System.out.println(tt.getCity(uid));
+//	    System.out.println(tt.getState(uid));
+//	    System.out.println(tt.getZipcode(uid));
+//	    System.out.println(tt.getCountry(uid));
+//	    System.out.println(tt.getStartDate(uid));
+//	    System.out.println(tt.getEndDate(uid));
+//	    System.out.println(tt.getComplete(uid));
+//	    System.out.println(tt.getAuthority(uid));
+//
+//	    tt.setDescription(uid, "set description");
+//	    tt.setDetails(uid, "set details");
+//	    tt.setStreet(uid, "set street");
+//	    tt.setCity(uid, "set city");
+//	    tt.setState(uid, "set state");
+//	    tt.setZipcode(uid, "set zipcode");
+//	    tt.setCountry(uid, "se country");
+//	    tt.setStartDate(uid, startDate);
+//	    tt.setEndDate(uid, endDate);
+//	    tt.setComplete(uid, 1);
+//	    tt.setAuthority(uid, list);
+//
+//	    System.out.println(tt.getDescription(uid));
+//	    System.out.println(tt.getDetails(uid));
+//	    System.out.println(tt.getStreet(uid));
+//	    System.out.println(tt.getCity(uid));
+//	    System.out.println(tt.getState(uid));
+//	    System.out.println(tt.getZipcode(uid));
+//	    System.out.println(tt.getCountry(uid));
+//	    System.out.println(tt.getStartDate(uid));
+//	    System.out.println(tt.getEndDate(uid));
+//	    System.out.println(tt.getComplete(uid));
+//	    System.out.println(tt.getAuthority(uid));
+//
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
+//	System.out.println("\n\n");
+////        System.out.println(tt.queryEntireTable());
+
+	// just to see whats there.
+//	System.out.println("EVENTS TABLE");
+//	System.out.print(et.queryEntireTable());
+//	System.out.println("SUBEVENTS TABLE");
+//	System.out.print(set.queryEntireTable());
+//	System.out.println("TASKS TABLE");
+//	System.out.print(tt.queryEntireTable());
+	
+	//CREATE BUDGET TESTS
+	try{
+	    uid = exTable.insertBudgetItem(ex);
+	    
+	    System.out.println(exTable.getDescription(uid));
+	    System.out.println(exTable.getDate(uid));
+	    System.out.println(exTable.getValue(uid));
+	    
+	    exTable.setDescription(uid, "new description");
+	    exTable.setDate(uid, endDate);
+	    exTable.setValue(uid, 654.8);	    
+	    
+	    System.out.println(exTable.getDescription(uid));
+	    System.out.println(exTable.getDate(uid));
+	    System.out.println(exTable.getValue(uid));	    	    
+	    
+	    System.out.println(exTable.total());
+	    System.out.println(exTable.queryEntireTable());
+	    
+	    
+	    uid = inTable.insertBudgetItem(in);
+	    
+	    System.out.println(inTable.getDescription(uid));
+	    System.out.println(inTable.getDate(uid));
+	    System.out.println(inTable.getValue(uid));
+	    
+	    inTable.setDescription(uid, "new description");
+	    inTable.setDate(uid, endDate);
+	    inTable.setValue(uid, 12335.58);
+	    
+	    System.out.println(inTable.getDescription(uid));
+	    System.out.println(inTable.getDate(uid));
+	    System.out.println(inTable.getValue(uid));
+	    
+	    System.out.println(inTable.total());
+	    System.out.println(inTable.queryEntireTable());
+	    
+	} catch(DoesNotExistException dnee){
+	    System.err.println(dnee.getMessage());
+	}
     }
 
     public static void main(String[] args) {

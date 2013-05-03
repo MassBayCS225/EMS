@@ -9,6 +9,7 @@ import EMS_Database.Interface_BudgetData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -74,6 +75,8 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
                 returnQuery.append(",");
                 returnQuery.append(rs.getString("DESCRIPTION"));
                 returnQuery.append(",");
+		returnQuery.append(rs.getString("DATE"));
+		returnQuery.append(",");
                 returnQuery.append(rs.getDouble("VALUE"));                                
                 returnQuery.append("\n");
             }
@@ -112,10 +115,11 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 	int newUID = nextValidUID();
         try {
             //Creating Statement
-            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO EXPENSE VALUES(?,?,?)");
+            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO EXPENSE VALUES(?,?,?,?)");
             AddAddressStmt.setInt(1, newUID);
             AddAddressStmt.setString(2, input.getDescription());
-            AddAddressStmt.setDouble(3, input.getValue());
+	    AddAddressStmt.setTimestamp(3, input.getTime());
+            AddAddressStmt.setDouble(4, input.getValue());
             //Execute Statement
             AddAddressStmt.executeUpdate();
 
@@ -181,7 +185,36 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 
     @Override
     public double getValue(int uid) throws DoesNotExistException {
-	double returnQuery = 0.0;
+	double returnQuery = -1.0;
+        try {
+
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            ResultSet rs = idQueryStmt.executeQuery();
+
+            //Gets the row with uid specified
+            while (rs.next()) {                
+                returnQuery = rs.getDouble("VALUE"); //Should not have two uids with the same name                            
+            }
+            
+            //checking for existance of that uid
+            if (returnQuery == -1.0) {
+		debugLog.warning("UID="+uid+" does not exist in EXPENSE table.");
+                throw new DoesNotExistException("UID does not exist in EXPENSE table.");
+            } else {
+                return returnQuery;
+            }
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+	debugLog.warning("UID="+uid+" does not exist in EXPENSE table.");
+        throw new DoesNotExistException("UID does not exist in EXPENSE table.");
+    }
+
+    @Override
+    public Timestamp getDate(int uid) throws DoesNotExistException {
+	Timestamp returnQuery = null;
 	try {
 
 	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE WHERE UID=?");
@@ -190,17 +223,27 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 
 	    //Gets the row with uid specified
 	    while (rs.next()) {
-		returnQuery = rs.getDouble("VALUE"); //Should not have two uids with the same name                            
+		//UNAME = coulmn name.
+		returnQuery = rs.getTimestamp("DATE"); //Should not have two uids with the same name                            
 	    }
-	    return returnQuery;
+
+	    //checking if that uid exists	  
+	    if (returnQuery == null) {
+		debugLog.warning("UID=" + uid + " does not exist in EXPENSE table.");
+		throw new DoesNotExistException("expense date");
+	    } else {
+		return returnQuery;
+	    }
 
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
 	    System.exit(1);
 	}
-	debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
-	return returnQuery;
+	debugLog.warning("UID=" + uid + " does not exist in EXPENSE table.");
+	return null;
     }
+    
+    
     
     
     //SETTERS
@@ -255,5 +298,31 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
 	}
     }
+
+    @Override
+    public void setDate(int uid, Timestamp date) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EXPENSE SET DATE=? WHERE UID=?");
+		idQueryStmt.setTimestamp(1, date);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
+		throw new DoesNotExistException("User does not exist in EXPENSE table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EXPENSE table.");
+	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
+	}
+    }        
 
 }

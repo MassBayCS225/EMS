@@ -26,6 +26,8 @@ public interface Interface_EventData {
 
     // GETTERS
     public String getDescription(int uid) throws DoesNotExistException;
+    
+    public String getDetails(int uid) throws DoesNotExistException;
 
     public Timestamp getStartDate(int uid) throws DoesNotExistException;
 
@@ -53,6 +55,8 @@ public interface Interface_EventData {
 
     // SETTERS      
     public void setDescription(int uid, String description) throws DoesNotExistException;
+    
+    public void setDetails(int uid, String details) throws DoesNotExistException;
 
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException;
 

@@ -1,5 +1,6 @@
 package EMS_Database;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -24,9 +25,13 @@ public interface Interface_BudgetData {
     
     public double getValue(int uid) throws DoesNotExistException;    
     
+    public Timestamp getDate(int uid)throws DoesNotExistException;
+    
     // SETTERS
     public void setDescription(int uid, String description) throws DoesNotExistException;
     
     public void setValue(int uid, double value) throws DoesNotExistException;
+    
+    public void setDate(int uid, Timestamp date) throws DoesNotExistException;
     
 }

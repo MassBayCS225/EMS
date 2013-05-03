@@ -1,5 +1,7 @@
 package EMS_Database;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author mike
@@ -8,71 +10,78 @@ public class InputCommittee {
         
     private String title;
     private int chairman;
-    private String budgetAcess;
-    private String committeeMembers;
-    private String taskList;
+    private ArrayList<Integer> budgetAcess;
+    private ArrayList<Integer> committeeMembers;
+    private ArrayList<Integer> taskList;
     private double budget;
-
-    public InputCommittee(String title, int chairman, String budgetAcess, String committeeMembers, String taskList, double budget) {        
-        this.title = title;
-        this.chairman = chairman;
-        this.budgetAcess = budgetAcess;
-        this.committeeMembers = committeeMembers;
-        this.taskList = taskList;
-        this.budget = budget;
+    
+    public InputCommittee(){
+	ArrayList<Integer> list = new ArrayList<Integer>();
+	this.title = "default title";
+        this.chairman = 0;
+        this.budgetAcess = list;
+        this.committeeMembers = list;
+        this.taskList = list;
+        this.budget = 0.0;
     }
 
+    public InputCommittee(String title, int chairman, ArrayList<Integer> budgetAcess, ArrayList<Integer> committeeMembers, ArrayList<Integer> taskList, double budget) {
+	this.title = title;
+	this.chairman = chairman;
+	this.budgetAcess = budgetAcess;
+	this.committeeMembers = committeeMembers;
+	this.taskList = taskList;
+	this.budget = budget;
+    }
 
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public int getChairman() {
-        return chairman;
+	return chairman;
     }
 
-    public String getBudgetAcess() {
-        return budgetAcess;
+    public ArrayList<Integer> getBudgetAcess() {
+	return budgetAcess;
     }
 
-    public String getCommitteeMembers() {
-        return committeeMembers;
+    public ArrayList<Integer> getCommitteeMembers() {
+	return committeeMembers;
     }
 
-    public String getTaskList() {
-        return taskList;
+    public ArrayList<Integer> getTaskList() {
+	return taskList;
     }
 
     public double getBudget() {
-        return budget;
+	return budget;
     }
-    
-    
-    //SETTERS
 
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
 
     public void setChairman(int chairman) {
-        this.chairman = chairman;
+	this.chairman = chairman;
     }
 
-    public void setBudgetAcess(String budgetAcess) {
-        this.budgetAcess = budgetAcess;
+    public void setBudgetAcess(ArrayList<Integer> budgetAcess) {
+	this.budgetAcess = budgetAcess;
     }
 
-    public void setCommitteeMembers(String committeeMembers) {
-        this.committeeMembers = committeeMembers;
+    public void setCommitteeMembers(ArrayList<Integer> committeeMembers) {
+	this.committeeMembers = committeeMembers;
     }
 
-    public void setTaskList(String taskList) {
-        this.taskList = taskList;
+    public void setTaskList(ArrayList<Integer> taskList) {
+	this.taskList = taskList;
     }
 
     public void setBudget(double budget) {
-        this.budget = budget;
+	this.budget = budget;
     }
+
     
     
 }

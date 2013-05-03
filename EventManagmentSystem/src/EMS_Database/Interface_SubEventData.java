@@ -21,11 +21,13 @@ public interface Interface_SubEventData {
     public int nextValidUID();
 
     public String queryEntireTable();
-    
+
     public boolean removeSubEvent(int uid) throws DoesNotExistException;
 
     //GETTERS
     public String getDescription(int uid) throws DoesNotExistException;
+
+    public String getDetails(int uid) throws DoesNotExistException;
 
     public String getStreet(int uid) throws DoesNotExistException; //location info
 
@@ -45,6 +47,8 @@ public interface Interface_SubEventData {
 
     //SETTERS
     public void setDescription(int uid, String description) throws DoesNotExistException;
+
+    public void setDetails(int uid, String details) throws DoesNotExistException;
 
     public void setStreet(int uid, String street) throws DoesNotExistException; //location info
 
