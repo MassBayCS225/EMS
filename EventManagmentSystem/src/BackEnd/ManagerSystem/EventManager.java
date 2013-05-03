@@ -25,9 +25,12 @@ public class EventManager {
     private SubEvent_Table subEventsTable;
     private Committees_Table committeesTable;
     private Tasks_Table tasksTable;
+    private Income_Table incomeTable;
+    private Expense_Table expenseTable;
 
     public EventManager(ArrayList<Participant> userList, UserData_Table usersTable, Tasks_Table tasksTable,
-            SubEvent_Table subEventsTable, Committees_Table committeesTable) // FIGURE OUT HOW TO HANDLE EXCEPTION
+            SubEvent_Table subEventsTable, Committees_Table committeesTable,
+            Income_Table incomeTable, Expense_Table expenseTable) // FIGURE OUT HOW TO HANDLE EXCEPTION
             throws DoesNotExistException {
         eventList = new ArrayList<Event>();
         rebuildEventList(userList);
@@ -36,6 +39,8 @@ public class EventManager {
         this.subEventsTable = subEventsTable;
         this.tasksTable = tasksTable;
         this.committeesTable = committeesTable;
+        this.incomeTable = incomeTable;
+        this.expenseTable = expenseTable;
 
         setSelectedEvent(eventList.get(0));
     }
@@ -132,7 +137,10 @@ public class EventManager {
         committee.setChair(usersTable.getUser(committeesTable.getChairman(committeeID)));
         committee.setTaskList(rebuildTaskList(committeeID, userList));
 
-        committee.setBudget(new Budget(committeesTable.getBudget(committeeID),));
+        Budget newBudget = new Budget();
+        newBudget.setIncomeList(rebuildIncomeList(committeeID));
+        newBudget.setExpenseList(rebuildExpenseList(committeeID));
+        committee.setBudget(newBudget);
         return committee;
     }
 
@@ -200,6 +208,40 @@ public class EventManager {
         }
         return responsibleList;
     }
+    
+    private ArrayList<Income> rebuildIncomeList(int committeeID) throws DoesNotExistException{
+        ArrayList<Income> incomeList = new ArrayList<Income>();
+        ArrayList<Integer> incomeIDList = new ArrayList<Integer>();
+                  // committeesTable.getIncomeList(committeeID);
+        
+        for (Integer incomeID : incomeIDList){
+            incomeList.add(rebuildIncome(incomeID));
+        }
+        return incomeList;
+    }
+
+    private Income rebuildIncome(int incomeID) throws DoesNotExistException{
+        Income income = new Income(incomeID, incomeTable.getValue(incomeID), incomeTable.getDescription(incomeID));
+        return income;
+    }
+    
+    private ArrayList<Expense> rebuildExpenseList(int committeeID) throws DoesNotExistException{
+        
+        ArrayList<Expense> expenseList = new ArrayList<Expense>();
+        ArrayList<Integer> expenseIDList = new ArrayList<Integer>();
+                //committeesTable.getExpenseList(committeeID);
+        
+        for (Integer expenseID : expenseIDList){
+            expenseList.add(rebuildExpense(expenseID));
+        }
+        return expenseList;
+        
+    }
+    
+    private Expense rebuildExpense(int expenseID) throws DoesNotExistException{
+        Expense expense = new Expense(expenseID, expenseTable.getValue(expenseID), expenseTable.getDescription(expenseID));
+        return expense;
+    }
 
     // method may be finished in future version
     public ArrayList<Event> getEventList() {
@@ -225,14 +267,14 @@ public class EventManager {
             subEventIDList = new ArrayList<Integer>();
             participantIDList = new ArrayList<Integer>();
             committeeIDList = new ArrayList<Integer>();
-
+            
             Event event = new Event(eventsTable.createEvent(new InputEventData(newEvent.getDescription(), newEvent.getLocation().getDetails(),
-                    newEvent.getTimeSchedule().getStartDateTimeTimestamp(), newEvent.getTimeSchedule().getEndDateTimeTimestamp(),
-                    0,
+                    "test", newEvent.getTimeSchedule().getStartDateTimeTimestamp(), newEvent.getTimeSchedule().getEndDateTimeTimestamp(),
+                    0, committeeIDList, organizerIDList, subEventIDList, participantIDList,
                     newEvent.getLocation().getStreet(), newEvent.getLocation().getCity(),
                     newEvent.getLocation().getState(), newEvent.getLocation().getZipCode(),
-                    newEvent.getLocation().getCountry(), organizerIDList,
-                    subEventIDList, participantIDList, committeeIDList)), newEvent.getDescription());
+                    newEvent.getLocation().getCountry()
+                    )), newEvent);
             eventList.add(event);
             selectedEvent = event;
         }
@@ -253,10 +295,9 @@ public class EventManager {
                     selectedEvent.getCommitteeList().get(i).getBudget().getIncomeList().remove(k);
                 }
                 for (int l = 0; l < selectedEvent.getCommitteeList().get(i).getBudget().getExpenseList().size(); l++) {
-                    expenseTable.removeBudgetItem(selectedEvent.getCommitteeList().get(i).getBudget().getExpenseList().get(k).getBUDGET_ITEM_ID());
+                    expenseTable.removeBudgetItem(selectedEvent.getCommitteeList().get(i).getBudget().getExpenseList().get(l).getBUDGET_ITEM_ID());
                     selectedEvent.getCommitteeList().get(i).getBudget().getExpenseList().remove(l);
                 }
-                budgetsTable.removeBudget(selectedEvent.getCommitteeList().get(i).getBudget().getBUDGET_ID());
                 selectedEvent.getCommitteeList().get(i).setBudget(null);
                 committeesTable.removeCommittee(selectedEvent.getCommitteeList().get(i).getCOMMITTEE_ID());
                 selectedEvent.getCommitteeList().remove(i);
@@ -295,17 +336,13 @@ public class EventManager {
             selectedEvent.getOrganizerList().remove(organizer);
             // write to database
 
-            /**
-             * ****
-             * Integer organizerUserID = new
-             * Integer(usersTable.getUIDByEmail(organizer.getEmailAddress()));
-             * ArrayList<Integer> newOrganizerList =
-             * eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
-             * newOrganizerList.remove(organizerUserID);
-             * eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(),
-             * newOrganizerList);
-             *
-             */
+            Integer organizerUserID = new Integer(usersTable.getUIDByEmail(organizer.getEmailAddress()));
+            ArrayList<Integer> newOrganizerList =
+                    eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
+            newOrganizerList.remove(organizerUserID);
+            eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(),
+                    newOrganizerList);
+
         }
     }
 
@@ -342,12 +379,12 @@ public class EventManager {
 
             // write to database
 
-            /*
-             Integer committeeID = new Integer(committee.getCOMMITTEE_ID());
-             ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
-             newCommitteeList.add(committeeID);
-             eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
-             * */
+
+            Integer committeeID = new Integer(committee.getCOMMITTEE_ID());
+            ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
+            newCommitteeList.add(committeeID);
+            eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
+
         }
     }
 
@@ -356,15 +393,15 @@ public class EventManager {
             selectedEvent.getCommitteeList().remove(committee);
             // write to database
 
-            /*
-             Integer committeeID = new Integer(committee.getCOMMITTEE_ID());
-             ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
-             newCommitteeList.remove(committeeID);
-             eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
 
-             // remove all related database entries
+            Integer committeeID = new Integer(committee.getCOMMITTEE_ID());
+            ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
+            newCommitteeList.remove(committeeID);
+            eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
 
-             * */
+            // remove all related database entries
+
+
         }
     }
 
@@ -372,24 +409,24 @@ public class EventManager {
         selectedEvent.getParticipantList().add(participant);
         // write to database
 
-        /*
-         Integer participantID = new Integer(participant.getPARTICIPANT_ID());
-         ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
-         newParticipantList.add(participantID);
-         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
-         * */
+
+        Integer participantID = new Integer(participant.getUserId());
+        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
+        newParticipantList.add(participantID);
+        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
+
     }
 
     public void removeParticipant(Participant participant) throws DoesNotExistException {
         selectedEvent.getParticipantList().remove(participant);
         // write to database
 
-        /*
-         Integer participantID = new Integer(participant.getPARTICIPANT_ID());
-         ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
-         newParticipantList.remove(participantID);
-         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
-         * */
+
+        Integer participantID = new Integer(participant.getUserId());
+        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
+        newParticipantList.remove(participantID);
+        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
+
     }
 
     public void editDescription(String description, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
@@ -397,9 +434,9 @@ public class EventManager {
             selectedEvent.setDescription(description);
             // write to database
 
-            /*
-             eventsTable.setDescription(selectedEvent.getEVENT_ID(), description);
-             * */
+
+            eventsTable.setDescription(selectedEvent.getEVENT_ID(), description);
+
         }
     }
 
@@ -408,14 +445,14 @@ public class EventManager {
             selectedEvent.setLocation(location);
             // write to database
 
-            /*
-             // eventsTable.setDetails(selectedEvent.getEVENT_ID(), location.getDetails());
-             eventsTable.setStreet(selectedEvent.getEVENT_ID(), location.getStreet());
-             eventsTable.setCity(selectedEvent.getEVENT_ID(), location.getCity());
-             eventsTable.setState(selectedEvent.getEVENT_ID(), location.getState());
-             eventsTable.setZipcode(selectedEvent.getEVENT_ID(), location.getZipCode());
-             eventsTable.setCountry(selectedEvent.getEVENT_ID(), location.getCountry());
-             * */
+
+            eventsTable.setDetails(selectedEvent.getEVENT_ID(), location.getDetails());
+            eventsTable.setStreet(selectedEvent.getEVENT_ID(), location.getStreet());
+            eventsTable.setCity(selectedEvent.getEVENT_ID(), location.getCity());
+            eventsTable.setState(selectedEvent.getEVENT_ID(), location.getState());
+            eventsTable.setZipcode(selectedEvent.getEVENT_ID(), location.getZipCode());
+            eventsTable.setCountry(selectedEvent.getEVENT_ID(), location.getCountry());
+
         }
     }
 
@@ -425,9 +462,9 @@ public class EventManager {
             selectedEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
             // write to database
 
-            /*
-             eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
-             * */
+
+            eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
+
         }
     }
 
@@ -437,9 +474,9 @@ public class EventManager {
             selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
             // write to database
 
-            /*
-             eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getEndDateTimeTimestamp());
-             * */
+
+            eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getEndDateTimeTimestamp());
+
         }
     }
 }
