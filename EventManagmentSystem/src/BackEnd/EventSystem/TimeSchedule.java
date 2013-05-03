@@ -110,7 +110,7 @@ public class TimeSchedule {
     }
     
     public String toString() {
-        return "Start Date & Time: " + startDateTime.get(Calendar.MONTH) + "/" + startDateTime.get(Calendar.DAY_OF_MONTH) +
+        return "Start Date & Time: " + startDateTime..get(Calendar.MONTH) + "/" + startDateTime.get(Calendar.DAY_OF_MONTH) +
                 "/" + startDateTime.get(Calendar.YEAR) + " " + String.format("%02d", startDateTime.get(Calendar.HOUR_OF_DAY)) + ":" +
                 String.format("%02d", startDateTime.get(Calendar.MINUTE)) + "\nEnd Date & Time: " + endDateTime.get(Calendar.MONTH) +
                 "/" + endDateTime.get(Calendar.DAY_OF_MONTH) + "/" + endDateTime.get(Calendar.YEAR) + " " + 

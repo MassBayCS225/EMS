@@ -4,7 +4,7 @@ import BackEnd.UserSystem.User;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author Ketty Lezama
  */
 
@@ -39,6 +39,10 @@ public class Committee implements Reportable {
         budget = committee.getBudget();
     }
     
+    /**
+     * Confirms if the committee has completed all of the tasks in taskList or not.
+     * @return True if the committee has finished all tasks, and false if it has not.
+     */
     public boolean isFinished() {
         boolean completed = true;
         
@@ -49,10 +53,18 @@ public class Committee implements Reportable {
         return completed;
     }
     
+    /**
+     * Returns the event ID of the committee.
+     * @return The committee event ID.
+     */
     public int getEVENT_ID() {
         return EVENT_ID;
     }
     
+    /**
+     * Sets the committee ID.
+     * @param committee_id The committee ID.
+     */
     private void setCOMMITTEE_ID(int committee_id) {
         COMMITTEE_ID = committee_id;
     }
