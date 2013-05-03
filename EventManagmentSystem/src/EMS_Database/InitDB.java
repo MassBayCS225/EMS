@@ -3,10 +3,16 @@ package EMS_Database;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -18,7 +24,7 @@ import java.util.logging.SimpleFormatter;
  *
  * Needs a connection URL, user and password.
  */
-public abstract class InitDB {
+public abstract class InitDB implements Interface_FunctionWrapper {
 
     protected Connection dbConnection = null;
     public final static Logger debugLog = Logger.getLogger("DebugLog");
@@ -197,5 +203,230 @@ public abstract class InitDB {
     public Connection getConnection() {
 	return dbConnection;
     }
-    // METHOD TO CREATE TABLES IF TABLES DO NOT EXIST.
+
+    /////////////////////////////SPECIAL FUNCTIONS/////////////////////////////////
+    /**
+     * A function to generate a list of the current UID's in a table
+     *
+     * @return ArrayList<Integer> of the current UID's in the table
+     */
+    public ArrayList<Integer> currentUIDList(String table) {
+	int newUID = 0;
+	ArrayList<Integer> UIDList = new ArrayList<Integer>();
+	try {
+
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    while (rs.next()) {
+		newUID = rs.getInt("UID");
+		UIDList.add(newUID);
+	    }
+	    return UIDList;
+
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	return UIDList; // should not be zero
+    }
+
+    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
+	if (uidList.equals("") || uidList == null) {
+	    return new ArrayList<Integer>();
+	} else {
+	    //Split String
+	    String[] uidStringList;
+	    uidStringList = uidList.split(",");
+
+	    ArrayList<Integer> uidIntList = new ArrayList<Integer>();
+
+	    //parse each item into arraylist
+	    for (String uid : uidStringList) {
+		try {
+		    uidIntList.add(Integer.parseInt(uid));
+		} catch (NumberFormatException nfe) {
+		    throw new NumberFormatException("Parse Error");
+		}
+	    }
+
+	    return uidIntList;
+	}
+    }
+
+    // FUNCTION WRAPPERS. USED TO CALL METHODS.
+    @Override
+    public String getDBString(String query, String table, int uid) throws DoesNotExistException {
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	//executing query
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    String returnQuery = null;
+	    while (rs.next()) {
+		returnQuery = rs.getString(query); //Should not have two uids with the same name                            
+	    }
+	    return returnQuery; //should always return here.
+
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	throw new DoesNotExistException("Should not get here...");
+    }
+
+    @Override
+    public double getDBDouble(String query, String table, int uid) throws DoesNotExistException {
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	//executing query
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    double returnQuery = 0.0;
+	    while (rs.next()) {
+		returnQuery = rs.getDouble(query); //Should not have two uids with the same name                            
+	    }
+	    return returnQuery; //should always return here.
+
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	throw new DoesNotExistException("Should not get here...");
+    }
+
+    @Override
+    public ArrayList<Integer> getDBArrayList(String query, String table, int uid) throws DoesNotExistException {
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	//executing query
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    String returnQuery = "";
+	    while (rs.next()) {
+		returnQuery = rs.getString(query); //Should not have two uids with the same name                            
+	    }
+	    return stringToList(returnQuery); //should always return here.
+
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	throw new DoesNotExistException("Should not get here...");
+    }
+
+    @Override
+    public int getDBInt(String query, String table, int uid) throws DoesNotExistException {
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	//executing query
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    int returnQuery = 0;
+	    while (rs.next()) {
+		returnQuery = rs.getInt(query); //Should not have two uids with the same name                            
+	    }
+	    return returnQuery; //should always return here.
+
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	throw new DoesNotExistException("Should not get here...");
+    }
+
+    @Override
+    public Timestamp getDBTimestamp(String query, String table, int uid) throws DoesNotExistException {
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	//executing query
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    Timestamp returnQuery = new Timestamp(new Date().getTime()); //using current time as default.
+	    while (rs.next()) {
+		returnQuery = rs.getTimestamp(query); //Should not have two uids with the same name                            
+	    }
+	    return returnQuery; //should always return here.
+
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	throw new DoesNotExistException("Should not get here...");
+    }
 }

@@ -13,8 +13,7 @@ public interface Interface_EventData {
     public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
 
     public String listToString(ArrayList<Integer> list);
-
-    public ArrayList<Integer> currentUIDList();
+    
 
     public int createEvent(InputEventData event) throws DuplicateInsertionException;
 
