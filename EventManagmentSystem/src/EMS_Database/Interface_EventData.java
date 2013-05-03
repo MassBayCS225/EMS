@@ -10,11 +10,6 @@ import java.util.ArrayList;
 public interface Interface_EventData {
 
     // SPECIAL CASE FUNCTIONS
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
-
-    public String listToString(ArrayList<Integer> list);
-    
-
     public int createEvent(InputEventData event) throws DuplicateInsertionException;
 
     public int nextValidUID();
