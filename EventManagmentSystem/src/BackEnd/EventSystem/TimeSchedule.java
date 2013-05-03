@@ -13,7 +13,7 @@ import java.lang.IllegalArgumentException;
 public class TimeSchedule {
     private Calendar startDateTime, endDateTime;
     
-    TimeSchedule() {
+    public TimeSchedule() {
         startDateTime = new GregorianCalendar();
         endDateTime = new GregorianCalendar();
     }
