@@ -8,14 +8,12 @@ package GUI.Dialog;
  *
  * @author Sid
  */
-public class EmailExceptionDialog extends javax.swing.JDialog {
-    
-    
+public class PrivilegeExceptionDialog extends javax.swing.JDialog {
     private Exception e;
     /**
-     * Creates new form EmailExceptionDialog
+     * Creates new form PrivlageExceptionDialog
      */
-    public EmailExceptionDialog(java.awt.Frame parent, boolean modal, Exception e) {
+    public PrivilegeExceptionDialog(java.awt.Frame parent, boolean modal, Exception e) {
         super(parent, modal);
         initComponents();
         this.e = e;
@@ -31,17 +29,22 @@ public class EmailExceptionDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        headerLabel2 = new javax.swing.JLabel();
-        closeButton = new javax.swing.JButton();
         headerLabel1 = new javax.swing.JLabel();
-        headerLabel3 = new javax.swing.JLabel();
+        headerLabel2 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
+        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        headerLabel2.setFont(new java.awt.Font("Tahoma", 1, 16));
-        headerLabel2.setText("Unexpected error found in given");
+        headerLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        headerLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        headerLabel1.setText("Warning:");
+
+        headerLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        headerLabel2.setText("Privilege error detected.");
+
+        errorLabel.setText("Error Message");
 
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -50,15 +53,6 @@ public class EmailExceptionDialog extends javax.swing.JDialog {
             }
         });
 
-        headerLabel1.setFont(new java.awt.Font("Tahoma", 1, 18));
-        headerLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        headerLabel1.setText("Warning:");
-
-        headerLabel3.setFont(new java.awt.Font("Tahoma", 1, 16));
-        headerLabel3.setText("e-mail address.");
-
-        errorLabel.setText("Error Message");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,51 +60,42 @@ public class EmailExceptionDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGap(48, 48, 48)
                         .addComponent(headerLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(headerLabel3))
-                            .addComponent(headerLabel2))
-                        .addGap(14, 14, 14))
+                        .addComponent(headerLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(errorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(152, 152, 152)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorLabel))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headerLabel1)
                     .addComponent(headerLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headerLabel3)
-                .addGap(14, 14, 14)
+                .addGap(18, 18, 18)
                 .addComponent(errorLabel)
                 .addGap(18, 18, 18)
                 .addComponent(closeButton)
-                .addGap(13, 13, 13))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_closeButtonActionPerformed
+private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+    this.dispose();
+}//GEN-LAST:event_closeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel headerLabel1;
     private javax.swing.JLabel headerLabel2;
-    private javax.swing.JLabel headerLabel3;
     // End of variables declaration//GEN-END:variables
 }
