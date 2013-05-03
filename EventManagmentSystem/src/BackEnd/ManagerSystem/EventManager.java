@@ -44,7 +44,11 @@ public class EventManager {
         System.out.println("userList:" + userList);
         rebuildEventList(userList);
 
+<<<<<<< HEAD
         // setSelectedEvent(eventList.get(0));
+=======
+        //setSelectedEvent(eventList.get(0));
+>>>>>>> upstream/master
     }
 
     private void rebuildEventList(ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
@@ -70,7 +74,11 @@ public class EventManager {
         System.out.println("organizerList:" + event.getOrganizerList());
         System.out.println("participantList:" + event.getParticipantList());
         System.out.println("committeeList:" + event.getCommitteeList());
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         event.setLocation(new Location(eventsTable.getStreet(eventID), eventsTable.getCity(eventID),
                 eventsTable.getState(eventID), eventsTable.getZipcode(eventID), eventsTable.getCountry(eventID),
                 eventsTable.getDetails(eventID)
@@ -144,6 +152,8 @@ public class EventManager {
         try{
         committee.setMemberList(rebuildCommitteeMemberList(committeeID, userList));
         committee.setBudgetAccessList(rebuildBudgetAccessList(committeeID, userList));
+        System.out.println(usersTable.currentUIDList());
+        System.out.println(committeesTable.getChairman(committeeID));
         committee.setChair(usersTable.getUser(committeesTable.getChairman(committeeID)));
         committee.setTaskList(rebuildTaskList(committeeID, userList));
         }

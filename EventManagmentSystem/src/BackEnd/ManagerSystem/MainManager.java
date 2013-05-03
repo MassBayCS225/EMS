@@ -41,6 +41,8 @@ public class MainManager {
             
             
         } catch (DoesNotExistException e) {
+            System.out.println("HERE! main manager");
+            e.printStackTrace();
         }
     }
 
