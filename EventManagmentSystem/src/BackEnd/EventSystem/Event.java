@@ -25,6 +25,15 @@ public class Event extends ScheduleItem implements Reportable {
         participantList = new ArrayList<Participant>();
     }
     
+    public Event(int eventID, Event event){
+        super((ScheduleItem)event);
+        EVENT_ID = eventID;
+        organizerList = event.getOrganizerList();
+        subEventList = event.getSubEventList();
+        committeeList = event.getCommitteeList();
+        participantList = event.getParticipantList();
+    }
+    
     public boolean isReady() {
         boolean eventReady = true;
         

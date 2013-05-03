@@ -13,9 +13,14 @@ import java.lang.IllegalArgumentException;
 public class TimeSchedule {
     private Calendar startDateTime, endDateTime;
     
-    TimeSchedule() {
+    public TimeSchedule() {
         startDateTime = new GregorianCalendar();
         endDateTime = new GregorianCalendar();
+    }
+    
+    public TimeSchedule(TimeSchedule timeSchedule){
+        startDateTime = timeSchedule.getStartDateTimeCalendar();
+        endDateTime = timeSchedule.getEndDateTimeCalendar();
     }
     
     public void setStartDateTime(int year, int month, int day, int hour, int minute) throws IllegalArgumentException {

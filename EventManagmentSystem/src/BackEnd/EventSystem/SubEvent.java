@@ -15,6 +15,11 @@ public class SubEvent extends ScheduleItem implements Reportable {
         SUB_EVENT_ID = sub_event_id;
     }
     
+    public SubEvent(int subEventID, SubEvent subEvent){
+        super((ScheduleItem)subEvent);
+        SUB_EVENT_ID = subEventID;
+    }
+    
     private void setSUB_EVENT_ID(int sub_event_id) {
         SUB_EVENT_ID = sub_event_id;
     }

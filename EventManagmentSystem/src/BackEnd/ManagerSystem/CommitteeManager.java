@@ -122,7 +122,7 @@ public class CommitteeManager {
             }
             
             Task newTask = new Task(tasksTable.createTask(new InputTask(
-                    task.getDescription(), task.getLocation().getStreet(), task.getLocation().getCity(),
+                    task.getDescription(), task.getLocation().getDetails(), task.getLocation().getStreet(), task.getLocation().getCity(),
                     task.getLocation().getState(), task.getLocation().getZipCode(), task.getLocation().getCountry(),
                     task.getTimeSchedule().getStartDateTimeTimestamp(), task.getTimeSchedule().getEndDateTimeTimestamp(),
                     (task.getCompleted() == true? 1 : 0), responsibleIDList)),

@@ -21,7 +21,7 @@ public class Task extends ScheduleItem {
     }
     
     public Task(int task_id, Task task){
-        super(task.getDescription());
+        super((ScheduleItem)task);
         TASK_ID = task_id;
         responsibleList = task.getResponsibleList();
         completed = task.getCompleted();

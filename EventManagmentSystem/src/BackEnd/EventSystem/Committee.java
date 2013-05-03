@@ -29,6 +29,16 @@ public class Committee implements Reportable {
         * */
     }
     
+    public Committee(int committee_id, Committee committee){
+        this.COMMITTEE_ID = committee_id;
+        title = committee.getTitle();
+        memberList = committee.getMemberList();
+        budgetAccessList = committee.getBudgetAccessList();
+        chair = committee.getChair();
+        taskList = committee.getTaskList();
+        budget = committee.getBudget();
+    }
+    
     public boolean isFinished() {
         boolean completed = true;
         
