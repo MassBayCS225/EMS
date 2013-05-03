@@ -43,14 +43,15 @@ public class BudgetItemManager {
         return selectedBudgetItem;
     }
 
-    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(value);
             // write to database
             if (selectedBudgetItem instanceof Income) {
-                // incomeTable.setValue(selectedBudgetItem.getBUDGET_ITEM_ID(), value);
+                incomeTable.setValue(selectedBudgetItem.getBUDGET_ITEM_ID(), value);
             } else {
-                // expenseTable.setValue(selectedBudgetItem.getBUDGET_ITEM_ID(), value);
+                expenseTable.setValue(selectedBudgetItem.getBUDGET_ITEM_ID(), value);
             }
         }
     }
@@ -62,9 +63,9 @@ public class BudgetItemManager {
             // write to database
 
             if (selectedBudgetItem instanceof Income) {
-                // incomeTable.setDescription(selectedBudgetItem.getBUDGET_ITEM_ID(), description);
+                incomeTable.setDescription(selectedBudgetItem.getBUDGET_ITEM_ID(), description);
             } else {
-                // expenseTable.setDescription(selectedBudgetItem.getBUDGET_ITEM_ID(), description);
+                expenseTable.setDescription(selectedBudgetItem.getBUDGET_ITEM_ID(), description);
             }
         }
     }
@@ -76,9 +77,9 @@ public class BudgetItemManager {
             // write to database
 
             if (selectedBudgetItem instanceof Income) {
-                // incomeTable.setDate(selectedBudgetItem.getBUDGET_ITEM_ID(), selectedBudgetItem.getDate());
+                incomeTable.setDate(selectedBudgetItem.getBUDGET_ITEM_ID(), selectedBudgetItem.getDate());
             } else {
-                // incomeTable.setDate(selectedBudgetItem.getBUDGET_ITEM_ID(), selectedBudgetItem.getDate());
+                incomeTable.setDate(selectedBudgetItem.getBUDGET_ITEM_ID(), selectedBudgetItem.getDate());
             }
         }
     }
