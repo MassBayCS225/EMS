@@ -28,7 +28,7 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
     
     public Committee createCommittee()
     {
-        Committee c = new Committee(1,1,nameField.getText());
+        Committee c = new Committee(1,nameField.getText());
         return c;
     }
 
