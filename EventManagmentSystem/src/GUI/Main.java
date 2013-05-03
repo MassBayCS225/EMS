@@ -67,7 +67,7 @@ public class Main extends javax.swing.JPanel {
         budget1 = new GUI.Budget();
         committeeListPanel1 = new GUI.CommitteeListPanel();
         userManagementPanel1 = new project.UserManagementPanel();
-        emailPanel1 = new project.EmailPanel();
+        emailPanel1 = new GUI.EmailPanel();
         ChangeHomeButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 153, 255));
@@ -472,7 +472,7 @@ public class Main extends javax.swing.JPanel {
     private GUI.CommitteeListPanel committeeListPanel1;
     private javax.swing.JPanel committeesPanel;
     private javax.swing.JPanel emailPanel;
-    private project.EmailPanel emailPanel1;
+    private GUI.EmailPanel emailPanel1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox2;
