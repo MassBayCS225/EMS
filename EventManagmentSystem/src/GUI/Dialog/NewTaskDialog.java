@@ -29,7 +29,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
     
     public Task createTask()
     {
-        Task t = new Task(1,1,taskNameLabel.getText());
+        Task t = new Task(1,taskNameLabel.getText());
         return t;
     }
     /**
