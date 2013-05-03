@@ -33,7 +33,7 @@ public class EventManager {
             Income_Table incomeTable, Expense_Table expenseTable) // FIGURE OUT HOW TO HANDLE EXCEPTION
             throws DoesNotExistException {
         eventList = new ArrayList<Event>();
-        rebuildEventList(userList);
+        
         eventsTable = new Events_Table();
         this.usersTable = usersTable;
         this.subEventsTable = subEventsTable;
@@ -41,6 +41,7 @@ public class EventManager {
         this.committeesTable = committeesTable;
         this.incomeTable = incomeTable;
         this.expenseTable = expenseTable;
+        rebuildEventList(userList);
 
         setSelectedEvent(eventList.get(0));
     }

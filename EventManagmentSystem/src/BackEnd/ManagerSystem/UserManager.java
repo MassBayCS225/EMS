@@ -28,6 +28,7 @@ public class UserManager {
 
     public UserManager()
             throws DoesNotExistException {
+        usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
         rebuildUserList();
     }
@@ -38,6 +39,7 @@ public class UserManager {
 
     private void rebuildUserList()
             throws DoesNotExistException {
+        System.out.println(usersTable.currentUIDList());
         for (Integer userID : usersTable.currentUIDList()) {
             if (usersTable.getParticipant(userID)) {
                 userList.add(rebuildParticipant(userID));
