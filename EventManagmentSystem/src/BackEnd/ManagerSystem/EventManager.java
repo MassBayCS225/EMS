@@ -43,7 +43,7 @@ public class EventManager {
         this.expenseTable = expenseTable;
         rebuildEventList(userList);
 
-        setSelectedEvent(eventList.get(0));
+        //setSelectedEvent(eventList.get(0));
     }
 
     private void rebuildEventList(ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
