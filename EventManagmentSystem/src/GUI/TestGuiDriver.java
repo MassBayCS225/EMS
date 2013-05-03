@@ -4,13 +4,17 @@
  */
 package GUI;
 
-import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Task;
-import BackEnd.ManagerSystem.EventManager;
+import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
+import BackEnd.ManagerSystem.PrivilegeInsufficientException;
+import BackEnd.UserSystem.User;
+import EMS_Database.DoesNotExistException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,7 +22,7 @@ import java.util.ArrayList;
  */
 public class TestGuiDriver 
 {
-    public static void main(String[] args) throws PasswordMismatchError, IllegalCharacterException
+    public static void main(String[] args) throws PasswordMismatchError, IllegalCharacterException, PrivilegeInsufficientException, DoesNotExistException
     {
         Event e = new Event(1,"test");
         ArrayList<Committee> list = new ArrayList<Committee>();
@@ -28,13 +32,29 @@ public class TestGuiDriver
         Committee c2 = new Committee(1,2,"Test2");
         c2.getTaskList().add(new Task(2,1,"task12"));
         c2.getTaskList().add(new Task(2,2,"task22"));
-        //c.setChair(new User(1,"A","B","AB@AB.com","ab","ab"));
+        c.setChair(new User(1,"A","B","AB@AB.com","ab","ab"));
         list.add(c);
         list.add(c2);
         e.setCommitteeList(list);
-        EventManager manager = new EventManager();
-        manager.setSelectedEvent(e);
-        Home home = new Home(manager);
+        MainManager manager = MainManager.getInstance();
+        manager.getEventManager().setSelectedEvent(e);            
+        User u = new User(1,"A","B","AB@AB.com","ab","ab");
+        User u2 = new User(2,"B","C","BC@BC.com","bc","bc");
+        User u3 = new User(3,"C","D","CD@CD.com","cd","cd");
+        User u4 = new User(4,"D","E","DE@DE.com","de","de");
+        u.setAdminPrivilege(true);
+        manager.getUserManager().setLoggedInUser(u);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u2);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u3);
+        manager.getEventManager().getSelectedEvent().getOrganizerList().add(u4);
+        manager.getUserManager().setSelectedUser(u);
+//        Home home = new Home();
+//        home.setVisible(true);
+        //JFrame frame = new JFrame();
+        //frame.add(new Main());
+        //frame.setVisible(true);
+        Home home = new Home();
         home.setVisible(true);
     }
 }

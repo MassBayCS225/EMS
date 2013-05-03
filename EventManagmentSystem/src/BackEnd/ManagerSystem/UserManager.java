@@ -28,6 +28,11 @@ public class UserManager
     {
         
     }
+    public void setLoggedInUser(User u)
+    {
+        loggedInUser = u;
+    }
+    
     public void addUser() throws PrivilegeInsufficientException
     {
         if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
@@ -43,7 +48,7 @@ public class UserManager
     }
     public void setSelectedUser(User u) throws PrivilegeInsufficientException, DoesNotExistException
     {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
+        //if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
             selectedUser = u;
         
     }
@@ -75,7 +80,7 @@ public class UserManager
     public void editAddress(Address address) throws PrivilegeInsufficientException, DoesNotExistException
     {
         if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setAddress(selectedUser.getUID(), address)
+            table.setAddress(selectedUser.getUID(), address);
     }
     public void editPhoneNumber(PhoneNumber phoneNumber) throws PrivilegeInsufficientException, DoesNotExistException
     {

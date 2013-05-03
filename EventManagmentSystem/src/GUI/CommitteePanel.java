@@ -4,14 +4,14 @@
  */
 package GUI;
 import GUI.Dialog.TaskDialog;
-import GUI.*;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import BackEnd.ManagerSystem.CommitteeManager;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Task;
+import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import GUI.Dialog.EmailExceptionDialog;
+import GUI.Dialog.FindMemberDialog;
+import GUI.Dialog.NewTaskDialog;
 /**
  *
  * @author Sid
@@ -21,11 +21,11 @@ public class CommitteePanel extends javax.swing.JPanel {
     /**
      * Creates new form CommitteePanel
      */
-    private CommitteeManager manager;
+    private MainManager manager;
     
     public CommitteePanel() {
         initComponents();
-        manager = new CommitteeManager();
+        manager = MainManager.getInstance();
         
     }
 
@@ -162,21 +162,16 @@ public class CommitteePanel extends javax.swing.JPanel {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 99, 20, 146));
     }// </editor-fold>//GEN-END:initComponents
-
-    public void setText(String text)
-    {
-        headerLabel.setText(text);
-    }
-    
+ 
     public void setCommittee(Committee c)
     {
-        manager.setSelectedCommittee(c);
+        manager.getCommitteeManager().setSelectedCommittee(c);
         updateInfo();
     }
     
-    private void updateInfo()
+    public void updateInfo()
     {
-        Committee c = manager.getSelectedCommittee();
+        Committee c = manager.getCommitteeManager().getSelectedCommittee();
         
         headerLabel.setText(c.getTitle());
         
@@ -226,22 +221,58 @@ public class CommitteePanel extends javax.swing.JPanel {
 
     private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        try
+        {
+        manager.getCommitteeManager().removeMember(manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(memberList.getSelectedIndex()), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        updateInfo();
     }//GEN-LAST:event_removeMemberButtonActionPerformed
 
     private void removeTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTaskButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        try
+        {
+            manager.getCommitteeManager().getSelectedCommittee().getTaskList().remove(taskList.getSelectedIndex());
+        }
+        catch (Exception e)
+        {
+            EmailExceptionDialog eed = new EmailExceptionDialog((JFrame)SwingUtilities.windowForComponent(this), true, e);
+            eed.setVisible(true);
+        }
+        updateInfo();
     }//GEN-LAST:event_removeTaskButtonActionPerformed
 
     private void addMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMemberButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        FindMemberDialog fmd = new FindMemberDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        fmd.setVisible(true);
+        if(fmd.getConfirm())
+        {
+            try
+            {
+                manager.getCommitteeManager().addMember(fmd.createUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        updateInfo();
     }//GEN-LAST:event_addMemberButtonActionPerformed
 
     private void addTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        NewTaskDialog ntd = new NewTaskDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        ntd.setVisible(true);
+        if(ntd.getConfirm())
+        {
+            manager.getCommitteeManager().getSelectedCommittee().getTaskList().add(ntd.createTask());
+        }
+        updateInfo();
     }//GEN-LAST:event_addTaskButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

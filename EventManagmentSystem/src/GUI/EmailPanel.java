@@ -2,19 +2,27 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package GUI;
+import BackEnd.ManagerSystem.MainManager;
+import BackEnd.ManagerSystem.PrivilegeInsufficientException;
+import Email.Email;
 import java.util.ArrayList;
-import java.awt.*;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Karina
  */
 public class EmailPanel extends javax.swing.JPanel {
+    private MainManager manager;
+    
     /**
      * Creates new form EmailPanel
      */
     public EmailPanel() {
         initComponents();
+        manager = MainManager.getInstance();
         setVisible(true);
     }
 
@@ -33,20 +41,15 @@ public class EmailPanel extends javax.swing.JPanel {
         toLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         titleField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        messageArea = new javax.swing.JTextArea();
+        sendButton = new javax.swing.JButton();
+        discardButton = new javax.swing.JButton();
+        toField = new javax.swing.JTextField();
         sentBox = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        composeButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        sentButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(212, 231, 238));
 
@@ -75,28 +78,29 @@ public class EmailPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText(" User:");
-        jLabel3.setOpaque(true);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "User1", "User2", "User3", "User4" }));
-
-        jLabel4.setText("Group:");
-        jLabel4.setOpaque(true);
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Group1", "Group2", "Group3", "Group4" }));
-
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setText("Message:");
         jLabel5.setOpaque(true);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        messageArea.setColumns(20);
+        messageArea.setRows(5);
+        jScrollPane1.setViewportView(messageArea);
 
-        jButton1.setText("Send");
+        sendButton.setText("Send");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Discard");
+        discardButton.setText("Discard");
+
+        toField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout composeBoxLayout = new javax.swing.GroupLayout(composeBox);
         composeBox.setLayout(composeBoxLayout);
@@ -112,23 +116,15 @@ public class EmailPanel extends javax.swing.JPanel {
                             .addComponent(toLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleField, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                            .addGroup(composeBoxLayout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(titleField, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                            .addComponent(toField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)))
                     .addGroup(composeBoxLayout.createSequentialGroup()
                         .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(composeBoxLayout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(sendButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))
+                                .addComponent(discardButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -136,16 +132,10 @@ public class EmailPanel extends javax.swing.JPanel {
             composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(composeBoxLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(toLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(composeBoxLayout.createSequentialGroup()
-                        .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(toField))
+                .addGap(1, 1, 1)
                 .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(titleField))
@@ -155,9 +145,9 @@ public class EmailPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(sendButton)
+                    .addComponent(discardButton))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         EmailHolderPanel.add(composeBox, "compose");
@@ -174,7 +164,7 @@ public class EmailPanel extends javax.swing.JPanel {
             sentBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sentBoxLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addContainerGap())
         );
         sentBoxLayout.setVerticalGroup(
@@ -187,23 +177,9 @@ public class EmailPanel extends javax.swing.JPanel {
 
         EmailHolderPanel.add(sentBox, "sent");
 
-        composeButton.setText("Compose");
-        composeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                composeButtonActionPerformed(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Mail");
-
-        sentButton.setText("Sent");
-        sentButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sentButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -213,14 +189,8 @@ public class EmailPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(composeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                            .addComponent(sentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(EmailHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(EmailHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -231,51 +201,43 @@ public class EmailPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EmailHolderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(composeButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(sentButton)))
+                .addComponent(EmailHolderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void composeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_composeButtonActionPerformed
-
-        CardLayout cl = (CardLayout)(EmailHolderPanel.getLayout());
-        cl.show(EmailHolderPanel, "compose");
-    }//GEN-LAST:event_composeButtonActionPerformed
 
     private void titleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_titleFieldActionPerformed
 
-    private void sentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sentButtonActionPerformed
-        CardLayout cl = (CardLayout)(EmailHolderPanel.getLayout());
-        cl.show(EmailHolderPanel, "sent");
-    }//GEN-LAST:event_sentButtonActionPerformed
+    private void toFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_toFieldActionPerformed
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        ArrayList<String> toList = new  ArrayList<String>(Arrays.asList(toField.getText().split(";")));
+        try {
+            Email.send(manager.getUserManager().getSelectedUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getUserManager().getSelectedUser().getFirstName() + manager.getUserManager().getSelectedUser().getLastName()));
+        } catch (PrivilegeInsufficientException ex) {
+            Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sendButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel EmailHolderPanel;
     private javax.swing.JPanel composeBox;
-    private javax.swing.JButton composeButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JButton discardButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea messageArea;
+    private javax.swing.JButton sendButton;
     private javax.swing.JPanel sentBox;
-    private javax.swing.JButton sentButton;
     private javax.swing.JTextField titleField;
+    private javax.swing.JTextField toField;
     private javax.swing.JLabel toLabel;
     // End of variables declaration//GEN-END:variables
 }
