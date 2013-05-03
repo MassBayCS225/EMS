@@ -64,7 +64,7 @@ public class EventManager {
 
         event.setLocation(new Location(eventsTable.getStreet(eventID), eventsTable.getCity(eventID),
                 eventsTable.getState(eventID), eventsTable.getZipcode(eventID), eventsTable.getCountry(eventID),
-                "remove this comment"//eventsTable.getDetails(eventID)
+                eventsTable.getDetails(eventID)
                 ));
         event.getTimeSchedule().setStartDateTime(eventsTable.getStartDate(eventID));
         event.getTimeSchedule().setEndDateTime(eventsTable.getEndDate(eventID));
@@ -86,7 +86,7 @@ public class EventManager {
         SubEvent subEvent = new SubEvent(subEventID, subEventsTable.getDescription(subEventID));
         subEvent.setLocation(new Location(subEventsTable.getStreet(subEventID), subEventsTable.getCity(subEventID),
                 subEventsTable.getState(subEventID), subEventsTable.getZipcode(subEventID), subEventsTable.getCountry(subEventID),
-                "remove this comment"//subEventsTable.getDetails(subEventID)
+                subEventsTable.getDetails(subEventID)
                 ));
         subEvent.getTimeSchedule().setStartDateTime(subEventsTable.getStartDate(subEventID));
         subEvent.getTimeSchedule().setEndDateTime(subEventsTable.getEndDate(subEventID));
@@ -185,7 +185,7 @@ public class EventManager {
         Task task = new Task(taskID, tasksTable.getDescription(taskID));
         task.setLocation(new Location(tasksTable.getStreet(taskID), tasksTable.getCity(taskID),
                 tasksTable.getState(taskID), tasksTable.getZipcode(taskID), tasksTable.getCountry(taskID),
-                "remove this comment"//tasksTable.getDetails(taskID)
+                tasksTable.getDetails(taskID)
                 ));
         task.getTimeSchedule().setStartDateTime(tasksTable.getStartDate(taskID));
         task.getTimeSchedule().setEndDateTime(tasksTable.getEndDate(taskID));
@@ -211,8 +211,7 @@ public class EventManager {
     
     private ArrayList<Income> rebuildIncomeList(int committeeID) throws DoesNotExistException{
         ArrayList<Income> incomeList = new ArrayList<Income>();
-        ArrayList<Integer> incomeIDList = new ArrayList<Integer>();
-                  // committeesTable.getIncomeList(committeeID);
+        ArrayList<Integer> incomeIDList = committeesTable.getIncome(committeeID);
         
         for (Integer incomeID : incomeIDList){
             incomeList.add(rebuildIncome(incomeID));
@@ -228,8 +227,7 @@ public class EventManager {
     private ArrayList<Expense> rebuildExpenseList(int committeeID) throws DoesNotExistException{
         
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
-        ArrayList<Integer> expenseIDList = new ArrayList<Integer>();
-                //committeesTable.getExpenseList(committeeID);
+        ArrayList<Integer> expenseIDList = committeesTable.getExpense(committeeID);
         
         for (Integer expenseID : expenseIDList){
             expenseList.add(rebuildExpense(expenseID));
@@ -245,7 +243,7 @@ public class EventManager {
 
     // method may be finished in future version
     public ArrayList<Event> getEventList() {
-        return null;
+        return eventList;
     }
 
     public void setSelectedEvent(Event selectedEvent) {
