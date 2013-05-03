@@ -224,7 +224,7 @@ public class EmailPanel extends javax.swing.JPanel {
         ArrayList<String> toList = new  ArrayList<String>(Arrays.asList(toField.getText().split(";")));
         try {
             Email.send(manager.getUserManager().getSelectedUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getUserManager().getSelectedUser().getFirstName() + " " + manager.getUserManager().getSelectedUser().getLastName()));
-        } catch (PrivilegeInsufficientException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_sendButtonActionPerformed

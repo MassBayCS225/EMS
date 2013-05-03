@@ -42,7 +42,8 @@ public class SubEventPanel extends javax.swing.JPanel {
     public SubEvent createEvent()
     {
         SubEvent e = new SubEvent(1,1,descriptionTextArea.getText());
-        TimeSchedule t = new TimeSchedule((int)yearSelect.getSelectedItem(),monthSelect.getSelectedIndex(), daySelect.getSelectedIndex(), );
+        //TimeSchedule t = new TimeSchedule((int)yearSelect.getSelectedItem(),monthSelect.getSelectedIndex(), daySelect.getSelectedIndex(), );
+        return e;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -196,11 +197,11 @@ public class SubEventPanel extends javax.swing.JPanel {
                     .addComponent(jCheckBox1)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(durationLabel)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(locationLabel)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
