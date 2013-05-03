@@ -67,6 +67,10 @@ public class DB_Testing {
 //	System.out.print(ct.queryEntireTable());
 //	System.out.println("USERS TABLE");
 //	System.out.print(udt.queryEntireTable());
+//	System.out.println("INCOME TABLE");
+//	System.out.print(inTable.queryEntireTable());
+//	System.out.println("EXPENSE TABLE");
+//	System.out.print(exTable.queryEntireTable());
 
 
 	//CREATE BUDGET INSERTION
@@ -154,10 +158,10 @@ public class DB_Testing {
 //        } catch (DuplicateInsertionException die) {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
-	// System.out.println(et.queryEntireTable());        
+//	 System.out.println(et.queryEntireTable());        
 	// System.out.println(); //blank line.
 //        try{
-//            uid = 3;
+//            uid = 2;
 //	    list.add(46);
 //            System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
@@ -174,7 +178,7 @@ public class DB_Testing {
 //            System.out.println(et.getParticipantList(uid));  
 //            System.out.println(et.getCommittee(uid));   	    
 //	   
-//	    et.setDescription(uid, "new description");	   
+//	    et.setDescription(uid, "al;skdjf;alskdf");	   
 //	    et.setDetails(uid, "new details");	   
 //	    et.setStartDate(uid, startDate);	   
 //	    et.setEndDate(uid, endDate);	   
@@ -199,7 +203,7 @@ public class DB_Testing {
 //            System.out.println(et.getState(uid));
 //            System.out.println(et.getZipcode(uid));
 //            System.out.println(et.getCountry(uid));
-//            System.out.println(et.getOrganizerList(uid));  
+//	    System.out.println(et.getOrganizerList(uid));  
 //            System.out.println(et.getSubEventList(uid));  
 //            System.out.println(et.getParticipantList(uid));  
 //            System.out.println(et.getCommittee(uid));   

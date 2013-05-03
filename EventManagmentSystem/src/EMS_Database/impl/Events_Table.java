@@ -6,12 +6,12 @@ import EMS_Database.InitDB;
 import static EMS_Database.InitDB.debugLog;
 import EMS_Database.Interface_EventData;
 import EMS_Database.InputEventData;
+import EMS_Database.Interface_FunctionWrapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 
 /**
@@ -19,38 +19,41 @@ import java.util.logging.Level;
  *
  * @author mike
  */
-public class Events_Table extends InitDB implements Interface_EventData {
+public class Events_Table extends InitDB implements Interface_EventData{
+
+    private static String tableName = "EVENTS";
 
     /////////////////////SPECIAL FUNCTIONS///////////////////////////
-    /**
-     * A special function designed to format integer array lists into a string
-     * to be used for actual integer data return from the database.
-     *
-     * @param uidList A formatted string from the database representing the UID
-     * list.
-     * @return A nice array list of the UID's from the database.
-     * @throws NumberFormatException if you somehow try to put something that
-     * cannot be parsed into the conversion string.
-     */
-    @Override
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
-	//Split String
-	String[] uidStringList;
-	uidStringList = uidList.split(",");
-
-	ArrayList<Integer> uidIntList = new ArrayList<Integer>();
-
-	//parse each item into arraylist
-	for (String uid : uidStringList) {
-	    try {
-		uidIntList.add(Integer.parseInt(uid));
-	    } catch (NumberFormatException nfe) {
-		throw new NumberFormatException("Parse Error");
-	    }
-	}
-
-	return uidIntList;
-    }
+//    /**
+//     * A special function designed to format integer array lists into a string
+//     * to be used for actual integer data return from the database.
+//     *
+//     * @param uidList A formatted string from the database representing the UID
+//     * list.
+//     * @return A nice array list of the UID's from the database.
+//     * @throws NumberFormatException if you somehow try to put something that
+//     * cannot be parsed into the conversion string.
+//     */
+//    @Override
+//    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
+//	//Split String
+//	String[] uidStringList;
+//	uidStringList = uidList.split(",");
+//
+//	ArrayList<Integer> uidIntList = new ArrayList<Integer>();	
+//
+//	//parse each item into arraylist
+//	for (String uid : uidStringList) {
+//	    try {
+//		uidIntList.add(Integer.parseInt(uid));
+//	    } catch (NumberFormatException nfe) {
+//		debugLog.log(Level.SEVERE,"Parse Error while parsing "+uidList);
+//		throw new NumberFormatException("Parse Error");
+//	    }
+//	}
+//
+//	return uidIntList;
+//    }
 
     /**
      * Does the opposite of string to list and creates a nicely formatted string
@@ -68,34 +71,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
 	    returnQuery.append(",");
 	}
 	return returnQuery.toString();
-    }
-
-    /**
-     * A function to generate a list of the current UID's in a table
-     *
-     * @return ArrayList<Integer> of the current UID's in the table
-     */
-    @Override
-    public ArrayList<Integer> currentUIDList() {
-	int newUID = 0;
-	ArrayList<Integer> UIDList = new ArrayList<Integer>();
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    while (rs.next()) {
-		newUID = rs.getInt("UID");
-		UIDList.add(newUID);
-	    }
-	    return UIDList;
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	return UIDList; // should not be zero
-    }
+    }   
 
     /**
      * Input a new event into the events using InputEvent class to create a
@@ -143,6 +119,27 @@ public class Events_Table extends InitDB implements Interface_EventData {
 	} finally {
 	    return newUID;
 	}
+    }
+    
+    public ArrayList<Integer> currentUIDList() {
+	int newUID = 0;
+	ArrayList<Integer> UIDList = new ArrayList<Integer>();
+	try {
+
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    while (rs.next()) {
+		newUID = rs.getInt("UID");
+		UIDList.add(newUID);
+	    }
+	    return UIDList;
+
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	return UIDList; // should not be zero
     }
 
     /**
@@ -246,6 +243,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
 	return true;
     }
 
+    
     //////////////////////GETTERS////////////////////////////
     /**
      * Returns the specified users description.
@@ -257,62 +255,12 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("event description");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("DESCRIPTION",tableName,uid);
     }
 
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("DETAILS"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("event details");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("DETAILS",tableName,uid);
     }
 
     /**
@@ -324,33 +272,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-	Timestamp returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		//UNAME = coulmn name.
-		returnQuery = rs.getTimestamp("STARTDATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking if that uid exists	  
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("event startdate");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBTimestamp("STARTDATE",tableName,uid);
     }
 
     /**
@@ -362,33 +284,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-	Timestamp returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		//UNAME = coulmn name.
-		returnQuery = rs.getTimestamp("ENDDATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking if that uid exists	    
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("event enddate");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBTimestamp("ENDDATE",tableName,uid);
     }
 
     /**
@@ -400,313 +296,52 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-	int returnQuery = 3;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getInt("COMPLETE"); //Should not have two uids with the same name                            
-	    }
-
-	    if (returnQuery == 3) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event complete");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return returnQuery; //should never get here.
+	return getDBInt("COMPLETE",tableName,uid);
     }
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("STREET"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event street");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("STREET",tableName,uid);
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("CITY"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event street");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("CITY",tableName,uid);
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("STATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event state");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("STATE",tableName,uid);
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("ZIPCODE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event zipcode");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("ZIPCODE",tableName,uid);
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("COUNTRY"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event country");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return null;
+	return getDBString("COUNTRY",tableName,uid);
     }
 
     @Override
     public ArrayList<Integer> getOrganizerList(int uid) throws DoesNotExistException {
-	String returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("ORGANIZER"); //Should not have two uids with the same name                            
-	    }
-
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event organizer");
-	    } else {
-		if (returnQuery.equals("")) {
-		    return new ArrayList<Integer>(); //return empty arraylist if none exists
-		} else {
-		    return stringToList(returnQuery); //return an arraylist		    
-		}
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return stringToList(returnQuery); //should never get here.
+	return getDBArrayList("ORGANIZER",tableName,uid);
     }
 
     @Override
     public ArrayList<Integer> getSubEventList(int uid) throws DoesNotExistException {
-	String returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("SUBEVENT"); //Should not have two uids with the same name                            
-	    }
-
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event subevent list");
-	    } else {
-		if (returnQuery.equals("")) {
-		    return new ArrayList<Integer>(); //return empty arraylist if none exists
-		} else {
-		    return stringToList(returnQuery); //return an arraylist		    
-		}
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return stringToList(returnQuery); //should never get here.
+	return getDBArrayList("SUBEVENT",tableName,uid);
     }
 
     @Override
     public ArrayList<Integer> getParticipantList(int uid) throws DoesNotExistException {
-	String returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("PARTICIPANT"); //Should not have two uids with the same name                            
-	    }
-
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event participant");
-	    } else {
-		if (returnQuery.equals("")) {
-		    return new ArrayList<Integer>(); //return empty arraylist if none exists
-		} else {
-		    return stringToList(returnQuery); //return an arraylist		    
-		}
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return stringToList(returnQuery); //should never get here.
+	return getDBArrayList("PARTICIPANT",tableName,uid);
     }
 
     @Override
     public ArrayList<Integer> getCommittee(int uid) throws DoesNotExistException {
-	String returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("COMMITTEE"); //Should not have two uids with the same name                            
-	    }
-
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-		throw new DoesNotExistException("Event committee");
-	    } else {
-		if (returnQuery.equals("")) {
-		    return new ArrayList<Integer>(); //return empty arraylist if none exists
-		} else {
-		    return stringToList(returnQuery); //return an arraylist		    
-		}
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EVENTS table.");
-	return stringToList(returnQuery); //should never get here.
+	return getDBArrayList("COMMITTEE",tableName,uid);
     }
 
     ////////////////////////SETTERS///////////////////////////////

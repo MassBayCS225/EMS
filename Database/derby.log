@@ -1,30 +1,6 @@
-Wed Apr 17 17:15:25 EDT 2013 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
-----------------------------------------------------------------
-Wed Apr 17 17:15:26 EDT 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013e-19da-211c-00003917449e 
-on database directory /BIG/DOCUMENTS/CS225/EMS/Database/EMS_DB  with class loader sun.misc.Launcher$AppClassLoader@63644028 
-Loaded from file:/usr/java/jdk1.7.0_17/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_17-b02
-user.dir=/usr/java/jdk1.7.0_17/db
-derby.system.home=/BIG/DOCUMENTS/CS225/EMS/Database
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Apr 17 17:15:36 EDT 2013:
-Shutting down instance a816c00e-013e-19da-211c-00003917449e on database directory /BIG/DOCUMENTS/CS225/EMS/Database/EMS_DB with class loader sun.misc.Launcher$AppClassLoader@63644028 
-Wed Apr 17 17:15:36 EDT 2013 Thread[DRDAConnThread_4,5,main] (DATABASE = EMS_DB), (DRDAID = {2}), Database 'EMS_DB' shutdown.
-----------------------------------------------------------------
-Wed Apr 17 17:41:09 EDT 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 6c44409f-013e-19da-211c-00003917449e 
-on database directory /BIG/DOCUMENTS/CS225/EMS/Database/EMS_DB  with class loader sun.misc.Launcher$AppClassLoader@63644028 
-Loaded from file:/usr/java/jdk1.7.0_17/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_17-b02
-user.dir=/usr/java/jdk1.7.0_17/db
-derby.system.home=/BIG/DOCUMENTS/CS225/EMS/Database
-Database Class Loader started - derby.database.classpath=''
-Wed Apr 17 17:41:24 EDT 2013 Thread[DRDAConnThread_4,5,main] Cleanup action starting
-java.sql.SQLException: Database 'derby-test' not found.
+Fri May 03 16:56:10 EDT 2013 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+Fri May 03 16:56:37 EDT 2013 Thread[DRDAConnThread_3,5,main] Cleanup action starting
+java.sql.SQLException: Database 'EMS_DB' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
@@ -44,12 +20,12 @@ java.sql.SQLException: Database 'derby-test' not found.
 	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
 	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
 	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
-Caused by: java.sql.SQLException: Database 'derby-test' not found.
+Caused by: java.sql.SQLException: Database 'EMS_DB' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
 	... 19 more
 ============= begin nested exception, level (1) ===========
-java.sql.SQLException: Database 'derby-test' not found.
+java.sql.SQLException: Database 'EMS_DB' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
@@ -73,55 +49,4 @@ java.sql.SQLException: Database 'derby-test' not found.
 	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
 ============= end nested exception, level (1) ===========
 Cleanup action completed
-Wed Apr 17 17:41:24 EDT 2013 Thread[DRDAConnThread_4,5,main] (DATABASE = derby-test), (DRDAID = {4}), Database 'derby-test' not found.
-Wed Apr 17 21:27:36 EDT 2013 Thread[DRDAConnThread_4,5,main] (XID = 396), (SESSIONID = 2), (DATABASE = EMS_DB), (DRDAID = {5}), Cleanup action starting
-java.sql.SQLNonTransientConnectionException: Connection authentication failure occurred.  Reason: Invalid authentication..
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
-	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
-	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
-Caused by: java.sql.SQLException: Connection authentication failure occurred.  Reason: Invalid authentication..
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
-	... 19 more
-============= begin nested exception, level (1) ===========
-java.sql.SQLException: Connection authentication failure occurred.  Reason: Invalid authentication..
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
-	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
-	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Wed Apr 17 21:27:36 EDT 2013 Thread[DRDAConnThread_4,5,main] (DATABASE = EMS_DB), (DRDAID = {5}), Connection authentication failure occurred.  Reason: Invalid authentication..
+Fri May 03 16:56:37 EDT 2013 Thread[DRDAConnThread_3,5,main] (DATABASE = EMS_DB), (DRDAID = {1}), Database 'EMS_DB' not found.
