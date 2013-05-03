@@ -13,5 +13,10 @@ public class Income extends BudgetItem{
         public Income(double value, String description) {
         super(value, description);
     }
+        
+        public Income(int incomeID, BudgetItem budgetItem)
+        {
+            super(incomeID, budgetItem);
+        }
     
 }

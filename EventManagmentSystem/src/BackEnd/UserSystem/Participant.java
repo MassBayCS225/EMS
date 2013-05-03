@@ -45,6 +45,16 @@ public class Participant{
     this.emailAddress = emailAddress;
   }
   
+  public Participant(int userID, Participant participant){
+      UID = userID;
+      firstName = participant.getFirstName();
+      lastName = participant.getLastName();
+      emailAddress = participant.getEmailAddress();
+      phoneNumber = participant.getPhoneNumber();
+      address = participant.getAddress();
+  }
+      
+  
   public int getUserId(){
     return UID;
   }

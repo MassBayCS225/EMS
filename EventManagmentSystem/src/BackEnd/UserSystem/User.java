@@ -38,6 +38,22 @@ public class User extends Participant
         setPassword(pword, pwordMatch);
             
     }
+    
+    public User(int userID, User user){
+        super(userID, (Participant)user);
+        password = user.getPassword();
+        adminPrivilege = user.getAdminPrivilege();
+        eventCreationPrivilege = user.getEventCreationPrivilege();
+    }
+    
+    public User(int uid, String firstName, String lastName, String emailAddress, String pword)
+    {
+        super(firstName, lastName, emailAddress);
+        UID = uid;
+        password = pword;
+            
+    }
+    
     public User()
     {
         super(null, null, null);

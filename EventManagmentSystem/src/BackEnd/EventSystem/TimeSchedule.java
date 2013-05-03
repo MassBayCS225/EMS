@@ -45,6 +45,10 @@ public class TimeSchedule {
             throw new IllegalArgumentException("Invalid minute entered.");
     }
     
+    public void setStartDateTime(Timestamp startDateTime){
+        this.startDateTime.setTimeInMillis(startDateTime.getTime());
+    }
+    
     public Calendar getStartDateTimeCalendar() {
         return startDateTime;
     }
@@ -78,6 +82,10 @@ public class TimeSchedule {
             endDateTime.set(Calendar.MINUTE, minute);
         else
             throw new IllegalArgumentException("Invalid minute entered.");
+    }
+    
+    public void setEndDateTime(Timestamp endDateTime){
+        this.endDateTime.setTimeInMillis(endDateTime.getTime());
     }
     
     public Calendar getEndDateTimeCalendar() {
