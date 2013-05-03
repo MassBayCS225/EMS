@@ -8,12 +8,12 @@ package GUI.Dialog;
  *
  * @author Sid
  */
-public class PhoneNumberExceptionDialog extends javax.swing.JDialog {
+public class PrivilegeExceptionDialog extends javax.swing.JDialog {
     private Exception e;
     /**
-     * Creates new form PhoneNumberExceptionDialog
+     * Creates new form PrivlageExceptionDialog
      */
-    public PhoneNumberExceptionDialog(java.awt.Frame parent, boolean modal, Exception e) {
+    public PrivilegeExceptionDialog(java.awt.Frame parent, boolean modal, Exception e) {
         super(parent, modal);
         initComponents();
         this.e = e;
@@ -31,7 +31,6 @@ public class PhoneNumberExceptionDialog extends javax.swing.JDialog {
 
         headerLabel1 = new javax.swing.JLabel();
         headerLabel2 = new javax.swing.JLabel();
-        headerLabel3 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
 
@@ -43,10 +42,7 @@ public class PhoneNumberExceptionDialog extends javax.swing.JDialog {
         headerLabel1.setText("Warning:");
 
         headerLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        headerLabel2.setText("Unexpected error found in given");
-
-        headerLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        headerLabel3.setText("phone number.");
+        headerLabel2.setText("Privilege error detected.");
 
         errorLabel.setText("Error Message");
 
@@ -64,36 +60,29 @@ public class PhoneNumberExceptionDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(48, 48, 48)
                         .addComponent(headerLabel1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(headerLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(headerLabel2))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(headerLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addGap(152, 152, 152)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(errorLabel))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headerLabel1)
                     .addComponent(headerLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headerLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(errorLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(closeButton)
-                .addContainerGap())
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -103,12 +92,10 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     this.dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel headerLabel1;
     private javax.swing.JLabel headerLabel2;
-    private javax.swing.JLabel headerLabel3;
     // End of variables declaration//GEN-END:variables
 }

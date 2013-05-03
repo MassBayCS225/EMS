@@ -31,17 +31,17 @@ public class EmailExceptionDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        headerLabel = new javax.swing.JLabel();
-        errorLabel = new javax.swing.JLabel();
+        headerLabel2 = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
+        headerLabel1 = new javax.swing.JLabel();
+        headerLabel3 = new javax.swing.JLabel();
+        errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-        headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        headerLabel.setForeground(new java.awt.Color(255, 0, 0));
-        headerLabel.setText("There was an unexpected error with the given email address.");
-
-        errorLabel.setText("Error Message");
+        headerLabel2.setFont(new java.awt.Font("Tahoma", 1, 16));
+        headerLabel2.setText("Unexpected error found in given");
 
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -50,29 +50,52 @@ public class EmailExceptionDialog extends javax.swing.JDialog {
             }
         });
 
+        headerLabel1.setFont(new java.awt.Font("Tahoma", 1, 18));
+        headerLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        headerLabel1.setText("Warning:");
+
+        headerLabel3.setFont(new java.awt.Font("Tahoma", 1, 16));
+        headerLabel3.setText("e-mail address.");
+
+        errorLabel.setText("Error Message");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(headerLabel)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(234, 234, 234)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(closeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(headerLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(headerLabel3))
+                            .addComponent(headerLabel2))
+                        .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(errorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(headerLabel1)
+                    .addComponent(headerLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(headerLabel3)
+                .addGap(14, 14, 14)
                 .addComponent(errorLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(closeButton)
-                .addGap(21, 21, 21))
+                .addGap(13, 13, 13))
         );
 
         pack();
@@ -86,6 +109,8 @@ public class EmailExceptionDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel errorLabel;
-    private javax.swing.JLabel headerLabel;
+    private javax.swing.JLabel headerLabel1;
+    private javax.swing.JLabel headerLabel2;
+    private javax.swing.JLabel headerLabel3;
     // End of variables declaration//GEN-END:variables
 }
