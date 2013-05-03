@@ -18,6 +18,12 @@ public class Budget {
         this.incomeList = new ArrayList<Income>();
         this.expenseList = new ArrayList<Expense>();
     }
+    
+    public Budget(int budgetID, Budget budget){
+        this.BUDGET_ID = budgetID;
+        incomeList = budget.getIncomeList();
+        expenseList = budget.getExpenseList();
+    }
 
     public void setBUDGET_ID(int BUDGET_ID) {
         this.BUDGET_ID = BUDGET_ID;
