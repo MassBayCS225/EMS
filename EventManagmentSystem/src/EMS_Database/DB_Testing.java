@@ -151,18 +151,13 @@ public class DB_Testing {
 //	}
 
 
-	//CREATE EVENT INSERTION
-//        try {
-//            uid = et.createEvent(ied);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
+//	CREATE EVENT INSERTION
+
 //	 System.out.println(et.queryEntireTable());        
 	// System.out.println(); //blank line.
 //        try{
-//            uid = 2;
-//	    list.add(46);
+//            uid = et.createEvent(ied);
+//	    list.add(34);
 //            System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
 //            System.out.println(et.getStartDate(uid));
@@ -182,7 +177,7 @@ public class DB_Testing {
 //	    et.setDetails(uid, "new details");	   
 //	    et.setStartDate(uid, startDate);	   
 //	    et.setEndDate(uid, endDate);	   
-//            et.setComplete(uid, 1);	   
+//          et.setComplete(uid, 1);	   
 //            et.setStreet(uid, "Mulholland Drive");	   
 //            et.setCity(uid, "Tokyo");	   
 //            et.setState(uid, "XYZ");	   
@@ -195,9 +190,9 @@ public class DB_Testing {
 //	    
 //	    System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
-//            System.out.println(et.getStartDate(uid));
+//	    System.out.println(et.getStartDate(uid));
 //            System.out.println(et.getEndDate(uid));
-//            System.out.println(et.getComplete(uid));
+//	    System.out.println(et.getComplete(uid));
 //            System.out.println(et.getStreet(uid));
 //            System.out.println(et.getCity(uid));
 //            System.out.println(et.getState(uid));

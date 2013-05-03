@@ -19,60 +19,11 @@ import java.util.logging.Level;
  *
  * @author mike
  */
-public class Events_Table extends InitDB implements Interface_EventData{
+public class Events_Table extends InitDB implements Interface_EventData {
 
     private static String tableName = "EVENTS";
 
-    /////////////////////SPECIAL FUNCTIONS///////////////////////////
-//    /**
-//     * A special function designed to format integer array lists into a string
-//     * to be used for actual integer data return from the database.
-//     *
-//     * @param uidList A formatted string from the database representing the UID
-//     * list.
-//     * @return A nice array list of the UID's from the database.
-//     * @throws NumberFormatException if you somehow try to put something that
-//     * cannot be parsed into the conversion string.
-//     */
-//    @Override
-//    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
-//	//Split String
-//	String[] uidStringList;
-//	uidStringList = uidList.split(",");
-//
-//	ArrayList<Integer> uidIntList = new ArrayList<Integer>();	
-//
-//	//parse each item into arraylist
-//	for (String uid : uidStringList) {
-//	    try {
-//		uidIntList.add(Integer.parseInt(uid));
-//	    } catch (NumberFormatException nfe) {
-//		debugLog.log(Level.SEVERE,"Parse Error while parsing "+uidList);
-//		throw new NumberFormatException("Parse Error");
-//	    }
-//	}
-//
-//	return uidIntList;
-//    }
-
-    /**
-     * Does the opposite of string to list and creates a nicely formatted string
-     * for insertion into the database.
-     *
-     * @param list An ArrayList of Integers representing the UID numbers to be
-     * stored.
-     * @return A nicely formated String for insertion into the database.
-     */
-    @Override
-    public String listToString(ArrayList<Integer> list) {
-	StringBuilder returnQuery = new StringBuilder();
-	for (int uid : list) {
-	    returnQuery.append(uid);
-	    returnQuery.append(",");
-	}
-	return returnQuery.toString();
-    }   
-
+    /////////////////////SPECIAL FUNCTIONS///////////////////////////    
     /**
      * Input a new event into the events using InputEvent class to create a
      * valid input object
@@ -82,7 +33,7 @@ public class Events_Table extends InitDB implements Interface_EventData{
      * @throws DuplicateInsertionException
      */
     @Override
-    public int createEvent(InputEventData event) throws DuplicateInsertionException {
+    public int createEvent(InputEventData event) {
 	int newUID = nextValidUID();
 
 	try {
@@ -110,7 +61,7 @@ public class Events_Table extends InitDB implements Interface_EventData{
 	    //checking to see if UID already exists.
 	    for (int uid : currentUIDList()) {
 		if (newUID == uid) {
-		    throw new DuplicateInsertionException("EventsTable");
+		    throw new DoesNotExistException("Issue creating EVENT insertion...");
 		}
 	    }
 
@@ -120,7 +71,7 @@ public class Events_Table extends InitDB implements Interface_EventData{
 	    return newUID;
 	}
     }
-    
+
     public ArrayList<Integer> currentUIDList() {
 	int newUID = 0;
 	ArrayList<Integer> UIDList = new ArrayList<Integer>();
@@ -243,7 +194,6 @@ public class Events_Table extends InitDB implements Interface_EventData{
 	return true;
     }
 
-    
     //////////////////////GETTERS////////////////////////////
     /**
      * Returns the specified users description.
@@ -255,12 +205,12 @@ public class Events_Table extends InitDB implements Interface_EventData{
      */
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-	return getDBString("DESCRIPTION",tableName,uid);
+	return getDBString("DESCRIPTION", tableName, uid);
     }
 
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
-	return getDBString("DETAILS",tableName,uid);
+	return getDBString("DETAILS", tableName, uid);
     }
 
     /**
@@ -272,7 +222,7 @@ public class Events_Table extends InitDB implements Interface_EventData{
      */
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-	return getDBTimestamp("STARTDATE",tableName,uid);
+	return getDBTimestamp("STARTDATE", tableName, uid);
     }
 
     /**
@@ -284,7 +234,7 @@ public class Events_Table extends InitDB implements Interface_EventData{
      */
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-	return getDBTimestamp("ENDDATE",tableName,uid);
+	return getDBTimestamp("ENDDATE", tableName, uid);
     }
 
     /**
@@ -296,416 +246,122 @@ public class Events_Table extends InitDB implements Interface_EventData{
      */
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-	return getDBInt("COMPLETE",tableName,uid);
+	return getDBInt("COMPLETE", tableName, uid);
     }
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-	return getDBString("STREET",tableName,uid);
+	return getDBString("STREET", tableName, uid);
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-	return getDBString("CITY",tableName,uid);
+	return getDBString("CITY", tableName, uid);
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-	return getDBString("STATE",tableName,uid);
+	return getDBString("STATE", tableName, uid);
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-	return getDBString("ZIPCODE",tableName,uid);
+	return getDBString("ZIPCODE", tableName, uid);
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-	return getDBString("COUNTRY",tableName,uid);
+	return getDBString("COUNTRY", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getOrganizerList(int uid) throws DoesNotExistException {
-	return getDBArrayList("ORGANIZER",tableName,uid);
+	return getDBArrayList("ORGANIZER", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getSubEventList(int uid) throws DoesNotExistException {
-	return getDBArrayList("SUBEVENT",tableName,uid);
+	return getDBArrayList("SUBEVENT", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getParticipantList(int uid) throws DoesNotExistException {
-	return getDBArrayList("PARTICIPANT",tableName,uid);
+	return getDBArrayList("PARTICIPANT", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getCommittee(int uid) throws DoesNotExistException {
-	return getDBArrayList("COMMITTEE",tableName,uid);
+	return getDBArrayList("COMMITTEE", tableName, uid);
     }
 
     ////////////////////////SETTERS///////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET DESCRIPTION=? WHERE UID=?");
-		idQueryStmt.setString(1, description);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("DESCRIPTION", tableName, uid, description);
     }
 
     @Override
     public void setDetails(int uid, String details) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET DETAILS=? WHERE UID=?");
-		idQueryStmt.setString(1, details);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("DETAILS",tableName,uid,details);		
     }
 
     @Override
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET STARTDATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, time);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBTimestamp("STARTDATE",tableName,uid,time);
     }
 
     @Override
     public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET ENDDATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, time);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBTimestamp("ENDDATE",tableName,uid,time);
     }
 
     @Override
     public void setComplete(int uid, int complete) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET COMPLETE=? WHERE UID=?");
-		idQueryStmt.setInt(1, complete);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBInt("COMPLETE",tableName,uid,complete);
     }
 
     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET STREET=? WHERE UID=?");
-		idQueryStmt.setString(1, street);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("STREET",tableName,uid,street);
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET CITY=? WHERE UID=?");
-		idQueryStmt.setString(1, city);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("CITY",tableName,uid,city);
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET STATE=? WHERE UID=?");
-		idQueryStmt.setString(1, state);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("STATE",tableName,uid,state);
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET ZIPCODE=? WHERE UID=?");
-		idQueryStmt.setString(1, zipcode);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("ZIPCODE",tableName,uid,zipcode);
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET COUNTRY=? WHERE UID=?");
-		idQueryStmt.setString(1, country);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBString("COUNTRY",tableName,uid,country);
     }
 
     @Override
     public void setOrganizerList(int uid, ArrayList<Integer> organizerList) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET ORGANIZER=? WHERE UID=?");
-		idQueryStmt.setString(1, listToString(organizerList));
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBArrayList("ORGANIZER",tableName,uid,organizerList);
     }
 
     @Override
     public void setSubEventList(int uid, ArrayList<Integer> subEventList) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET SUBEVENT=? WHERE UID=?");
-		idQueryStmt.setString(1, listToString(subEventList));
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBArrayList("SUBEVENT",tableName,uid,subEventList);
     }
 
     @Override
     public void setParticipantList(int uid, ArrayList<Integer> participantList) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET PARTICIPANT=? WHERE UID=?");
-		idQueryStmt.setString(1, listToString(participantList));
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBArrayList("PARTICIPANT",tableName,uid,participantList);	
     }
 
     @Override
     public void setCommittee(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EVENTS SET COMMITTEE=? WHERE UID=?");
-		idQueryStmt.setString(1, listToString(committeeList));
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in EVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EVENT table.");
-	    throw new DoesNotExistException("User does not exist in EVENT table.");
-	}
+	setDBArrayList("COMMITTEE",tableName,uid,committeeList);
     }
 }

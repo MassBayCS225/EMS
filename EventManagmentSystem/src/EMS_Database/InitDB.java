@@ -25,18 +25,18 @@ import java.util.logging.SimpleFormatter;
  * Needs a connection URL, user and password.
  */
 public abstract class InitDB implements Interface_FunctionWrapper {
-
+    
     protected Connection dbConnection = null;
     public final static Logger debugLog = Logger.getLogger("DebugLog");
     private static FileHandler fh = null;
-
+    
     static { // Setup logging file        
 	try {
 	    fh = new FileHandler("debug.log", false);
 	    CloseLogger ch = new CloseLogger(fh);
 	    Thread t = new Thread(ch);
 	    Runtime.getRuntime().addShutdownHook(t);
-
+	    
 	} catch (SecurityException e) {
 	    System.err.println(e.getMessage());
 	} catch (IOException e) {
@@ -46,9 +46,9 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	debugLog.addHandler(fh);
 	debugLog.setUseParentHandlers(false); //do not use default outputs (console and such)
 
-
+	
     }
-
+    
     public InitDB() {
 
 
@@ -74,7 +74,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    //System.out.println("Database Connection Established.");
 	    //debugLog.info("Database Connection Established.");
 	} catch (SQLException sqle) {
-
+	    
 	    try {
 		//create connection if no database exists
 		dbConnection = DriverManager.getConnection("jdbc:derby:EMS_DB;create=true", props);
@@ -96,7 +96,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "COUNTRY VARCHAR(100) DEFAULT NULL, "
 			+ "PARTICIPANT VARCHAR(100) DEFAULT NULL, "
 			+ "EVENTLEVEL INT NOT NULL)";
-
+		
 		String createEventsTable = "CREATE TABLE EVENTS (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
@@ -124,7 +124,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "COUNTRY VARCHAR(100) DEFAULT NULL, "
 			+ "STARTDATE TIMESTAMP, "
 			+ "ENDDATE TIMESTAMP)";
-
+		
 		String createCommitteeTable = "CREATE TABLE COMMITTEE (UID INT PRIMARY KEY, "
 			+ "TITLE VARCHAR(160) DEFAULT NULL, "
 			+ "CHAIRMAN INT, "
@@ -134,7 +134,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "INCOME VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s
 			+ "EXPENSE VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s						
 			+ "BUDGET DOUBLE)";
-
+		
 		String createTasksTable = "CREATE TABLE TASKS (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
@@ -152,12 +152,12 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
 			+ "DATE TIMESTAMP, "
 			+ "VALUE DOUBLE)";
-
+		
 		String createExpenseTable = "CREATE TABLE EXPENSE (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
 			+ "DATE TIMESTAMP, "
 			+ "VALUE DOUBLE)";
-
+		
 		Statement stmt = dbConnection.createStatement();
 		stmt.executeUpdate(createUserTable); //takes table string as argument
 		debugLog.info("USER table created successfully");
@@ -173,25 +173,28 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		debugLog.info("INCOME table created successfully");
 		stmt.executeUpdate(createExpenseTable);
 		debugLog.info("EXPENSE table created successfully");
-
-
+		
+		
 	    } catch (SQLException sqlee) { //serious errors if this gets thrown
 		sqlee.printStackTrace();
 		debugLog.severe("TABLE CREATION FAILED!");
 	    }
-
+	    
 	}
-
+	
     }
-
+    
+    /**
+     * This is a separate sub class which is another thread for shutdown sequences.
+     */
     private static class CloseLogger implements Runnable {
-
+	
 	private final FileHandler fh;
-
+	
 	public CloseLogger(FileHandler fh) {
 	    this.fh = fh;
 	}
-
+	
 	@Override
 	public void run() {
 	    fh.flush();
@@ -199,7 +202,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    //System.out.println("closed logger");
 	}
     }
-
+    
     public Connection getConnection() {
 	return dbConnection;
     }
@@ -214,23 +217,23 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	int newUID = 0;
 	ArrayList<Integer> UIDList = new ArrayList<Integer>();
 	try {
-
+	    
 	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table);
 	    ResultSet rs = idQueryStmt.executeQuery();
-
+	    
 	    while (rs.next()) {
 		newUID = rs.getInt("UID");
 		UIDList.add(newUID);
 	    }
 	    return UIDList;
-
+	    
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
 	    System.exit(1);
 	}
 	return UIDList; // should not be zero
     }
-
+    
     public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
 	if (uidList.equals("") || uidList == null) {
 	    return new ArrayList<Integer>();
@@ -238,7 +241,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    //Split String
 	    String[] uidStringList;
 	    uidStringList = uidList.split(",");
-
+	    
 	    ArrayList<Integer> uidIntList = new ArrayList<Integer>();
 
 	    //parse each item into arraylist
@@ -249,12 +252,30 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		    throw new NumberFormatException("Parse Error");
 		}
 	    }
-
+	    
 	    return uidIntList;
 	}
     }
+    
+    /**
+     * Does the opposite of string to list and creates a nicely formatted string
+     * for insertion into the database.
+     *
+     * @param list An ArrayList of Integers representing the UID numbers to be
+     * stored.
+     * @return A nicely formated String for insertion into the database.
+     */    
+    public String listToString(ArrayList<Integer> list) {
+	StringBuilder returnQuery = new StringBuilder();
+	for (int uid : list) {
+	    returnQuery.append(uid);
+	    returnQuery.append(",");
+	}
+	return returnQuery.toString();
+    }
 
     // FUNCTION WRAPPERS. USED TO CALL METHODS.
+    //GETTERS
     @Override
     public String getDBString(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -266,7 +287,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    }
 	}
 	if (exists == false) {
-	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling get{2}", new Object[]{uid, table, query});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
 	//executing query
@@ -289,7 +310,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-
+    
     @Override
     public double getDBDouble(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -301,7 +322,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    }
 	}
 	if (exists == false) {
-	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling get{2}", new Object[]{uid, table, query});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
 	//executing query
@@ -324,7 +345,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-
+    
     @Override
     public ArrayList<Integer> getDBArrayList(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -336,7 +357,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    }
 	}
 	if (exists == false) {
-	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling get{2}", new Object[]{uid, table, query});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
 	//executing query
@@ -359,7 +380,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-
+    
     @Override
     public int getDBInt(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -371,7 +392,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    }
 	}
 	if (exists == false) {
-	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling get{2}", new Object[]{uid, table, query});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
 	//executing query
@@ -394,7 +415,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-
+    
     @Override
     public Timestamp getDBTimestamp(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -406,7 +427,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    }
 	}
 	if (exists == false) {
-	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling {2}", new Object[]{uid, table, query});
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling get{2}", new Object[]{uid, table, query});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
 	//executing query
@@ -428,5 +449,137 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    System.exit(1);
 	}
 	throw new DoesNotExistException("Should not get here...");
+    }
+
+    //SETTERS
+    @Override
+    public void setDBString(String query, String table, int uid, String newValue) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList(table)) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE " + table + " SET " + query + "=? WHERE UID=?");
+		idQueryStmt.setString(1, newValue);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling set{2}", new Object[]{uid, table, query});
+		throw new DoesNotExistException("check debug log. " + table + " table error.");
+	    }
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+    }
+    
+    @Override
+    public void setDBDouble(String query, String table, int uid, double newValue) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList(table)) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE " + table + " SET " + query + "=? WHERE UID=?");
+		idQueryStmt.setDouble(1, newValue);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling set{2}", new Object[]{uid, table, query});
+		throw new DoesNotExistException("check debug log. " + table + " table error.");
+	    }
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+    }
+    
+    @Override
+    public void setDBArrayList(String query, String table, int uid, ArrayList<Integer> newValue) throws DoesNotExistException {
+	String newStringValue = listToString(newValue);
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList(table)) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE " + table + " SET " + query + "=? WHERE UID=?");
+		idQueryStmt.setString(1, newStringValue);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling set{2}", new Object[]{uid, table, query});
+		throw new DoesNotExistException("check debug log. " + table + " table error.");
+	    }
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+    }
+    
+    @Override
+    public void setDBInt(String query, String table, int uid, int newValue) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList(table)) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE " + table + " SET " + query + "=? WHERE UID=?");
+		idQueryStmt.setInt(1, newValue);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling set{2}", new Object[]{uid, table, query});
+		throw new DoesNotExistException("check debug log. " + table + " table error.");
+	    }
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+    }
+    
+    @Override
+    public void setDBTimestamp(String query, String table, int uid, Timestamp newValue) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList(table)) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE " + table + " SET " + query + "=? WHERE UID=?");
+		idQueryStmt.setTimestamp(1, newValue);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling set{2}", new Object[]{uid, table, query});
+		throw new DoesNotExistException("check debug log. " + table + " table error.");
+	    }
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
     }
 }
