@@ -2,6 +2,8 @@ package EMS_Database;
 
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
+import EMS_Database.impl.Expense_Table;
+import EMS_Database.impl.Income_Table;
 import EMS_Database.impl.SubEvent_Table;
 import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
@@ -27,6 +29,8 @@ public class DB_Testing {
 	Tasks_Table tt = new Tasks_Table();
 	Committees_Table ct = new Committees_Table();
 	UserData_Table udt = new UserData_Table();
+	Expense_Table exTable = new Expense_Table();
+	Income_Table inTable = new Income_Table();
 
 	//BOGUS Events table data
 	Timestamp startDate = new Timestamp(new Date().getTime());
@@ -43,6 +47,11 @@ public class DB_Testing {
 	InputTask it = new InputTask("Stop Programming So Much", "181 Bacon St.", "Natick", "MA", "01760", "MURICA!", startDate, endDate, 0, "2,1,");
 	//BOGUS UserData table data
 	InputUser iu = new InputUser(); //can be declared with no data.
+	//BOGUS Income data
+	InputIncome in = new InputIncome("some large sum of money", 0.01);
+	//BOGUS Expense data
+	InputExpense ex = new InputExpense("something expensive", 0.02);
+
 
 
 	//ALL TABLE QUERY
@@ -58,56 +67,77 @@ public class DB_Testing {
 //	System.out.print(udt.queryEntireTable());
 
 
-	//CREATE USER INSERTION
-	
-	try{
-	    uid = udt.createUser(iu); 
-	    System.out.println(udt.getLevel(uid));
-	    System.out.println(udt.getFirstName(uid));
-	    System.out.println(udt.getLastName(uid));
-	    System.out.println(udt.getPwd(uid));
-	    System.out.println(udt.getEmail(uid));
-	    System.out.println(udt.getPhone(uid));
-	    System.out.println(udt.getState(uid));
-	    System.out.println(udt.getCity(uid));
-	    System.out.println(udt.getZipcode(uid));
-	    System.out.println(udt.getCountry(uid));
-	    System.out.println(udt.getEventCreationPrivilege(uid));
-	    System.out.println(udt.getParticipant(uid));
-	    
-	    udt.setLevel(uid, 5);
-	    udt.setFirstName(uid, "new firstname");
-	    udt.setLastName(uid, "new lastname");
-	    udt.setPwd(uid, "new pwd");
-	    udt.setEmail(uid, "new email");
-	    udt.setPhone(uid, "new phone");
-	    udt.setStreet(uid, "new street");
-	    udt.setCity(uid, "new city");
-	    udt.setState(uid, "new state");
-	    udt.setZipcode(uid, "new zipcode");
-	    udt.setCountry(uid, "new country");
-	    udt.setEventCreationPrivilege(uid, 12);
-	    udt.setParticipant(uid, true);
-	    
-	    System.out.println(udt.getLevel(uid));
-	    System.out.println(udt.getFirstName(uid));
-	    System.out.println(udt.getLastName(uid));
-	    System.out.println(udt.getPwd(uid));
-	    System.out.println(udt.getEmail(uid));
-	    System.out.println(udt.getPhone(uid));
-	    System.out.println(udt.getState(uid));
-	    System.out.println(udt.getCity(uid));
-	    System.out.println(udt.getZipcode(uid));
-	    System.out.println(udt.getCountry(uid));
-	    System.out.println(udt.getEventCreationPrivilege(uid));
-	    System.out.println(udt.getParticipant(uid));
-	    
-	    System.out.println(udt.getParticipantList());
-	    
-	}catch(DoesNotExistException dnee) {
-	    System.out.println(dnee.getMessage());
-	}
-	
+	//CREATE BUDGET INSERTION
+//	for (int x = 0; x < 20; x++) {
+//	    System.out.print(inTable.nextValidUID()+" ");
+//	    inTable.insertBudgetItem(in);	    
+//	}
+	//System.out.print(inTable.queryEntireTable());
+	//try {	
+	uid = 1;
+	System.out.println(exTable.queryEntireTable());
+	System.out.println("Total Expences: " + exTable.total());
+	System.out.println(inTable.queryEntireTable());
+	System.out.println("Total Income: " + inTable.total());
+
+//	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
+//	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
+
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
+
+
+
+	//CREATE USER INSERTION	
+//	try{
+//	    uid = udt.createUser(iu); 
+//	    System.out.println(udt.getLevel(uid));
+//	    System.out.println(udt.getFirstName(uid));
+//	    System.out.println(udt.getLastName(uid));
+//	    System.out.println(udt.getPwd(uid));
+//	    System.out.println(udt.getEmail(uid));
+//	    System.out.println(udt.getPhone(uid));
+//	    System.out.println(udt.getState(uid));
+//	    System.out.println(udt.getCity(uid));
+//	    System.out.println(udt.getZipcode(uid));
+//	    System.out.println(udt.getCountry(uid));
+//	    System.out.println(udt.getEventCreationPrivilege(uid));
+//	    System.out.println(udt.getParticipant(uid));
+//	    
+//	    udt.setLevel(uid, 5);
+//	    udt.setFirstName(uid, "new firstname");
+//	    udt.setLastName(uid, "new lastname");
+//	    udt.setPwd(uid, "new pwd");
+//	    udt.setEmail(uid, "new email");
+//	    udt.setPhone(uid, "new phone");
+//	    udt.setStreet(uid, "new street");
+//	    udt.setCity(uid, "new city");
+//	    udt.setState(uid, "new state");
+//	    udt.setZipcode(uid, "new zipcode");
+//	    udt.setCountry(uid, "new country");
+//	    udt.setEventCreationPrivilege(uid, 12);
+//	    udt.setParticipant(uid, true);
+//	    
+//	    System.out.println(udt.getLevel(uid));
+//	    System.out.println(udt.getFirstName(uid));
+//	    System.out.println(udt.getLastName(uid));
+//	    System.out.println(udt.getPwd(uid));
+//	    System.out.println(udt.getEmail(uid));
+//	    System.out.println(udt.getPhone(uid));
+//	    System.out.println(udt.getState(uid));
+//	    System.out.println(udt.getCity(uid));
+//	    System.out.println(udt.getZipcode(uid));
+//	    System.out.println(udt.getCountry(uid));
+//	    System.out.println(udt.getEventCreationPrivilege(uid));
+//	    System.out.println(udt.getParticipant(uid));
+//	    
+//	    System.out.println(udt.getParticipantList());
+//	    
+//	}catch(DoesNotExistException dnee) {
+//	    System.out.println(dnee.getMessage());
+//	}
+
 
 	//CREATE EVENT INSERTION
 //        try {
@@ -116,8 +146,8 @@ public class DB_Testing {
 //        } catch (DuplicateInsertionException die) {
 //            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
 //        }
-       // System.out.println(et.queryEntireTable());        
-       // System.out.println(); //blank line.
+	// System.out.println(et.queryEntireTable());        
+	// System.out.println(); //blank line.
 //        try{
 //            uid = 6;
 //	    list.add(12);
@@ -247,7 +277,7 @@ public class DB_Testing {
 //        } catch(DoesNotExistException dnee) {
 //            System.err.println(dnee.getMessage());
 //        }
-        
+
 
 
 	//CREATE TASKS INSERTION

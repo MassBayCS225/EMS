@@ -108,7 +108,7 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
         }        
     }
     
-    public int insertBudgetItem(InputExpense input) throws DuplicateInsertionException {
+    public int insertBudgetItem(InputExpense input) {
 	int newUID = nextValidUID();
         try {
             //Creating Statement
@@ -136,11 +136,13 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
     @Override
     public double total() {
 	double returnQuery = 0.0;
+	double input = 0.0;
 	try {
 	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE");
 	    ResultSet rs = idQueryStmt.executeQuery();
 	    while (rs.next()) {
-		returnQuery += rs.getDouble("VALUE");
+		input = rs.getDouble("VALUE");
+		returnQuery = returnQuery + input;		
 	    }
 	    return returnQuery;
 
@@ -167,12 +169,13 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 	    while (rs.next()) {
 		returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
 	    }
+	    return returnQuery;
 
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
 	    System.exit(1);
 	}
-	debugLog.warning("UID=" + uid + " does not exist in INCOME table.");
+	debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
 	return null;
     }
 
@@ -189,12 +192,13 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 	    while (rs.next()) {
 		returnQuery = rs.getDouble("VALUE"); //Should not have two uids with the same name                            
 	    }
+	    return returnQuery;
 
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
 	    System.exit(1);
 	}
-	debugLog.log(Level.WARNING, "UID={0} does not exist in INCOME table.", uid);
+	debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
 	return returnQuery;
     }
     

@@ -109,7 +109,7 @@ public class Income_Table extends InitDB implements Interface_BudgetData {
 	}
     }
 
-    public int insertBudgetItem(InputIncome input) throws DuplicateInsertionException {
+    public int insertBudgetItem(InputIncome input) {
 	int newUID = nextValidUID();
 	try {
 	    //Creating Statement
@@ -166,6 +166,7 @@ public class Income_Table extends InitDB implements Interface_BudgetData {
 	    while (rs.next()) {
 		returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
 	    }
+	    return returnQuery;
 
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
@@ -188,6 +189,7 @@ public class Income_Table extends InitDB implements Interface_BudgetData {
 	    while (rs.next()) {
 		returnQuery = rs.getDouble("VALUE"); //Should not have two uids with the same name                            
 	    }
+	    return returnQuery;
 
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
