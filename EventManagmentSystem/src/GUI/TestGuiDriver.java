@@ -34,9 +34,8 @@ public class TestGuiDriver
         Committee c2 = new Committee(2,"Test2");
         c2.getTaskList().add(new Task(1,"task12"));
         c2.getTaskList().add(new Task(2,"task22"));
-        c.setChair(new User(1,"A","B","AB@AB.com","ab","ab"));
         
-         SubEvent se1 = new SubEvent(1,"SE Test 1");
+        SubEvent se1 = new SubEvent(1,"SE Test 1");
         TimeSchedule ts1 = new TimeSchedule();
         ts1.setStartDateTime(2013,5,7,5,30);
         ts1.setStartDateTime(2013,5,7,8,00);
@@ -77,12 +76,34 @@ public class TestGuiDriver
         list.add(c2);
         e.setCommitteeList(list);
         MainManager manager = MainManager.getInstance();
-        manager.getEventManager().setSelectedEvent(e);            
+        
+        //manager.getEventManager().setSelectedEvent(e);            
         User u = new User(1,"A","B","AB@AB.com","ab","ab");
         User u2 = new User(2,"B","C","BC@BC.com","bc","bc");
         User u3 = new User(3,"C","D","CD@CD.com","cd","cd");
         User u4 = new User(4,"D","E","DE@DE.com","de","de");
         u.setAdminPrivilege(true);
+        try
+        {
+            manager.getEventManager().createEvent(e,u);
+            manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+            for(User tu : e.getOrganizerList())
+            {
+                manager.getEventManager().addOrganizer(tu, u);
+            }
+//            for(Committee tc : e.getCommitteeList())
+//            {
+//                manager.getEventManager().addCommittee(tc, u);
+//            }
+//            for(SubEvent ts : e.getSubEventList())
+//            {
+//                manager.getEventManager().addSubEvent(ts, u);
+//            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
         manager.getUserManager().setLoggedInUser(u);
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u);
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u2);

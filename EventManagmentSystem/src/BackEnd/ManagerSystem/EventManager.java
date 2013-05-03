@@ -62,7 +62,12 @@ public class EventManager {
         event.setOrganizerList(rebuildOrganizerList(eventID, userList));
         event.setParticipantList(rebuildParticipantList(eventID, userList));
         event.setCommitteeList(rebuildCommitteeList(eventID, userList));
-
+        
+        System.out.println("subEventList:" + event.getSubEventList());
+        System.out.println("organizerList:" + event.getOrganizerList());
+        System.out.println("participantList:" + event.getParticipantList());
+        System.out.println("committeeList:" + event.getCommitteeList());
+        
         event.setLocation(new Location(eventsTable.getStreet(eventID), eventsTable.getCity(eventID),
                 eventsTable.getState(eventID), eventsTable.getZipcode(eventID), eventsTable.getCountry(eventID),
                 eventsTable.getDetails(eventID)
@@ -135,6 +140,8 @@ public class EventManager {
 
         committee.setMemberList(rebuildCommitteeMemberList(committeeID, userList));
         committee.setBudgetAccessList(rebuildBudgetAccessList(committeeID, userList));
+        System.out.println(usersTable.currentUIDList());
+        System.out.println(committeesTable.getChairman(committeeID));
         committee.setChair(usersTable.getUser(committeesTable.getChairman(committeeID)));
         committee.setTaskList(rebuildTaskList(committeeID, userList));
 
