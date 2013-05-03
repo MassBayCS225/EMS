@@ -5,6 +5,7 @@ import BackEnd.UserSystem.*;
 
 import EMS_Database.*;
 import EMS_Database.impl.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 public class BudgetManager {
 
-    private Budgets_Table budgetsTable;
+    private Committees_Table committeesTable;
     private Income_Table incomeTable;
     private Expense_Table expenseTable;
     private Budget selectedBudget;
@@ -25,8 +26,8 @@ public class BudgetManager {
     /**
      * Default, no arg constructor. Builds the budget list.
      */
-    public BudgetManager(Income_Table incomeTable, Expense_Table expenseTable) {
-        budgetsTable = new Budgets_Table();
+    public BudgetManager(Committees_Table committeesTable, Income_Table incomeTable, Expense_Table expenseTable) {
+        this.committeesTable = committeesTable;
         this.incomeTable = incomeTable;
         this.expenseTable = expenseTable;
     }
@@ -58,20 +59,22 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
+    
     public void addIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DuplicateInsertionException {
+        /*
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {          
-            Income newIncome = new Income(incomeTable.insertBudgetItem(new InputIncome(income.getDescription(), income.getValue()
+            Income newIncome = new Income(incomeTable.insertBudgetItem(new InputIncome(income.getDescription(), income.getDate(), income.getValue()
                     )), income);
             selectedBudget.getIncomeList().add(newIncome);
             
             Integer incomeID = new Integer(newIncome.getBUDGET_ITEM_ID());
-            ArrayList<Integer> newIncomeIDList = budgetsTable.getIncomeList(selectedBudget.getBUDGET_ID());
+            ArrayList<Integer> newIncomeIDList = committeesTable.getIncomeList(selectedBudget.getBUDGET_ID());
             newIncomeIDList.add(incomeID);
-            budgetsTable.setIncomeList(selectedBudget.getBUDGET_ID(), newIncomeIDList);
+            committeesTable.setIncomeList(selectedBudget.getBUDGET_ID(), newIncomeIDList);
             // remove all related database entries
             
-        }
+        }*/
     }
 
     /**
@@ -85,18 +88,19 @@ public class BudgetManager {
      */
     public void removeIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        /*
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
 
             // write to database
 
             Integer incomeID = new Integer(income.getBUDGET_ITEM_ID());
-            ArrayList<Integer> newIncomeIDList = budgetsTable.getIncomeList(selectedBudget.getBUDGET_ID());
+            ArrayList<Integer> newIncomeIDList = committeesTable.getIncomeList(selectedBudget.getBUDGET_ID());
             newIncomeIDList.remove(incomeID);
-            budgetsTable.setIncomeList(selectedBudget.getBUDGET_ID(), newIncomeIDList);
+            committeesTable.setIncomeList(selectedBudget.getBUDGET_ID(), newIncomeIDList);
             // remove all related database entries
             incomeTable.removeBudgetItem(incomeID);
             selectedBudget.getIncomeList().remove(income);
-        }
+        }*/
     }
 
     /**
@@ -110,19 +114,20 @@ public class BudgetManager {
      */
     public void addExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DuplicateInsertionException {
+        /*
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
 
             // write to database
             
-            Expense newExpense = new Expense(expenseTable.insertBudgetItem(new InputExpense(expense.getDescription(), expense.getValue()
+            Expense newExpense = new Expense(expenseTable.insertBudgetItem(new InputExpense(expense.getDescription(), expense.getDate(), expense.getValue()
                     )), expense);
             selectedBudget.getExpenseList().add(newExpense);
             
             Integer expenseID = new Integer(newExpense.getBUDGET_ITEM_ID());
-            ArrayList<Integer> newExpenseIDList = budgetsTable.getExpenseList(selectedBudget.getBUDGET_ID());
+            ArrayList<Integer> newExpenseIDList = committeesTable.getExpenseList(selectedBudget.getBUDGET_ID());
             newExpenseIDList.add(expenseID);
-            budgetsTable.setIncomeList(selectedBudget.getBUDGET_ID(), newExpenseIDList);
-        }
+            committeesTable.setIncomeList(selectedBudget.getBUDGET_ID(), newExpenseIDList);
+        }*/
     }
 
     /**
@@ -136,17 +141,18 @@ public class BudgetManager {
      */
     public void removeExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        /*
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             // write to database
             // remove all related database entries
             
                         Integer expenseID = new Integer(expense.getBUDGET_ITEM_ID());
-            ArrayList<Integer> newExpenseIDList = budgetsTable.getExpenseList(selectedBudget.getBUDGET_ID());
+            ArrayList<Integer> newExpenseIDList = committeesTable.getExpenseList(selectedBudget.getBUDGET_ID());
             newExpenseIDList.remove(expenseID);
-            budgetsTable.setExpenseList(selectedBudget.getBUDGET_ID(), newExpenseIDList);
+            committeesTable.setExpenseList(selectedBudget.getBUDGET_ID(), newExpenseIDList);
             // remove all related database entries
             expenseTable.removeBudgetItem(expenseID);
             selectedBudget.getExpenseList().remove(expense);
-        }
+        }*/
     }
 }
