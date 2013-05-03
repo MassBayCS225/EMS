@@ -73,19 +73,29 @@ public class DB_Testing {
 //	    inTable.insertBudgetItem(in);	    
 //	}
 	//System.out.print(inTable.queryEntireTable());
-	//try {	
-	uid = 1;
-	System.out.println(exTable.queryEntireTable());
-	System.out.println("Total Expences: " + exTable.total());
-	System.out.println(inTable.queryEntireTable());
-	System.out.println("Total Income: " + inTable.total());
+	try {
+	    uid = 1;
+//	System.out.println(exTable.queryEntireTable());
+//	System.out.println("Total Expences: " + exTable.total());
+//	System.out.println(inTable.queryEntireTable());
+//	System.out.println("Total Income: " + inTable.total());
 
-//	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
-//	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
+	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
+	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
+	    
+	    exTable.setDescription(uid, "new expense");
+	    inTable.setDescription(uid, "new income");
+	    exTable.setValue(uid, 100.55);
+	    inTable.setValue(uid, 564.8);
+	    
+	    System.out.println(exTable.getDescription(uid) + "===" + exTable.getValue(uid));
+	    System.out.println(inTable.getDescription(uid) + "===" + inTable.getValue(uid));
+	    
+	    
 
-//	} catch (DoesNotExistException dnee) {
-//	    System.err.println(dnee.getMessage());
-//	}
+	} catch (DoesNotExistException dnee) {
+	    System.err.println(dnee.getMessage());
+	}
 
 
 

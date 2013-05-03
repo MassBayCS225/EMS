@@ -206,12 +206,54 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
     //SETTERS
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EXPENSE SET DESCRIPTION=? WHERE UID=?");
+		idQueryStmt.setString(1, description);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
+		throw new DoesNotExistException("User does not exist in EXPENSE table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EXPENSE table.");
+	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
+	}
     }
 
     @Override
     public void setValue(int uid, double value) throws DoesNotExistException {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EXPENSE SET VALUE=? WHERE UID=?");
+		idQueryStmt.setDouble(1, value);
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
+		throw new DoesNotExistException("User does not exist in EXPENSE table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EXPENSE table.");
+	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
+	}
     }
 
 }
