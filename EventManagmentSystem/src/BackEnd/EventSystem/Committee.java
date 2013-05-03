@@ -75,7 +75,7 @@ public class Committee implements Reportable {
         if (chair != null)
             memberList.add(chair);
         else
-            throw new NullChairException("Error: Object chair is currently null. Unable to add to member list.");
+            throw new NullChairException("Object chair is currently null. Unable to add to member list.");
         
         return memberList;
     }
