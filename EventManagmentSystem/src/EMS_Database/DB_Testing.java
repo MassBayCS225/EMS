@@ -261,41 +261,51 @@ public class DB_Testing {
 	//System.out.println("\n\n");	    
 
 	//CREATE COMMITTEE INSERTION
-//        try{
-//            uid = ct.createCommittee(ic);
-//            System.out.println("The created uid = " + uid);
-//        } catch(DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
-//        //System.out.println(ct.queryEntireTable());
-//        try{
-//            uid = 5;
-//            System.out.println(ct.getTitle(uid));
-//            System.out.println(ct.getChairman(uid));
-//            System.out.println(ct.getBudgetAccessList(uid));
-//            System.out.println(ct.getCommitteeMembers(uid));
-//            System.out.println(ct.getTaskList(uid));
-//            System.out.println(ct.getBudget(uid));
-//	    
-//	    ct.setTitle(uid, "Better Title");
-//            ct.setChairman(uid, 2);
-//            ct.setBudgetAccessList(uid, list);
-//            ct.setCommitteeMembers(uid, list);
-//            ct.setTaskList(uid, list);
-//            ct.setBudget(uid, 59.52);
-//	    
+	//System.out.println(ct.queryEntireTable());
+//	try {
+//	    uid = ct.createCommittee(ic);
+//	    ct.setExpense(uid, list);
+//	    ct.setIncome(uid, list);
+//	    System.out.println(ct.totalExpense(uid));
+//	    System.out.println(ct.totalIncome(uid));
+//	    System.out.println(ct.remainingMonies(uid));
+//	    System.out.println(ct.getExpense(uid));
+	    
+	    
+//	    uid = 1;
 //	    System.out.println(ct.getTitle(uid));
-//            System.out.println(ct.getChairman(uid));
-//            System.out.println(ct.getBudgetAccessList(uid));
-//            System.out.println(ct.getCommitteeMembers(uid));
-//            System.out.println(ct.getTaskList(uid));
-//            System.out.println(ct.getBudget(uid));	    	    
-//            
-//        } catch(DoesNotExistException dnee) {
-//            System.err.println(dnee.getMessage());
-//        }
+//	    System.out.println(ct.getChairman(uid));
+//	    System.out.println(ct.getBudgetAccessList(uid));
+//	    System.out.println(ct.getCommitteeMembers(uid));
+//	    System.out.println(ct.getTaskList(uid));
+//	    System.out.println(ct.getIncome(uid));
+//	    System.out.println(ct.getExpense(uid));
+//	    System.out.println(ct.getBudget(uid));
+//
+//	    ct.setTitle(uid, "Better Title");
+//	    ct.setChairman(uid, 2);
+//	    ct.setBudgetAccessList(uid, list);
+//	    ct.setCommitteeMembers(uid, list);
+//	    ct.setTaskList(uid, list);
+//	    ct.setIncome(uid, list);
+//	    ct.setExpense(uid, list);
+//	    ct.setBudget(uid, 59.52);
+//
+//	    System.out.println(ct.getTitle(uid));
+//	    System.out.println(ct.getChairman(uid));
+//	    System.out.println(ct.getBudgetAccessList(uid));
+//	    System.out.println(ct.getCommitteeMembers(uid));
+//	    System.out.println(ct.getTaskList(uid));
+//	    System.out.println(ct.getIncome(uid));
+//	    System.out.println(ct.getExpense(uid));
+//	    System.out.println(ct.getBudget(uid));
 
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
 
+	
+	
 
 	//CREATE TASKS INSERTION
 //	try {
@@ -357,47 +367,53 @@ public class DB_Testing {
 //	System.out.print(set.queryEntireTable());
 //	System.out.println("TASKS TABLE");
 //	System.out.print(tt.queryEntireTable());
-	
-	//CREATE BUDGET TESTS
-	try{
-	    uid = exTable.insertBudgetItem(ex);
-	    
-	    System.out.println(exTable.getDescription(uid));
-	    System.out.println(exTable.getDate(uid));
-	    System.out.println(exTable.getValue(uid));
-	    
-	    exTable.setDescription(uid, "new description");
-	    exTable.setDate(uid, endDate);
-	    exTable.setValue(uid, 654.8);	    
-	    
-	    System.out.println(exTable.getDescription(uid));
-	    System.out.println(exTable.getDate(uid));
-	    System.out.println(exTable.getValue(uid));	    	    
-	    
-	    System.out.println(exTable.total());
-	    System.out.println(exTable.queryEntireTable());
-	    
-	    
-	    uid = inTable.insertBudgetItem(in);
-	    
-	    System.out.println(inTable.getDescription(uid));
-	    System.out.println(inTable.getDate(uid));
-	    System.out.println(inTable.getValue(uid));
-	    
-	    inTable.setDescription(uid, "new description");
-	    inTable.setDate(uid, endDate);
-	    inTable.setValue(uid, 12335.58);
-	    
-	    System.out.println(inTable.getDescription(uid));
-	    System.out.println(inTable.getDate(uid));
-	    System.out.println(inTable.getValue(uid));
-	    
-	    System.out.println(inTable.total());
-	    System.out.println(inTable.queryEntireTable());
-	    
-	} catch(DoesNotExistException dnee){
-	    System.err.println(dnee.getMessage());
-	}
+
+	//CREATE INCOME/EXPENSE TESTS
+//	try {
+//	    for (int x = 0; x < 10; x++) {
+//		uid = exTable.insertBudgetItem(ex);
+//	    }
+//	    exTable.setValue(3, 654);
+//	    exTable.setValue(4, 897.2);
+
+//	    System.out.println(exTable.getDescription(uid));
+//	    System.out.println(exTable.getDate(uid));
+//	    System.out.println(exTable.getValue(uid));
+//	    
+//	    exTable.setDescription(uid, "new description");
+//	    exTable.setDate(uid, endDate);
+//	    exTable.setValue(uid, 654.8);	    
+//	    
+//	    System.out.println(exTable.getDescription(uid));
+//	    System.out.println(exTable.getDate(uid));
+//	    System.out.println(exTable.getValue(uid));	    	    
+//	    
+//	    System.out.println(exTable.total());
+//	    System.out.println(exTable.queryEntireTable());
+
+//	    for (int x = 0; x < 10; x++) {
+//		uid = inTable.insertBudgetItem(in);
+//	    }
+//	    inTable.setValue(3, 25);
+//	    inTable.setValue(4, 15);
+//	    System.out.println(inTable.getDescription(uid));
+//	    System.out.println(inTable.getDate(uid));
+//	    System.out.println(inTable.getValue(uid));
+//	    
+//	    inTable.setDescription(uid, "new description");
+//	    inTable.setDate(uid, endDate);
+//	    inTable.setValue(uid, 12335.58);
+//	    
+//	    System.out.println(inTable.getDescription(uid));
+//	    System.out.println(inTable.getDate(uid));
+//	    System.out.println(inTable.getValue(uid));
+//	    
+//	    System.out.println(inTable.total());
+//	    System.out.println(inTable.queryEntireTable());
+//
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
     }
 
     public static void main(String[] args) {

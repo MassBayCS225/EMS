@@ -125,6 +125,8 @@ public abstract class InitDB {
 			+ "BUDGETACCESS VARCHAR(1000) DEFAULT NULL, " //list of UID #'s
 			+ "MEMBERS VARCHAR(1000) DEFAULT NULL, " //list of UID #'s
 			+ "TASKS VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s
+			+ "INCOME VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s
+			+ "EXPENSE VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s						
 			+ "BUDGET DOUBLE)";
 
 		String createTasksTable = "CREATE TABLE TASKS (UID INT PRIMARY KEY, "

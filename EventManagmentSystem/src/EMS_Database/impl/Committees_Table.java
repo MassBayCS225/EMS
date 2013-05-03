@@ -102,19 +102,21 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
      * @throws DuplicateInsertionException if all hell breaks loose.
      */
     @Override
-    public int createCommittee(InputCommittee committee) throws DuplicateInsertionException {
+    public int createCommittee(InputCommittee committee) {
         int newUID = nextValidUID();
 
         try {
             //Creating Statement
-            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO COMMITTEE VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO COMMITTEE VALUES(?,?,?,?,?,?,?,?,?)");
             AddAddressStmt.setInt(1, newUID);
             AddAddressStmt.setString(2, committee.getTitle());
             AddAddressStmt.setInt(3, committee.getChairman());
             AddAddressStmt.setString(4, listToString(committee.getBudgetAcess()));
             AddAddressStmt.setString(5, listToString(committee.getCommitteeMembers()));
             AddAddressStmt.setString(6, listToString(committee.getTaskList()));
-            AddAddressStmt.setDouble(7, committee.getBudget());
+	    AddAddressStmt.setString(7, listToString(committee.getIncome()));
+	    AddAddressStmt.setString(8, listToString(committee.getExpense()));	    
+            AddAddressStmt.setDouble(9, committee.getBudget());
             
             //Execute Statement
             AddAddressStmt.executeUpdate();
@@ -215,6 +217,33 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
         }
         return true;
     }
+
+    @Override
+    public double remainingMonies(int uid) throws DoesNotExistException {
+	return totalIncome(uid)-totalExpense(uid);
+    }
+
+    @Override
+    public double totalIncome(int uid) throws DoesNotExistException {
+	double income = 0.0;
+	Income_Table in = new Income_Table();
+	for(int uids : getIncome(uid)){
+	    income += in.getValue(uids);
+	}
+	return income;	
+    }
+
+    @Override
+    public double totalExpense(int uid) throws DoesNotExistException {
+	double expense = 0.0;
+	Expense_Table ex = new Expense_Table();
+	for(int uids : getExpense(uid)){
+	    expense += ex.getValue(uids);
+	}
+	return expense;
+    }
+    
+    
 
         
     
@@ -358,6 +387,72 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
 	    //Gets the row with uid specified
 	    while (rs.next()) {
 		returnQuery = rs.getString("TASKS"); //Should not have two uids with the same name                            
+	    }
+
+	    if (returnQuery == null) {
+		debugLog.warning("UID=" + uid + " does not exist in COMMITTEE table.");
+		throw new DoesNotExistException("committee tasks");
+	    } else {
+		if (returnQuery.equals("")) {
+		    return new ArrayList<Integer>(); //return empty arraylist if none exists
+		} else {
+		    return stringToList(returnQuery); //return an arraylist		    
+		}
+	    }
+
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	debugLog.warning("UID=" + uid + " does not exist in COMMITTEE table.");
+	return stringToList(returnQuery); //should never get here.
+    }    
+
+    @Override
+    public ArrayList<Integer> getIncome(int uid) throws DoesNotExistException {
+	String returnQuery = null;
+	try {
+
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    while (rs.next()) {
+		returnQuery = rs.getString("INCOME"); //Should not have two uids with the same name                            
+	    }
+
+	    if (returnQuery == null) {
+		debugLog.warning("UID=" + uid + " does not exist in COMMITTEE table.");
+		throw new DoesNotExistException("committee tasks");
+	    } else {
+		if (returnQuery.equals("")) {
+		    return new ArrayList<Integer>(); //return empty arraylist if none exists
+		} else {
+		    return stringToList(returnQuery); //return an arraylist		    
+		}
+	    }
+
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	debugLog.warning("UID=" + uid + " does not exist in COMMITTEE table.");
+	return stringToList(returnQuery); //should never get here.
+    }
+
+    @Override
+    public ArrayList<Integer> getExpense(int uid) throws DoesNotExistException {
+	String returnQuery = null;
+	try {
+
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM COMMITTEE WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    while (rs.next()) {
+		returnQuery = rs.getString("EXPENSE"); //Should not have two uids with the same name                            
 	    }
 
 	    if (returnQuery == null) {
@@ -529,6 +624,58 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
 	    if (exists) {
 		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET MEMBERS=? WHERE UID=?");
 		idQueryStmt.setString(1, listToString(memberList));
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
+    }
+
+    @Override
+    public void setIncome(int uid, ArrayList<Integer> income) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET INCOME=? WHERE UID=?");
+		idQueryStmt.setString(1, listToString(income));
+		idQueryStmt.setInt(2, uid);
+		idQueryStmt.executeUpdate();
+	    } else {
+		debugLog.log(Level.WARNING, "UID={0} does not exist in EVENT table.", uid);
+		throw new DoesNotExistException("User does not exist in EVENT table.");
+	    }
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    debugLog.severe("Major SQL-Error in EVENT table.");
+	    throw new DoesNotExistException("User does not exist in EVENT table.");
+	}
+    }
+
+    @Override
+    public void setExpense(int uid, ArrayList<Integer> expense) throws DoesNotExistException {
+	try {
+	    boolean exists = false;
+	    for (int validID : currentUIDList()) {
+		if (validID == uid) {
+		    exists = true;
+		    break;
+		}
+	    }
+	    if (exists) {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE COMMITTEE SET EXPENSE=? WHERE UID=?");
+		idQueryStmt.setString(1, listToString(expense));
 		idQueryStmt.setInt(2, uid);
 		idQueryStmt.executeUpdate();
 	    } else {

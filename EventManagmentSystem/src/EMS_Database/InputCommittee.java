@@ -13,6 +13,8 @@ public class InputCommittee {
     private ArrayList<Integer> budgetAcess;
     private ArrayList<Integer> committeeMembers;
     private ArrayList<Integer> taskList;
+    private ArrayList<Integer> income;
+    private ArrayList<Integer> expense;
     private double budget;
     
     public InputCommittee(){
@@ -22,15 +24,19 @@ public class InputCommittee {
         this.budgetAcess = list;
         this.committeeMembers = list;
         this.taskList = list;
+	this.income = list;
+	this.expense = list;
         this.budget = 0.0;
     }
 
-    public InputCommittee(String title, int chairman, ArrayList<Integer> budgetAcess, ArrayList<Integer> committeeMembers, ArrayList<Integer> taskList, double budget) {
+    public InputCommittee(String title, int chairman, ArrayList<Integer> budgetAcess, ArrayList<Integer> committeeMembers, ArrayList<Integer> taskList, ArrayList<Integer> income, ArrayList<Integer> expense, double budget) {
 	this.title = title;
 	this.chairman = chairman;
 	this.budgetAcess = budgetAcess;
 	this.committeeMembers = committeeMembers;
 	this.taskList = taskList;
+	this.income = income;
+	this.expense = expense;
 	this.budget = budget;
     }
 
@@ -52,6 +58,14 @@ public class InputCommittee {
 
     public ArrayList<Integer> getTaskList() {
 	return taskList;
+    }
+
+    public ArrayList<Integer> getIncome() {
+	return income;
+    }
+
+    public ArrayList<Integer> getExpense() {
+	return expense;
     }
 
     public double getBudget() {
@@ -78,10 +92,15 @@ public class InputCommittee {
 	this.taskList = taskList;
     }
 
-    public void setBudget(double budget) {
-	this.budget = budget;
+    public void setIncome(ArrayList<Integer> income) {
+	this.income = income;
     }
 
-    
-    
+    public void setExpense(ArrayList<Integer> expense) {
+	this.expense = expense;
+    }
+
+    public void setBudget(double budget) {
+	this.budget = budget;
+    }                
 }
