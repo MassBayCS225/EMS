@@ -9,15 +9,14 @@ import java.util.ArrayList;
  */
 
 public class Committee implements Reportable {
-    private int EVENT_ID, COMMITTEE_ID;
+    private int COMMITTEE_ID;
     private String title;
     private ArrayList<User> memberList, budgetAccessList;
     private User chair;
     private ArrayList<Task> taskList;
     private Budget budget;
     
-    public Committee(int event_id, int committee_id, String title) {
-        EVENT_ID = event_id;
+    public Committee(int committee_id, String title) {
         COMMITTEE_ID = committee_id;
         this.title = title;
         memberList = new ArrayList<User>();
@@ -57,10 +56,6 @@ public class Committee implements Reportable {
      * Returns the event ID of the committee.
      * @return The committee event ID.
      */
-    public int getEVENT_ID() {
-        return EVENT_ID;
-    }
-    
     /**
      * Sets the committee ID.
      * @param committee_id The committee ID.
@@ -135,8 +130,7 @@ public class Committee implements Reportable {
     }
     
     public boolean equals(Committee committee) {
-        if (this.getEVENT_ID() == committee.getEVENT_ID()
-               && this.getCOMMITTEE_ID() == committee.getCOMMITTEE_ID()
+        if (this.getCOMMITTEE_ID() == committee.getCOMMITTEE_ID()
                && this.getTitle().equalsIgnoreCase(committee.getTitle())
                && this.getMemberList().equals(committee.getMemberList())
                && this.getBudgetAccessList().equals(committee.getBudgetAccessList())
