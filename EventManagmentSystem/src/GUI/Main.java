@@ -6,6 +6,7 @@ package GUI;
 
 import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
+import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import java.awt.CardLayout;
 
 /**
@@ -19,7 +20,7 @@ public class Main extends javax.swing.JPanel {
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main() throws PrivilegeInsufficientException {
         initComponents();
         manager = MainManager.getInstance();
         setSize(850,650);
@@ -32,7 +33,7 @@ public class Main extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() throws PrivilegeInsufficientException {
 
         tasksPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
