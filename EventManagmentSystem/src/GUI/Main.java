@@ -67,7 +67,7 @@ public class Main extends javax.swing.JPanel {
         calendarPanel2 = new GUI.CalendarPanel();
         budget1 = new GUI.Budget();
         committeeListPanel1 = new GUI.CommitteeListPanel();
-        userManagementPanel1 = new project.UserManagementPanel();
+        userManagementPanel1 = new GUI.UserManagementPanel();
         emailPanel1 = new GUI.EmailPanel();
         ChangeHomeButton = new javax.swing.JButton();
 
@@ -494,6 +494,6 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JPanel reportsPanel;
     private javax.swing.JPanel schedulePanel;
     private javax.swing.JPanel tasksPanel;
-    private project.UserManagementPanel userManagementPanel1;
+    private GUI.UserManagementPanel userManagementPanel1;
     // End of variables declaration//GEN-END:variables
 }
