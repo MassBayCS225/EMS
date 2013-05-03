@@ -41,7 +41,7 @@ public class SubEventPanel extends javax.swing.JPanel {
     
     public SubEvent createEvent()
     {
-        SubEvent e = new SubEvent(1,1,descriptionTextArea.getText());
+        SubEvent e = new SubEvent(1,descriptionTextArea.getText());
         //TimeSchedule t = new TimeSchedule((int)yearSelect.getSelectedItem(),monthSelect.getSelectedIndex(), daySelect.getSelectedIndex(), );
         return e;
     }
