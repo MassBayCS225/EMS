@@ -19,7 +19,7 @@ public class TimeSchedule {
     }
     
     public void setStartDateTime(int year, int month, int day, int hour, int minute) throws IllegalArgumentException {
-        if (year >= 2013 && year <= 9999)
+        if (year >= 2013 && year <= 2050)
             startDateTime.set(Calendar.YEAR, year);
         else
             throw new IllegalArgumentException("Invalid year entered.");
@@ -54,7 +54,7 @@ public class TimeSchedule {
     }
     
     public void setEndDateTime(int year, int month, int day, int hour, int minute) throws IllegalArgumentException {
-        if (year >= 2013 && year <= 9999)
+        if (year >= 2013 && year <= 2050)
             endDateTime.set(Calendar.YEAR, year);
         else
             throw new IllegalArgumentException("Invalid year entered.");
