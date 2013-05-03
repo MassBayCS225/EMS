@@ -9,17 +9,22 @@ import java.util.ArrayList;
  */
 
 public class Task extends ScheduleItem {
-    private int COMMITTEE_ID;
     private int TASK_ID;
     private ArrayList<User> responsibleList;
     private boolean completed;
     
-    public Task(int committee_id, int task_id, String description){
+    public Task(int task_id, String description){
         super(description);
-        COMMITTEE_ID = committee_id;
         TASK_ID = task_id;
         responsibleList = new ArrayList<User>();
         completed = false;
+    }
+    
+    public Task(int task_id, Task task){
+        super(task.getDescription());
+        TASK_ID = task_id;
+        responsibleList = task.getResponsibleList();
+        completed = task.getCompleted();
     }
     
     private void setTASK_ID(int task_id) {
@@ -28,10 +33,6 @@ public class Task extends ScheduleItem {
     
     public int getTASK_ID() {
         return TASK_ID;
-    }
-    
-    public int getCOMMITTEE_ID() {
-        return COMMITTEE_ID;
     }
     
     public void setResponsibleList(ArrayList<User> responsibleList) {
@@ -51,8 +52,7 @@ public class Task extends ScheduleItem {
     }
     
     public boolean equals(Task task) {
-        if (this.getCOMMITTEE_ID() == task.getCOMMITTEE_ID() 
-                && this.getTASK_ID() == task.getTASK_ID() 
+        if (this.getTASK_ID() == task.getTASK_ID() 
                 && this.getResponsibleList().equals(task.getResponsibleList()) 
                 && this.getCompleted() == task.getCompleted())
             return true;

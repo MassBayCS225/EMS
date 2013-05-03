@@ -4,125 +4,159 @@
  */
 package BackEnd.ManagerSystem;
 
-import BackEnd.UserSystem.Address;
-import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
+import BackEnd.UserSystem.IllegalCharacterException;
+import BackEnd.UserSystem.Address;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
+import BackEnd.UserSystem.Participant;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.InputUser;
 import EMS_Database.impl.UserData_Table;
+import java.util.ArrayList;
 
 /**
  *
  * @author David Tersoff
  */
-public class UserManager
-{
-    
+public class UserManager {
+
+    private ArrayList<Participant> userList;
     private User selectedUser;
     private User loggedInUser;
-    private UserData_Table table;
-    
+    private UserData_Table usersTable;
+
     public UserManager()
-    {
-        
+            throws DoesNotExistException {
+        userList = new ArrayList<Participant>();
+        rebuildUserList();
     }
-    public void setLoggedInUser(User u)
-    {
+    
+    public UserData_Table getUsersTable(){
+        return usersTable;
+    }
+
+    private void rebuildUserList()
+            throws DoesNotExistException {
+        for (Integer userID : usersTable.currentUIDList()) {
+            if (usersTable.getParticipant(userID)) {
+                userList.add(rebuildParticipant(userID));
+            } else {
+                userList.add((Participant) rebuildUser(userID));
+            }
+        }
+    }
+
+    private Participant rebuildParticipant(int userID)
+            throws DoesNotExistException {
+        Participant participant = new Participant(userID, usersTable.getFirstName(userID), usersTable.getLastName(userID),
+                usersTable.getEmail(userID));
+        participant.setPhoneNumber(new PhoneNumber(usersTable.getPhone(userID)));
+        participant.setAddress(new Address(usersTable.getStreet(userID), usersTable.getCity(userID),
+                usersTable.getState(userID), usersTable.getZipcode(userID), usersTable.getCountry(userID)));
+        return participant;
+    }
+
+    private User rebuildUser(int userID)
+            throws DoesNotExistException {
+        User user = new User(userID, usersTable.getFirstName(userID), usersTable.getLastName(userID),
+                usersTable.getEmail(userID), usersTable.getPwd(userID));
+
+        user.setAdminPrivilege(usersTable.getLevel(userID) == 1 ? true : false);
+        user.setEventCreationPrivilege(usersTable.getEventCreationPrivilege(userID) == 1 ? true : false);
+        user.setPhoneNumber(new PhoneNumber(usersTable.getPhone(userID)));
+        user.setAddress(new Address(usersTable.getStreet(userID), usersTable.getCity(userID),
+                usersTable.getState(userID), usersTable.getZipcode(userID), usersTable.getCountry(userID)));
+
+        return user;
+    }
+
+    public ArrayList<Participant> getUserList() {
+        return userList;
+    }
+
+    public void setLoggedInUser(User u) {
         loggedInUser = u;
     }
-    
-    public void addUser() throws PrivilegeInsufficientException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-        {
-            InputUser input = new InputUser(selectedUser);
-            table.createUser(input);
-        }
+
+    public void addUser(User user){
+            userList.add(new User(usersTable.createUser(new InputUser(user)), user));
     }
-    public void removeUser(User u) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.removeUser(selectedUser.getUID());
+
+    public void removeUser(User user) throws DoesNotExistException {
+            usersTable.removeUser(selectedUser.getUID());
+            userList.remove(selectedUser);
     }
-    public void setSelectedUser(User u) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        //if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            selectedUser = u;
-        
+
+    public void setSelectedUser(User selectedUser){
+        this.selectedUser = selectedUser;
     }
-    public User getSelectedUser() throws PrivilegeInsufficientException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
+
+    public User getSelectedUser(){
             return selectedUser;
-        else
-            throw new PrivilegeInsufficientException("Insufficient Privileges");
     }
-    public void editFirstName(String firstName) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setFirstName(selectedUser.getUID(), firstName);
+
+    public void editFirstName(String firstName, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
+            selectedUser.setFirstName(firstName);
+            usersTable.setFirstName(selectedUser.getUID(), firstName);
+        }
         //Write to database
     }
-    public void editLastName(String lastName) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setLastName(selectedUser.getUID(), lastName);
+
+    public void editLastName(String lastName, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
+            selectedUser.setLastName(lastName);
+            usersTable.setLastName(selectedUser.getUID(), lastName);
+        }
         //Write to database
     }
-    public void editEmailAddress(String emailAddress) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setEmail(selectedUser.getUID(), emailAddress);
+
+    public void editEmailAddress(String emailAddress, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
+            selectedUser.setEmailAddress(emailAddress);
+            usersTable.setEmail(selectedUser.getUID(), emailAddress);
+        }
         //Write to database
     }
-    public void editAddress(Address address) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setAddress(selectedUser.getUID(), address);
+
+    public void editAddress(Address address, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
+            selectedUser.setAddress(address);
+            usersTable.setAddress(selectedUser.getUID(), address);
+        }
     }
-    public void editPhoneNumber(PhoneNumber phoneNumber) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-            table.setPhone(selectedUser.getUID(), phoneNumber.toString());
+
+    public void editPhoneNumber(PhoneNumber phoneNumber, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
+            selectedUser.setPhoneNumber(phoneNumber);
+            usersTable.setPhone(selectedUser.getUID(), phoneNumber.toString());
+        }
         //Write to database
     }
-    public void editPassword(String password, String passwordMatch) throws IllegalCharacterException, PasswordMismatchError, PrivilegeInsufficientException, DoesNotExistException
-    {
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-        {
+
+    public void editPassword(String password, String passwordMatch, User loggedInUser) throws IllegalCharacterException, PasswordMismatchError, PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPassword(password, passwordMatch);
-            table.setPwd(selectedUser.getUID(), selectedUser.getPassword());
-        //Write to database
-    }   }
-    public void editAdminPrivilege(boolean adminPrivilege) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        int level;
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-        {
-            if(selectedUser.getAdminPrivilege())
-                level = 1;
-            else
-                level = 0;
-            table.setLevel(selectedUser.getUID(), level);
+            usersTable.setPwd(selectedUser.getUID(), password);
         }
-        
+    }
+
+    public void editAdminPrivilege(boolean adminPrivilege, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
+            selectedUser.setAdminPrivilege(adminPrivilege);
+            usersTable.setLevel(selectedUser.getUID(), adminPrivilege == true? 1 : 0);
+        }
+
         //Write to database
     }
-    public void editEventCreationPrivilege(boolean eventCreationPrivilege) throws PrivilegeInsufficientException, DoesNotExistException
-    {
-        int level;
-        if(PrivilegeManager.hasAdminPrivilege(loggedInUser))
-        {
-            if(selectedUser.getEventCreationPrivilege())
-                level = 1;
-            else
-                level = 0;
-            table.setEventCreationPrivilege(selectedUser.getUID(), level);
+
+    public void editEventCreationPrivilege(boolean eventCreationPrivilege) throws PrivilegeInsufficientException, DoesNotExistException {
+        if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
+            selectedUser.setEventCreationPrivilege(eventCreationPrivilege);
+            usersTable.setLevel(selectedUser.getUID(), eventCreationPrivilege == true? 1 : 0);
         }
-            
+
         //Write to database
     }
-    
 }
