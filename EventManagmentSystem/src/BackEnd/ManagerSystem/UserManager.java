@@ -31,6 +31,7 @@ public class UserManager {
         usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
         rebuildUserList();
+        System.out.print(userList);
     }
     
     public UserData_Table getUsersTable(){
