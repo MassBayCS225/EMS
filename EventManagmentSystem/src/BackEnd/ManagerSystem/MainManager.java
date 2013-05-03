@@ -21,20 +21,22 @@ public class MainManager {
     private SubEventManager subEventManager;
     private TaskManager taskManager;
     private UserManager userManager;
-    // private LoginManager logInManager;
+    private LoginManager logInManager;
 
     public MainManager() {
         try {
             userManager = new UserManager();
-            // logInManager = new LogInManager();
-            budgetItemManager = new BudgetItemManager();
-            budgetManager = new BudgetManager(budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
+            logInManager = new LoginManager(userManager.getUserList());
             taskManager = new TaskManager();
             subEventManager = new SubEventManager();
             committeeManager = new CommitteeManager(taskManager.getTasksTable());
+            budgetItemManager = new BudgetItemManager();
+            budgetManager = new BudgetManager(committeeManager.getCommitteesTable(), budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
+            
             eventManager = new EventManager(userManager.getUserList(),
                     userManager.getUsersTable(), taskManager.getTasksTable(),
-                    subEventManager.getSubEventsTable(), committeeManager.getCommitteesTable());
+                    subEventManager.getSubEventsTable(), committeeManager.getCommitteesTable(),
+                    budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
             
             
             

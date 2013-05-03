@@ -8,25 +8,18 @@ import java.util.ArrayList;
  */
 
 public class Budget {
-    
-    private int BUDGET_ID;
+
     ArrayList<Income> incomeList;
     ArrayList<Expense> expenseList;
     
-    public Budget(int budget_id) {
-        this.BUDGET_ID = budget_id;
+    public Budget() {
         this.incomeList = new ArrayList<Income>();
         this.expenseList = new ArrayList<Expense>();
     }
     
-    public Budget(int budgetID, Budget budget){
-        this.BUDGET_ID = budgetID;
+    public Budget(Budget budget){
         incomeList = budget.getIncomeList();
         expenseList = budget.getExpenseList();
-    }
-
-    public void setBUDGET_ID(int BUDGET_ID) {
-        this.BUDGET_ID = BUDGET_ID;
     }
 
     public void setIncomeList(ArrayList<Income> incomeList) {
@@ -35,10 +28,6 @@ public class Budget {
 
     public void setExpenseList(ArrayList<Expense> expenseList) {
         this.expenseList = expenseList;
-    }
-
-    public int getBUDGET_ID() {
-        return BUDGET_ID;
     }
 
     public ArrayList<Income> getIncomeList() {
@@ -63,8 +52,7 @@ public class Budget {
     
     @Override
     public String toString() {
-        return "Budget{" + "BUDGET_ID=" + 
-                BUDGET_ID + ", incomeList=" + incomeList + ", expenseList=" + 
+        return "Budget{" + ", incomeList=" + incomeList + ", expenseList=" + 
                 expenseList + '}';
     }
 
@@ -77,9 +65,6 @@ public class Budget {
             return false;
         }
         final Budget other = (Budget) obj;
-        if (this.BUDGET_ID != other.BUDGET_ID) {
-            return false;
-        }
         if (this.incomeList != other.incomeList && (this.incomeList == null || !this.incomeList.equals(other.incomeList))) {
             return false;
         }
