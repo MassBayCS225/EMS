@@ -94,7 +94,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     public void populateSubEvents()
     {
         ArrayList<SubEvent> subEventList = manager.getEventManager().getSelectedEvent().getSubEventList();
-        subEventList.add(new SubEvent(11, 12, "This is an event"));
+        subEventList.add(new SubEvent(12, "This is an event"));
     }
 
     /**

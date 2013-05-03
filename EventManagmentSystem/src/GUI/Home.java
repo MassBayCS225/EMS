@@ -29,8 +29,16 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
-        Main m = new Main();
-        add(m);
+        try
+        {
+            Main m = new Main();
+            add(m);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+            
         setVisible(true);
     }
     public void setEvent(Event e){
