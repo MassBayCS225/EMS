@@ -4,6 +4,8 @@
  */
 package BackEnd.ManagerSystem;
 
+import EMS_Database.DoesNotExistException;
+
 /**
  * This class holds all the other Manager classes, to facilitate passing the
  * managers around the GUI.
@@ -22,22 +24,32 @@ public class MainManager {
     // private LoginManager logInManager;
 
     public MainManager() {
-        budgetItemManager = new BudgetItemManager();
-        budgetManager = new BudgetManager();
-        committeeManager = new CommitteeManager();
-        eventManager = new EventManager();
-        subEventManager = new SubEventManager();
-        taskManager = new TaskManager();
-        userManager = new UserManager();
-
+        try {
+            userManager = new UserManager();
+            // logInManager = new LogInManager();
+            budgetItemManager = new BudgetItemManager();
+            budgetManager = new BudgetManager(budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
+            taskManager = new TaskManager();
+            subEventManager = new SubEventManager();
+            committeeManager = new CommitteeManager(taskManager.getTasksTable());
+            eventManager = new EventManager(userManager.getUserList(),
+                    userManager.getUsersTable(), taskManager.getTasksTable(),
+                    subEventManager.getSubEventsTable(), committeeManager.getCommitteesTable());
+            
+            
+            
+        } catch (DoesNotExistException e) {
+        }
     }
-    	private static class Main {
-		public static MainManager instance = new MainManager();
-	}
 
-	public static MainManager getInstance() {
-		return Main.instance;
-	}
+    private static class Main {
+
+        public static MainManager instance = new MainManager();
+    }
+
+    public static MainManager getInstance() {
+        return Main.instance;
+    }
 
     public BudgetItemManager getBudgetItemManager() {
         return budgetItemManager;

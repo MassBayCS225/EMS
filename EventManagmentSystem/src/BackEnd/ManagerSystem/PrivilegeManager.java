@@ -37,7 +37,7 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasEventCreationPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public static boolean hasEventCreationPrivilege(User loggedInUser) throws PrivilegeInsufficientException {
         if (loggedInUser.getEventCreationPrivilege()) {
             return true;
         } else {

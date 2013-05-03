@@ -13,9 +13,14 @@ import java.lang.IllegalArgumentException;
 public class TimeSchedule {
     private Calendar startDateTime, endDateTime;
     
-    TimeSchedule() {
+    public TimeSchedule() {
         startDateTime = new GregorianCalendar();
         endDateTime = new GregorianCalendar();
+    }
+    
+    public TimeSchedule(TimeSchedule timeSchedule){
+        startDateTime = timeSchedule.getStartDateTimeCalendar();
+        endDateTime = timeSchedule.getEndDateTimeCalendar();
     }
     
     public void setStartDateTime(int year, int month, int day, int hour, int minute) throws IllegalArgumentException {
@@ -43,6 +48,10 @@ public class TimeSchedule {
             startDateTime.set(Calendar.MINUTE, minute);
         else
             throw new IllegalArgumentException("Invalid minute entered.");
+    }
+    
+    public void setStartDateTime(Timestamp startDateTime){
+        this.startDateTime.setTimeInMillis(startDateTime.getTime());
     }
     
     public Calendar getStartDateTimeCalendar() {
@@ -78,6 +87,10 @@ public class TimeSchedule {
             endDateTime.set(Calendar.MINUTE, minute);
         else
             throw new IllegalArgumentException("Invalid minute entered.");
+    }
+    
+    public void setEndDateTime(Timestamp endDateTime){
+        this.endDateTime.setTimeInMillis(endDateTime.getTime());
     }
     
     public Calendar getEndDateTimeCalendar() {

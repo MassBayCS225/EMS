@@ -18,6 +18,12 @@ public class ScheduleItem {
         timeSchedule = new TimeSchedule();
     }
     
+    public ScheduleItem(ScheduleItem scheduleItem){
+        description = scheduleItem.getDescription();
+        location = scheduleItem.getLocation();
+        timeSchedule = scheduleItem.getTimeSchedule();
+    }
+    
     public void setDescription(String description) {
         this.description = description;
     }

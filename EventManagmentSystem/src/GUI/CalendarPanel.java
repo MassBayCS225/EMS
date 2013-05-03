@@ -4,6 +4,10 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.CalendarEvent;
+import BackEnd.EventSystem.SubEvent;
+import BackEnd.ManagerSystem.MainManager;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -15,11 +19,14 @@ public class CalendarPanel extends javax.swing.JPanel {
     private Calendar tempCalendar = Calendar.getInstance(); // gets the current day and time
     private int month = Calendar.getInstance().get(Calendar.MONTH);
     private int year = Calendar.getInstance().get(Calendar.YEAR);
+    private MainManager manager;
     /**
      * Creates new form CalendarPanel
      */
     public CalendarPanel() {
         initComponents();
+        manager = MainManager.getInstance();
+        CalendarTable.getTableHeader().setReorderingAllowed(false);
         populateCalendar();
     }
     
@@ -53,34 +60,28 @@ public class CalendarPanel extends javax.swing.JPanel {
                      * the elements of say, a sub event list. If you want it to
                      * check just the main event, then you don't need the for
                      * loop.
-           *
                      */
-                    /**
-                     * int tempMillis; // temporary value used in for loop that
-                     * saves a time in milliseconds for (int i = 0; i <
-                     * selectedEvent.getSubEventList().size(); i++){ tempMillis
-                     * =
-                     * selectedEvent.getSubEventList().get(i).getStartTime().getTime();
-                     * // set the date for the current element // if you want to
-                     * check end time, use getEndTime() instead of getStartTime
-                     *
-                     * if (tempMillis >= tempCalendar.getTimeInMillis()){ // if
-                     * the current element's time greater than or equal to the
-                     * tempCalendar's tempCalendar.set(Calendar.DAY_OF_MONTH,
-                     * tempCalendar.get(DAY_OF_MONTH) + 1); // move calendar +1
-                     * day if (tempMillis < tempCalendar.getTimeInMillis()){ //
-                     * if the current element's time is less than tempCalendar's
-                     * // add event, or subEvent, or Task, or whatever to the
-                     * specific day of the calendar }
-                     * tempCalendar.set(Calendar.DAY_OF_MONTH,
-                     * tempCalendar.get(DAY_OF_MONTH) - 1); // reset the day
-                     * back to original } }
-                     */
+                    ArrayList<SubEvent> events = new ArrayList<SubEvent>();
+                     int tempMillis; // temporary value used in for loop that saves a time in milliseconds
+                     for (int i = 0; i < manager.getEventManager().getSelectedEvent().getSubEventList().size(); i++){
+                      tempMillis = (int)manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeTimestamp().getTime(); // set the date for the current element
+                      // if you want to check end time, use getEndTime() instead of getStartTime
+                      if (tempMillis >= tempCalendar.getTimeInMillis()){ // if the current element's time greater than or equal to the tempCalendar's
+                        tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.DAY_OF_MONTH + 1); // move calendar +1 day
+                        if (tempMillis < tempCalendar.getTimeInMillis()){ // if the current element's time is less than tempCalendar's
+                          events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
+                        }
+                        tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.DAY_OF_MONTH - 1); // reset the day back to original
+                      }
+                    }
+                     
+                     CalendarEvent cEvent = new CalendarEvent(day, events);
                     //System.out.println(tempCalendar);
                     tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH) + 1);
-                    String dayString = "" + day;
+                    //String dayString = "" + day;
                     day++;
-                    CalendarTable.setValueAt(dayString, weekOfMonth, dayOfWeek);
+                    System.out.println(cEvent);
+                    CalendarTable.setValueAt(cEvent, weekOfMonth, dayOfWeek);
 
                 } else {
                     CalendarTable.setValueAt("-", weekOfMonth, dayOfWeek);
@@ -88,6 +89,12 @@ public class CalendarPanel extends javax.swing.JPanel {
                 calendarSlot++;
             }
         }
+    }
+    
+    public void populateSubEvents()
+    {
+        ArrayList<SubEvent> subEventList = manager.getEventManager().getSelectedEvent().getSubEventList();
+        subEventList.add(new SubEvent(11, 12, "This is an event"));
     }
 
     /**
@@ -100,7 +107,11 @@ public class CalendarPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        CalendarTable = new javax.swing.JTable();
+        CalendarTable = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int collIndex) {
+                return false;
+            }
+        };
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();

@@ -14,4 +14,7 @@ public class Expense extends BudgetItem {
         super(value, description);
     }
     
+    public Expense(int expenseID, Expense budgetItem){
+        super(expenseID, (BudgetItem)budgetItem);
+    }
 }
