@@ -14,9 +14,9 @@ public class Income extends BudgetItem{
         super(value, description);
     }
         
-        public Income(int incomeID, BudgetItem budgetItem)
+        public Income(int incomeID, Income budgetItem)
         {
-            super(incomeID, budgetItem);
+            super(incomeID, (BudgetItem)budgetItem);
         }
     
 }
