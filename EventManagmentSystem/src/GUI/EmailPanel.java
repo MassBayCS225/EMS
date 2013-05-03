@@ -20,9 +20,10 @@ public class EmailPanel extends javax.swing.JPanel {
     /**
      * Creates new form EmailPanel
      */
-    public EmailPanel() {
+    public EmailPanel() throws PrivilegeInsufficientException {
         initComponents();
         manager = MainManager.getInstance();
+        welcomeLabel.setText("Welcome " + manager.getUserManager().getSelectedUser().getFirstName() + " " + manager.getUserManager().getSelectedUser().getLastName());
         setVisible(true);
     }
 
@@ -35,7 +36,7 @@ public class EmailPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        welcomeLabel = new javax.swing.JLabel();
         EmailHolderPanel = new javax.swing.JPanel();
         composeBox = new javax.swing.JPanel();
         toLabel = new javax.swing.JLabel();
@@ -53,9 +54,9 @@ public class EmailPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(212, 231, 238));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Welcome User!");
+        welcomeLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        welcomeLabel.setText("Welcome User!");
 
         EmailHolderPanel.setBackground(new java.awt.Color(255, 255, 255));
         EmailHolderPanel.setLayout(new java.awt.CardLayout());
@@ -95,6 +96,11 @@ public class EmailPanel extends javax.swing.JPanel {
         });
 
         discardButton.setText("Discard");
+        discardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discardButtonActionPerformed(evt);
+            }
+        });
 
         toField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +194,7 @@ public class EmailPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(EmailHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -197,7 +203,7 @@ public class EmailPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(welcomeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,17 +223,22 @@ public class EmailPanel extends javax.swing.JPanel {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         ArrayList<String> toList = new  ArrayList<String>(Arrays.asList(toField.getText().split(";")));
         try {
-            Email.send(manager.getUserManager().getSelectedUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getUserManager().getSelectedUser().getFirstName() + manager.getUserManager().getSelectedUser().getLastName()));
+            Email.send(manager.getUserManager().getSelectedUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getUserManager().getSelectedUser().getFirstName() + " " + manager.getUserManager().getSelectedUser().getLastName()));
         } catch (PrivilegeInsufficientException ex) {
             Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_sendButtonActionPerformed
 
+    private void discardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discardButtonActionPerformed
+        toField.setText("");
+        titleField.setText("");
+        messageArea.setText("");
+    }//GEN-LAST:event_discardButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel EmailHolderPanel;
     private javax.swing.JPanel composeBox;
     private javax.swing.JButton discardButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -239,5 +250,6 @@ public class EmailPanel extends javax.swing.JPanel {
     private javax.swing.JTextField titleField;
     private javax.swing.JTextField toField;
     private javax.swing.JLabel toLabel;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
