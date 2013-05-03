@@ -89,7 +89,7 @@ public class TestGuiDriver
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u3);
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u4);
         manager.getUserManager().setSelectedUser(u);
-        manager.getUserManager().addUser(u);
+        //manager.getUserManager().addUser(u);
 //        Home home = new Home();
 //        home.setVisible(true);
         //JFrame frame = new JFrame();
