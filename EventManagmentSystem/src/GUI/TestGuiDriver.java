@@ -13,10 +13,11 @@ import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
+import BackEnd.UserSystem.Address;
+import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 
 /**
  *
@@ -79,6 +80,10 @@ public class TestGuiDriver
         
         //manager.getEventManager().setSelectedEvent(e);            
         User u = new User(1,"A","B","AB@AB.com","ab","ab");
+        Address addr = new Address("Street","City", "STATE","00000","COUNTRY");
+        PhoneNumber num = new PhoneNumber("5555555555");
+        u.setAddress(addr);
+        u.setPhoneNumber(num);
         User u2 = new User(2,"B","C","BC@BC.com","bc","bc");
         User u3 = new User(3,"C","D","CD@CD.com","cd","cd");
         User u4 = new User(4,"D","E","DE@DE.com","de","de");
@@ -110,7 +115,7 @@ public class TestGuiDriver
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u3);
         manager.getEventManager().getSelectedEvent().getOrganizerList().add(u4);
         manager.getUserManager().setSelectedUser(u);
-        //manager.getUserManager().addUser(u);
+        manager.getUserManager().addUser(u);
 //        Home home = new Home();
 //        home.setVisible(true);
         //JFrame frame = new JFrame();
