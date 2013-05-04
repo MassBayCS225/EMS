@@ -7,21 +7,20 @@ package GUI;
 import BackEnd.EventSystem.CalendarEvent;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.ManagerSystem.MainManager;
+import GUI.Dialog.NewSubEventDialog;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 import java.awt.event.MouseEvent;
 import java.text.DateFormatSymbols;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -167,7 +166,7 @@ public class CalendarPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         detailsArea = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        addEventButton = new javax.swing.JButton();
         monthLabel = new javax.swing.JLabel();
         lastMonthButton = new javax.swing.JButton();
         nextMonthButton = new javax.swing.JButton();
@@ -229,7 +228,12 @@ public class CalendarPanel extends javax.swing.JPanel {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Add an Event");
+        addEventButton.setText("Add an Event");
+        addEventButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEventButtonActionPerformed(evt);
+            }
+        });
 
         monthLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         monthLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -267,7 +271,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(addEventButton)
                         .addGap(200, 200, 200))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,7 +317,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(addEventButton))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -339,10 +343,29 @@ public class CalendarPanel extends javax.swing.JPanel {
         populateCalendar();
     }//GEN-LAST:event_nextMonthButtonActionPerformed
 
+    private void addEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEventButtonActionPerformed
+        // TODO add your handling code here:
+        NewSubEventDialog nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        nsed.setVisible(true);
+        if(nsed.getConfirm())
+        {
+            try
+            {
+                manager.getEventManager().createSubEvent(nsed.createEvent(), manager.getLogInManager().getLoggedInUser());
+                populateCalendar();
+            }
+            catch (Exception e)
+            {
+                System.out.println("Can't create Sub Event");
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_addEventButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CalendarTable;
+    private javax.swing.JButton addEventButton;
     private javax.swing.JTextArea detailsArea;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
