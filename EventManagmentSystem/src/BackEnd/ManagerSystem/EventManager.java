@@ -44,17 +44,11 @@ public class EventManager {
         this.expenseTable = expenseTable;
         System.out.println("userList:" + userList);
         rebuildEventList(userList);
-
-
-        // setSelectedEvent(eventList.get(0));
-
-        //setSelectedEvent(eventList.get(0));
-
     }
 
     private void rebuildEventList(ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
             throws DoesNotExistException {
-        ArrayList<Integer> eventIDList = eventsTable.currentUIDList();
+        ArrayList<Integer> eventIDList = eventsTable.currentUIDList("EVENTS");
         
         System.out.println("eventIDList:" + eventIDList);
         for (Integer eventID : eventIDList) {
@@ -77,7 +71,7 @@ public class EventManager {
         System.out.println("committeeList:" + event.getCommitteeList());
 
         System.out.println(eventID);
-        System.out.println(eventsTable.currentUIDList());
+        System.out.println(eventsTable.currentUIDList("EVENTS"));
         System.out.println(eventsTable.getDetails(eventID));
         event.setLocation(new Location(eventsTable.getStreet(eventID), eventsTable.getCity(eventID),
                 eventsTable.getState(eventID), eventsTable.getZipcode(eventID), eventsTable.getCountry(eventID),
@@ -266,7 +260,7 @@ public class EventManager {
         return expense;
     }
 
-    // method may be finished in future version
+    
     public ArrayList<Event> getEventList() {
         return eventList;
     }
@@ -331,7 +325,7 @@ public class EventManager {
         }
     }
 
-    public void clearEvent(User loggedInUser)
+    public void deleteEvent(User loggedInUser)
             throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
 
@@ -397,15 +391,21 @@ public class EventManager {
         }
     }
 
-    public void addSubEvent(SubEvent subEvent, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+    public void createSubEvent(SubEvent subEvent, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getSubEventList().add(subEvent);
             // write to database
 
-            Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
+            //String description, String details, int complete, String street, String city,
+            //        String state, String zipcode, String country, Timestamp startTime, Timestamp endTime
+            /*
+            Integer subEventID = new Integer(subEventsTable.createSubEvent(new InputSubEventData(subEvent.getDescription(),
+                    subEvent.getLocation().getDetails(), subEvent.getComplete(), subEvent.getLocation().getStreet(),
+                    subEvent.getCity(), subEvent.getLocation.get)));
             ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
             newSubEventList.add(subEventID);
             eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
+            * */
         }
     }
 
@@ -424,7 +424,7 @@ public class EventManager {
         }
     }
 
-    public void addCommittee(Committee committee, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+    public void createCommittee(Committee committee, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getCommitteeList().add(committee);
 
@@ -554,4 +554,9 @@ public class EventManager {
 
         }
     }
+    
+    
+    //subEvent.getLocation().getStreet()
+    
+    //private String getStreet(Location location, 
 }
