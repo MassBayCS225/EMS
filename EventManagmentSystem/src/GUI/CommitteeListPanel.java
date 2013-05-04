@@ -33,8 +33,6 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             model.addElement(c.getTitle());
         }
         committeeList.setModel(model);
-        committeeList.setSelectedIndex(0);
-        committeePanel1.updateInfo();
     }
     
     /**
