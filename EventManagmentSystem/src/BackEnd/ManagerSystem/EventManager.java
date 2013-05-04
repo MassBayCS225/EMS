@@ -6,7 +6,6 @@ import EMS_Database.*;
 import EMS_Database.impl.*;
 
 import java.util.ArrayList;
-import java.sql.Timestamp;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -47,9 +46,8 @@ public class EventManager {
 
     private void rebuildEventList(ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
             throws DoesNotExistException {
+        
         ArrayList<Integer> eventIDList = eventsTable.currentUIDList("EVENTS");
-
-        //System.out.println("eventIDList:" + eventIDList);
         for (Integer eventID : eventIDList) {
             eventList.add(rebuildEvent(eventID, userList));
         }
@@ -293,10 +291,7 @@ public class EventManager {
                 deleteSubEvent(selectedEvent.getSubEventList().get(j), loggedInUser);
             }
             for (int k = selectedEvent.getParticipantList().size() - 1; k >= 0; k--) {
-                if (!(selectedEvent.getParticipantList().get(k) instanceof User)) {
-                    usersTable.removeUser(selectedEvent.getParticipantList().get(k).getUserId());
-                }
-                selectedEvent.getParticipantList().remove(k);
+                deleteParticipant(selectedEvent.getParticipantList().get(k), loggedInUser);
             }
             eventsTable.removeEvent(selectedEvent.getEVENT_ID());
             eventList.remove(selectedEvent.getEVENT_ID());
@@ -436,7 +431,7 @@ public class EventManager {
 
     private void deleteIncomeList(Committee committee)
             throws DoesNotExistException {
-        
+
         ArrayList<Integer> incomeIDList = committeesTable.getIncome(committee.getCOMMITTEE_ID());
         for (Integer incomeID : incomeIDList) {
             incomeTable.removeBudgetItem(incomeID);
@@ -448,7 +443,7 @@ public class EventManager {
 
     private void deleteExpenseList(Committee committee)
             throws DoesNotExistException {
-        
+
         ArrayList<Integer> expenseIDList = committeesTable.getExpense(committee.getCOMMITTEE_ID());
         for (Integer expenseID : expenseIDList) {
             expenseTable.removeBudgetItem(expenseID);
@@ -458,77 +453,75 @@ public class EventManager {
         }
     }
 
-    // UPDATE
-    public Participant createParticipant(Participant participant)
+    public Participant createParticipant(Participant participant, User loggedInUser)
             throws DoesNotExistException {
-        selectedEvent.getParticipantList().add(participant);
 
-        Integer participantID = new Integer(participant.getUserId());
-        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
-        newParticipantList.add(participantID);
+        Participant newParticipant = null;
+        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());;
+        if (loggedInUser == null) {
+            newParticipant = new Participant(usersTable.createUser(new InputUser(participant))
+                    , participant);
+            newParticipantList.add(newParticipant.getUserId());
+            selectedEvent.getParticipantList().add(newParticipant);
+        } else {
+            newParticipantList.add(loggedInUser.getUserId());
+            selectedEvent.getParticipantList().add(loggedInUser);
+        }
         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
-        
-        return null;
+        return newParticipant;
     }
 
-    public void removeParticipant(Participant participant) throws DoesNotExistException {
+    public void deleteParticipant(Participant participant, User loggedInUser)
+            throws DoesNotExistException {
+
+        if (!(participant instanceof User)) {
+            usersTable.removeUser(participant.getUserId());
+        }
+        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
+        newParticipantList.remove(participant.getUserId());
+
+        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
         selectedEvent.getParticipantList().remove(participant);
-
-        Integer participantID = new Integer(participant.getUserId());
-        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
-        newParticipantList.remove(participantID);
-        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
-
     }
 
-    public void editDescription(String description, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+    public void editDescription(String description, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setDescription(description);
-            // write to database
-
-
             eventsTable.setDescription(selectedEvent.getEVENT_ID(), description);
-
+            selectedEvent.setDescription(description);
         }
     }
 
-    public void editLocation(Location location, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
+    public void editLocation(Location location, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.setLocation(location);
-            // write to database
-
-
             eventsTable.setDetails(selectedEvent.getEVENT_ID(), location.getDetails());
             eventsTable.setStreet(selectedEvent.getEVENT_ID(), location.getStreet());
             eventsTable.setCity(selectedEvent.getEVENT_ID(), location.getCity());
             eventsTable.setState(selectedEvent.getEVENT_ID(), location.getState());
             eventsTable.setZipcode(selectedEvent.getEVENT_ID(), location.getZipCode());
             eventsTable.setCountry(selectedEvent.getEVENT_ID(), location.getCountry());
-
+            selectedEvent.setLocation(location);
         }
     }
 
     public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser)
             throws PrivilegeInsufficientException, DoesNotExistException {
+
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
-            // write to database
-
-
             eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
-
+            selectedEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
         }
     }
 
     public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser)
             throws PrivilegeInsufficientException, DoesNotExistException {
+
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
-            // write to database
-
-
             eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getEndDateTimeTimestamp());
-
+            selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
         }
     }
 }
