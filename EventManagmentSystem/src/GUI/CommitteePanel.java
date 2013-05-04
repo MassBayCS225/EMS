@@ -172,8 +172,10 @@ public class CommitteePanel extends javax.swing.JPanel {
     public void updateInfo()
     {
         Committee c = manager.getCommitteeManager().getSelectedCommittee();
-        
-        headerLabel.setText(c.getTitle());
+        if(c.getTitle() != null)
+        {
+            headerLabel.setText(c.getTitle());
+        }
         
         if(c.getChair() != null){
             headNameLabel.setText(c.getChair().getFirstName() + " " + c.getChair().getLastName());
