@@ -36,9 +36,8 @@ public class Participant{
   *  @param address The participant's email address
   */
   
-  /*
+  
   public Participant(int UID, String firstName, String lastName, String emailAddress){
-    table = new UserData_Table();
     this.UID = UID;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -46,7 +45,7 @@ public class Participant{
     phoneNumber = new PhoneNumber();
     address = new Address();
   }
-  * */
+  
   
   
   public Participant(String firstName, String lastName, String emailAddress){
