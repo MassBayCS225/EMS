@@ -25,6 +25,8 @@ public class CommitteeManager {
     public CommitteeManager(Tasks_Table tasksTable) {
         committeesTable = new Committees_Table();
         this.tasksTable = tasksTable;
+        
+        System.out.println("committees : " + committeesTable.queryEntireTable());
     }
     
     public Committees_Table getCommitteesTable(){
@@ -88,9 +90,11 @@ public class CommitteeManager {
             throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getMemberList().add(member);
+            System.out.println("passed privilege");
             // write to database
 
             ArrayList<Integer> newMemberList = committeesTable.getCommitteeMembers(selectedCommittee.getCOMMITTEE_ID());
+            System.out.println(newMemberList);
             newMemberList.add(member.getUserId());
             committeesTable.setCommitteeMembers(selectedCommittee.getCOMMITTEE_ID(), newMemberList);
         }
@@ -109,11 +113,10 @@ public class CommitteeManager {
         }
     }
 
-    public void createTask(){
-    }
-    
-    public void addTask(Task task, User loggedInUser, Event selectedEvent)
+    public Task createTask(Task task, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException, DuplicateInsertionException {
+        
+        Task newTask = null;
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             
             ArrayList<Integer> responsibleIDList = new ArrayList<Integer>();
@@ -121,26 +124,23 @@ public class CommitteeManager {
                 responsibleIDList.add(responsible.getUserId());
             }
             
-            Task newTask = new Task(tasksTable.createTask(new InputTask(
+            newTask = new Task(tasksTable.createTask(new InputTask(
                     task.getDescription(), task.getLocation().getDetails(), task.getLocation().getStreet(), task.getLocation().getCity(),
                     task.getLocation().getState(), task.getLocation().getZipCode(), task.getLocation().getCountry(),
                     task.getTimeSchedule().getStartDateTimeTimestamp(), task.getTimeSchedule().getEndDateTimeTimestamp(),
-                    (task.getCompleted() == true? 1 : 0), responsibleIDList)),
-                    task);
+                    (task.getCompleted() == true? 1 : 0), responsibleIDList))
+                    , task);
             
-            selectedCommittee.getTaskList().add(newTask);
-            // write to database
             ArrayList<Integer> newTaskList = committeesTable.getTaskList(selectedCommittee.getCOMMITTEE_ID());
             newTaskList.add(newTask.getTASK_ID());
-            committeesTable.setTaskList(selectedCommittee.getCOMMITTEE_ID(), newTaskList);
             
+            committeesTable.setTaskList(selectedCommittee.getCOMMITTEE_ID(), newTaskList);
+            selectedCommittee.getTaskList().add(newTask);
         }
-    }
-
-    public void deleteTask(){
+        return newTask;
     }
     
-    public void removeTask(Task task, User loggedInUser, Event selectedEvent)
+    public void deleteTask(Task task, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getTaskList().remove(task);
