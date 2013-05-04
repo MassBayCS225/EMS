@@ -9,9 +9,7 @@ import java.util.ArrayList;
  */
 public interface Interface_BudgetData {
 
-    // SPECIAL CASE FUNCTIONS
-    public ArrayList<Integer> currentUIDList();
-    
+    // SPECIAL CASE FUNCTIONS       
     public int nextValidUID();
     
     public String queryEntireTable();

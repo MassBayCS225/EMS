@@ -18,30 +18,9 @@ import java.util.logging.Level;
  * @author mike
  */
 public class Expense_Table extends InitDB implements Interface_BudgetData {
-
-    //SPECIAL FUNCTIONS
-    @Override
-    public ArrayList<Integer> currentUIDList() {
-	int newUID = 0;
-        ArrayList<Integer> UIDList = new ArrayList<Integer>();
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE");
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            while (rs.next()) {
-                newUID = rs.getInt("UID");
-                UIDList.add(newUID);
-            }
-            return UIDList;
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return UIDList; // should not be zero
-    }
-
+    private String tableName = "EXPENSE";
+    
+    //SPECIAL FUNCTIONS    
     @Override
     public int nextValidUID() {
 	int newUID = 0;
@@ -92,7 +71,7 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
     @Override
     public void removeBudgetItem(int uid) throws DoesNotExistException {
 	boolean exists = false;
-	for(int users : currentUIDList()){
+	for(int users : currentUIDList(tableName)){
 	    if(uid == users){
 		exists = true;
 	    }
@@ -122,13 +101,7 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
             AddAddressStmt.setDouble(4, input.getValue());
             //Execute Statement
             AddAddressStmt.executeUpdate();
-
-            //checking to see if UID already exists.
-            for (int uid : currentUIDList()) {
-                if (newUID == uid) {
-                    throw new DuplicateInsertionException("Expense table error."); //should not get here.
-                }
-            }
+            
 
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());	
@@ -162,85 +135,17 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
     //GETTERS
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
-	    }
-	    return returnQuery;
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
-	return null;
+	return getDBString("DESCRIPTION",tableName,uid);
     }
 
     @Override
     public double getValue(int uid) throws DoesNotExistException {
-	double returnQuery = -1.0;
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getDouble("VALUE"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if (returnQuery == -1.0) {
-		debugLog.warning("UID="+uid+" does not exist in EXPENSE table.");
-                throw new DoesNotExistException("UID does not exist in EXPENSE table.");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        }
-	debugLog.warning("UID="+uid+" does not exist in EXPENSE table.");
-        throw new DoesNotExistException("UID does not exist in EXPENSE table.");
+	return getDBDouble("VALUE",tableName,uid);
     }
 
     @Override
     public Timestamp getDate(int uid) throws DoesNotExistException {
-	Timestamp returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EXPENSE WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		//UNAME = coulmn name.
-		returnQuery = rs.getTimestamp("DATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking if that uid exists	  
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in EXPENSE table.");
-		throw new DoesNotExistException("expense date");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in EXPENSE table.");
-	return null;
+	return getDBTimestamp("DATE",tableName,uid);
     }
     
     
@@ -249,80 +154,17 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
     //SETTERS
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EXPENSE SET DESCRIPTION=? WHERE UID=?");
-		idQueryStmt.setString(1, description);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
-		throw new DoesNotExistException("User does not exist in EXPENSE table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EXPENSE table.");
-	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
-	}
+	setDBString("DESCRIPTION",tableName,uid,description);
     }
 
     @Override
     public void setValue(int uid, double value) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EXPENSE SET VALUE=? WHERE UID=?");
-		idQueryStmt.setDouble(1, value);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
-		throw new DoesNotExistException("User does not exist in EXPENSE table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EXPENSE table.");
-	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
-	}
+	setDBDouble("VALUE",tableName,uid,value);
     }
 
     @Override
     public void setDate(int uid, Timestamp date) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE EXPENSE SET DATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, date);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in EXPENSE table.", uid);
-		throw new DoesNotExistException("User does not exist in EXPENSE table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in EXPENSE table.");
-	    throw new DoesNotExistException("User does not exist in EXPENSE table.");
-	}
+	setDBTimestamp("DATE",tableName,uid,date);
     }        
 
 }

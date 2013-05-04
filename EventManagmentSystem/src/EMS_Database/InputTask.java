@@ -27,13 +27,13 @@ public class InputTask {
     public InputTask(){
 	ArrayList<Integer> list = new ArrayList<Integer>(); //list with no values
 	Timestamp time = new Timestamp(new Date().getTime()); //gets current time.
-	this.descripton = "default description";
-	this.details = "default details";
-	this.street = "default street";
-	this.city = "default city";
-	this.state = "default state";
-	this.zipcode = "default zipcode";
-	this.country = "default country";
+	this.descripton = null;
+	this.details = null;
+	this.street = null;
+	this.city = null;
+	this.state = null;
+	this.zipcode = null;
+	this.country = null;
 	this.startDate = time;
 	this.endDate = time;
 	this.complete = 0;

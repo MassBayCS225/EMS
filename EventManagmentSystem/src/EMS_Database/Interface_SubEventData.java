@@ -10,13 +10,7 @@ import java.util.ArrayList;
 public interface Interface_SubEventData {
 
     // SPECIAL CASE FUNCTIONS
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
-
-    public String listToString(ArrayList<Integer> list);
-
-    public ArrayList<Integer> currentUIDList();
-
-    public int createSubEvent(InputSubEventData subevent) throws DuplicateInsertionException;
+    public int createSubEvent(InputSubEventData subevent);
 
     public int nextValidUID();
 

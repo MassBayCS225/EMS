@@ -15,7 +15,7 @@ public class InputIncome {
 
     public InputIncome(){
 	Timestamp time = new Timestamp(new Date().getTime());
-	this.description = "default description";
+	this.description = null;
 	this.date = time;
 	this.value = 0.0;
     }

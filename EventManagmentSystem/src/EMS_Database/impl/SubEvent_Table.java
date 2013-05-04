@@ -19,121 +19,50 @@ import java.util.logging.Level;
  */
 public class SubEvent_Table extends InitDB implements Interface_SubEventData {
 
+    private String tableName = "SUBEVENTS";
+
     ///////////////////////SPECIAL FUNCTIONS///////////////////////////
     /**
-     * A special function designed to format integer array lists into a string
-     * to be used for actual integer data return from the database.
+     * Inserts a new row into SubEvent Table based on the parameters of
+     * InputSubEventData
      *
-     * @param uidList A formatted string from the database representing the UID
-     * list.
-     * @return A nice array list of the UID's from the database.
-     * @throws NumberFormatException if you somehow try to put something that
-     * cannot be parsed into the conversion string.
-     */
-    @Override
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
-        //Split String
-        String[] uidStringList;
-        uidStringList = uidList.split(",");
-
-        ArrayList<Integer> uidIntList = new ArrayList<Integer>();
-
-        //parse each item into arraylist
-        for (String uid : uidStringList) {
-            try {
-                uidIntList.add(Integer.parseInt(uid));
-            } catch (NumberFormatException nfe) {
-                throw new NumberFormatException("Parse Error");
-            }
-        }
-
-        return uidIntList;
-    }
-
-    /**
-     * Does the opposite of string to list and creates a nicely formatted string
-     * for insertion into the database.
-     *
-     * @param list An ArrayList of Integers representing the UID numbers to be
-     * stored.
-     * @return A nicely formated String for insertion into the database.
-     */
-    @Override
-    public String listToString(ArrayList<Integer> list) {
-        StringBuilder returnQuery = new StringBuilder();
-        for (int uid : list) {
-            returnQuery.append(uid);
-            returnQuery.append(",");
-        }
-        return returnQuery.toString();
-    }
-
-    /**
-     * A function to generate a list of the current UID's in a table
-     *
-     * @return ArrayList<Integer> of the current UID's in the table
-     */
-    @Override
-    public ArrayList<Integer> currentUIDList() {
-        int newUID = 0;
-        ArrayList<Integer> UIDList = new ArrayList<Integer>();
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS");
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            while (rs.next()) {
-                newUID = rs.getInt("UID");
-                UIDList.add(newUID);
-            }
-            return UIDList;
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return UIDList; // should not be zero
-    }
-
-    /**
-     * Inserts a new row into SubEvent Table based on the parameters of InputSubEventData
      * @param subevent the collected data to be inserted
      * @return an int of the UID upon successful creation.
      * @throws DuplicateInsertionException if something goes horribly wrong.
      */
     @Override
-    public int createSubEvent(InputSubEventData subevent) throws DuplicateInsertionException {
-        int newUID = nextValidUID();
+    public int createSubEvent(InputSubEventData subevent) {
+	int newUID = nextValidUID();
 
-        try {
-            //Creating Statement
-            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO SUBEVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-            AddAddressStmt.setInt(1, newUID);
-            AddAddressStmt.setString(2, subevent.getDescription());
+	try {
+	    //Creating Statement
+	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO SUBEVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+	    AddAddressStmt.setInt(1, newUID);
+	    AddAddressStmt.setString(2, subevent.getDescription());
 	    AddAddressStmt.setString(3, subevent.getDetails());
-            AddAddressStmt.setInt(4, subevent.getComplete());
-            AddAddressStmt.setString(5, subevent.getStreet());
-            AddAddressStmt.setString(6, subevent.getCity());
-            AddAddressStmt.setString(7, subevent.getState());
-            AddAddressStmt.setString(8, subevent.getZipcode());
-            AddAddressStmt.setString(9, subevent.getCountry());
-            AddAddressStmt.setTimestamp(10, subevent.getStartTime());
-            AddAddressStmt.setTimestamp(11, subevent.getEndTime());
+	    AddAddressStmt.setInt(4, subevent.getComplete());
+	    AddAddressStmt.setString(5, subevent.getStreet());
+	    AddAddressStmt.setString(6, subevent.getCity());
+	    AddAddressStmt.setString(7, subevent.getState());
+	    AddAddressStmt.setString(8, subevent.getZipcode());
+	    AddAddressStmt.setString(9, subevent.getCountry());
+	    AddAddressStmt.setTimestamp(10, subevent.getStartTime());
+	    AddAddressStmt.setTimestamp(11, subevent.getEndTime());
 
-            //Execute Statement
-            AddAddressStmt.executeUpdate();
-            
-            for(int uid : currentUIDList()){
-                if(newUID == uid){
-                    throw new DuplicateInsertionException("SubEventsTable");
-                }
-            }
+	    //Execute Statement
+	    AddAddressStmt.executeUpdate();
 
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        } finally {
-            return newUID;
-        }
+	    for (int uid : currentUIDList(tableName)) {
+		if (newUID == uid) {
+		    throw new DoesNotExistException("Problem inserting UID=" + newUID + " into database");
+		}
+	    }
+
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	} finally {
+	    return newUID;
+	}
     }
 
     /**
@@ -143,645 +72,191 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
      */
     @Override
     public int nextValidUID() {
-        int newUID = 0;
-        try {
+	int newUID = 0;
+	try {
 
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS");
-            ResultSet rs = idQueryStmt.executeQuery();
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS");
+	    ResultSet rs = idQueryStmt.executeQuery();
 
-            while (rs.next()) {
-                newUID = rs.getInt("UID");
-                //System.out.println(newUID);
-            }
-            return (newUID + 1);
+	    while (rs.next()) {
+		newUID = rs.getInt("UID");
+		//System.out.println(newUID);
+	    }
+	    return (newUID + 1);
 
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return newUID; // should not be zero
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	return newUID; // should not be zero
     }
 
     /**
      * A debug function to display the entire contents of this table
+     *
      * @return the entire contents of this table as a string.
      */
     @Override
     public String queryEntireTable() {
-        StringBuilder returnQuery = new StringBuilder();
-        try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS");
-            ResultSet rs = idQueryStmt.executeQuery();
+	StringBuilder returnQuery = new StringBuilder();
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS");
+	    ResultSet rs = idQueryStmt.executeQuery();
 
-            while (rs.next()) {
-                returnQuery.append(rs.getString("UID"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getString("DESCRIPTION"));
-                returnQuery.append(",");
+	    while (rs.next()) {
+		returnQuery.append(rs.getString("UID"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("DESCRIPTION"));
+		returnQuery.append(",");
 		returnQuery.append(rs.getString("DETAILS"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getInt("COMPLETE"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getString("STREET"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getString("CITY"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getString("STATE"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getString("ZIPCODE"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getString("COUNTRY"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getTimestamp("STARTDATE"));
-                returnQuery.append(",");
-                returnQuery.append(rs.getTimestamp("ENDDATE"));
-                returnQuery.append("\n");
-            }
+		returnQuery.append(",");
+		returnQuery.append(rs.getInt("COMPLETE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("STREET"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("CITY"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("STATE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("ZIPCODE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("COUNTRY"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getTimestamp("STARTDATE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getTimestamp("ENDDATE"));
+		returnQuery.append("\n");
+	    }
 
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
+	} catch (SQLException sqle) {
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
 
-        return returnQuery.toString();
+	return returnQuery.toString();
     }
 
     /**
      * This function removes a subevent specified by the UID.
+     *
      * @param uid the UID of the subevent to be removed.
      * @return a boolean. true if removal was successful.
      * @throws DoesNotExistException if the uid does not exist in the table.
      */
     @Override
     public boolean removeSubEvent(int uid) throws DoesNotExistException {
-        try {
+	try {
 
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM SUBEVENT WHERE UID=?");
-            idQueryStmt.setInt(1, uid);            
-            idQueryStmt.executeUpdate();                        
-            
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist.");
-        }
-        return true;
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM SUBEVENT WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    idQueryStmt.executeUpdate();
+
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    throw new DoesNotExistException("User does not exist.");
+	}
+	return true;
     }
-    
-    
-    
 
     ////////////////////////GETTERS/////////////////////////
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-        String returnQuery = null;
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent description");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBString("DESCRIPTION", tableName, uid);
     }
 
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("DETAILS"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent details");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
-    }        
+	return getDBString("DETAILS", tableName, uid);
+    }
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-        String returnQuery = "";
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("STREET"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent street");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBString("STREET", tableName, uid);
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-        String returnQuery = "";
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("CITY"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent city");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBString("CITY", tableName, uid);
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-        String returnQuery = "";
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("STATE"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent state");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBString("STATE", tableName, uid);
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-        String returnQuery = "";
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("ZIPCODE"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent zipcode");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBString("ZIPCODE", tableName, uid);
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-        String returnQuery = "";
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getString("COUNTRY"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if ("".equals(returnQuery)) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent country");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBString("COUNTRY", tableName, uid);
     }
 
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-        Timestamp returnQuery = null;
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getTimestamp("STARTDATE"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent startdate");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBTimestamp("STARTDATE", tableName, uid);
     }
 
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-        Timestamp returnQuery = null;
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getTimestamp("ENDDATE"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent enddate");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        return null;
+	return getDBTimestamp("ENDDATE", tableName, uid);
     }
 
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-        int returnQuery = 3;
-        try {
-
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM SUBEVENTS WHERE UID=?");
-            idQueryStmt.setInt(1, uid);
-            ResultSet rs = idQueryStmt.executeQuery();
-
-            //Gets the row with uid specified
-            while (rs.next()) {                
-                returnQuery = rs.getInt("COMPLETE"); //Should not have two uids with the same name                            
-            }
-            
-            //checking for existance of that uid
-            if (returnQuery == 3) {
-		debugLog.warning("UID=" + uid + " does not exist in SUBEVENTS table.");
-                throw new DoesNotExistException("SubEvent complete");
-            } else {
-                return returnQuery;
-            }
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            System.exit(1);
-        }
-        throw new DoesNotExistException("SubEvent complete");
+	return getDBInt("COMPLETE", tableName, uid);
     }
-    
-    
-    
 
     /////////////////////SETTERS////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET DESCRIPTION=? WHERE UID=?");
-		idQueryStmt.setString(1, description);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("DESCRIPTION", tableName, uid, description);
     }
 
     @Override
     public void setDetails(int uid, String details) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET DETAILS=? WHERE UID=?");
-		idQueryStmt.setString(1, details);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("DETAILS", tableName, uid, details);
     }
 
     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET STREET=? WHERE UID=?");
-		idQueryStmt.setString(1, street);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("STREET", tableName, uid, street);
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET CITY=? WHERE UID=?");
-		idQueryStmt.setString(1, city);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("CITY", tableName, uid, city);
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET STATE=? WHERE UID=?");
-		idQueryStmt.setString(1, state);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("STATE", tableName, uid, state);
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET ZIPCODE=? WHERE UID=?");
-		idQueryStmt.setString(1, zipcode);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("ZIPCODE", tableName, uid, zipcode);
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET COUNTRY=? WHERE UID=?");
-		idQueryStmt.setString(1, country);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBString("COUNTRY", tableName, uid, country);
     }
 
     @Override
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET STARTDATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, time);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBTimestamp("STARTDATE", tableName, uid, time);
     }
 
     @Override
     public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET ENDDATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, time);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBTimestamp("ENDDATE", tableName, uid, time);
     }
 
     @Override
     public void setComplete(int uid, int complete) throws DoesNotExistException {
-        try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE SUBEVENTS SET COMPLETE=? WHERE UID=?");
-		idQueryStmt.setInt(1, complete);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in SUBEVENT table.", uid);
-		throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in SUBEVENT table.");
-	    throw new DoesNotExistException("User does not exist in SUBEVENT table.");
-	}
+	setDBInt("COMPLETE", tableName, uid, complete);
     }
 }

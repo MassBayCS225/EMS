@@ -211,16 +211,10 @@ public class DB_Testing {
 
 
 	//CREATE SUBEVENT INSERTION
-//        try {
-//            uid = set.createSubEvent(ised);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
-	//System.out.println(set.queryEntireTable());
-
+//	System.out.println(set.queryEntireTable());
+//
 //        try{
-//            uid = 2;
+//            uid = set.createSubEvent(ised);
 //            System.out.println(set.getDescription(uid));
 //	    System.out.println(set.getDetails(uid));
 //            System.out.println(set.getComplete(uid));
@@ -270,8 +264,7 @@ public class DB_Testing {
 //	    System.out.println(ct.remainingMonies(uid));
 //	    System.out.println(ct.getExpense(uid));
 	    
-	    
-//	    uid = 1;
+	    	    
 //	    System.out.println(ct.getTitle(uid));
 //	    System.out.println(ct.getChairman(uid));
 //	    System.out.println(ct.getBudgetAccessList(uid));
@@ -298,7 +291,7 @@ public class DB_Testing {
 //	    System.out.println(ct.getIncome(uid));
 //	    System.out.println(ct.getExpense(uid));
 //	    System.out.println(ct.getBudget(uid));
-
+//
 //	} catch (DoesNotExistException dnee) {
 //	    System.err.println(dnee.getMessage());
 //	}
@@ -306,17 +299,10 @@ public class DB_Testing {
 	
 	
 
-	//CREATE TASKS INSERTION
-//	try {
-//	    uid = tt.createTask(it);
-//	    System.out.println("The created uid = " + uid);
-//	} catch (DuplicateInsertionException die) {
-//	    System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//	}
-
+	//CREATE TASKS INSERTION	
 //        System.out.println(tt.queryEntireTable());
 //	try {
-//	    uid = 1;
+//	    uid = tt.createTask(it);
 //	    System.out.println(tt.getDescription(uid));
 //	    System.out.println(tt.getDetails(uid));
 //	    System.out.println(tt.getStreet(uid));
@@ -374,7 +360,8 @@ public class DB_Testing {
 //	    }
 //	    exTable.setValue(3, 654);
 //	    exTable.setValue(4, 897.2);
-
+//
+//	    uid = 1;
 //	    System.out.println(exTable.getDescription(uid));
 //	    System.out.println(exTable.getDate(uid));
 //	    System.out.println(exTable.getValue(uid));
@@ -389,7 +376,7 @@ public class DB_Testing {
 //	    
 //	    System.out.println(exTable.total());
 //	    System.out.println(exTable.queryEntireTable());
-
+//
 //	    for (int x = 0; x < 10; x++) {
 //		uid = inTable.insertBudgetItem(in);
 //	    }

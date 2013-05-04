@@ -8,13 +8,7 @@ import java.util.ArrayList;
  */
 public interface Interface_CommitteeData {
 
-    //SPECIAL FUNCTIONS
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
-
-    public String listToString(ArrayList<Integer> list);
-
-    public ArrayList<Integer> currentUIDList();
-
+    //SPECIAL FUNCTIONS       
     public int createCommittee(InputCommittee committee);
 
     public int nextValidUID();

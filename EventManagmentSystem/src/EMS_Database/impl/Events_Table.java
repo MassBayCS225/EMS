@@ -57,41 +57,13 @@ public class Events_Table extends InitDB implements Interface_EventData {
 
 	    //Execute Statement
 	    AddAddressStmt.executeUpdate();
-
-	    //checking to see if UID already exists.
-	    for (int uid : currentUIDList()) {
-		if (newUID == uid) {
-		    throw new DoesNotExistException("Issue creating EVENT insertion...");
-		}
-	    }
-
+	    
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage());
 	} finally {
 	    return newUID;
 	}
-    }
-
-    public ArrayList<Integer> currentUIDList() {
-	int newUID = 0;
-	ArrayList<Integer> UIDList = new ArrayList<Integer>();
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    while (rs.next()) {
-		newUID = rs.getInt("UID");
-		UIDList.add(newUID);
-	    }
-	    return UIDList;
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	return UIDList; // should not be zero
-    }
+    }   
 
     /**
      * Gets the next vaild UID in the Events table

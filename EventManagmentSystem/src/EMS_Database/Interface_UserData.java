@@ -10,9 +10,7 @@ import java.util.ArrayList;
 public interface Interface_UserData {
 
     // SPECIAL FUNCTIONS
-    public int createUser(InputUser user);
-    
-    public String queryEntireTable();
+    public int createUser(InputUser user);        
     
     public int nextValidUID();
     
@@ -53,10 +51,7 @@ public interface Interface_UserData {
     public boolean getParticipant(int uid) throws DoesNotExistException;
     
     
-    //SETTERS
-
-    public void setUID(int uid, int nuid) throws DuplicateInsertionException , DoesNotExistException;
-
+    //SETTERS   
     public void setAddress(int uid , Address address) throws DoesNotExistException;   
 
     public void setFirstName(int uid, String fname) throws DoesNotExistException;
