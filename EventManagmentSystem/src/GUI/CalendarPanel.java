@@ -9,6 +9,9 @@ import BackEnd.EventSystem.SubEvent;
 import BackEnd.ManagerSystem.MainManager;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JTable;
@@ -17,6 +20,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
+import java.awt.event.MouseEvent;
+import java.text.DateFormatSymbols;
 
 /**
  *
@@ -35,6 +40,7 @@ public class CalendarPanel extends javax.swing.JPanel {
         initComponents();
         manager = MainManager.getInstance();
         CalendarTable.getTableHeader().setReorderingAllowed(false);
+        detailsArea.setEditable(false);
         for (int i = 0; i < 7; i++)
         {
             CalendarTable.setRowHeight( i, 64 );
@@ -44,25 +50,28 @@ public class CalendarPanel extends javax.swing.JPanel {
         CalendarTable.setCellSelectionEnabled(true);
     ListSelectionModel cellSelectionModel = CalendarTable.getSelectionModel();
     cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
-      public void valueChanged(ListSelectionEvent e) {
-        String selectedData = "";
-
-        int selectedRow = CalendarTable.getSelectedRow();
-        int selectedColumn = CalendarTable.getSelectedColumn();
-        selectedData = CalendarTable.getValueAt(selectedRow, selectedColumn).toString();
-        System.out.println("HERE Selected Row: " + selectedRow + ", Column: " + selectedColumn);
-        /*for (int i = 0; i < selectedRow.length; i++) {
-          for (int j = 0; j < selectedColumns.length; j++) {
-            selectedData = (String) CalendarTable.getValueAt(selectedRow[i], selectedColumns[j]).toString();
-          }
-        }*/
-        detailsField.setText(selectedData);
-      }
-
-    });
     
+    CalendarTable.addMouseListener(new MouseAdapter()  
+        {  
+            public void mouseClicked(MouseEvent e)  
+              {  
+                if (e.getClickCount() == 1)  
+                {  
+                     String selectedData = null;  
+                       
+                    JTable target = (JTable)e.getSource();  
+                    
+                  int selectedRow = target.getSelectedRow();  
+                   int selectedColumn = target.getSelectedColumn();   
+                  
+                 Object selectedCellValue=target.getValueAt(selectedRow, selectedColumn);  
+                 detailsArea.setText(selectedCellValue.toString());
+  }  
+}  
+});
+    
+            
+
         populateCalendar();
     }
     
@@ -99,11 +108,13 @@ public class CalendarPanel extends javax.swing.JPanel {
                      */
                     ArrayList<SubEvent> events = new ArrayList<SubEvent>();
                      int tempMillis; // temporary value used in for loop that saves a time in milliseconds
+                     int tempMonth;
                      for (int i = 0; i < manager.getEventManager().getSelectedEvent().getSubEventList().size(); i++){
                       tempMillis = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().DAY_OF_MONTH); // set the date for the current element
+                      tempMonth = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().MONTH);
                       //System.out.println("Event Days: " + tempMillis);
                       // if you want to check end time, use getEndTime() instead of getStartTime
-                      if (tempMillis == day){
+                      if (tempMillis == day && tempMonth == tempCalendar.get(tempCalendar.MONTH)){
                           //System.out.println("YES!");
                             events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
                         tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH - 1)); // reset the day back to original
@@ -124,12 +135,18 @@ public class CalendarPanel extends javax.swing.JPanel {
                 calendarSlot++;
             }
         }
+        monthLabel.setText("" + getMonthString(month));
+        yearLabel.setText("" + year);
     }
     
     public void populateSubEvents()
     {
         ArrayList<SubEvent> subEventList = manager.getEventManager().getSelectedEvent().getSubEventList();
         subEventList.add(new SubEvent(12, "This is an event"));
+    }
+    
+    public String getMonthString(int month) {
+    return new DateFormatSymbols().getMonths()[month];
     }
 
     /**
@@ -148,12 +165,14 @@ public class CalendarPanel extends javax.swing.JPanel {
             }
         };
         jPanel1 = new javax.swing.JPanel();
-        detailsField = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        detailsArea = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         monthLabel = new javax.swing.JLabel();
         lastMonthButton = new javax.swing.JButton();
         nextMonthButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        yearLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 204, 255));
 
@@ -194,24 +213,20 @@ public class CalendarPanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        detailsField.setEditable(false);
-        detailsField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        detailsArea.setColumns(20);
+        detailsArea.setLineWrap(true);
+        detailsArea.setRows(5);
+        jScrollPane2.setViewportView(detailsArea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(detailsField, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(detailsField, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
         );
 
         jButton1.setText("Add an Event");
@@ -219,7 +234,7 @@ public class CalendarPanel extends javax.swing.JPanel {
         monthLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         monthLabel.setForeground(new java.awt.Color(255, 255, 255));
         monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        monthLabel.setText("April");
+        monthLabel.setText("Month");
 
         lastMonthButton.setText("<");
         lastMonthButton.addActionListener(new java.awt.event.ActionListener() {
@@ -240,29 +255,38 @@ public class CalendarPanel extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Details");
 
+        yearLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        yearLabel.setForeground(new java.awt.Color(255, 255, 255));
+        yearLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        yearLabel.setText("year");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(lastMonthButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(monthLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextMonthButton)
-                                .addGap(12, 12, 12)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(200, 200, 200)))
+                        .addGap(200, 200, 200))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(19, 19, 19)
+                                    .addComponent(lastMonthButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(yearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(nextMonthButton)
+                                    .addGap(12, 12, 12)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(monthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
@@ -271,17 +295,23 @@ public class CalendarPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(nextMonthButton))
-                    .addComponent(monthLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lastMonthButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(47, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(nextMonthButton))
+                            .addComponent(lastMonthButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(monthLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(yearLabel)
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -297,7 +327,6 @@ public class CalendarPanel extends javax.swing.JPanel {
             month = 11;
         }
         populateCalendar();
-        monthLabel.setText("" + (month+1));
     }//GEN-LAST:event_lastMonthButtonActionPerformed
 
     private void nextMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMonthButtonActionPerformed
@@ -308,19 +337,20 @@ public class CalendarPanel extends javax.swing.JPanel {
             month = 0;
         }
         populateCalendar();
-        monthLabel.setText("" + (month+1));
     }//GEN-LAST:event_nextMonthButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CalendarTable;
-    private javax.swing.JTextField detailsField;
+    private javax.swing.JTextArea detailsArea;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton lastMonthButton;
     private javax.swing.JLabel monthLabel;
     private javax.swing.JButton nextMonthButton;
+    private javax.swing.JLabel yearLabel;
     // End of variables declaration//GEN-END:variables
 
 
