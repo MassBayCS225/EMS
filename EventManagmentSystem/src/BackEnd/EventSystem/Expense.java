@@ -10,6 +10,10 @@ package BackEnd.EventSystem;
  */
 public class Expense extends BudgetItem {
     
+    public Expense(){
+        super();
+    }
+    
     public Expense(double value, String description) {
         super(value, description);
     }

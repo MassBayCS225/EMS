@@ -18,7 +18,13 @@ public class User extends Participant
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
-    private UserData_Table table;
+    
+    public User(){
+        super();
+        password = new String();
+    }
+    
+    
     /**
      * Constructor, creates a User object
      * @param pword         the desired password
@@ -27,7 +33,6 @@ public class User extends Participant
     public User(String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
         super(firstName, lastName, emailAddress);
-        UID = table.nextValidUID();
         setPassword(pword, pwordMatch);
             
     }
@@ -53,11 +58,7 @@ public class User extends Participant
         password = pword;
             
     }
-    
-    public User()
-    {
-        super(null, null, null);
-    }
+
     /**
      * 
      * @param pword         The new password

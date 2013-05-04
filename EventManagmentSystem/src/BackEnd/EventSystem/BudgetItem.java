@@ -18,9 +18,15 @@ public class BudgetItem {
     private String description;
     private Timestamp date;
     
+    public BudgetItem(){
+        description = new String();
+        date = new Timestamp(0);
+    }
+    
     public BudgetItem(double value, String description) {
         this.value = value;
         this.description = description;
+        date = new Timestamp(0);
     }
     
     public BudgetItem(int budgetItemID, double value, String description) {

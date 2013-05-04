@@ -25,6 +25,10 @@ public class PhoneNumber{
      * a string of digits.
      * @param digits The phone number
      */
+    
+    public PhoneNumber(){
+    }
+    
     public PhoneNumber(String digits){
         setDigits(digits);
         verifyNumeric(this.digits);
