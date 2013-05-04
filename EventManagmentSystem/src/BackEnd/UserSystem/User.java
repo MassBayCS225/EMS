@@ -13,7 +13,7 @@ import EMS_Database.impl.UserData_Table;
  */
 public class User extends Participant
 {
-    private int UID;
+    // private int UID;
     private String password;
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
@@ -36,13 +36,14 @@ public class User extends Participant
         setPassword(pword, pwordMatch);
             
     }
+    
+    /*
     public User(int uid, String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
     {
-        super(firstName, lastName, emailAddress);
-        UID = uid;
+        super(uid, firstName, lastName, emailAddress);
         setPassword(pword, pwordMatch);
             
-    }
+    }*/
     
     public User(int userID, User user){
         super(userID, (Participant)user);
@@ -51,13 +52,13 @@ public class User extends Participant
         eventCreationPrivilege = user.getEventCreationPrivilege();
     }
     
+    /*
     public User(int uid, String firstName, String lastName, String emailAddress, String pword)
     {
-        super(firstName, lastName, emailAddress);
-        UID = uid;
+        super(uid, firstName, lastName, emailAddress);
         password = pword;
             
-    }
+    }*/
 
     /**
      * 
@@ -152,6 +153,7 @@ public class User extends Participant
     {
         return eventCreationPrivilege;
     }
+    
     public boolean equals(User user)
     {
         String s = this.getEmailAddress();
@@ -160,14 +162,10 @@ public class User extends Participant
         else
             return false;
     }
-    public int getUID()
-    {
-        return UID;
-    }
+
     public String toString()
     {
-        String output = "User ID: " + UID + "\n" +
-                super.toString() +
+        String output = super.toString() +
                 "\nPassword: " + password +
                 "\nAdmin Privileges: " + adminPrivilege +
                 "\nEvent Creation Privileges: " + eventCreationPrivilege;
