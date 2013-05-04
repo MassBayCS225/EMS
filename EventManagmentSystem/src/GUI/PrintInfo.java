@@ -8,6 +8,7 @@ import BackEnd.ManagerSystem.MainManager;
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
 import EMS_Database.impl.SubEvent_Table;
+import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
 
 /**
@@ -32,6 +33,10 @@ public class PrintInfo {
         Committees_Table ct = new Committees_Table();
         //ct.removeAll("COMMITTEE");
         System.out.println(ct.queryEntireTable());
+        
+        System.out.println("TASKS");
+        Tasks_Table tt = new Tasks_Table();
+        System.out.println(tt.queryEntireTable());
         
         System.out.println("SUBEVENTS");
         SubEvent_Table set = new SubEvent_Table();

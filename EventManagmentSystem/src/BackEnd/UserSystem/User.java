@@ -155,6 +155,10 @@ public class User extends Participant
     
     public boolean equals(User user)
     {
+        if(user == null)
+        {
+            return false;
+        }
         String s = this.getEmailAddress();
         if(s.equals(user.getEmailAddress()))
             return true;
