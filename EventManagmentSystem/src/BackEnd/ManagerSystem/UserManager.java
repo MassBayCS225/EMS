@@ -88,7 +88,7 @@ public class UserManager {
     }
 
     public void removeUser(User user) throws DoesNotExistException {
-            usersTable.removeUser(selectedUser.getUID());
+            usersTable.removeUser(selectedUser.getUserId());
             userList.remove(selectedUser);
     }
 
@@ -103,7 +103,7 @@ public class UserManager {
     public void editFirstName(String firstName, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setFirstName(firstName);
-            usersTable.setFirstName(selectedUser.getUID(), firstName);
+            usersTable.setFirstName(selectedUser.getUserId(), firstName);
         }
         //Write to database
     }
@@ -111,7 +111,7 @@ public class UserManager {
     public void editLastName(String lastName, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setLastName(lastName);
-            usersTable.setLastName(selectedUser.getUID(), lastName);
+            usersTable.setLastName(selectedUser.getUserId(), lastName);
         }
         //Write to database
     }
@@ -119,7 +119,7 @@ public class UserManager {
     public void editEmailAddress(String emailAddress, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setEmailAddress(emailAddress);
-            usersTable.setEmail(selectedUser.getUID(), emailAddress);
+            usersTable.setEmail(selectedUser.getUserId(), emailAddress);
         }
         //Write to database
     }
@@ -127,14 +127,14 @@ public class UserManager {
     public void editAddress(Address address, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setAddress(address);
-            usersTable.setAddress(selectedUser.getUID(), address);
+            usersTable.setAddress(selectedUser.getUserId(), address);
         }
     }
 
     public void editPhoneNumber(PhoneNumber phoneNumber, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPhoneNumber(phoneNumber);
-            usersTable.setPhone(selectedUser.getUID(), phoneNumber.toString());
+            usersTable.setPhone(selectedUser.getUserId(), phoneNumber.toString());
         }
         //Write to database
     }
@@ -142,14 +142,14 @@ public class UserManager {
     public void editPassword(String password, String passwordMatch, User loggedInUser) throws IllegalCharacterException, PasswordMismatchError, PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPassword(password, passwordMatch);
-            usersTable.setPwd(selectedUser.getUID(), password);
+            usersTable.setPwd(selectedUser.getUserId(), password);
         }
     }
 
     public void editAdminPrivilege(boolean adminPrivilege, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
             selectedUser.setAdminPrivilege(adminPrivilege);
-            usersTable.setLevel(selectedUser.getUID(), adminPrivilege == true? 1 : 0);
+            usersTable.setLevel(selectedUser.getUserId(), adminPrivilege == true? 1 : 0);
         }
 
         //Write to database
@@ -158,7 +158,7 @@ public class UserManager {
     public void editEventCreationPrivilege(boolean eventCreationPrivilege) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
             selectedUser.setEventCreationPrivilege(eventCreationPrivilege);
-            usersTable.setLevel(selectedUser.getUID(), eventCreationPrivilege == true? 1 : 0);
+            usersTable.setLevel(selectedUser.getUserId(), eventCreationPrivilege == true? 1 : 0);
         }
 
         //Write to database
