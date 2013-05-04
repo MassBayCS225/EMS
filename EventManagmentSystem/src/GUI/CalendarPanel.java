@@ -101,10 +101,10 @@ public class CalendarPanel extends javax.swing.JPanel {
                      int tempMillis; // temporary value used in for loop that saves a time in milliseconds
                      for (int i = 0; i < manager.getEventManager().getSelectedEvent().getSubEventList().size(); i++){
                       tempMillis = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().DAY_OF_MONTH); // set the date for the current element
-                      System.out.println("Event Days: " + tempMillis);
+                      //System.out.println("Event Days: " + tempMillis);
                       // if you want to check end time, use getEndTime() instead of getStartTime
                       if (tempMillis == day){
-                          System.out.println("YES!");
+                          //System.out.println("YES!");
                             events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
                         tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH - 1)); // reset the day back to original
                       }

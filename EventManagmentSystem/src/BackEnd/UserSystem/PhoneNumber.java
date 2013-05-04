@@ -132,10 +132,10 @@ public class PhoneNumber{
      * throws an exception
      */
     private boolean verifyNumeric(char[] digits){
-        for(int i = 0; i < digits.length; i++)
-            if(!Character.isDigit(digits[i]))
-                throw new PhoneNumberNonNumericException(
-                    "Digits entered are not numeric");
+//        for(int i = 0; i < digits.length; i++)
+//            if(!Character.isDigit(digits[i]))
+//                throw new PhoneNumberNonNumericException(
+//                    "Digits entered are not numeric");
         return true;
     }
     
@@ -146,10 +146,10 @@ public class PhoneNumber{
      * throws an exception
      */
     private boolean verifyNumeric(String digits){
-        for(int i = 0; i < digits.length(); i++)
-            if(!Character.isDigit(digits.charAt(i)))
-                throw new PhoneNumberNonNumericException(
-                    "Digits entered are not numeric");
+//        for(int i = 0; i < digits.length(); i++)
+//            if(!Character.isDigit(digits.charAt(i)))
+//                throw new PhoneNumberNonNumericException(
+//                    "Digits entered are not numeric");
         return true;
     }
     
