@@ -19,7 +19,7 @@ public class InputCommittee {
     
     public InputCommittee(){
 	ArrayList<Integer> list = new ArrayList<Integer>();
-	this.title = "default title";
+	this.title = null;
         this.chairman = 0;
         this.budgetAcess = list;
         this.committeeMembers = list;

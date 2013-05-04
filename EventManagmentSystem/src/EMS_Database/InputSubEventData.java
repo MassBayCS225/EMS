@@ -22,14 +22,14 @@ public class InputSubEventData {
     
     public InputSubEventData(){
 	Timestamp time = new Timestamp(new Date().getTime()); //gets current time.
-	this.description = "default description";
-	this.details = "default details";	
+	this.description = null;
+	this.details = null;	
 	this.complete = 0;
-	this.street = "default street";
-	this.city = "default city";
-	this.state = "default state";
-	this.zipcode = "default zipcode";
-	this.country = "default country";
+	this.street = null;
+	this.city = null;
+	this.state = null;
+	this.zipcode = null;
+	this.country = null;
 	this.startTime = time;
 	this.endTime = time;
     }

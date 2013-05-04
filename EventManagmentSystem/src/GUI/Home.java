@@ -36,7 +36,8 @@ public class Home extends javax.swing.JFrame {
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println("CAN'T CREATE HOME\n" + e);
+            e.printStackTrace();
         }
             
         setVisible(true);

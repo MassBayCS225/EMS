@@ -16,6 +16,11 @@ public class Address {
      * Default Constructor.
      */
     public Address(){
+        street = new String();
+        city = new String();
+        state = new String();
+        zipCode = new String();
+        country = new String();
     }
     
     /**
@@ -109,14 +114,14 @@ public class Address {
      *   otherwise throws an exception
      */
     private boolean verifyZipCodeFormat(String zipCode){
-        if(zipCode.length() == ZIP_CODE_LENGTH){
-            for(int i = 0; i < zipCode.length(); i++){
-                if(Character.isDigit(zipCode.charAt(i)) == false)
-                    throw new ZipCodeInvalidFormatException(
-                      "Invalid zip code format");
-            }
-        } else throw new ZipCodeInvalidLengthException(
-                      "Invalid zip code length");
+//        if(zipCode.length() == ZIP_CODE_LENGTH){
+//            for(int i = 0; i < zipCode.length(); i++){
+//                if(Character.isDigit(zipCode.charAt(i)) == false)
+//                    throw new ZipCodeInvalidFormatException(
+//                      "Invalid zip code format");
+//            }
+//        } else throw new ZipCodeInvalidLengthException(
+//                      "Invalid zip code length");
         return true;
     }
     

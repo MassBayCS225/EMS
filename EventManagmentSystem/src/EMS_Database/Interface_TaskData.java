@@ -10,19 +10,13 @@ import java.util.ArrayList;
 public interface Interface_TaskData {
 
     // SPECIAL CASE FUNCTIONS
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
-
-    public String listToString(ArrayList<Integer> list);
-
-    public ArrayList<Integer> currentUIDList();
-
-    public int createTask(InputTask task) throws DuplicateInsertionException;
-
-    public int nextValidUID();
-
     public String queryEntireTable();
+    
+    public int createTask(InputTask task);
 
-    public boolean removeTask(int uid) throws DoesNotExistException;
+    public int nextValidUID();    
+
+    public void removeTask(int uid) throws DoesNotExistException;
 
     // GETTERS
     public String getDescription(int uid) throws DoesNotExistException;

@@ -19,82 +19,51 @@ import java.util.logging.Level;
  */
 public class Tasks_Table extends InitDB implements Interface_TaskData {
 
-    ///////////////////////SPECIAL FUNCTIONS///////////////////////////
-    /**
-     * A special function designed to format integer array lists into a string
-     * to be used for actual integer data return from the database.
-     *
-     * @param uidList A formatted string from the database representing the UID
-     * list.
-     * @return A nice array list of the UID's from the database.
-     * @throws NumberFormatException if you somehow try to put something that
-     * cannot be parsed into the conversion string.
-     */
+    private String tableName = "TASKS";
+
+    ///////////////////////SPECIAL FUNCTIONS///////////////////////////    
     @Override
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
-	//Split String
-	String[] uidStringList;
-	uidStringList = uidList.split(",");
-
-	ArrayList<Integer> uidIntList = new ArrayList<Integer>();
-
-	//parse each item into arraylist
-	for (String uid : uidStringList) {
-	    try {
-		uidIntList.add(Integer.parseInt(uid));
-	    } catch (NumberFormatException nfe) {
-		throw new NumberFormatException("Parse Error");
-	    }
-	}
-
-	return uidIntList;
-    }
-
-    /**
-     * Does the opposite of string to list and creates a nicely formatted string
-     * for insertion into the database.
-     *
-     * @param list An ArrayList of Integers representing the UID numbers to be
-     * stored.
-     * @return A nicely formated String for insertion into the database.
-     */
-    @Override
-    public String listToString(ArrayList<Integer> list) {
+    public String queryEntireTable() {
 	StringBuilder returnQuery = new StringBuilder();
-	for (int uid : list) {
-	    returnQuery.append(uid);
-	    returnQuery.append(",");
-	}
-	return returnQuery.toString();
-    }
-
-    /**
-     * A function to generate a list of the current UID's in a table
-     *
-     * @return ArrayList<Integer> of the current UID's in the table
-     */
-    @Override
-    public ArrayList<Integer> currentUIDList() {
-	int newUID = 0;
-	ArrayList<Integer> UIDList = new ArrayList<Integer>();
 	try {
-
 	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS");
 	    ResultSet rs = idQueryStmt.executeQuery();
 
 	    while (rs.next()) {
-		newUID = rs.getInt("UID");
-		UIDList.add(newUID);
+		returnQuery.append(rs.getString("UID"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("DESCRIPTION"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("DETAILS"));
+		returnQuery.append(",");		
+		returnQuery.append(rs.getString("STREET"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("CITY"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("STATE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("ZIPCODE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("COUNTRY"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getTimestamp("STARTDATE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getTimestamp("ENDDATE"));
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("COMPLETE"));
+		returnQuery.append(",");
+		returnQuery.append(stringToList(rs.getString("MANAGER")));		
+		returnQuery.append("\n");
 	    }
-	    return UIDList;
 
 	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
+	    sqle.printStackTrace();
 	    System.exit(1);
 	}
-	return UIDList; // should not be zero
-    }
 
+	return returnQuery.toString();
+    }    
+    
     /**
      * Inserts a new task into the Task table based on the parameters specified
      * by InputTask.
@@ -104,7 +73,7 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
      * @throws DuplicateInsertionException when pigs fly. no really.
      */
     @Override
-    public int createTask(InputTask task) throws DuplicateInsertionException {
+    public int createTask(InputTask task) {
 	int newUID = nextValidUID();
 
 	try {
@@ -126,12 +95,6 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 	    //Execute Statement
 	    AddAddressStmt.executeUpdate();
 
-	    //check for duplicates
-	    for (int uid : currentUIDList()) {
-		if (newUID == uid) {
-		    throw new DuplicateInsertionException("TasksTable");
-		}
-	    }
 
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage()); //seriously bad...
@@ -167,53 +130,6 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
     }
 
     /**
-     * Debug function used to return the entire table as a string.
-     *
-     * @return the entire table.
-     */
-    @Override
-    public String queryEntireTable() {
-	StringBuilder returnQuery = new StringBuilder();
-	try {
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS");
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    while (rs.next()) {
-		returnQuery.append(rs.getInt("UID"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("DESCRIPTION"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("DETAILS"));
-		returnQuery.append(",");		
-		returnQuery.append(rs.getString("STREET"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("CITY"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("STATE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("ZIPCODE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("COUNTRY"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getTimestamp("STARTDATE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getTimestamp("ENDDATE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getInt("COMPLETE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("MANAGER"));
-		returnQuery.append("\n");
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-
-	return returnQuery.toString();
-    }
-
-    /**
      * This function removes a committee specified by the UID.
      *
      * @param uid the UID of the committee to be removed.
@@ -221,617 +137,142 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
      * @throws DoesNotExistException if the uid does not exist in the table.
      */
     @Override
-    public boolean removeTask(int uid) throws DoesNotExistException {
+    public void removeTask(int uid) throws DoesNotExistException {
+	String table = "TASKS";
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	//what to do if that uid does not exist
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	
 	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM TASK WHERE UID=?");
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
 	    idQueryStmt.setInt(1, uid);
 	    idQueryStmt.executeUpdate();
 
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage());
-	    throw new DoesNotExistException("User does not exist.");
-	}
-	return true;
+	    System.err.println("Deleting stuff from "+table+" is dangerous...");
+	}	
     }
 
     ///////////////////////////GETTERS/////////////////////////////
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("DESCRIPTION"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("DESCRIPTION", tableName, uid);
     }
 
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("DETAILS"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("DETAILS", tableName, uid);
     }
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("STREET"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("STREET", tableName, uid);
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("CITY"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("CITY", tableName, uid);
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("STATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("STATE", tableName, uid);
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("ZIPCODE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("ZIPCODE", tableName, uid);
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-	String returnQuery = "";
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("COUNTRY"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if ("".equals(returnQuery)) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBString("COUNTRY", tableName, uid);
     }
 
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-	Timestamp returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getTimestamp("STARTDATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if (returnQuery == null) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBTimestamp("STARTDATE",tableName,uid);
     }
 
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-	Timestamp returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getTimestamp("ENDDATE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if (returnQuery == null) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBTimestamp("ENDDATE",tableName,uid);
     }
 
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-	int returnQuery = 3;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getInt("COMPLETE"); //Should not have two uids with the same name                            
-	    }
-
-	    //checking for existance of that uid
-	    if (returnQuery == 3) {
-		throw new DoesNotExistException("UID does not exist in TASKS table.");
-	    } else {
-		return returnQuery;
-	    }
-
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.exit(1);
-	}
-	throw new DoesNotExistException("UID does not exist in TASKS table.");
+	return getDBInt("COMPLETE",tableName,uid);
     }
 
     @Override
     public ArrayList<Integer> getAuthority(int uid) throws DoesNotExistException {
-	String returnQuery = null;
-	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM TASKS WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    ResultSet rs = idQueryStmt.executeQuery();
-
-	    //Gets the row with uid specified
-	    while (rs.next()) {
-		returnQuery = rs.getString("MANAGER"); //Should not have two uids with the same name                            
-	    }
-
-	    if (returnQuery == null) {
-		debugLog.warning("UID=" + uid + " does not exist in TASKS table.");
-		throw new DoesNotExistException("Event organizer");
-	    } else {
-		if (returnQuery.equals("")) {
-		    return new ArrayList<Integer>(); //return empty arraylist if none exists
-		} else {
-		    return stringToList(returnQuery); //return an arraylist		    
-		}
-	    }
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	debugLog.warning("UID=" + uid + " does not exist in TASKS table.");
-	return stringToList(returnQuery); //should never get here.
+	return getDBArrayList("MANAGER",tableName,uid);
     }
 
     /////////////////////////////SETTERS//////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET DESCRIPTION=? WHERE UID=?");
-		idQueryStmt.setString(1, description);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBString("DESCRIPTION",tableName,uid,description);
     }
 
     @Override
     public void setDetails(int uid, String details) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET DETAILS=? WHERE UID=?");
-		idQueryStmt.setString(1, details);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBString("DETAILS",tableName,uid,details);
     }
 
-    @Override
+     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET STREET=? WHERE UID=?");
-		idQueryStmt.setString(1, street);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBString("STREET",tableName,uid,street);
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET CITY=? WHERE UID=?");
-		idQueryStmt.setString(1, city);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBString("CITY",tableName,uid,city);
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET STATE=? WHERE UID=?");
-		idQueryStmt.setString(1, state);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBString("STATE",tableName,uid,state);
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET ZIPCODE=? WHERE UID=?");
-		idQueryStmt.setString(1, zipcode);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBString("ZIPCODE",tableName,uid,zipcode);
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET COUNTRY=? WHERE UID=?");
-		idQueryStmt.setString(1, country);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
-    }
-
+	setDBString("COUNTRY",tableName,uid,country);
+    }    
+    
     @Override
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET STARTDATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, time);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBTimestamp("STARTDATE",tableName,uid,time);
     }
 
     @Override
     public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET ENDDATE=? WHERE UID=?");
-		idQueryStmt.setTimestamp(1, time);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBTimestamp("ENDDATE",tableName,uid,time);
     }
 
     @Override
     public void setComplete(int uid, int complete) throws DoesNotExistException {
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET COMPLETE=? WHERE UID=?");
-		idQueryStmt.setInt(1, complete);
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}
+	setDBInt("COMPLETE",tableName,uid,complete);
     }
 
     @Override
-    public void setAuthority(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {	
-	try {
-	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
-		if (validID == uid) {
-		    exists = true;
-		    break;
-		}
-	    }
-	    if (exists) {
-		PreparedStatement idQueryStmt = dbConnection.prepareStatement("UPDATE TASKS SET MANAGER=? WHERE UID=?");
-		idQueryStmt.setString(1, listToString(committeeList));
-		idQueryStmt.setInt(2, uid);
-		idQueryStmt.executeUpdate();
-	    } else {
-		debugLog.log(Level.WARNING, "UID={0} does not exist in TASKS table.", uid);
-		throw new DoesNotExistException("User does not exist in TASKS table.");
-	    }
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    debugLog.severe("Major SQL-Error in TASKS table.");
-	    throw new DoesNotExistException("User does not exist in TASKS table.");
-	}		
-    }	
-    
+    public void setAuthority(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {
+	setDBArrayList("MANAGER",tableName,uid,committeeList);
+    }
 }

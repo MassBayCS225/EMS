@@ -10,19 +10,13 @@ import java.util.ArrayList;
 public interface Interface_EventData {
 
     // SPECIAL CASE FUNCTIONS
-    public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException;
-
-    public String listToString(ArrayList<Integer> list);
-
-    public ArrayList<Integer> currentUIDList();
-
     public int createEvent(InputEventData event) throws DuplicateInsertionException;
 
     public int nextValidUID();
 
     public String queryEntireTable();
     
-    public boolean removeEvent(int uid) throws DoesNotExistException;
+    public void removeEvent(int uid) throws DoesNotExistException;
 
     // GETTERS
     public String getDescription(int uid) throws DoesNotExistException;

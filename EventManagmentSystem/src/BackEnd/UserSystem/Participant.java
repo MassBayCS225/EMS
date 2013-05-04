@@ -20,7 +20,13 @@ public class Participant{
  * Default Constructor.
  * @author Anderson Santana
  */
-  public Participant(){}
+  public Participant(){
+      firstName = new String();
+      lastName = new String();
+      emailAddress = new String();
+      phoneNumber = new PhoneNumber();
+      address = new Address();
+  }
 
  /**
   *  This constructor initializes the Participant object with a first 

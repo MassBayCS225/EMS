@@ -15,7 +15,7 @@ public class InputExpense {
 
     public InputExpense(){
 	Timestamp time = new Timestamp(new Date().getTime());
-	this.description = "default description";
+	this.description = null;
 	this.time = time;
 	this.value = 0.0;
     }

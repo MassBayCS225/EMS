@@ -30,9 +30,9 @@ public class InputEventData {
     public InputEventData(){
 	ArrayList<Integer> list = new ArrayList<Integer>(); //list with no values	
 	Timestamp time = new Timestamp(new Date().getTime()); //gets current time.
-	this.description = "default description";
-	this.details = "default details";
-	this.location = "default location";
+	this.description = null;
+	this.details = null;
+	this.location = null;
 	this.startDate = time;
 	this.endDate = time;
 	this.complete = 0;
@@ -40,11 +40,11 @@ public class InputEventData {
 	this.organizerList = list;
 	this.subEventList = list;
 	this.participantList = list;
-	this.street = "default street";
-	this.city = "default city";
-	this.state = "default state";
-	this.zipcode = "default zipcode";
-	this.country = "default country";
+	this.street = null;
+	this.city = null;
+	this.state = null;
+	this.zipcode = null;
+	this.country = null;
     }
 
     public InputEventData(String description, String details, String location, Timestamp startDate, Timestamp endDate, int complete, ArrayList<Integer> committee, ArrayList<Integer> organizerList, ArrayList<Integer> subEventList, ArrayList<Integer> participantList, String street, String city, String state, String zipcode, String country) {

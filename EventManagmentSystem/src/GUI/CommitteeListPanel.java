@@ -33,8 +33,6 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             model.addElement(c.getTitle());
         }
         committeeList.setModel(model);
-        committeeList.setSelectedIndex(0);
-        committeePanel1.updateInfo();
     }
     
     /**
@@ -224,7 +222,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         cd.setVisible(true);
         if(cd.getConfirm()){
             try{
-            manager.getEventManager().addCommittee(cd.createCommittee(),manager.getUserManager().getSelectedUser());
+            manager.getEventManager().createCommittee(cd.createCommittee(),manager.getUserManager().getSelectedUser());
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -236,7 +234,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     private void removeCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCommitteeButtonActionPerformed
         // TODO add your handling code here:
         Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
-        System.out.println(c);
+        //System.out.println(c);
         try
         {
             manager.getEventManager().removeCommittee(c, manager.getUserManager().getSelectedUser());

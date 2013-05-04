@@ -10,6 +10,10 @@ import java.util.ArrayList;
 public class SubEvent extends ScheduleItem implements Reportable {
     private int SUB_EVENT_ID;
     
+    public SubEvent(){
+        super();
+    }
+    
     public SubEvent(int sub_event_id, String description) {
         super(description);
         SUB_EVENT_ID = sub_event_id;

@@ -55,8 +55,30 @@ public class DB_Testing {
 	InputExpense ex = new InputExpense();
 
 
-
-	//ALL TABLE QUERY
+	//ADD ITEMS TO ALL TABLES
+//	for (int x = 0; x < 30; x++) {
+//	    et.createEvent(ied);
+//	    set.createSubEvent(ised);
+//	    tt.createTask(it);
+//	    ct.createCommittee(ic);
+//	    udt.createUser(iu);
+//	    inTable.insertBudgetItem(in);
+//	    exTable.insertBudgetItem(ex);
+//	}
+//
+//	try {
+//	    et.removeEvent(2);
+//	    set.removeSubEvent(2);
+//	    tt.removeTask(2);
+//	    ct.removeCommittee(2);
+//	    udt.removeUser(2);
+//	    inTable.removeBudgetItem(2);
+//	    exTable.removeBudgetItem(2);
+//	} catch (DoesNotExistException dnee) {
+//	    System.out.println(dnee.getMessage());
+//	}
+//
+//	//ALL TABLE QUERY
 //	System.out.println("EVENTS TABLE");
 //	System.out.print(et.queryEntireTable());
 //	System.out.println("SUBEVENTS TABLE");
@@ -67,6 +89,18 @@ public class DB_Testing {
 //	System.out.print(ct.queryEntireTable());
 //	System.out.println("USERS TABLE");
 //	System.out.print(udt.queryEntireTable());
+//	System.out.println("INCOME TABLE");
+//	System.out.print(inTable.queryEntireTable());
+//	System.out.println("EXPENSE TABLE");
+//	System.out.print(exTable.queryEntireTable());
+//
+//	et.removeAll("EVENTS");
+//	set.removeAll("SUBEVENTS");
+//	tt.removeAll("TASKS");
+//	ct.removeAll("COMMITTEE");
+//	udt.removeAll("USERS");
+//	inTable.removeAll("INCOME");
+//	exTable.removeAll("EXPENSE");
 
 
 	//CREATE BUDGET INSERTION
@@ -147,18 +181,18 @@ public class DB_Testing {
 //	}
 
 
-	//CREATE EVENT INSERTION
-//        try {
-//            uid = et.createEvent(ied);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
-	// System.out.println(et.queryEntireTable());        
+//	CREATE EVENT INSERTION
+
+//	System.out.println(et.queryEntireTable());
 	// System.out.println(); //blank line.
-//        try{
-//            uid = 3;
-//	    list.add(46);
+	//try {
+//	    for (int x = 0; x < 20; x++) {
+//		uid = et.createEvent(ied);
+//	    }
+//	    
+
+
+
 //            System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
 //            System.out.println(et.getStartDate(uid));
@@ -174,11 +208,11 @@ public class DB_Testing {
 //            System.out.println(et.getParticipantList(uid));  
 //            System.out.println(et.getCommittee(uid));   	    
 //	   
-//	    et.setDescription(uid, "new description");	   
+//	    et.setDescription(uid, "al;skdjf;alskdf");	   
 //	    et.setDetails(uid, "new details");	   
 //	    et.setStartDate(uid, startDate);	   
 //	    et.setEndDate(uid, endDate);	   
-//            et.setComplete(uid, 1);	   
+//          et.setComplete(uid, 1);	   
 //            et.setStreet(uid, "Mulholland Drive");	   
 //            et.setCity(uid, "Tokyo");	   
 //            et.setState(uid, "XYZ");	   
@@ -191,37 +225,31 @@ public class DB_Testing {
 //	    
 //	    System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
-//            System.out.println(et.getStartDate(uid));
+//	    System.out.println(et.getStartDate(uid));
 //            System.out.println(et.getEndDate(uid));
-//            System.out.println(et.getComplete(uid));
+//	    System.out.println(et.getComplete(uid));
 //            System.out.println(et.getStreet(uid));
 //            System.out.println(et.getCity(uid));
 //            System.out.println(et.getState(uid));
 //            System.out.println(et.getZipcode(uid));
 //            System.out.println(et.getCountry(uid));
-//            System.out.println(et.getOrganizerList(uid));  
+//	    System.out.println(et.getOrganizerList(uid));  
 //            System.out.println(et.getSubEventList(uid));  
 //            System.out.println(et.getParticipantList(uid));  
 //            System.out.println(et.getCommittee(uid));   
 //	    
 //	                
-//        }catch(DoesNotExistException dnee){	    
-//            System.err.println(dnee.getMessage());
-//        }
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
 //	System.out.println("\n\n");
 
 
 	//CREATE SUBEVENT INSERTION
-//        try {
-//            uid = set.createSubEvent(ised);
-//            System.out.println("The created uid = " + uid);
-//        } catch (DuplicateInsertionException die) {
-//            System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//        }
-	//System.out.println(set.queryEntireTable());
-
+//	System.out.println(set.queryEntireTable());
+//
 //        try{
-//            uid = 2;
+//            uid = set.createSubEvent(ised);
 //            System.out.println(set.getDescription(uid));
 //	    System.out.println(set.getDetails(uid));
 //            System.out.println(set.getComplete(uid));
@@ -270,9 +298,8 @@ public class DB_Testing {
 //	    System.out.println(ct.totalIncome(uid));
 //	    System.out.println(ct.remainingMonies(uid));
 //	    System.out.println(ct.getExpense(uid));
-	    
-	    
-//	    uid = 1;
+
+
 //	    System.out.println(ct.getTitle(uid));
 //	    System.out.println(ct.getChairman(uid));
 //	    System.out.println(ct.getBudgetAccessList(uid));
@@ -299,25 +326,18 @@ public class DB_Testing {
 //	    System.out.println(ct.getIncome(uid));
 //	    System.out.println(ct.getExpense(uid));
 //	    System.out.println(ct.getBudget(uid));
-
+//
 //	} catch (DoesNotExistException dnee) {
 //	    System.err.println(dnee.getMessage());
 //	}
 
-	
-	
 
-	//CREATE TASKS INSERTION
-//	try {
-//	    uid = tt.createTask(it);
-//	    System.out.println("The created uid = " + uid);
-//	} catch (DuplicateInsertionException die) {
-//	    System.err.println("Duplicate Insertion? that shouldn't be happening :/");
-//	}
 
+
+	//CREATE TASKS INSERTION	
 //        System.out.println(tt.queryEntireTable());
 //	try {
-//	    uid = 1;
+//	    uid = tt.createTask(it);
 //	    System.out.println(tt.getDescription(uid));
 //	    System.out.println(tt.getDetails(uid));
 //	    System.out.println(tt.getStreet(uid));
@@ -375,7 +395,8 @@ public class DB_Testing {
 //	    }
 //	    exTable.setValue(3, 654);
 //	    exTable.setValue(4, 897.2);
-
+//
+//	    uid = 1;
 //	    System.out.println(exTable.getDescription(uid));
 //	    System.out.println(exTable.getDate(uid));
 //	    System.out.println(exTable.getValue(uid));
@@ -390,7 +411,7 @@ public class DB_Testing {
 //	    
 //	    System.out.println(exTable.total());
 //	    System.out.println(exTable.queryEntireTable());
-
+//
 //	    for (int x = 0; x < 10; x++) {
 //		uid = inTable.insertBudgetItem(in);
 //	    }
