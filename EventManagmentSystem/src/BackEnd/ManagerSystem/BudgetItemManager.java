@@ -1,12 +1,13 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.*;
-import BackEnd.UserSystem.*;
-
-import java.sql.Timestamp;
-
-import EMS_Database.*;
-import EMS_Database.impl.*;
+import BackEnd.EventSystem.BudgetItem;
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Income;
+import BackEnd.UserSystem.User;
+import EMS_Database.DoesNotExistException;
+import EMS_Database.impl.Expense_Table;
+import EMS_Database.impl.Income_Table;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -45,9 +46,9 @@ public class BudgetItemManager {
 
     public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setValue(value);
-            // write to database
             if (selectedBudgetItem instanceof Income) {
                 incomeTable.setValue(selectedBudgetItem.getBUDGET_ITEM_ID(), value);
             } else {
@@ -58,10 +59,9 @@ public class BudgetItemManager {
 
     public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setDescription(description);
-            // write to database
-
             if (selectedBudgetItem instanceof Income) {
                 incomeTable.setDescription(selectedBudgetItem.getBUDGET_ITEM_ID(), description);
             } else {
@@ -72,10 +72,9 @@ public class BudgetItemManager {
 
     public void editDate(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudgetItem.setDate(year, month, day, hour, minute);
-            // write to database
-
             if (selectedBudgetItem instanceof Income) {
                 incomeTable.setDate(selectedBudgetItem.getBUDGET_ITEM_ID(), selectedBudgetItem.getDate());
             } else {
