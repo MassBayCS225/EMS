@@ -43,8 +43,8 @@ public class TestGuiDriver
         se1.setTimeSchedule(ts1);
         SubEvent se2 = new SubEvent(2,"SE Test 2");
         TimeSchedule ts2 = new TimeSchedule();
-        ts1.setStartDateTime(2013,5,8,4,30);
-        ts1.setStartDateTime(2013,5,8,9,30);
+        ts2.setStartDateTime(2013,5,8,4,30);
+        ts2.setStartDateTime(2013,5,8,9,30);
         se2.setTimeSchedule(ts2);
         SubEvent se3 = new SubEvent(3,"SE Test 3");
         TimeSchedule ts3 = new TimeSchedule();
@@ -91,7 +91,8 @@ public class TestGuiDriver
         try
         {
             manager.getEventManager().createEvent(e,u);
-            manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+            //manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+            manager.getEventManager().setSelectedEvent(e);
             for(User tu : e.getOrganizerList())
             {
                 manager.getEventManager().addOrganizer(tu, u);
