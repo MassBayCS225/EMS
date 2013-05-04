@@ -23,9 +23,7 @@ public class Committee implements Reportable {
         budgetAccessList = new ArrayList<User>();
         chair = null;
         taskList = new ArrayList<Task>();
-        /** temporarily commented out
         budget = new Budget();
-        * */
     }
     
     public Committee(int committee_id, Committee committee){
