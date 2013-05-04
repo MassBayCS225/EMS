@@ -237,7 +237,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         //System.out.println(c);
         try
         {
-            manager.getEventManager().removeCommittee(c, manager.getUserManager().getSelectedUser());
+            manager.getEventManager().deleteCommittee(c, manager.getUserManager().getSelectedUser());
         }
         catch (Exception e)
         {

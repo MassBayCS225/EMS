@@ -46,9 +46,10 @@ public class SetUpData {
         
         //Create Event
         Event e = new Event(0,"SetupTest1");
-                    
+        e.setDescription("I'm an event.");
+        //e.setLocation(new Location());
         //Create admin user
-        User u = new User(1,"A","B","AB@AB.com","ab","ab");
+        User u = new User("A","B","AB@AB.com","ab","ab");
         Address addr = new Address("Street","City", "STATE","00000","COUNTRY");
         PhoneNumber num = new PhoneNumber("5555555555");
         u.setAddress(addr);
@@ -79,11 +80,11 @@ public class SetUpData {
         
         //Create users
         ArrayList<User> uList = new ArrayList<User>();
-        User u2 = new User(2,"B","C","BC@BC.com","bc","bc");
+        User u2 = new User("B","C","BC@BC.com","bc","bc");
         uList.add(u2);
-        User u3 = new User(3,"C","D","CD@CD.com","cd","cd");
+        User u3 = new User("C","D","CD@CD.com","cd","cd");
         uList.add(u3);
-        User u4 = new User(4,"D","E","DE@DE.com","de","de");
+        User u4 = new User("D","E","DE@DE.com","de","de");
         uList.add(u4);
         
         //add users
@@ -92,7 +93,6 @@ public class SetUpData {
             for(User tu : uList)
             {
                 manager.getUserManager().addUser(tu);
-                
             }
             for(int i = 0; i < manager.getUserManager().getUserList().size(); i++)
             {
@@ -187,4 +187,5 @@ public class SetUpData {
             ex4.printStackTrace();
         }
     }
+    
 }

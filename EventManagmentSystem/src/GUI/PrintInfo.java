@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BackEnd.ManagerSystem.MainManager;
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
 import EMS_Database.impl.SubEvent_Table;
@@ -36,6 +37,15 @@ public class PrintInfo {
         SubEvent_Table set = new SubEvent_Table();
         //set.removeAll("SUBEVENTS");
         System.out.println(set.queryEntireTable());
+        
+        System.out.println("ORGANIZERS");
+        MainManager manager = MainManager.getInstance();
+        manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+        System.out.println(manager.getEventManager().getSelectedEvent().getOrganizerList());
+        
+        
+        System.out.println("PARTICIPANTS");
+        System.out.println(manager.getEventManager().getSelectedEvent().getParticipantList());
     }
     
 }

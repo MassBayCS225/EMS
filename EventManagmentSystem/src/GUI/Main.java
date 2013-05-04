@@ -26,6 +26,8 @@ public class Main extends javax.swing.JPanel {
         CalendarPanel cp = new CalendarPanel();
         MainPanel.setLayout(new BorderLayout());
         MainPanel.add(cp, BorderLayout.NORTH);
+        CommitteeListPanel clp = new CommitteeListPanel();
+        SwitchingPanelHolder.add(clp, "committees");
         manager = MainManager.getInstance();
         setSize(850,650);
     }
