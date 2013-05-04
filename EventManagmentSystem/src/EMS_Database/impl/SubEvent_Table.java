@@ -1,7 +1,6 @@
 package EMS_Database.impl;
 
 import EMS_Database.DoesNotExistException;
-import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
 import static EMS_Database.InitDB.debugLog;
 import EMS_Database.InputSubEventData;
@@ -10,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 /**
@@ -27,8 +25,7 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
      * InputSubEventData
      *
      * @param subevent the collected data to be inserted
-     * @return an int of the UID upon successful creation.
-     * @throws DuplicateInsertionException if something goes horribly wrong.
+     * @return an int of the UID upon successful creation.     
      */
     @Override
     public int createSubEvent(InputSubEventData subevent) {

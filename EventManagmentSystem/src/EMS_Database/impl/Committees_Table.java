@@ -1,7 +1,6 @@
 package EMS_Database.impl;
 
 import EMS_Database.DoesNotExistException;
-import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
 import static EMS_Database.InitDB.debugLog;
 import EMS_Database.InputCommittee;
@@ -25,8 +24,7 @@ public class Committees_Table extends InitDB implements Interface_CommitteeData 
      * Adds a new Committee into the committee table based on the the data from
      * InputCommittee object.
      * @param committee the parameters of this object specify what is to be inserted
-     * @return the UID of the inserted data.
-     * @throws DuplicateInsertionException if all hell breaks loose.
+     * @return the UID of the inserted data.     
      */
     @Override
     public int createCommittee(InputCommittee committee) {

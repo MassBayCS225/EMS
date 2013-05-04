@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface Interface_EventData {
 
     // SPECIAL CASE FUNCTIONS
-    public int createEvent(InputEventData event) throws DuplicateInsertionException;
+    public int createEvent(InputEventData event);
 
     public int nextValidUID();
 

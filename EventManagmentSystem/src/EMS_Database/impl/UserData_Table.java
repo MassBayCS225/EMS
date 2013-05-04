@@ -5,7 +5,6 @@ import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
-import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
 import static EMS_Database.InitDB.debugLog;
 import EMS_Database.Interface_UserData;

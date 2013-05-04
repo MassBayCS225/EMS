@@ -1,12 +1,10 @@
 package EMS_Database.impl;
 
 import EMS_Database.DoesNotExistException;
-import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
 import static EMS_Database.InitDB.debugLog;
 import EMS_Database.Interface_EventData;
 import EMS_Database.InputEventData;
-import EMS_Database.Interface_FunctionWrapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,8 +27,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
      * valid input object
      *
      * @param event of type InputEvent for row insertion.
-     * @return the UID of the created event.
-     * @throws DuplicateInsertionException
+     * @return the UID of the created event.     
      */
     @Override
     public int createEvent(InputEventData event) {
