@@ -30,7 +30,7 @@ public class TimeSchedule {
             throw new IllegalArgumentException("Invalid year entered.");
         
         if (month >= 0 && month < 12)
-            startDateTime.set(Calendar.MONTH, month);
+            startDateTime.set(Calendar.MONTH, month - 1);
         else
             throw new IllegalArgumentException("Invalid numerical month entered.");
         
@@ -39,7 +39,7 @@ public class TimeSchedule {
         else
             throw new IllegalArgumentException("Invalid numerical day entered.");
         
-        if (hour >= 0 && hour <= 24)
+        if (hour >= 0 && hour < 24)
             startDateTime.set(Calendar.HOUR_OF_DAY, hour);
         else
             throw new IllegalArgumentException("Invalid hour entered.");
@@ -69,7 +69,7 @@ public class TimeSchedule {
             throw new IllegalArgumentException("Invalid year entered.");
         
         if (month >= 0 && month < 12)
-            endDateTime.set(Calendar.MONTH, month);
+            endDateTime.set(Calendar.MONTH, month - 1);
         else
             throw new IllegalArgumentException("Invalid numerical month entered.");
         
@@ -78,7 +78,7 @@ public class TimeSchedule {
         else
             throw new IllegalArgumentException("Invalid numerical day entered.");
         
-        if (hour >= 0 && hour <= 24)
+        if (hour >= 0 && hour < 24)
             endDateTime.set(Calendar.HOUR_OF_DAY, hour);
         else
             throw new IllegalArgumentException("Invalid hour entered.");
