@@ -272,7 +272,15 @@ public class CommitteePanel extends javax.swing.JPanel {
         ntd.setVisible(true);
         if(ntd.getConfirm())
         {
-            manager.getCommitteeManager().getSelectedCommittee().getTaskList().add(ntd.createTask());
+            try
+            {
+                manager.getCommitteeManager().createTask(ntd.createTask(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error in adding task to committee.");
+                e.printStackTrace();
+            }
         }
         updateInfo();
     }//GEN-LAST:event_addTaskButtonActionPerformed

@@ -7,6 +7,7 @@ package GUI;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.SubEvent;
+import BackEnd.EventSystem.Task;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.Address;
@@ -14,7 +15,6 @@ import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
-import EMS_Database.InitDB;
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
 import EMS_Database.impl.SubEvent_Table;
@@ -49,7 +49,7 @@ public class SetUpData {
         e.setDescription("I'm an event.");
         //e.setLocation(new Location());
         //Create admin user
-        User u = new User("A","B","AB@AB.com","ab","ab");
+        User u = new User("Alpha","Bravo","AB@AB.com","ab","ab");
         Address addr = new Address("Street","City", "STATE","00000","COUNTRY");
         PhoneNumber num = new PhoneNumber("5555555555");
         u.setAddress(addr);
@@ -64,11 +64,9 @@ public class SetUpData {
         try
         {
             manager.getEventManager().createEvent(e,u);
-            manager.getUserManager().addUser(u);
-            u = (User)manager.getUserManager().getUserList().get(0);
-            manager.getUserManager().setLoggedInUser(u);
-            manager.getUserManager().setSelectedUser(u);
-            manager.getEventManager().addOrganizer(u, u);
+            manager.getUserManager().setSelectedUser(manager.getUserManager().createUser(u));
+            manager.getLogInManager().setLoggedInUser("AB@AB.com", "ab");
+            manager.getEventManager().addOrganizer(manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser());
             System.out.println("Event Created.");
             System.out.println("Admin Created: " + u);
         }
@@ -80,23 +78,26 @@ public class SetUpData {
         
         //Create users
         ArrayList<User> uList = new ArrayList<User>();
-        User u2 = new User("B","C","BC@BC.com","bc","bc");
+        User u2 = new User("Bravo","Charlie","BC@BC.com","bc","bc");
         uList.add(u2);
-        User u3 = new User("C","D","CD@CD.com","cd","cd");
+        User u3 = new User("Charlie","Delta","CD@CD.com","cd","cd");
         uList.add(u3);
-        User u4 = new User("D","E","DE@DE.com","de","de");
+        User u4 = new User("Delta","Echo","DE@DE.com","de","de");
         uList.add(u4);
+        uList.add(new User("Echo","Foxtrot","EF@EF.com","ef","ef"));
+        uList.add(new User("Foxtrot","Golf","FG@FG.com","fg","fg"));
+        uList.add(new User("Golf","Hotel","GH@GH.com","gh","gh"));
+        uList.add(new User("Hotel","India","HI@HI.com","hi","hi"));
+        uList.add(new User("India","Juliett","IJ@IJ.com","ij","ij"));
+        uList.add(new User("Juliett","Kilo","JK@JK.com","jk","jk"));
         
         //add users
         try
         {
             for(User tu : uList)
             {
-                manager.getUserManager().addUser(tu);
-            }
-            for(int i = 0; i < manager.getUserManager().getUserList().size(); i++)
-            {
-                manager.getEventManager().addOrganizer((User)manager.getUserManager().getUserList().get(i),u);
+                manager.getUserManager().setSelectedUser((manager.getUserManager().createUser(tu)));
+                manager.getEventManager().addOrganizer(manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser());
             }
             System.out.println("Users created.");
         }
@@ -110,22 +111,28 @@ public class SetUpData {
         //create committees
         ArrayList<Committee> list = new ArrayList<Committee>();
         Committee c = new Committee();
-        c.setTitle("Test");
+        c.setTitle("Committee #1");
         list.add(c);
         Committee c2 = new Committee();
-        c2.setTitle("Test2");
+        c2.setTitle("Committee #2");
         list.add(c2);
+        Committee c3 = new Committee();
+        c3.setTitle("Committee #3");
+        list.add(c3);
         //add committees
         try
         {
             for(Committee tc : list)
                 {
-                    manager.getEventManager().createCommittee(tc, u);
-                    manager.getCommitteeManager().setSelectedCommittee(tc);
-//                    for(int i = 1; i < 4; i++)
-//                    {
-//                        manager.getCommitteeManager().addTask(new Task(), u, e);
-//                    }
+                    manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(tc, manager.getLogInManager().getLoggedInUser()));
+                    manager.getCommitteeManager().addMember(manager.getUserManager().getSelectedUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    manager.getCommitteeManager().editChair(manager.getUserManager().getSelectedUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    for(int i = 1; i < 4; i++)
+                    {
+                        Task t = new Task();
+                        manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent()));
+                        manager.getTaskManager().editDescription("Task " + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                    }
                 }
             System.out.println("Committees created.");
         }
@@ -177,7 +184,7 @@ public class SetUpData {
         {
             for(SubEvent ts : sList)
             {
-                manager.getEventManager().createSubEvent(ts, u);
+                manager.getSubEventManager().setSelectedSubEvent(manager.getEventManager().createSubEvent(ts, u));
             }
             System.out.println("SubEvents created.");
         }
