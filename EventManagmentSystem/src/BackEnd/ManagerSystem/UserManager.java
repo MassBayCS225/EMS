@@ -83,8 +83,10 @@ public class UserManager {
         loggedInUser = u;
     }
 
-    public void addUser(User user){
-            userList.add(new User(usersTable.createUser(new InputUser(user)), user));
+    public User createUser(User user) {
+        User newUser = new User(usersTable.createUser(new InputUser(user)), user);
+        userList.add(newUser);
+        return newUser;
     }
 
     public void removeUser(User user) throws DoesNotExistException {
