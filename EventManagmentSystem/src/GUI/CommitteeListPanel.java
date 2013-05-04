@@ -212,7 +212,8 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(committeeList.getSelectedIndex() >= 0){
             Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
-            committeePanel1.setCommittee(c);
+            manager.getCommitteeManager().setSelectedCommittee(c);
+            committeePanel1.updateInfo();
         }
     }//GEN-LAST:event_committeeListValueChanged
 
@@ -222,7 +223,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         cd.setVisible(true);
         if(cd.getConfirm()){
             try{
-            manager.getEventManager().createCommittee(cd.createCommittee(),manager.getUserManager().getSelectedUser());
+                manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(cd.createCommittee(),manager.getLogInManager().getLoggedInUser()));
             }
             catch (Exception e) {
                 e.printStackTrace();

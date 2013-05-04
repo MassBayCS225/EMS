@@ -125,8 +125,15 @@ public class TestGuiDriver
         MainManager manager = MainManager.getInstance();
         manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
         User u = (User)manager.getUserManager().getUserList().get(0);
-        manager.getUserManager().setLoggedInUser(u);
-        manager.getUserManager().setSelectedUser(u);
+        try
+        {
+            manager.getLogInManager().setLoggedInUser("AB@AB.com", "ab");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Can't log in");
+        }
+        manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
         Home home = new Home();
         home.setVisible(true);
     }
