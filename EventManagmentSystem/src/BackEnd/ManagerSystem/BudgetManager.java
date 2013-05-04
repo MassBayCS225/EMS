@@ -1,11 +1,18 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.*;
-import BackEnd.UserSystem.*;
-
-import EMS_Database.*;
-import EMS_Database.impl.*;
-import java.sql.Timestamp;
+import BackEnd.EventSystem.Budget;
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Expense;
+import BackEnd.EventSystem.Income;
+import BackEnd.UserSystem.User;
+import EMS_Database.DoesNotExistException;
+import EMS_Database.DuplicateInsertionException;
+import EMS_Database.InputExpense;
+import EMS_Database.InputIncome;
+import EMS_Database.impl.Committees_Table;
+import EMS_Database.impl.Expense_Table;
+import EMS_Database.impl.Income_Table;
 import java.util.ArrayList;
 
 /**
@@ -60,21 +67,20 @@ public class BudgetManager {
      * @param selectedCommittee
      */
     
-    public void addIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public Income createIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException, DuplicateInsertionException {
         
+        Income newIncome = null;
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {          
-            Income newIncome = new Income(incomeTable.insertBudgetItem(new InputIncome(income.getDescription(), income.getDate(), income.getValue()
-                    )), income);
+            newIncome = new Income(incomeTable.insertBudgetItem(new InputIncome(
+                    income.getDescription(), income.getDate(), income.getValue()))
+                    , income);
             selectedBudget.getIncomeList().add(newIncome);
-            
-            Integer incomeID = new Integer(newIncome.getBUDGET_ITEM_ID());
             ArrayList<Integer> newIncomeIDList = committeesTable.getIncome(selectedCommittee.getCOMMITTEE_ID());
-            newIncomeIDList.add(incomeID);
+            newIncomeIDList.add(newIncome.getBUDGET_ITEM_ID());
             committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newIncomeIDList);
-            // remove all related database entries
-            
         }
+        return newIncome;
     }
 
     /**
@@ -86,20 +92,15 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void removeIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void deleteIncome(Income income, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-
-            // write to database
-
-            Integer incomeID = new Integer(income.getBUDGET_ITEM_ID());
-            ArrayList<Integer> newIncomeIDList = committeesTable.getIncome(selectedCommittee.getCOMMITTEE_ID());
-            newIncomeIDList.remove(incomeID);
-            committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newIncomeIDList);
-            // remove all related database entries
-            incomeTable.removeBudgetItem(incomeID);
             selectedBudget.getIncomeList().remove(income);
+            ArrayList<Integer> newIncomeIDList = committeesTable.getIncome(selectedCommittee.getCOMMITTEE_ID());
+            newIncomeIDList.remove(income.getBUDGET_ITEM_ID());
+            committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newIncomeIDList);
+            incomeTable.removeBudgetItem(income.getBUDGET_ITEM_ID());
         }
     }
 
@@ -112,22 +113,20 @@ public class BudgetManager {
      * @param selectedEvent the selected event
      * @param selectedCommittee the selected committee
      */
-    public void addExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public Expense createExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException, DuplicateInsertionException {
         
+        Expense newExpense = null;
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-
-            // write to database
-            
-            Expense newExpense = new Expense(expenseTable.insertBudgetItem(new InputExpense(expense.getDescription(), expense.getDate(), expense.getValue()
-                    )), expense);
+            newExpense = new Expense(expenseTable.insertBudgetItem(new InputExpense(
+                    expense.getDescription(), expense.getDate(), expense.getValue()))
+                    , expense);
             selectedBudget.getExpenseList().add(newExpense);
-            
-            Integer expenseID = new Integer(newExpense.getBUDGET_ITEM_ID());
             ArrayList<Integer> newExpenseIDList = committeesTable.getExpense(selectedCommittee.getCOMMITTEE_ID());
-            newExpenseIDList.add(expenseID);
+            newExpenseIDList.add(newExpense.getBUDGET_ITEM_ID());
             committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newExpenseIDList);
         }
+        return newExpense;
     }
 
     /**
@@ -139,20 +138,15 @@ public class BudgetManager {
      * @param selectedEvent
      * @param selectedCommittee
      */
-    public void removeExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void deleteExpense(Expense expense, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            // write to database
-            // remove all related database entries
-            
-                        Integer expenseID = new Integer(expense.getBUDGET_ITEM_ID());
-            ArrayList<Integer> newExpenseIDList = committeesTable.getExpense(selectedCommittee.getCOMMITTEE_ID());
-            newExpenseIDList.remove(expenseID);
-            committeesTable.setExpense(selectedCommittee.getCOMMITTEE_ID(), newExpenseIDList);
-            // remove all related database entries
-            expenseTable.removeBudgetItem(expenseID);
             selectedBudget.getExpenseList().remove(expense);
+            ArrayList<Integer> newExpenseIDList = committeesTable.getExpense(selectedCommittee.getCOMMITTEE_ID());
+            newExpenseIDList.remove(expense.getBUDGET_ITEM_ID());
+            committeesTable.setExpense(selectedCommittee.getCOMMITTEE_ID(), newExpenseIDList);
+            expenseTable.removeBudgetItem(expense.getBUDGET_ITEM_ID());
         }
     }
 }
