@@ -52,13 +52,12 @@ public class User extends Participant
         eventCreationPrivilege = user.getEventCreationPrivilege();
     }
     
-    /*
+    
     public User(int uid, String firstName, String lastName, String emailAddress, String pword)
     {
         super(uid, firstName, lastName, emailAddress);
         password = pword;
-            
-    }*/
+    }
 
     /**
      * 
