@@ -45,12 +45,13 @@ public class SubEventPanel extends javax.swing.JPanel {
         }
         daySelect.setModel((ComboBoxModel)dayModel);
         yearSelect.setModel((ComboBoxModel)yearModel);
+        minuteSelect.setModel(minModel);
         
     }
     
     public SubEvent createEvent()
     {
-        SubEvent e = new SubEvent(descriptionTextArea.getText());
+        SubEvent e = new SubEvent(nameField.getText());
         int year = yearSelect.getSelectedIndex() + 2012;
         int month = monthSelect.getSelectedIndex();
         int day = daySelect.getSelectedIndex();
@@ -89,7 +90,7 @@ public class SubEventPanel extends javax.swing.JPanel {
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         pmCheck = new javax.swing.JCheckBox();
-        jTextField4 = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
         hourSelect = new javax.swing.JComboBox();
         minuteSelect = new javax.swing.JComboBox();
 
@@ -98,7 +99,7 @@ public class SubEventPanel extends javax.swing.JPanel {
 
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setRows(5);
-        descriptionTextArea.setText("Description of this event.");
+        descriptionTextArea.setText("Description of this event.\nDoesn't do anything yet.");
         descriptionScrollPane.setViewportView(descriptionTextArea);
 
         startLabel.setText("Start Time:");
@@ -107,7 +108,7 @@ public class SubEventPanel extends javax.swing.JPanel {
 
         locationLabel.setText("Location:");
 
-        monthSelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December" }));
+        monthSelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
         daySelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Day" }));
 
@@ -174,7 +175,7 @@ public class SubEventPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(headerLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4)))
+                        .addComponent(nameField)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -183,7 +184,7 @@ public class SubEventPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headerLabel)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(descriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,11 +228,11 @@ public class SubEventPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox hourSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField locationField;
     private javax.swing.JLabel locationLabel;
     private javax.swing.JComboBox minuteSelect;
     private javax.swing.JComboBox monthSelect;
+    private javax.swing.JTextField nameField;
     private javax.swing.JCheckBox pmCheck;
     private javax.swing.JLabel startLabel;
     private javax.swing.JComboBox yearSelect;
