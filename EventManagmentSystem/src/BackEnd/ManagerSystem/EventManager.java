@@ -395,17 +395,17 @@ public class EventManager {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedEvent.getSubEventList().add(subEvent);
             // write to database
-
-            //String description, String details, int complete, String street, String city,
-            //        String state, String zipcode, String country, Timestamp startTime, Timestamp endTime
-            /*
+            
             Integer subEventID = new Integer(subEventsTable.createSubEvent(new InputSubEventData(subEvent.getDescription(),
-                    subEvent.getLocation().getDetails(), subEvent.getComplete(), subEvent.getLocation().getStreet(),
-                    subEvent.getCity(), subEvent.getLocation.get)));
+                    subEvent.getLocation().getDetails(), 0, subEvent.getLocation().getStreet(),
+                    subEvent.getLocation().getCity(), subEvent.getLocation().getState(),
+                    subEvent.getLocation().getZipCode(),
+                    subEvent.getLocation().getCountry(), subEvent.getTimeSchedule().getStartDateTimeTimestamp(),
+                    subEvent.getTimeSchedule().getEndDateTimeTimestamp())));
             ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
             newSubEventList.add(subEventID);
             eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
-            * */
+            
         }
     }
 
@@ -452,9 +452,17 @@ public class EventManager {
                 taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
             }
 
-            Integer committeeID = new Integer(committeesTable.createCommittee(new InputCommittee(committee.getTitle(),
+            Integer committeeID;
+            if (committee.getChair() == null){
+                committeeID = new Integer(committeesTable.createCommittee(new InputCommittee(committee.getTitle(),
+            -1, budgetAccessIDList, memberIDList, taskIDList,
+            incomeIDList, expenseIDList, committee.getCOMMITTEE_ID())));
+            }
+            else{
+            committeeID = new Integer(committeesTable.createCommittee(new InputCommittee(committee.getTitle(),
             committee.getChair().getUserId(), budgetAccessIDList, memberIDList, taskIDList,
             incomeIDList, expenseIDList, committee.getCOMMITTEE_ID())));
+            }
             ArrayList<Integer> newCommitteeList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
             newCommitteeList.add(committeeID);
             eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
