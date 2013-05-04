@@ -91,7 +91,7 @@ public class Committee implements Reportable {
         return memberList;
     }
     
-    public ArrayList<User> getMemberListWithChair() throws NullChairException {
+    public ArrayList<User> getMemberListWithChair() throws NullPointerException {
         for (User member : memberList)
             if (member.equals(chair))
                 return memberList;
@@ -99,7 +99,7 @@ public class Committee implements Reportable {
         if (chair != null)
             memberList.add(chair);
         else
-            throw new NullChairException("Object chair is currently null. Unable to add to member list.");
+            throw new NullPointerException("Object chair is currently null. Unable to add to member list.");
         
         return memberList;
     }
