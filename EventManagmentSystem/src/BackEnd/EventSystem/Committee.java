@@ -40,7 +40,7 @@ public class Committee implements Reportable {
         title = committee.getTitle();
         memberList = committee.getMemberList();
         budgetAccessList = committee.getBudgetAccessList();
-        //chair = committee.getChair();
+        //chair = new User();
         taskList = committee.getTaskList();
         budget = committee.getBudget();
     }
