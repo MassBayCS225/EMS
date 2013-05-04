@@ -14,6 +14,9 @@ public class SubEvent extends ScheduleItem implements Reportable {
         super();
     }
     
+    public SubEvent(String description) {
+        super(description);
+    }
     public SubEvent(int sub_event_id, String description) {
         super(description);
         SUB_EVENT_ID = sub_event_id;

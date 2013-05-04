@@ -35,14 +35,14 @@ public class EventManager {
         eventList = new ArrayList<Event>();
 
         eventsTable = new Events_Table();
-        System.out.println("events : " + eventsTable.queryEntireTable());
+        //System.out.println("events : " + eventsTable.queryEntireTable());
         this.usersTable = usersTable;
         this.subEventsTable = subEventsTable;
         this.tasksTable = tasksTable;
         this.committeesTable = committeesTable;
         this.incomeTable = incomeTable;
         this.expenseTable = expenseTable;
-        System.out.println("userList:" + userList);
+        //System.out.println("userList:" + userList);
         rebuildEventList(userList);
     }
 
@@ -50,7 +50,7 @@ public class EventManager {
             throws DoesNotExistException {
         ArrayList<Integer> eventIDList = eventsTable.currentUIDList("EVENTS");
 
-        System.out.println("eventIDList:" + eventIDList);
+        //System.out.println("eventIDList:" + eventIDList);
         for (Integer eventID : eventIDList) {
             eventList.add(rebuildEvent(eventID, userList));
         }
@@ -65,14 +65,14 @@ public class EventManager {
         event.setParticipantList(rebuildParticipantList(eventID, userList));
         event.setCommitteeList(rebuildCommitteeList(eventID, userList));
 
-        System.out.println("subEventList:" + event.getSubEventList());
-        System.out.println("organizerList:" + event.getOrganizerList());
-        System.out.println("participantList:" + event.getParticipantList());
-        System.out.println("committeeList:" + event.getCommitteeList());
+        //System.out.println("subEventList:" + event.getSubEventList());
+        //System.out.println("organizerList:" + event.getOrganizerList());
+        //System.out.println("participantList:" + event.getParticipantList());
+        //System.out.println("committeeList:" + event.getCommitteeList());
 
-        System.out.println(eventID);
-        System.out.println(eventsTable.currentUIDList("EVENTS"));
-        System.out.println(eventsTable.getDetails(eventID));
+        //System.out.println(eventID);
+        //System.out.println(eventsTable.currentUIDList("EVENTS"));
+        //System.out.println(eventsTable.getDetails(eventID));
         event.setLocation(new Location(eventsTable.getStreet(eventID), eventsTable.getCity(eventID),
                 eventsTable.getState(eventID), eventsTable.getZipcode(eventID), eventsTable.getCountry(eventID),
                 eventsTable.getDetails(eventID)));
@@ -144,9 +144,9 @@ public class EventManager {
         try {
             committee.setMemberList(rebuildCommitteeMemberList(committeeID, userList));
             committee.setBudgetAccessList(rebuildBudgetAccessList(committeeID, userList));
-            System.out.println(usersTable.currentUIDList("USERS"));
-            System.out.println(committeesTable.getChairman(committeeID));
-            committee.setChair(usersTable.getUser(committeesTable.getChairman(committeeID)));
+            //System.out.println(usersTable.currentUIDList("USERS"));
+            //System.out.println(committeesTable.getChairman(committeeID));
+            //committee.setChair(usersTable.getUser(committeesTable.getChairman(committeeID)));
             committee.setTaskList(rebuildTaskList(committeeID, userList));
         } catch (DoesNotExistException e) {
             System.out.println("CATCHING:");
@@ -261,7 +261,7 @@ public class EventManager {
     }
 
     public void setSelectedEvent(Event selectedEvent) {
-        System.out.println("checking event selection");
+        //System.out.println("checking event selection");
         this.selectedEvent = selectedEvent;
     }
 
@@ -378,7 +378,7 @@ public class EventManager {
             selectedEvent.getCommitteeList().add(committee);
             committee.setChair(loggedInUser);
 
-            System.out.println("committee should be successfully added");
+            //System.out.println("committee should be successfully added");
             // write to database
 
             ArrayList<Integer> budgetAccessIDList = new ArrayList<Integer>();
@@ -410,7 +410,7 @@ public class EventManager {
             newCommitteeList.add(committeeID);
             eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeList);
 
-            System.out.println("leaving add committee method");
+            //System.out.println("leaving add committee method");
         }
     }
 

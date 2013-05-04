@@ -31,7 +31,7 @@ public class UserManager {
         usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
         rebuildUserList();
-        System.out.println(userList);
+        //System.out.println(userList);
         // System.out.println("users : " + usersTable.queryEntireTable());
     }
     
@@ -41,7 +41,7 @@ public class UserManager {
 
     private void rebuildUserList()
             throws DoesNotExistException {
-        System.out.println(usersTable.currentUIDList("USERS"));
+        //System.out.println(usersTable.currentUIDList("USERS"));
         for (Integer userID : usersTable.currentUIDList("USERS")) {
             if (usersTable.getParticipant(userID)) {
                 userList.add(rebuildParticipant(userID));
