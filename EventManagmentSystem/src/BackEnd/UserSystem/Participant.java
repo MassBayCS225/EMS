@@ -13,7 +13,7 @@ public class Participant{
   private String lastName;
   private String emailAddress;
   private PhoneNumber phoneNumber;
-  private UserData_Table table;
+  // private UserData_Table table;
   private Address address;
   
 /**
@@ -35,6 +35,8 @@ public class Participant{
   *  @param lastName The participant's last name
   *  @param address The participant's email address
   */
+  
+  /*
   public Participant(int UID, String firstName, String lastName, String emailAddress){
     table = new UserData_Table();
     this.UID = UID;
@@ -44,16 +46,17 @@ public class Participant{
     phoneNumber = new PhoneNumber();
     address = new Address();
   }
+  * */
+  
   
   public Participant(String firstName, String lastName, String emailAddress){
-    table = new UserData_Table();
-    UID = table.nextValidUID();
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
     phoneNumber = new PhoneNumber();
     address = new Address();
   }
+  
   
   public Participant(int userID, Participant participant){
       UID = userID;
@@ -204,7 +207,8 @@ public class Participant{
    */
   @Override
   public String toString(){
-    String info = firstName + " " + lastName + "\n" + 
+      System.out.println("INSIDE PARTICIPANT TO STRING: " + UID);
+    String info = "User ID: " + UID + "\n" + firstName + " " + lastName + "\n" + 
                     emailAddress + "\n" + 
                     phoneNumber + "\n" +
                     address;
