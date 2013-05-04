@@ -23,7 +23,6 @@ public class UserManager {
 
     private ArrayList<Participant> userList;
     private User selectedUser;
-    private User loggedInUser;
     private UserData_Table usersTable;
 
     public UserManager()
@@ -77,10 +76,6 @@ public class UserManager {
 
     public ArrayList<Participant> getUserList() {
         return userList;
-    }
-
-    public void setLoggedInUser(User u) {
-        loggedInUser = u;
     }
 
     public User createUser(User user) {
@@ -157,7 +152,7 @@ public class UserManager {
         //Write to database
     }
 
-    public void editEventCreationPrivilege(boolean eventCreationPrivilege) throws PrivilegeInsufficientException, DoesNotExistException {
+    public void editEventCreationPrivilege(boolean eventCreationPrivilege, User loggedInUser) throws PrivilegeInsufficientException, DoesNotExistException {
         if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
             selectedUser.setEventCreationPrivilege(eventCreationPrivilege);
             usersTable.setLevel(selectedUser.getUserId(), eventCreationPrivilege == true? 1 : 0);
