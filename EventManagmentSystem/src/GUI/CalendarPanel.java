@@ -7,8 +7,16 @@ package GUI;
 import BackEnd.EventSystem.CalendarEvent;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.ManagerSystem.MainManager;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -27,6 +35,34 @@ public class CalendarPanel extends javax.swing.JPanel {
         initComponents();
         manager = MainManager.getInstance();
         CalendarTable.getTableHeader().setReorderingAllowed(false);
+        for (int i = 0; i < 7; i++)
+        {
+            CalendarTable.setRowHeight( i, 64 );
+            CalendarTable.getColumnModel().getColumn(i).setCellRenderer(new TextTableRenderer());
+        }
+        
+        CalendarTable.setCellSelectionEnabled(true);
+    ListSelectionModel cellSelectionModel = CalendarTable.getSelectionModel();
+    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+      public void valueChanged(ListSelectionEvent e) {
+        String selectedData = "";
+
+        int selectedRow = CalendarTable.getSelectedRow();
+        int selectedColumn = CalendarTable.getSelectedColumn();
+        selectedData = CalendarTable.getValueAt(selectedRow, selectedColumn).toString();
+        System.out.println("HERE Selected Row: " + selectedRow + ", Column: " + selectedColumn);
+        /*for (int i = 0; i < selectedRow.length; i++) {
+          for (int j = 0; j < selectedColumns.length; j++) {
+            selectedData = (String) CalendarTable.getValueAt(selectedRow[i], selectedColumns[j]).toString();
+          }
+        }*/
+        detailsField.setText(selectedData);
+      }
+
+    });
+    
         populateCalendar();
     }
     
@@ -64,14 +100,13 @@ public class CalendarPanel extends javax.swing.JPanel {
                     ArrayList<SubEvent> events = new ArrayList<SubEvent>();
                      int tempMillis; // temporary value used in for loop that saves a time in milliseconds
                      for (int i = 0; i < manager.getEventManager().getSelectedEvent().getSubEventList().size(); i++){
-                      tempMillis = (int)manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeTimestamp().getTime(); // set the date for the current element
+                      tempMillis = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().DAY_OF_MONTH); // set the date for the current element
+                      System.out.println("Event Days: " + tempMillis);
                       // if you want to check end time, use getEndTime() instead of getStartTime
-                      if (tempMillis >= tempCalendar.getTimeInMillis()){ // if the current element's time greater than or equal to the tempCalendar's
-                        tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.DAY_OF_MONTH + 1); // move calendar +1 day
-                        if (tempMillis < tempCalendar.getTimeInMillis()){ // if the current element's time is less than tempCalendar's
-                          events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
-                        }
-                        tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.DAY_OF_MONTH - 1); // reset the day back to original
+                      if (tempMillis == day){
+                          System.out.println("YES!");
+                            events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
+                        tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH - 1)); // reset the day back to original
                       }
                     }
                      
@@ -113,8 +148,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             }
         };
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        detailsField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         monthLabel = new javax.swing.JLabel();
         lastMonthButton = new javax.swing.JButton();
@@ -160,9 +194,8 @@ public class CalendarPanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jLabel3.setText("The details of Calendar");
-
-        jLabel4.setText("days will show up here.");
+        detailsField.setEditable(false);
+        detailsField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,19 +203,15 @@ public class CalendarPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(detailsField, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(351, Short.MAX_VALUE))
+                .addComponent(detailsField, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jButton1.setText("Add an Event");
@@ -236,7 +265,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                         .addGap(200, 200, 200)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -284,14 +313,40 @@ public class CalendarPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CalendarTable;
+    private javax.swing.JTextField detailsField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton lastMonthButton;
     private javax.swing.JLabel monthLabel;
     private javax.swing.JButton nextMonthButton;
     // End of variables declaration//GEN-END:variables
+
+
+private class TextTableRenderer extends JTextArea implements TableCellRenderer {
+public TextTableRenderer() {
+setOpaque(true);
+setLineWrap(true);
+setWrapStyleWord(true);
+}
+
+public Component getTableCellRendererComponent(JTable table,
+Object value, boolean isSelected, boolean hasFocus, int row,
+int column) {
+
+if (isSelected) {
+setForeground(Color.BLACK);
+setBackground(table.getSelectionBackground());
+} else {
+setForeground(Color.BLACK);
+setBackground(table.getBackground());
+}
+
+setText((value == null)
+? ""
+: value.toString());
+return this;
+}
+    }
 }
