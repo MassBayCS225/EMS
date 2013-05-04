@@ -7,6 +7,7 @@ package GUI;
 import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
 /**
@@ -22,6 +23,9 @@ public class Main extends javax.swing.JPanel {
      */
     public Main() throws PrivilegeInsufficientException {
         initComponents();
+        CalendarPanel cp = new CalendarPanel();
+        MainPanel.setLayout(new BorderLayout());
+        MainPanel.add(cp, BorderLayout.NORTH);
         manager = MainManager.getInstance();
         setSize(850,650);
     }
@@ -33,7 +37,7 @@ public class Main extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() throws PrivilegeInsufficientException {
+    private void initComponents() {
 
         tasksPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -62,13 +66,8 @@ public class Main extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         SwitchingPanelHolder = new javax.swing.JPanel();
         MainPanel = new javax.swing.JPanel();
-        schedulePanel = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        calendarPanel2 = new GUI.CalendarPanel();
         budget1 = new GUI.Budget();
-        committeeListPanel1 = new GUI.CommitteeListPanel();
         userManagementPanel1 = new GUI.UserManagementPanel();
-        emailPanel1 = new GUI.EmailPanel();
         ChangeHomeButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 153, 255));
@@ -319,39 +318,15 @@ public class Main extends javax.swing.JPanel {
         MainPanel.setBackground(new java.awt.Color(255, 255, 255));
         MainPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jLabel9.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        jLabel9.setText("Schedule");
-
-        org.jdesktop.layout.GroupLayout schedulePanelLayout = new org.jdesktop.layout.GroupLayout(schedulePanel);
-        schedulePanel.setLayout(schedulePanelLayout);
-        schedulePanelLayout.setHorizontalGroup(
-            schedulePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(schedulePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jLabel9)
-                .addContainerGap(641, Short.MAX_VALUE))
-        );
-        schedulePanelLayout.setVerticalGroup(
-            schedulePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(schedulePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jLabel9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 39, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(264, Short.MAX_VALUE))
-        );
-
         org.jdesktop.layout.GroupLayout MainPanelLayout = new org.jdesktop.layout.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(schedulePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .add(calendarPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(0, 706, Short.MAX_VALUE)
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(MainPanelLayout.createSequentialGroup()
-                .add(calendarPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 400, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(schedulePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(0, 649, Short.MAX_VALUE)
         );
 
         SwitchingPanelHolder.add(MainPanel, "home");
@@ -359,18 +334,10 @@ public class Main extends javax.swing.JPanel {
         budget1.setMinimumSize(new java.awt.Dimension(64, 48));
         SwitchingPanelHolder.add(budget1, "budget");
 
-        committeeListPanel1.setMinimumSize(new java.awt.Dimension(64, 48));
-        SwitchingPanelHolder.add(committeeListPanel1, "committees");
-
         userManagementPanel1.setBackground(new java.awt.Color(192, 232, 248));
         userManagementPanel1.setMaximumSize(new java.awt.Dimension(32767, 480));
         userManagementPanel1.setMinimumSize(new java.awt.Dimension(64, 48));
         SwitchingPanelHolder.add(userManagementPanel1, "userManagement");
-
-        emailPanel1.setMaximumSize(new java.awt.Dimension(32767, 480));
-        emailPanel1.setMinimumSize(new java.awt.Dimension(64, 48));
-        emailPanel1.setPreferredSize(new java.awt.Dimension(640, 480));
-        SwitchingPanelHolder.add(emailPanel1, "email");
 
         ChangeHomeButton.setText("Home");
         ChangeHomeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -465,15 +432,12 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JPanel SwitchingPanelHolder;
     private GUI.Budget budget1;
     private javax.swing.JPanel budgetPanel;
-    private GUI.CalendarPanel calendarPanel2;
     private javax.swing.JButton changeBudgetButton;
     private javax.swing.JButton changeCommitteesButton;
     private javax.swing.JButton changeEmailButton;
     private javax.swing.JButton changeUserManagementButton;
-    private GUI.CommitteeListPanel committeeListPanel1;
     private javax.swing.JPanel committeesPanel;
     private javax.swing.JPanel emailPanel;
-    private GUI.EmailPanel emailPanel1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox2;
@@ -488,11 +452,9 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JPanel participantsPanel;
     private javax.swing.JPanel reportsPanel;
-    private javax.swing.JPanel schedulePanel;
     private javax.swing.JPanel tasksPanel;
     private GUI.UserManagementPanel userManagementPanel1;
     // End of variables declaration//GEN-END:variables
