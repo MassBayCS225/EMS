@@ -41,6 +41,8 @@ public class Participant{
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
+    phoneNumber = new PhoneNumber();
+    address = new Address();
   }
   
   public Participant(String firstName, String lastName, String emailAddress){
@@ -49,6 +51,8 @@ public class Participant{
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
+    phoneNumber = new PhoneNumber();
+    address = new Address();
   }
   
   public Participant(int userID, Participant participant){
