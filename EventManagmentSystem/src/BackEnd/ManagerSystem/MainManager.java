@@ -5,6 +5,7 @@
 package BackEnd.ManagerSystem;
 
 import EMS_Database.DoesNotExistException;
+import EMS_Database.impl.*;
 
 /**
  * This class holds all the other Manager classes, to facilitate passing the
@@ -24,6 +25,17 @@ public class MainManager {
     private LoginManager logInManager;
 
     public MainManager() {
+
+        /*
+         Committees_Table committees = new Committees_Table();
+         Events_Table events = new Events_Table();
+         Expense_Table expenses = new Expense_Table();
+         Income_Table incomes = new Income_Table();
+         SubEvent_Table subEvents = new SubEvent_Table();
+         Tasks_Table tasks = new Tasks_Table();
+         UserData_Table users = new UserData_Table();
+         * */
+
         try {
             userManager = new UserManager();
             logInManager = new LoginManager(userManager.getUserList());
@@ -32,16 +44,13 @@ public class MainManager {
             committeeManager = new CommitteeManager(taskManager.getTasksTable());
             budgetItemManager = new BudgetItemManager();
             budgetManager = new BudgetManager(committeeManager.getCommitteesTable(), budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
-            
-            eventManager = new EventManager(userManager.getUserList(),
-                    userManager.getUsersTable(), taskManager.getTasksTable(),
+
+            eventManager = new EventManager(
+                    userManager.getUserList(), userManager.getUsersTable(), taskManager.getTasksTable(),
                     subEventManager.getSubEventsTable(), committeeManager.getCommitteesTable(),
                     budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
-            
-            
-            
+
         } catch (DoesNotExistException e) {
-            System.out.println("HERE! main manager");
             e.printStackTrace();
         }
     }
@@ -82,9 +91,8 @@ public class MainManager {
     public UserManager getUserManager() {
         return userManager;
     }
-    /*
-     public LoginManager getLogInManager(){
-     return logInManager;
-     }
-     * */
+
+    public LoginManager getLogInManager() {
+        return logInManager;
+    }
 }

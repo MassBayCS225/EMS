@@ -1,7 +1,6 @@
 package EMS_Database.impl;
 
 import EMS_Database.DoesNotExistException;
-import EMS_Database.DuplicateInsertionException;
 import EMS_Database.InitDB;
 import static EMS_Database.InitDB.debugLog;
 import EMS_Database.InputTask;
@@ -69,8 +68,7 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
      * by InputTask.
      *
      * @param task The collected data to be inserted into the Task table
-     * @return an int of the UID of the created task.
-     * @throws DuplicateInsertionException when pigs fly. no really.
+     * @return an int of the UID of the created task.     
      */
     @Override
     public int createTask(InputTask task) {
