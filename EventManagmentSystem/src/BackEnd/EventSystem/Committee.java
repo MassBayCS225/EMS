@@ -16,12 +16,21 @@ public class Committee implements Reportable {
     private ArrayList<Task> taskList;
     private Budget budget;
     
+    public Committee(){
+        title = new String();
+        memberList = new ArrayList<User>();
+        budgetAccessList = new ArrayList<User>();
+        chair = new User();
+        taskList = new ArrayList<Task>();
+        budget = new Budget();
+    }
+    
     public Committee(int committee_id, String title) {
         COMMITTEE_ID = committee_id;
         this.title = title;
         memberList = new ArrayList<User>();
         budgetAccessList = new ArrayList<User>();
-        chair = null;
+        chair = new User();
         taskList = new ArrayList<Task>();
         budget = new Budget();
     }
