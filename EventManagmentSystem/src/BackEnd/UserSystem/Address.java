@@ -16,6 +16,11 @@ public class Address {
      * Default Constructor.
      */
     public Address(){
+        street = new String();
+        city = new String();
+        state = new String();
+        zipCode = new String();
+        country = new String();
     }
     
     /**

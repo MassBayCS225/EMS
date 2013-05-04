@@ -13,6 +13,10 @@ public class Task extends ScheduleItem {
     private ArrayList<User> responsibleList;
     private boolean completed;
     
+    public Task(){
+        responsibleList = new ArrayList<User>();
+    }
+    
     public Task(int task_id, String description){
         super(description);
         TASK_ID = task_id;

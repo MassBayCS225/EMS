@@ -12,9 +12,15 @@ public class ScheduleItem {
     private Location location;
     private TimeSchedule timeSchedule;
     
+    public ScheduleItem(){
+        description = new String();
+        location = new Location();
+        timeSchedule = new TimeSchedule();
+    }
+    
     public ScheduleItem(String description) {
         this.description = description;
-        location = new Location("");
+        location = new Location();
         timeSchedule = new TimeSchedule();
     }
     

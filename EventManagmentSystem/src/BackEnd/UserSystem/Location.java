@@ -6,6 +6,10 @@ package BackEnd.UserSystem;
  */
 public class Location extends Address{
     private String details;
+    
+    public Location(){
+        details = new String();
+    }
    
     /**
      * This constructor initializes the location object details. 
