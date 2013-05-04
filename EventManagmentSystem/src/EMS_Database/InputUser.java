@@ -1,5 +1,6 @@
 package EMS_Database;
 
+import BackEnd.UserSystem.Participant;
 import BackEnd.UserSystem.User;
 
 /**
@@ -14,14 +15,14 @@ public class InputUser {
     private String fname;
     private String lname;
     private String pwd;
-    private String email;    
+    private String email;
     private String phone;
     private String street;
     private String city;
     private String state;
     private String zipcode;
     private String country;
-    private int eventLevel;   
+    private int eventLevel;
     private int participant;
     
     /** 
@@ -87,8 +88,24 @@ public class InputUser {
         } else {
             this.eventLevel = 0;
         }
-	//add participant function here.
+	this.participant = 0;
                                 
+    }
+    
+    public InputUser(Participant user) {
+        this.participant = 1;
+        this.level = 0;
+        this.fname = user.getFirstName();
+        this.lname = user.getLastName();
+        this.pwd = new String();
+        this.email = user.getEmailAddress();  
+        this.phone = user.getPhoneNumber().toString();
+        this.street = user.getAddress().getStreet();
+        this.city = user.getAddress().getCity();
+        this.state = user.getAddress().getState();
+        this.zipcode = user.getAddress().getZipCode();
+        this.country = user.getAddress().getCountry();
+        this.eventLevel = 0;
     }
     
     public InputUser(int uid, int level, String fname, String lname, String pwd, String email, String phone, String street, String city , String state, String zipcode, String country,
