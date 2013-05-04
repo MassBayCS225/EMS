@@ -50,3 +50,6 @@ java.sql.SQLException: Database 'EMS_DB' not found.
 ============= end nested exception, level (1) ===========
 Cleanup action completed
 Fri May 03 16:56:37 EDT 2013 Thread[DRDAConnThread_3,5,main] (DATABASE = EMS_DB), (DRDAID = {1}), Database 'EMS_DB' not found.
+----------------------------------------------------------------
+Fri May 03 21:19:48 EDT 2013: Shutting down Derby engine
+----------------------------------------------------------------

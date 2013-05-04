@@ -14,7 +14,7 @@ public interface Interface_UserData {
     
     public int nextValidUID();
     
-    public boolean removeUser(int uid) throws DoesNotExistException;        
+    public void removeUser(int uid) throws DoesNotExistException;        
         
 
     // GETTERS

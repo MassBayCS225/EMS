@@ -55,8 +55,30 @@ public class DB_Testing {
 	InputExpense ex = new InputExpense();
 
 
-
-	//ALL TABLE QUERY
+	//ADD ITEMS TO ALL TABLES
+//	for (int x = 0; x < 30; x++) {
+//	    et.createEvent(ied);
+//	    set.createSubEvent(ised);
+//	    tt.createTask(it);
+//	    ct.createCommittee(ic);
+//	    udt.createUser(iu);
+//	    inTable.insertBudgetItem(in);
+//	    exTable.insertBudgetItem(ex);
+//	}
+//
+//	try {
+//	    et.removeEvent(2);
+//	    set.removeSubEvent(2);
+//	    tt.removeTask(2);
+//	    ct.removeCommittee(2);
+//	    udt.removeUser(2);
+//	    inTable.removeBudgetItem(2);
+//	    exTable.removeBudgetItem(2);
+//	} catch (DoesNotExistException dnee) {
+//	    System.out.println(dnee.getMessage());
+//	}
+//
+//	//ALL TABLE QUERY
 //	System.out.println("EVENTS TABLE");
 //	System.out.print(et.queryEntireTable());
 //	System.out.println("SUBEVENTS TABLE");
@@ -71,6 +93,14 @@ public class DB_Testing {
 //	System.out.print(inTable.queryEntireTable());
 //	System.out.println("EXPENSE TABLE");
 //	System.out.print(exTable.queryEntireTable());
+//
+//	et.removeAll("EVENTS");
+//	set.removeAll("SUBEVENTS");
+//	tt.removeAll("TASKS");
+//	ct.removeAll("COMMITTEE");
+//	udt.removeAll("USERS");
+//	inTable.removeAll("INCOME");
+//	exTable.removeAll("EXPENSE");
 
 
 	//CREATE BUDGET INSERTION
@@ -153,11 +183,16 @@ public class DB_Testing {
 
 //	CREATE EVENT INSERTION
 
-//	 System.out.println(et.queryEntireTable());        
+//	System.out.println(et.queryEntireTable());
 	// System.out.println(); //blank line.
-//        try{
-//            uid = et.createEvent(ied);
-//	    list.add(34);
+	//try {
+//	    for (int x = 0; x < 20; x++) {
+//		uid = et.createEvent(ied);
+//	    }
+//	    
+
+
+
 //            System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
 //            System.out.println(et.getStartDate(uid));
@@ -204,9 +239,9 @@ public class DB_Testing {
 //            System.out.println(et.getCommittee(uid));   
 //	    
 //	                
-//        }catch(DoesNotExistException dnee){	    
-//            System.err.println(dnee.getMessage());
-//        }
+//	} catch (DoesNotExistException dnee) {
+//	    System.err.println(dnee.getMessage());
+//	}
 //	System.out.println("\n\n");
 
 
@@ -263,8 +298,8 @@ public class DB_Testing {
 //	    System.out.println(ct.totalIncome(uid));
 //	    System.out.println(ct.remainingMonies(uid));
 //	    System.out.println(ct.getExpense(uid));
-	    
-	    	    
+
+
 //	    System.out.println(ct.getTitle(uid));
 //	    System.out.println(ct.getChairman(uid));
 //	    System.out.println(ct.getBudgetAccessList(uid));
@@ -296,8 +331,8 @@ public class DB_Testing {
 //	    System.err.println(dnee.getMessage());
 //	}
 
-	
-	
+
+
 
 	//CREATE TASKS INSERTION	
 //        System.out.println(tt.queryEntireTable());

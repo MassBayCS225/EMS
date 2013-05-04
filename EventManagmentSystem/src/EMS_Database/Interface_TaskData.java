@@ -16,7 +16,7 @@ public interface Interface_TaskData {
 
     public int nextValidUID();    
 
-    public boolean removeTask(int uid) throws DoesNotExistException;
+    public void removeTask(int uid) throws DoesNotExistException;
 
     // GETTERS
     public String getDescription(int uid) throws DoesNotExistException;

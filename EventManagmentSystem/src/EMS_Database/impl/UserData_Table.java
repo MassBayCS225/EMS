@@ -152,44 +152,76 @@ public class UserData_Table extends InitDB implements Interface_UserData {
      * not exist.
      */
     @Override
-    public boolean removeUser(int uid) throws DoesNotExistException {
+    public void removeUser(int uid) throws DoesNotExistException {
+	String table = "USERS";
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	//what to do if that uid does not exist
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	
 	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM USERS WHERE UID=?");
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
 	    idQueryStmt.setInt(1, uid);
 	    idQueryStmt.executeUpdate();
 
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage());
-	    throw new DoesNotExistException("User does not exist.");
-	}
-	return true;
-    }
+	    System.err.println("Deleting stuff from "+table+" is dangerous...");
+	}	
+    }    
+    
+    public String queryEntireTable() {
+	StringBuilder returnQuery = new StringBuilder();
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS");
+            ResultSet rs = idQueryStmt.executeQuery();
 
-    /**
-     * A function to generate a list of the current UID's in a table
-     *
-     * @return ArrayList<Integer> of the current UID's in the table
-     */
-    public ArrayList<Integer> currentUIDList() {
-	int newUID = 0;
-	ArrayList<Integer> UIDList = new ArrayList<Integer>();
-	try {
+            while (rs.next()) {
+                returnQuery.append(rs.getInt("UID"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("LEVEL"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("FNAME"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("LNAME"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("PWD"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("EMAIL"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("PHONE"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("STREET"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("CITY"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("STATE"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("ZIPCODE"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("COUNTRY"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("EVENTLEVEL"));
+                returnQuery.append(",");
+		returnQuery.append(rs.getString("PARTICIPANT"));                		                        
+                returnQuery.append("\n");
+            }
 
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS");
-	    ResultSet rs = idQueryStmt.executeQuery();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
 
-	    while (rs.next()) {
-		newUID = rs.getInt("UID");
-		UIDList.add(newUID);
-	    }
-	    return UIDList;
-
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	return UIDList; // should not be zero
+        return returnQuery.toString();
     }
 
     ///////////////////// GETTERS ////////////////////////////        
@@ -649,7 +681,7 @@ public class UserData_Table extends InitDB implements Interface_UserData {
 
 	try {
 	    boolean exists = false;
-	    for (int validID : currentUIDList()) {
+	    for (int validID : currentUIDList(tableName)) {
 		if (validID == uid) {
 		    exists = true;
 		    break;

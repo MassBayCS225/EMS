@@ -70,24 +70,30 @@ public class Expense_Table extends InitDB implements Interface_BudgetData {
 
     @Override
     public void removeBudgetItem(int uid) throws DoesNotExistException {
+	String table = "EXPENSE";
+	//checking for existance of that uid
 	boolean exists = false;
-	for(int users : currentUIDList(tableName)){
-	    if(uid == users){
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
 		exists = true;
+		break;
 	    }
 	}
-	if(exists = false){
-	    debugLog.log(Level.WARNING, "Cannot remove user UID={0}", uid);
-	    throw new DoesNotExistException("Cannot remove user UID="+uid);	    
+	//what to do if that uid does not exist
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
+	
 	try {
-            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM EXPENSE WHERE UID=?");
-            idQueryStmt.setInt(1, uid);            
-            idQueryStmt.executeUpdate();                                    
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-            throw new DoesNotExistException("User does not exist.");
-        }        
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    idQueryStmt.executeUpdate();
+
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	    System.err.println("Deleting stuff from "+table+" is dangerous...");
+	}	
     }
     
     public int insertBudgetItem(InputExpense input) {

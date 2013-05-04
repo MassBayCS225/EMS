@@ -15,7 +15,7 @@ public interface Interface_CommitteeData {
 
     public String queryEntireTable();
     
-    public boolean removeCommittee(int uid) throws DoesNotExistException;
+    public void removeCommittee(int uid) throws DoesNotExistException;
     
     public double remainingMonies(int uid) throws DoesNotExistException;
     

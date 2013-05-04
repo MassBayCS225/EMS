@@ -144,18 +144,31 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
      * @throws DoesNotExistException if the uid does not exist in the table.
      */
     @Override
-    public boolean removeSubEvent(int uid) throws DoesNotExistException {
+    public void removeSubEvent(int uid) throws DoesNotExistException {
+	String table = "SUBEVENTS";
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	//what to do if that uid does not exist
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	
 	try {
-
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM SUBEVENT WHERE UID=?");
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
 	    idQueryStmt.setInt(1, uid);
 	    idQueryStmt.executeUpdate();
 
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage());
-	    throw new DoesNotExistException("User does not exist.");
-	}
-	return true;
+	    System.err.println("Deleting stuff from "+table+" is dangerous...");
+	}	
     }
 
     ////////////////////////GETTERS/////////////////////////

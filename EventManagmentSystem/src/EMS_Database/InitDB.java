@@ -25,18 +25,18 @@ import java.util.logging.SimpleFormatter;
  * Needs a connection URL, user and password.
  */
 public abstract class InitDB implements Interface_FunctionWrapper {
-    
+
     protected Connection dbConnection = null;
     public final static Logger debugLog = Logger.getLogger("DebugLog");
     private static FileHandler fh = null;
-    
+
     static { // Setup logging file        
 	try {
 	    fh = new FileHandler("debug.log", false);
 	    CloseLogger ch = new CloseLogger(fh);
 	    Thread t = new Thread(ch);
 	    Runtime.getRuntime().addShutdownHook(t);
-	    
+
 	} catch (SecurityException e) {
 	    System.err.println(e.getMessage());
 	} catch (IOException e) {
@@ -46,9 +46,9 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	debugLog.addHandler(fh);
 	debugLog.setUseParentHandlers(false); //do not use default outputs (console and such)
 
-	
+
     }
-    
+
     public InitDB() {
 
 
@@ -74,7 +74,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    //System.out.println("Database Connection Established.");
 	    //debugLog.info("Database Connection Established.");
 	} catch (SQLException sqle) {
-	    
+
 	    try {
 		//create connection if no database exists
 		dbConnection = DriverManager.getConnection("jdbc:derby:EMS_DB;create=true", props);
@@ -96,7 +96,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "COUNTRY VARCHAR(100) DEFAULT NULL, "
 			+ "PARTICIPANT VARCHAR(100) DEFAULT NULL, "
 			+ "EVENTLEVEL INT NOT NULL)";
-		
+
 		String createEventsTable = "CREATE TABLE EVENTS (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
@@ -124,7 +124,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "COUNTRY VARCHAR(100) DEFAULT NULL, "
 			+ "STARTDATE TIMESTAMP, "
 			+ "ENDDATE TIMESTAMP)";
-		
+
 		String createCommitteeTable = "CREATE TABLE COMMITTEE (UID INT PRIMARY KEY, "
 			+ "TITLE VARCHAR(160) DEFAULT NULL, "
 			+ "CHAIRMAN INT, "
@@ -134,7 +134,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "INCOME VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s
 			+ "EXPENSE VARCHAR(1000) DEFAULT NULL, " //list of task UID #'s						
 			+ "BUDGET DOUBLE)";
-		
+
 		String createTasksTable = "CREATE TABLE TASKS (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
@@ -152,12 +152,12 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
 			+ "DATE TIMESTAMP, "
 			+ "VALUE DOUBLE)";
-		
+
 		String createExpenseTable = "CREATE TABLE EXPENSE (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
 			+ "DATE TIMESTAMP, "
 			+ "VALUE DOUBLE)";
-		
+
 		Statement stmt = dbConnection.createStatement();
 		stmt.executeUpdate(createUserTable); //takes table string as argument
 		debugLog.info("USER table created successfully");
@@ -173,28 +173,29 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		debugLog.info("INCOME table created successfully");
 		stmt.executeUpdate(createExpenseTable);
 		debugLog.info("EXPENSE table created successfully");
-		
-		
+
+
 	    } catch (SQLException sqlee) { //serious errors if this gets thrown
 		sqlee.printStackTrace();
 		debugLog.severe("TABLE CREATION FAILED!");
 	    }
-	    
+
 	}
-	
+
     }
-    
+
     /**
-     * This is a separate sub class which is another thread for shutdown sequences.
+     * This is a separate sub class which is another thread for shutdown
+     * sequences.
      */
     private static class CloseLogger implements Runnable {
-	
+
 	private final FileHandler fh;
-	
+
 	public CloseLogger(FileHandler fh) {
 	    this.fh = fh;
 	}
-	
+
 	@Override
 	public void run() {
 	    fh.flush();
@@ -202,7 +203,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    //System.out.println("closed logger");
 	}
     }
-    
+
     public Connection getConnection() {
 	return dbConnection;
     }
@@ -217,23 +218,34 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	int newUID = 0;
 	ArrayList<Integer> UIDList = new ArrayList<Integer>();
 	try {
-	    
+
 	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table);
 	    ResultSet rs = idQueryStmt.executeQuery();
-	    
+
 	    while (rs.next()) {
 		newUID = rs.getInt("UID");
 		UIDList.add(newUID);
 	    }
 	    return UIDList;
-	    
+
 	} catch (SQLException sqle) {
 	    sqle.printStackTrace();
 	    System.exit(1);
 	}
 	return UIDList; // should not be zero
     }
-    
+
+    /**
+     * This function performs the opposite of the stringToList function which is
+     * to create a format of ArrayLists that can be stored in a database as a
+     * string.
+     *
+     * @param uidList a string to be converted back into an ArrayList<Integer>
+     * @return ArrayList<Integer> of the values contained in the formatted
+     * string.
+     * @throws NumberFormatException if the values in the string cannot be
+     * parsed.
+     */
     public ArrayList<Integer> stringToList(String uidList) throws NumberFormatException {
 	if (uidList.equals("") || uidList == null) {
 	    return new ArrayList<Integer>();
@@ -241,7 +253,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    //Split String
 	    String[] uidStringList;
 	    uidStringList = uidList.split(",");
-	    
+
 	    ArrayList<Integer> uidIntList = new ArrayList<Integer>();
 
 	    //parse each item into arraylist
@@ -252,11 +264,11 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		    throw new NumberFormatException("Parse Error");
 		}
 	    }
-	    
+
 	    return uidIntList;
 	}
     }
-    
+
     /**
      * Does the opposite of string to list and creates a nicely formatted string
      * for insertion into the database.
@@ -264,7 +276,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
      * @param list An ArrayList of Integers representing the UID numbers to be
      * stored.
      * @return A nicely formated String for insertion into the database.
-     */    
+     */
     public String listToString(ArrayList<Integer> list) {
 	StringBuilder returnQuery = new StringBuilder();
 	for (int uid : list) {
@@ -274,8 +286,44 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	return returnQuery.toString();
     }
 
-    // FUNCTION WRAPPERS. USED TO CALL METHODS.
+    /**
+     * A dangerous function that should be used with care. This function removes
+     * all the fields contained within the specified table.
+     * @param table Added this field as a way of confirming to delete all data     
+     */
+    public void removeAll(String table) {
+	for (int uid : currentUIDList(table)) {
+	    try {
+		PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
+		idQueryStmt.setInt(1, uid);
+		idQueryStmt.executeUpdate();
+	    } catch (SQLException sqle) {
+		System.err.println(sqle.getMessage());
+		debugLog.severe("Remove All FAILED.");
+		System.exit(1); //if the shit really hits the fan.
+	    }
+	}	
+    }
+
+    // FUNCTION WRAPPERS. USED AS SQL CALL METHODS.
     //GETTERS
+    /**
+     * An awesome function that takes a set of parameters and creates an error
+     * checked sql query.
+     * <p>
+     * Each of the following functions corresponds to its data type for its
+     * ability to get and set within a table. All the following functions follow
+     * the same pattern.
+     *
+     * @param query essentially the column name that you are looking for in the
+     * table.
+     * @param table the table to search for that column
+     * @param uid the unique id of the primary key of that table to get the item
+     * of.
+     * @return the value stored in the field specified by the table and column.
+     * @throws DoesNotExistException if the UID that you are looking for does
+     * not exist.
+     */
     @Override
     public String getDBString(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -310,7 +358,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-    
+
     @Override
     public double getDBDouble(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -345,7 +393,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-    
+
     @Override
     public ArrayList<Integer> getDBArrayList(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -380,7 +428,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-    
+
     @Override
     public int getDBInt(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -415,7 +463,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	}
 	throw new DoesNotExistException("Should not get here...");
     }
-    
+
     @Override
     public Timestamp getDBTimestamp(String query, String table, int uid) throws DoesNotExistException {
 	//checking for existance of that uid
@@ -477,7 +525,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    System.exit(1);
 	}
     }
-    
+
     @Override
     public void setDBDouble(String query, String table, int uid, double newValue) throws DoesNotExistException {
 	try {
@@ -503,7 +551,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    System.exit(1);
 	}
     }
-    
+
     @Override
     public void setDBArrayList(String query, String table, int uid, ArrayList<Integer> newValue) throws DoesNotExistException {
 	String newStringValue = listToString(newValue);
@@ -530,7 +578,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    System.exit(1);
 	}
     }
-    
+
     @Override
     public void setDBInt(String query, String table, int uid, int newValue) throws DoesNotExistException {
 	try {
@@ -556,7 +604,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 	    System.exit(1);
 	}
     }
-    
+
     @Override
     public void setDBTimestamp(String query, String table, int uid, Timestamp newValue) throws DoesNotExistException {
 	try {
