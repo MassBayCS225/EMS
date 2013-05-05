@@ -136,6 +136,12 @@ public class EventManager {
             throws DoesNotExistException {
 
         Committee committee = new Committee(committeeID, committeesTable.getTitle(committeeID));
+        for (Participant user : userList) {
+            if (user.getUserId() == committeesTable.getChairman(committeeID)) {
+                committee.setChair((User)user);
+                break;
+            }
+        }
         committee.setMemberList(rebuildCommitteeMemberList(committeeID, userList));
         committee.setBudgetAccessList(rebuildBudgetAccessList(committeeID, userList));
         committee.setTaskList(rebuildTaskList(committeeID, userList));
@@ -394,9 +400,12 @@ public class EventManager {
                 taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
             }
             
+            committee.setChair(loggedInUser);
             newCommittee = new Committee(committeesTable.createCommittee(new InputCommittee(
                     committee.getTitle(), loggedInUser.getUserId(), budgetAccessIDList,
                     memberIDList, taskIDList, incomeIDList, expenseIDList, 0)), committee);
+            newCommittee.setChair(loggedInUser);
+            System.out.println("CHECKING COMMITTEE CHAIR: " + newCommittee.getChair());
 
             ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
             newCommitteeIDList.add(newCommittee.getCOMMITTEE_ID());
