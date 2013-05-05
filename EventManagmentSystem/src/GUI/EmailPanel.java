@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI; 
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import Email.Email;
