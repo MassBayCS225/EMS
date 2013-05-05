@@ -4,11 +4,14 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -32,6 +35,17 @@ public class Main extends javax.swing.JPanel {
         SwitchingPanelHolder.add(ep, "email");
         manager = MainManager.getInstance();
         setSize(950,750);
+        updateInfo();
+    }
+    
+    public void updateInfo()
+    {
+        DefaultComboBoxModel listModel = new DefaultComboBoxModel();
+        listModel.removeAllElements();
+        for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
+            listModel.addElement(c.getTitle());
+        }
+        committeesComboBox.setModel(listModel);
     }
 
     /**
@@ -50,6 +64,7 @@ public class Main extends javax.swing.JPanel {
         committeesPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         changeCommitteesButton = new javax.swing.JButton();
+        committeesComboBox = new javax.swing.JComboBox();
         participantsPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         changeUserManagementButton = new javax.swing.JButton();
@@ -97,7 +112,7 @@ public class Main extends javax.swing.JPanel {
                     .add(tasksPanelLayout.createSequentialGroup()
                         .add(jLabel5)
                         .add(0, 0, Short.MAX_VALUE))
-                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                 .addContainerGap())
             .add(org.jdesktop.layout.GroupLayout.TRAILING, tasksPanelLayout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
@@ -125,27 +140,33 @@ public class Main extends javax.swing.JPanel {
             }
         });
 
+        committeesComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         org.jdesktop.layout.GroupLayout committeesPanelLayout = new org.jdesktop.layout.GroupLayout(committeesPanel);
         committeesPanel.setLayout(committeesPanelLayout);
         committeesPanelLayout.setHorizontalGroup(
             committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanelLayout.createSequentialGroup()
+                .add(0, 0, Short.MAX_VALUE)
+                .add(changeCommitteesButton))
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(committeesComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(committeesPanelLayout.createSequentialGroup()
-                        .add(10, 10, 10)
-                        .add(changeCommitteesButton))
-                    .add(jLabel6))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(jLabel6)
+                        .add(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         committeesPanelLayout.setVerticalGroup(
             committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel6)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(changeCommitteesButton)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(committeesComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(changeCommitteesButton))
         );
 
         jLabel7.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -310,7 +331,7 @@ public class Main extends javax.swing.JPanel {
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 716, Short.MAX_VALUE)
+            .add(0, 720, Short.MAX_VALUE)
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -345,8 +366,8 @@ public class Main extends javax.swing.JPanel {
                         .add(jLabel11)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(ChangeHomeButton))
-                    .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 56, Short.MAX_VALUE)
+                    .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 60, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(tasksPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(committeesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -377,7 +398,7 @@ public class Main extends javax.swing.JPanel {
                     .add(ChangeHomeButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 649, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -424,6 +445,7 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JButton changeCommitteesButton;
     private javax.swing.JButton changeEmailButton;
     private javax.swing.JButton changeUserManagementButton;
+    private javax.swing.JComboBox committeesComboBox;
     private javax.swing.JPanel committeesPanel;
     private javax.swing.JPanel emailPanel;
     private javax.swing.JButton jButton3;
