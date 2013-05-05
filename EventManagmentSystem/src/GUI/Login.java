@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BackEnd.ManagerSystem.MainManager;
+
 /**
  *
  * @author sara
@@ -13,10 +15,25 @@ public class Login extends javax.swing.JPanel {
     /**
      * Creates new form Login
      */
+    private boolean confirm;
+    
+    private MainManager manager;
     public Login() {
         initComponents();
+        manager = MainManager.getInstance();
     }
 
+    public void createUser()
+    {
+        try
+        {
+            manager.getLogInManager().setLoggedInUser(emailTextField.getText(), passwordField.getText());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,7 +46,7 @@ public class Login extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        signUpButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -49,10 +66,10 @@ public class Login extends javax.swing.JPanel {
         passwordField.setText("jPasswordField1");
         passwordField.setPreferredSize(new java.awt.Dimension(180, 30));
 
-        jButton1.setText("Sign In");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        signUpButton.setText("Sign In");
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                signUpButtonActionPerformed(evt);
             }
         });
 
@@ -63,11 +80,11 @@ public class Login extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap(478, Short.MAX_VALUE)
+                .addContainerGap(483, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jLabel1)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(jButton1)
+                        .add(signUpButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(jButton2))
                     .add(emailTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -77,7 +94,7 @@ public class Login extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(398, Short.MAX_VALUE)
+                .addContainerGap(404, Short.MAX_VALUE)
                 .add(jLabel1)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(emailTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -85,15 +102,16 @@ public class Login extends javax.swing.JPanel {
                 .add(passwordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton1)
+                    .add(signUpButton)
                     .add(jButton2))
                 .add(74, 74, 74))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        confirm = true;
+    }//GEN-LAST:event_signUpButtonActionPerformed
 
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
@@ -101,9 +119,9 @@ public class Login extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton signUpButton;
     // End of variables declaration//GEN-END:variables
 }
