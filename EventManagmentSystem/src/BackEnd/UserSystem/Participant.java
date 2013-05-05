@@ -1,8 +1,5 @@
 package BackEnd.UserSystem;
 
-import EMS_Database.impl.UserData_Table;
-
-
 /**
  * This class represents a Participant of an event.
  * @author Anderson Santana
@@ -206,7 +203,6 @@ public class Participant{
    */
   @Override
   public String toString(){
-      System.out.println("INSIDE PARTICIPANT TO STRING: " + UID);
     String info = "User ID: " + UID + "\n" + firstName + " " + lastName + "\n" + 
                     emailAddress + "\n" + 
                     phoneNumber + "\n" +
