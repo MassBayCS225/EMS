@@ -18,6 +18,7 @@ import BackEnd.UserSystem.User;
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
 import EMS_Database.impl.SubEvent_Table;
+import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
 import java.util.ArrayList;
 
@@ -43,6 +44,10 @@ public class SetUpData {
         System.out.println("DELETINGSUBEVENTS");
         SubEvent_Table set = new SubEvent_Table();
         set.removeAll("SUBEVENTS");
+        
+        System.out.println("DELETING TASKS");
+        Tasks_Table tt = new Tasks_Table();
+        tt.removeAll("TASKS");
         
         //Create Event
         Event e = new Event(0,"SetupTest1");
@@ -98,6 +103,7 @@ public class SetUpData {
             {
                 manager.getUserManager().setSelectedUser((manager.getUserManager().createUser(tu)));
                 manager.getEventManager().addOrganizer(manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser());
+                System.out.println(manager.getLogInManager().getLoggedInUser());
             }
             System.out.println("Users created.");
         }
@@ -126,7 +132,7 @@ public class SetUpData {
                 {
                     manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(tc, manager.getLogInManager().getLoggedInUser()));
                     manager.getCommitteeManager().addMember(manager.getUserManager().getSelectedUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
-                    manager.getCommitteeManager().editChair(manager.getUserManager().getSelectedUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    //manager.getCommitteeManager().editChair(manager.g, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
                     for(int i = 1; i < 4; i++)
                     {
                         Task t = new Task();
