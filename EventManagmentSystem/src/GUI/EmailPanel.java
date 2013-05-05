@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI; 
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import Email.Email;
@@ -23,7 +23,7 @@ public class EmailPanel extends javax.swing.JPanel {
     public EmailPanel() throws PrivilegeInsufficientException {
         initComponents();
         manager = MainManager.getInstance();
-        welcomeLabel.setText("Welcome " + manager.getUserManager().getSelectedUser().getFirstName() + " " + manager.getUserManager().getSelectedUser().getLastName());
+        welcomeLabel.setText("Welcome " + manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName());
         setVisible(true);
     }
 
@@ -223,7 +223,7 @@ public class EmailPanel extends javax.swing.JPanel {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         ArrayList<String> toList = new  ArrayList<String>(Arrays.asList(toField.getText().split(";")));
         try {
-            Email.send(manager.getUserManager().getSelectedUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getUserManager().getSelectedUser().getFirstName() + " " + manager.getUserManager().getSelectedUser().getLastName()));
+            Email.send(manager.getLogInManager().getLoggedInUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName()));
         } catch (Exception ex) {
             Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
