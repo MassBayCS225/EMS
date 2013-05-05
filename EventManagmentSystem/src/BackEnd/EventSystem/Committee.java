@@ -60,33 +60,49 @@ public class Committee implements Reportable {
     }
     
     /**
-     * Returns the event ID of the committee.
-     * @return The committee event ID.
-     */
-    /**
-     * Sets the committee ID.
+     * Sets the committee ID to the given committee ID value.
      * @param committee_id The committee ID.
      */
     private void setCOMMITTEE_ID(int committee_id) {
         COMMITTEE_ID = committee_id;
     }
     
+    /**
+     * Returns the committee ID.
+     * @return COMMITTEE_ID The committee ID.
+     */
     public int getCOMMITTEE_ID() {
         return COMMITTEE_ID;
     }
     
+    /**
+     * Sets the committee title to the given title.
+     * @param title The committee title.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
     
+    /**
+     * Returns the committee title.
+     * @return title The committee's title.
+     */
     public String getTitle() {
         return title;
     }
     
+    /**
+     * Stores a list of committee members.
+     * @param memberList
+     */
     public void setMemberList(ArrayList<User> memberList) {
         this.memberList = memberList;
     }
     
+    /**
+     * Returns the committee member list.
+     * @return memberList
+     */
     public ArrayList<User> getMemberList() {
         return memberList;
     }
