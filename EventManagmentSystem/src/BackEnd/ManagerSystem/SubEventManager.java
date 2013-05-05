@@ -1,12 +1,12 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.*;
-import BackEnd.UserSystem.*;
-
-import java.sql.Timestamp;
-
-import EMS_Database.*;
-import EMS_Database.impl.*;
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.SubEvent;
+import BackEnd.UserSystem.Location;
+import BackEnd.UserSystem.User;
+import EMS_Database.DoesNotExistException;
+import EMS_Database.impl.SubEvent_Table;
 
 /**
  * This class serves as a liaison between the GUI and the back end and the data.
@@ -39,21 +39,19 @@ public class SubEventManager {
 
     public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
-            selectedSubEvent.setDescription(description);
-            // write to database
-            
-            subEventsTable.setDescription(selectedSubEvent.getSUB_EVENT_ID(), description); 
+            selectedSubEvent.setDescription(description);  
+            subEventsTable.setDescription(selectedSubEvent.getSUB_EVENT_ID(), description);    
         }
     }
 
     public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.setLocation(location);
-            // write to database
-            
-            // subEventsTable.setDetails(selectedSubEvent.getSUB_EVENT_ID(), location.getDetails());
+            subEventsTable.setDetails(selectedSubEvent.getSUB_EVENT_ID(), location.getDetails());
             subEventsTable.setStreet(selectedSubEvent.getSUB_EVENT_ID(), location.getStreet());
             subEventsTable.setCity(selectedSubEvent.getSUB_EVENT_ID(), location.getCity());
             subEventsTable.setState(selectedSubEvent.getSUB_EVENT_ID(), location.getState());
@@ -64,18 +62,18 @@ public class SubEventManager {
 
     public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
-            // write to database
             subEventsTable.setStartDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getStartDateTimeTimestamp()); 
         }
     }
 
     public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
+        
         if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedSubEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
-            // write to database
             subEventsTable.setEndDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getEndDateTimeTimestamp()); 
         }
     }

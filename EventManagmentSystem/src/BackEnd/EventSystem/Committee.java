@@ -20,7 +20,7 @@ public class Committee implements Reportable {
         title = new String();
         memberList = new ArrayList<User>();
         budgetAccessList = new ArrayList<User>();
-        //chair = new User();
+        chair = new User();
         taskList = new ArrayList<Task>();
         budget = new Budget();
     }
@@ -30,7 +30,7 @@ public class Committee implements Reportable {
         this.title = title;
         memberList = new ArrayList<User>();
         budgetAccessList = new ArrayList<User>();
-        //chair = new User();
+        chair = new User();
         taskList = new ArrayList<Task>();
         budget = new Budget();
     }
@@ -40,7 +40,7 @@ public class Committee implements Reportable {
         title = committee.getTitle();
         memberList = committee.getMemberList();
         budgetAccessList = committee.getBudgetAccessList();
-        //chair = new User();
+        chair = new User();
         taskList = committee.getTaskList();
         budget = committee.getBudget();
     }

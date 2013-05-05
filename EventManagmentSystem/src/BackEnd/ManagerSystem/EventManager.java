@@ -17,15 +17,15 @@ import java.util.ArrayList;
  */
 public class EventManager {
 
-    private ArrayList<Event> eventList;
-    private Event selectedEvent;
-    private Events_Table eventsTable;
     private UserData_Table usersTable;
+    private Events_Table eventsTable;
     private SubEvent_Table subEventsTable;
     private Committees_Table committeesTable;
     private Tasks_Table tasksTable;
     private Income_Table incomeTable;
     private Expense_Table expenseTable;
+    private ArrayList<Event> eventList;
+    private Event selectedEvent;
 
     public EventManager(
             ArrayList<Participant> userList, UserData_Table usersTable, Tasks_Table tasksTable,
@@ -34,17 +34,18 @@ public class EventManager {
             throws DoesNotExistException {
 
         this.eventList = new ArrayList<Event>();
-        this.eventsTable = new Events_Table();
         this.usersTable = usersTable;
-        this.tasksTable = tasksTable;
+        this.eventsTable = new Events_Table();
         this.subEventsTable = subEventsTable;
         this.committeesTable = committeesTable;
+        this.tasksTable = tasksTable;
         this.incomeTable = incomeTable;
         this.expenseTable = expenseTable;
         rebuildEventList(userList);
     }
 
-    private void rebuildEventList(ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
+    
+    private void rebuildEventList(ArrayList<Participant> userList)
             throws DoesNotExistException {
         
         ArrayList<Integer> eventIDList = eventsTable.currentUIDList("EVENTS");
@@ -53,7 +54,7 @@ public class EventManager {
         }
     }
 
-    private Event rebuildEvent(int eventID, ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
+    private Event rebuildEvent(int eventID, ArrayList<Participant> userList)
             throws DoesNotExistException {
 
         Event event = new Event(eventID, eventsTable.getDescription(eventID));
@@ -241,6 +242,11 @@ public class EventManager {
         Expense expense = new Expense(expenseID, expenseTable.getValue(expenseID), expenseTable.getDescription(expenseID));
         return expense;
     }
+    
+    
+    public Events_Table getEventsTable(){
+        return eventsTable;
+    }
 
     public ArrayList<Event> getEventList() {
         return eventList;
@@ -364,7 +370,7 @@ public class EventManager {
 
     public Committee createCommittee(Committee committee, User loggedInUser)
             throws PrivilegeInsufficientException, DoesNotExistException {
-
+        
         Committee newCommittee = null;
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             ArrayList<Integer> budgetAccessIDList = new ArrayList<Integer>();
@@ -387,9 +393,9 @@ public class EventManager {
             for (int i = 0; i < committee.getTaskList().size(); i++) {
                 taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
             }
-            committee.setChair(loggedInUser);
+            
             newCommittee = new Committee(committeesTable.createCommittee(new InputCommittee(
-                    committee.getTitle(), committee.getChair().getUserId(), budgetAccessIDList,
+                    committee.getTitle(), loggedInUser.getUserId(), budgetAccessIDList,
                     memberIDList, taskIDList, incomeIDList, expenseIDList, 0)), committee);
 
             ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
