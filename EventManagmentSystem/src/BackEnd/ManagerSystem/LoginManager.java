@@ -13,6 +13,7 @@ public class LoginManager {
     private User loggedInUser;
     private ArrayList<Participant> userList;
     private final String INCORRECT_LOG_IN = "Incorrect log in information.";
+    
 
     public LoginManager(ArrayList<Participant> userList) {
         this.userList = userList;
@@ -40,11 +41,11 @@ public class LoginManager {
     private boolean checkPassword(User user, String password)
             throws LogInIncorrectException {
 
-        if (user.getPassword().equals(password)) {
+        if (user.getPassword().equals(""+password.hashCode()))
             return true;
-        } else {
+        else 
             throw new LogInIncorrectException(INCORRECT_LOG_IN);
-        }
+        
     }
 
     public User getLoggedInUser() {
