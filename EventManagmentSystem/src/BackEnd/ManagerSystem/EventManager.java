@@ -41,11 +41,11 @@ public class EventManager {
         this.committeesTable = committeesTable;
         this.incomeTable = incomeTable;
         this.expenseTable = expenseTable;
-        ObjectRebuilder.rebuildEventList(userList);
+        rebuildEventList(userList);
     }
 
-    /*
-    private void rebuildEventList(ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
+    
+    private void rebuildEventList(ArrayList<Participant> userList)
             throws DoesNotExistException {
         
         ArrayList<Integer> eventIDList = eventsTable.currentUIDList("EVENTS");
@@ -54,7 +54,7 @@ public class EventManager {
         }
     }
 
-    private Event rebuildEvent(int eventID, ArrayList<Participant> userList) // FIGURE OUT HOW TO HANDLE EXCEPTION
+    private Event rebuildEvent(int eventID, ArrayList<Participant> userList)
             throws DoesNotExistException {
 
         Event event = new Event(eventID, eventsTable.getDescription(eventID));
@@ -242,7 +242,7 @@ public class EventManager {
         Expense expense = new Expense(expenseID, expenseTable.getValue(expenseID), expenseTable.getDescription(expenseID));
         return expense;
     }
-*/
+
 
     public ArrayList<Event> getEventList() {
         return eventList;
