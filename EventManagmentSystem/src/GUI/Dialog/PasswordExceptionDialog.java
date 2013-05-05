@@ -43,10 +43,10 @@ public class PasswordExceptionDialog extends javax.swing.JDialog {
         headerLabel1.setText("Warning:");
 
         headerLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        headerLabel2.setText("Unexpected error found in");
+        headerLabel2.setText("Incorrect email address");
 
         headerLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        headerLabel3.setText("given password.");
+        headerLabel3.setText("or password.");
 
         errorLabel.setText("Error Message");
 
@@ -64,19 +64,19 @@ public class PasswordExceptionDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(headerLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(headerLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(headerLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(errorLabel)
-                            .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                            .addComponent(headerLabel3)
+                            .addComponent(headerLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(errorLabel)))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,9 +87,9 @@ public class PasswordExceptionDialog extends javax.swing.JDialog {
                     .addComponent(headerLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(headerLabel3)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(errorLabel)
-                .addGap(19, 19, 19)
+                .addGap(11, 11, 11)
                 .addComponent(closeButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
