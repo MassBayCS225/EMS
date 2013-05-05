@@ -56,6 +56,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         removeTaskButton = new javax.swing.JButton();
         addTaskButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        committeeChangeButton = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(387, 327));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -161,6 +162,14 @@ public class CommitteePanel extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 99, 20, 146));
+
+        committeeChangeButton.setText("change");
+        committeeChangeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                committeeChangeButtonActionPerformed(evt);
+            }
+        });
+        add(committeeChangeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
  
     public void setCommittee(Committee c)
@@ -177,12 +186,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             headerLabel.setText(c.getTitle());
         }
         
-        if(c.getChair() != null){
-            headNameLabel.setText(c.getChair().getFirstName() + " " + c.getChair().getLastName());
-        }
-        else{
-            headNameLabel.setText("");
-        }
+        headNameLabel.setText(c.getChair().getFirstName() + " " + c.getChair().getLastName());
             
         DefaultListModel tModel = new DefaultListModel();
         DefaultListModel mModel = new DefaultListModel();
@@ -285,11 +289,30 @@ public class CommitteePanel extends javax.swing.JPanel {
         updateInfo();
     }//GEN-LAST:event_addTaskButtonActionPerformed
 
+    private void committeeChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_committeeChangeButtonActionPerformed
+        // TODO add your handling code here:
+        FindMemberDialog fmd = new FindMemberDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        fmd.setVisible(true);
+        if(fmd.getConfirm())
+        {
+            try
+            {
+            manager.getCommitteeManager().editChair(fmd.createUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        updateInfo();
+    }//GEN-LAST:event_committeeChangeButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMemberButton;
     private javax.swing.JButton addTaskButton;
     private javax.swing.JButton budgetButton;
     private javax.swing.JButton closeButton;
+    private javax.swing.JButton committeeChangeButton;
     private javax.swing.JLabel headLabel;
     private javax.swing.JLabel headNameLabel;
     private javax.swing.JLabel headerLabel;
