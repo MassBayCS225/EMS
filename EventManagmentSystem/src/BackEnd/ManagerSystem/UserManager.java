@@ -146,7 +146,7 @@ public class UserManager {
 
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPassword(password, passwordMatch);
-            usersTable.setPwd(selectedUser.getUserId(), password);
+            usersTable.setPwd(selectedUser.getUserId(), ""+password.hashCode());
         }
     }
 
