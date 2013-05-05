@@ -68,7 +68,7 @@ public class TimeSchedule {
         else
             throw new IllegalArgumentException("Invalid year entered.");
         
-        if (month >= 0 && month < 12)
+        if (month > 0 && month <= 12)
             endDateTime.set(Calendar.MONTH, month - 1);
         else
             throw new IllegalArgumentException("Invalid numerical month entered.");
