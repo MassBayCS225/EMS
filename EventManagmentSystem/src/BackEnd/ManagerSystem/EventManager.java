@@ -400,12 +400,12 @@ public class EventManager {
                 taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
             }
             
-            committee.setChair(loggedInUser);
+            if (committee.getChair().getUserId() == 0) {
+                committee.setChair(loggedInUser);
+            }
             newCommittee = new Committee(committeesTable.createCommittee(new InputCommittee(
-                    committee.getTitle(), loggedInUser.getUserId(), budgetAccessIDList,
+                    committee.getTitle(), committee.getChair().getUserId(), budgetAccessIDList,
                     memberIDList, taskIDList, incomeIDList, expenseIDList, 0)), committee);
-            newCommittee.setChair(loggedInUser);
-            System.out.println("CHECKING COMMITTEE CHAIR: " + newCommittee.getChair());
 
             ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
             newCommitteeIDList.add(newCommittee.getCOMMITTEE_ID());
