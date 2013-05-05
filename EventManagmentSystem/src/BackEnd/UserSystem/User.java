@@ -72,7 +72,7 @@ public class User extends Participant
         {
             if(verifyPassword(pword, pwordMatch))
             {
-                password = pword;
+                password = ""+pword.hashCode();
             }
             else
                 throw new PasswordMismatchError();
