@@ -62,11 +62,11 @@ public class PrivilegeManager {
     }
 
     public static boolean hasCommitteePrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
-//        if (selectedCommittee.getChair().equals(loggedInUser)) {
-//            return true;
-//        } else {
+        if (selectedCommittee.getChair().equals(loggedInUser)) {
+            return true;
+        } else {
             return hasEventPrivilege(loggedInUser, selectedEvent);
-//        }
+        }
     }
 
     public static boolean hasTaskPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee, Task selectedTask) throws PrivilegeInsufficientException {
