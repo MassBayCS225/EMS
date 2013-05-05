@@ -1,11 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.*;
-import BackEnd.UserSystem.*;
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Task;
+import BackEnd.UserSystem.User;
 
 /**
  * This class serves as a collection of static methods that help manage whether
@@ -21,7 +19,9 @@ public class PrivilegeManager {
     private PrivilegeManager() {
     }
 
-    public static boolean hasAdminPrivilege(User loggedInUser) throws PrivilegeInsufficientException {
+    public static boolean hasAdminPrivilege(User loggedInUser)
+            throws PrivilegeInsufficientException {
+
         if (loggedInUser.getAdminPrivilege()) {
             return true;
         } else {
@@ -29,7 +29,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasUserPrivilege(User loggedInUser, User selectedUser) throws PrivilegeInsufficientException {
+    public static boolean hasUserPrivilege(User loggedInUser, User selectedUser)
+            throws PrivilegeInsufficientException {
+
         if (loggedInUser.equals(selectedUser)) {
             return true;
         } else {
@@ -37,7 +39,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasEventCreationPrivilege(User loggedInUser) throws PrivilegeInsufficientException {
+    public static boolean hasEventCreationPrivilege(User loggedInUser)
+            throws PrivilegeInsufficientException {
+
         if (loggedInUser.getEventCreationPrivilege()) {
             return true;
         } else {
@@ -45,7 +49,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasEventPrivilege(User loggedInUser, Event selectedEvent) throws PrivilegeInsufficientException {
+    public static boolean hasEventPrivilege(User loggedInUser, Event selectedEvent)
+            throws PrivilegeInsufficientException {
+
         if (selectedEvent.getOrganizerList().contains(loggedInUser)) {
             return true;
         } else {
@@ -53,7 +59,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasSubEventPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public static boolean hasSubEventPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException {
+
         if (selectedCommittee.getChair().equals(loggedInUser)) {
             return true;
         } else {
@@ -61,7 +69,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasCommitteePrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public static boolean hasCommitteePrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException {
+
         if (selectedCommittee.getChair().equals(loggedInUser)) {
             return true;
         } else {
@@ -69,7 +79,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasTaskPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee, Task selectedTask) throws PrivilegeInsufficientException {
+    public static boolean hasTaskPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee, Task selectedTask)
+            throws PrivilegeInsufficientException {
+
         if (selectedTask.getResponsibleList().contains(loggedInUser)) {
             return true;
         } else {
@@ -77,7 +89,9 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasBudgetPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee) throws PrivilegeInsufficientException {
+    public static boolean hasBudgetPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException {
+
         if (selectedCommittee.getBudgetAccessList().contains(loggedInUser)) {
             return true;
         } else {
