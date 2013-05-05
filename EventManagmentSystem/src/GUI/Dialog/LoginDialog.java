@@ -25,6 +25,11 @@ public class LoginDialog extends javax.swing.JDialog {
         manager = MainManager.getInstance();
     }
 
+    public boolean getConfirm()
+    {
+        return confirm;s
+    }
+    
     public void createUser()
     {
         try
