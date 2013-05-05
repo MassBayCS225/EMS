@@ -121,10 +121,10 @@ public class CommitteeManager {
                     (task.getCompleted() == true? 1 : 0), responsibleIDList))
                     , task);
             
+            selectedCommittee.getTaskList().add(newTask);
             ArrayList<Integer> newTaskList = committeesTable.getTaskList(selectedCommittee.getCOMMITTEE_ID());
             newTaskList.add(newTask.getTASK_ID());
             committeesTable.setTaskList(selectedCommittee.getCOMMITTEE_ID(), newTaskList);
-            selectedCommittee.getTaskList().add(newTask);
         }
         return newTask;
     }
