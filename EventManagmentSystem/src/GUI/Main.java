@@ -27,7 +27,9 @@ public class Main extends javax.swing.JPanel {
         MainPanel.setLayout(new BorderLayout());
         MainPanel.add(cp, BorderLayout.NORTH);
         CommitteeListPanel clp = new CommitteeListPanel();
+        EmailPanel ep = new EmailPanel();
         SwitchingPanelHolder.add(clp, "committees");
+        SwitchingPanelHolder.add(ep, "email");
         manager = MainManager.getInstance();
         setSize(950,750);
     }
