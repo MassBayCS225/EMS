@@ -29,7 +29,7 @@ public class Main extends javax.swing.JPanel {
         CommitteeListPanel clp = new CommitteeListPanel();
         SwitchingPanelHolder.add(clp, "committees");
         manager = MainManager.getInstance();
-        setSize(850,650);
+        setSize(950,750);
     }
 
     /**
@@ -48,11 +48,9 @@ public class Main extends javax.swing.JPanel {
         committeesPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         changeCommitteesButton = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox();
         participantsPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         changeUserManagementButton = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
         reportsPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
@@ -74,8 +72,8 @@ public class Main extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(153, 153, 255));
         setMaximumSize(new java.awt.Dimension(32767, 600));
-        setMinimumSize(new java.awt.Dimension(900, 700));
-        setPreferredSize(new java.awt.Dimension(900, 700));
+        setMinimumSize(new java.awt.Dimension(950, 750));
+        setPreferredSize(new java.awt.Dimension(950, 750));
 
         jLabel5.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel5.setText("Tasks Progress");
@@ -96,8 +94,8 @@ public class Main extends javax.swing.JPanel {
                 .add(tasksPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(tasksPanelLayout.createSequentialGroup()
                         .add(jLabel5)
-                        .add(0, 50, Short.MAX_VALUE))
-                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addContainerGap())
             .add(org.jdesktop.layout.GroupLayout.TRAILING, tasksPanelLayout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
@@ -125,23 +123,18 @@ public class Main extends javax.swing.JPanel {
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         org.jdesktop.layout.GroupLayout committeesPanelLayout = new org.jdesktop.layout.GroupLayout(committeesPanel);
         committeesPanel.setLayout(committeesPanelLayout);
         committeesPanelLayout.setHorizontalGroup(
             committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanelLayout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
-                .add(changeCommitteesButton))
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(committeesPanelLayout.createSequentialGroup()
-                        .add(jLabel6)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(jComboBox3, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .add(10, 10, 10)
+                        .add(changeCommitteesButton))
+                    .add(jLabel6))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         committeesPanelLayout.setVerticalGroup(
             committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -149,10 +142,8 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(jLabel6)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jComboBox3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(changeCommitteesButton)
-                .addContainerGap())
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jLabel7.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -165,23 +156,18 @@ public class Main extends javax.swing.JPanel {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         org.jdesktop.layout.GroupLayout participantsPanelLayout = new org.jdesktop.layout.GroupLayout(participantsPanel);
         participantsPanel.setLayout(participantsPanelLayout);
         participantsPanelLayout.setHorizontalGroup(
             participantsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, participantsPanelLayout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
-                .add(changeUserManagementButton))
             .add(participantsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(participantsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(participantsPanelLayout.createSequentialGroup()
-                        .add(jLabel7)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jComboBox2, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .add(10, 10, 10)
+                        .add(changeUserManagementButton))
+                    .add(jLabel7))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         participantsPanelLayout.setVerticalGroup(
             participantsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -189,10 +175,8 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(jLabel7)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jComboBox2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(changeUserManagementButton)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jLabel4.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -294,7 +278,7 @@ public class Main extends javax.swing.JPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel8)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(changeEmailButton))
         );
         emailPanelLayout.setVerticalGroup(
@@ -324,7 +308,7 @@ public class Main extends javax.swing.JPanel {
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 706, Short.MAX_VALUE)
+            .add(0, 716, Short.MAX_VALUE)
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -359,8 +343,8 @@ public class Main extends javax.swing.JPanel {
                         .add(jLabel11)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(ChangeHomeButton))
-                    .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 25, Short.MAX_VALUE)
+                    .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 56, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(tasksPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(committeesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -391,7 +375,7 @@ public class Main extends javax.swing.JPanel {
                     .add(ChangeHomeButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 649, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -418,15 +402,15 @@ public class Main extends javax.swing.JPanel {
         cl.show(SwitchingPanelHolder, "committees");
     }//GEN-LAST:event_changeCommitteesButtonActionPerformed
 
-    private void changeUserManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUserManagementButtonActionPerformed
-        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
-        cl.show(SwitchingPanelHolder, "userManagement");
-    }//GEN-LAST:event_changeUserManagementButtonActionPerformed
-
     private void ChangeHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeHomeButtonActionPerformed
         CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "home");
     }//GEN-LAST:event_ChangeHomeButtonActionPerformed
+
+    private void changeUserManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUserManagementButtonActionPerformed
+        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
+        cl.show(SwitchingPanelHolder, "userManagement");
+    }//GEN-LAST:event_changeUserManagementButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChangeHomeButton;
@@ -442,8 +426,6 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JPanel emailPanel;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
