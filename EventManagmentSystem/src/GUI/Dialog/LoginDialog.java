@@ -4,7 +4,10 @@
  */
 package GUI.Dialog;
 
+import BackEnd.ManagerSystem.LogInIncorrectException;
 import BackEnd.ManagerSystem.MainManager;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -17,7 +20,7 @@ public class LoginDialog extends javax.swing.JDialog {
      */
     private boolean confirm;
     private MainManager manager;
-    
+
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -25,23 +28,20 @@ public class LoginDialog extends javax.swing.JDialog {
         manager = MainManager.getInstance();
     }
 
-    public boolean getConfirm()
-    {
-        return confirm;s
+    public boolean getConfirm() {
+        return confirm;
     }
-    
-    public void createUser()
-    {
-        try
-        {
-            manager.getLogInManager().setLoggedInUser(emailField.getText(), passwordField.getText());
-        }
-        catch (Exception e)
-        {
-            System.out.println("Can't log in.");
-            e.printStackTrace();
+
+    public void createUser() {
+        try {
+            manager.getLogInManager().setLoggedInUser(emailField.getText(),
+                    new String(passwordField.getPassword()));
+        } catch (LogInIncorrectException e) {
+            PasswordExceptionDialog passwordExceptionDialog = new PasswordExceptionDialog(new JFrame(), true, e);
+            passwordExceptionDialog.setVisible(true);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +58,11 @@ public class LoginDialog extends javax.swing.JDialog {
         loginButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Username(email)");
 
@@ -124,6 +129,10 @@ public class LoginDialog extends javax.swing.JDialog {
         confirm = true;
         this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.exit(0);// TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
