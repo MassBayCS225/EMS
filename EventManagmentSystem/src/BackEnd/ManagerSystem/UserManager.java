@@ -90,7 +90,7 @@ public class UserManager {
         return newUser;
     }
 
-    public void removeUser(User user)
+    public void deleteUser(User user)
             throws DoesNotExistException {
         userList.remove(selectedUser);
         usersTable.removeUser(selectedUser.getUserId());

@@ -135,7 +135,7 @@ public class CommitteeManager {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getTaskList().remove(task);
             ArrayList<Integer> newTaskList = committeesTable.getTaskList(selectedCommittee.getCOMMITTEE_ID());
-            newTaskList.remove(task.getTASK_ID());
+            newTaskList.remove(new Integer(task.getTASK_ID()));
             committeesTable.setTaskList(selectedCommittee.getCOMMITTEE_ID(), newTaskList);
             tasksTable.removeTask(task.getTASK_ID());
         }

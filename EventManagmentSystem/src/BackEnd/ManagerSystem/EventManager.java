@@ -365,10 +365,10 @@ public class EventManager {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
 
             Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
-            ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
-            newSubEventList.remove(subEventID);
+            ArrayList<Integer> newSubEventIDList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
+            newSubEventIDList.remove(subEventID);
 
-            eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
+            eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventIDList);
             subEventsTable.removeSubEvent(subEventID);
             selectedEvent.getSubEventList().remove(subEvent);
         }
@@ -424,7 +424,7 @@ public class EventManager {
             deleteIncomeList(committee);
             deleteExpenseList(committee);
             ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
-            newCommitteeIDList.remove(committee.getCOMMITTEE_ID());
+            newCommitteeIDList.remove(new Integer(committee.getCOMMITTEE_ID()));
 
             eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeIDList);
             committeesTable.removeCommittee(committee.getCOMMITTEE_ID());
@@ -492,10 +492,10 @@ public class EventManager {
         if (!(participant instanceof User)) {
             usersTable.removeUser(participant.getUserId());
         }
-        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
-        newParticipantList.remove(participant.getUserId());
+        ArrayList<Integer> newParticipantIDList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
+        newParticipantIDList.remove(new Integer(participant.getUserId()));
 
-        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
+        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantIDList);
         selectedEvent.getParticipantList().remove(participant);
     }
 
