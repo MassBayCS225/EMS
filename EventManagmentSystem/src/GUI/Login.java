@@ -27,7 +27,7 @@ public class Login extends javax.swing.JPanel {
     {
         try
         {
-            manager.getLogInManager().setLoggedInUser(emailTextField.getText(), passwordField.getText());
+            manager.getLogInManager().setLoggedInUser(emailTextField.getText(), new String(passwordField.getPassword()));
         }
         catch (Exception e)
         {
