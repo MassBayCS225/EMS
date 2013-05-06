@@ -4,8 +4,10 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Budget;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Income;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.EventSystem.Task;
 import BackEnd.EventSystem.TimeSchedule;
@@ -138,6 +140,13 @@ public class SetUpData {
                         Task t = new Task();
                         manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent()));
                         manager.getTaskManager().editDescription("Task " + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                    }
+                    for(int i = 1; i < 4; i++)
+                    {
+                        Budget b = manager.getCommitteeManager().getSelectedCommittee().getBudget();
+                        manager.getBudgetManager().setSelectedBudget(b);
+                        manager.getBudgetItemManager().setSelectedBudgetItem(manager.getBudgetManager().createIncome(new Income(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
+                        manager.getBudgetItemManager().editDescription("test"+i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                     }
                 }
             System.out.println("Committees created.");
