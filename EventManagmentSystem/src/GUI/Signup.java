@@ -321,6 +321,9 @@ public class Signup extends javax.swing.JPanel {
         if(zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code")){
             message += "\nMissing zip code.";}
         
+        if(zipcodeField.getText().length() < 5){
+            message += "\nMissing a 5 digits zip code.";}
+        
         if(countryField.getText().equals("") || countryField.getText().equals("Country")){
             message += "\nMissing country.";}
         
