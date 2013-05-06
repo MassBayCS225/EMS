@@ -4,17 +4,31 @@
  */
 package GUI;
 
+import BackEnd.ManagerSystem.MainManager;
+import BackEnd.ManagerSystem.UserManager;
+import BackEnd.UserSystem.IllegalCharacterException;
+import BackEnd.UserSystem.PasswordMismatchError;
+import BackEnd.UserSystem.PhoneNumber;
+import BackEnd.UserSystem.User;
+import javax.swing.JDialog;
+
 /**
  *
  * @author sara
  */
 public class Signup extends javax.swing.JPanel {
 
+    UserManager userManager;
+    JDialog parentDialog;
     /**
      * Creates new form Signup
      */
-    public Signup() {
+    public Signup(JDialog parentDialog) {
         initComponents();
+
+        this.parentDialog = parentDialog;
+        MainManager mainManager = MainManager.getInstance();
+        userManager = mainManager.getUserManager();
     }
 
     /**
@@ -63,7 +77,6 @@ public class Signup extends javax.swing.JPanel {
 
         firstNameField.setText("First");
         firstNameField.setPreferredSize(new java.awt.Dimension(380, 28));
-        firstNameField.setSize(new java.awt.Dimension(380, 28));
 
         lastNameField.setText("Last");
         lastNameField.setPreferredSize(new java.awt.Dimension(360, 28));
@@ -141,6 +154,12 @@ public class Signup extends javax.swing.JPanel {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         signupButton.setText("Sign up");
+        signupButton.setActionCommand("signup");
+        signupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupButtonActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -167,7 +186,7 @@ public class Signup extends javax.swing.JPanel {
                     .add(countryField))
                 .add(18, 18, 18)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, Short.MAX_VALUE)
+                .add(18, 21, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
@@ -179,7 +198,7 @@ public class Signup extends javax.swing.JPanel {
                             .add(reenterPassWordField))
                         .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 350, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, signupButton))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -200,7 +219,7 @@ public class Signup extends javax.swing.JPanel {
                             .add(layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 51, Short.MAX_VALUE)
                                 .add(passwordLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(passwordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -264,6 +283,30 @@ public class Signup extends javax.swing.JPanel {
     private void countryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_countryFieldActionPerformed
+
+    private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
+        try {
+            User newUser = new User(firstNameField.getText(),
+                    lastNameField.getText(),
+                    emailField.getText(),
+                    passwordField.getText(),
+                    reenterPassWordField.getText());
+            newUser.getAddress().setStreet(streetField.getText());
+            newUser.getAddress().setCity(cityField.getText());
+            newUser.getAddress().setState(stateField.getText());
+            newUser.getAddress().setZipCode(zipcodeField.getText());
+            newUser.getAddress().setCountry(countryField.getText());
+            newUser.setPhoneNumber(new PhoneNumber(phoneNumberField.getText()));  
+            
+            userManager.getUserList().add(userManager.createUser(newUser));
+            parentDialog.dispose();
+            
+        } catch (PasswordMismatchError e) {
+        } catch (IllegalCharacterException error) {
+        }
+        
+
+    }//GEN-LAST:event_signupButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
