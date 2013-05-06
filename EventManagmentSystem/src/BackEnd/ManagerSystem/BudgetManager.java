@@ -98,7 +98,7 @@ public class BudgetManager {
         if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedBudget.getIncomeList().remove(income);
             ArrayList<Integer> newIncomeIDList = committeesTable.getIncome(selectedCommittee.getCOMMITTEE_ID());
-            newIncomeIDList.remove(income.getBUDGET_ITEM_ID());
+            newIncomeIDList.remove(new Integer(income.getBUDGET_ITEM_ID()));
             committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newIncomeIDList);
             incomeTable.removeBudgetItem(income.getBUDGET_ITEM_ID());
         }
