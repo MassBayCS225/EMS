@@ -4,9 +4,11 @@
  */
 package GUI;
 import BackEnd.EventSystem.Event;
-import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
+import GUI.Dialog.LoginDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
 
@@ -31,6 +33,14 @@ public class Home extends javax.swing.JFrame {
         manager = MainManager.getInstance();
         try
         {
+            while (manager.getLogInManager().getLoggedInUser() == null) {
+                LoginDialog ld = new LoginDialog(this, true);
+                ld.setVisible(true);
+                if (ld.getConfirm()) {
+                    ld.createUser();
+                    manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
+                }
+            }
             Main m = new Main();
             add(m);
         }

@@ -483,7 +483,7 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="GUI.Budget" name="budget1">
+        <Component class="GUI.BudgetPanel" name="budget1">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[64, 48]"/>
