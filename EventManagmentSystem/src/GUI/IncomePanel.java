@@ -159,7 +159,7 @@ public class IncomePanel extends javax.swing.JPanel {
 
     private void deleteIncomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteIncomeButtonActionPerformed
         // TODO add your handling code here:
-        int selection = incomeTable.getSelectedRowCount();
+        int selection = incomeTable.getSelectedRow();
         Income income = manager.getCommitteeManager().getSelectedCommittee().getBudget().getIncomeList().get(selection);
         try
         {
