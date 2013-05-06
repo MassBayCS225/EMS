@@ -83,6 +83,11 @@ public class LoginDialog extends javax.swing.JDialog {
                 passwordFieldActionPerformed(evt);
             }
         });
+        passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordFieldFocusGained(evt);
+            }
+        });
 
         loginButton.setText("Log In");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -161,6 +166,14 @@ public class LoginDialog extends javax.swing.JDialog {
         SignupDialog signupDialog = new SignupDialog((JFrame)SwingUtilities.windowForComponent(this), true);
         signupDialog.setVisible(true);
     }//GEN-LAST:event_signUpActionPerformed
+
+    private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
+        // TODO add your handling code here:
+        if(new String(passwordField.getPassword()).equals("password"))
+        {
+            passwordField.selectAll();
+        }
+    }//GEN-LAST:event_passwordFieldFocusGained
 
     /**
      * @param args the command line arguments
