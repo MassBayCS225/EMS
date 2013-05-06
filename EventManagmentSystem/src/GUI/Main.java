@@ -83,7 +83,7 @@ public class Main extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         SwitchingPanelHolder = new javax.swing.JPanel();
         MainPanel = new javax.swing.JPanel();
-        budget1 = new GUI.Budget();
+        budget1 = new GUI.BudgetPanel();
         userManagementPanel1 = new GUI.UserManagementPanel();
         ChangeHomeButton = new javax.swing.JButton();
 
@@ -439,7 +439,7 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JButton ChangeHomeButton;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel SwitchingPanelHolder;
-    private GUI.Budget budget1;
+    private GUI.BudgetPanel budget1;
     private javax.swing.JPanel budgetPanel;
     private javax.swing.JButton changeBudgetButton;
     private javax.swing.JButton changeCommitteesButton;

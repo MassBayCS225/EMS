@@ -7,6 +7,7 @@ package GUI;
 import BackEnd.ManagerSystem.MainManager;
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
+import EMS_Database.impl.Income_Table;
 import EMS_Database.impl.SubEvent_Table;
 import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
@@ -37,6 +38,10 @@ public class PrintInfo {
         System.out.println("TASKS");
         Tasks_Table tt = new Tasks_Table();
         System.out.println(tt.queryEntireTable());
+        
+        System.out.println("INCOMES");
+        Income_Table it = new Income_Table();
+        System.out.println(it.queryEntireTable());
         
         System.out.println("SUBEVENTS");
         SubEvent_Table set = new SubEvent_Table();

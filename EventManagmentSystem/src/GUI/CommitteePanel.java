@@ -9,6 +9,7 @@ import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Task;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import GUI.Dialog.BudgetDialog;
 import GUI.Dialog.EmailExceptionDialog;
 import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTaskDialog;
@@ -203,7 +204,9 @@ public class CommitteePanel extends javax.swing.JPanel {
     
     private void budgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
+        manager.getBudgetManager().setSelectedBudget(manager.getCommitteeManager().getSelectedCommittee().getBudget());
+        BudgetDialog bd = new BudgetDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        bd.setVisible(true);
     }//GEN-LAST:event_budgetButtonActionPerformed
 
     private void taskListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taskListMouseClicked
