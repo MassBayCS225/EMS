@@ -19,6 +19,8 @@ public class BudgetDialog extends javax.swing.JDialog {
     public BudgetDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         budgetPanel = new BudgetPanel();
         budgetPanel.setSize(800,600);
         add(budgetPanel);

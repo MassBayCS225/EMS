@@ -22,6 +22,8 @@ public class FindMemberDialog extends javax.swing.JDialog {
     public FindMemberDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         manager = MainManager.getInstance();
         updateInfo();
         confirm = false;

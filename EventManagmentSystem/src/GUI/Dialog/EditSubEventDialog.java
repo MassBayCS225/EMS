@@ -33,6 +33,8 @@ public class EditSubEventDialog extends javax.swing.JDialog {
         super(parent, modal);
         selectedSubEvent = se;
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         nameField.setText(selectedSubEvent.getDescription());
         manager = MainManager.getInstance();
         confirm = false;

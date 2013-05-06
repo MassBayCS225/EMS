@@ -18,6 +18,8 @@ public class SignupDialog extends javax.swing.JDialog {
     public SignupDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         setContentPane(new Signup(this));
     }
 

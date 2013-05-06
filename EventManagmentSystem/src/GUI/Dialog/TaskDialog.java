@@ -18,6 +18,8 @@ public class TaskDialog extends javax.swing.JDialog {
     public TaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
     }
    
     public TaskDialog(java.awt.Frame parent, boolean modal, String task){
