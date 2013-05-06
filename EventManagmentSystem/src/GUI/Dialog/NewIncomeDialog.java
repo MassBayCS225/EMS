@@ -19,6 +19,8 @@ public class NewIncomeDialog extends javax.swing.JDialog {
     public NewIncomeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         confirm = false;
     }
     

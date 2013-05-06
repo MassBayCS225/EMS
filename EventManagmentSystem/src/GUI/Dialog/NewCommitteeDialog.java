@@ -23,6 +23,8 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
     public NewCommitteeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         confirm = false;
         chair = null;
     }

@@ -16,6 +16,8 @@ public class ZipCodeExceptionDialog extends javax.swing.JDialog {
     public ZipCodeExceptionDialog(java.awt.Frame parent, boolean modal, Exception e) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         this.e = e;
         errorLabel.setText(e.toString());
     }
