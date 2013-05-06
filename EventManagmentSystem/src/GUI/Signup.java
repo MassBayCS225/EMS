@@ -11,6 +11,7 @@ import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -285,6 +286,48 @@ public class Signup extends javax.swing.JPanel {
     }//GEN-LAST:event_countryFieldActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
+        String message = "";
+        
+        if (firstNameField.getText().equals("") || firstNameField.getText().equals("First")){
+            message += "\nMissing first name.";}
+        
+        if (lastNameField.getText().equals("") || lastNameField.getText().equals("Last")){
+            message += "\nMissing last name.";}
+        
+        if (emailField.getText().equals("")){
+            message += "\nMissing email address.";}
+        
+        if (passwordField.getText().equals("")){
+            message += "\nMissing password.";}
+        
+        if (reenterPassWordField.getText().equals("")){
+            message += "\nMissing reenter password.";}
+        
+        if(!passwordField.getText().equals(reenterPassWordField.getText())){
+            message += "\nPasswords don't match.";}
+        
+        if(phoneNumberField.getText().equals("") || phoneNumberField.getText().equals("(XXX) XXX - XXXX")){
+            message += "\nMissing phone number.";}    
+        
+        if(streetField.getText().equals("") || streetField.getText().equals("Street")){
+            message += "\nMissing street.";}
+        
+        if(cityField.getText().equals("") || cityField.getText().equals("City")){
+            message += "\nMissing city.";}
+        
+        if(stateField.getText().equals("") || stateField.getText().equals("State")){
+            message += "\nMissing state.";}
+        
+        if(zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code")){
+            message += "\nMissing zip code.";}
+        
+        if(countryField.getText().equals("") || countryField.getText().equals("Country")){
+            message += "\nMissing country.";}
+        
+        if (!message.equals("")){
+            JOptionPane.showMessageDialog(this, message);  
+        }
+        else{
         try {
             User newUser = new User(firstNameField.getText(),
                     lastNameField.getText(),
@@ -303,6 +346,7 @@ public class Signup extends javax.swing.JPanel {
             
         } catch (PasswordMismatchError e) {
         } catch (IllegalCharacterException error) {
+        }
         }
         
 
