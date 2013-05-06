@@ -25,6 +25,8 @@ public class LoginDialog extends javax.swing.JDialog {
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         confirm = false;
         manager = MainManager.getInstance();
     }
