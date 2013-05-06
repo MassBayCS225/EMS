@@ -21,20 +21,20 @@ public class CalendarEvent {
         setSubEventList(sList);
     }
 
-    private void setDay(int d) {
+    public void setDay(int d) {
         day = d;
     }
 
-    private void setSubEventList(ArrayList<SubEvent> sList) {
+    public void setSubEventList(ArrayList<SubEvent> sList) {
         subEventList = sList;
     }
     
-    private int getDay()
+    public int getDay()
     {
         return day;
     }
     
-    private ArrayList<SubEvent> getSubEventList()
+    public ArrayList<SubEvent> getSubEventList()
     {
         return subEventList;
     }
