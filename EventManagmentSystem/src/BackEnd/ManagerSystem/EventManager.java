@@ -498,7 +498,7 @@ public class EventManager {
         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantIDList);
         selectedEvent.getParticipantList().remove(participant);
     }
-
+    
     public void editDescription(String description, User loggedInUser)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
