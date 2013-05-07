@@ -6,6 +6,7 @@ package GUI;
 import GUI.Dialog.TaskDialog;
 import javax.swing.*;
 import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Task;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
@@ -195,7 +196,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             mModel.addElement(m.getFirstName() + " " + m.getLastName());
         }
         for(Task t : c.getTaskList()){
-            tModel.addElement(t.getDescription());
+            tModel.addElement(t.getTitle());
         }
         taskList.setModel(tModel);
         memberList.setModel(mModel);
@@ -220,13 +221,17 @@ public class CommitteePanel extends javax.swing.JPanel {
             {
                 //UPDATE ALL TASK INFO
                 Task t = td.createTask();
+                User u = manager.getLogInManager().getLoggedInUser();
+                Event e = manager.getEventManager().getSelectedEvent();
+                Committee c = manager.getCommitteeManager().getSelectedCommittee();
                 try
                 {
-                    manager.getTaskManager().editCompleted(t.getCompleted(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                    manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
+                    manager.getTaskManager().editTitle(t.getTitle(), u,e,c);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    e.printStackTrace();
+                    ex.printStackTrace();
                 }
             }
         }
