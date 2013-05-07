@@ -116,6 +116,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		String createSubEventTable = "CREATE TABLE SUBEVENTS (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
+			+ "TITLE VARCHAR(100) DEFAULT NULL, "
 			+ "COMPLETE INT, "
 			+ "STREET VARCHAR(100) DEFAULT NULL, "
 			+ "CITY VARCHAR(100) DEFAULT NULL, "
@@ -138,6 +139,7 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		String createTasksTable = "CREATE TABLE TASKS (UID INT PRIMARY KEY, "
 			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
+			+ "TITLE VARCHAR(100) DEFAULT NULL, "
 			+ "STREET VARCHAR(100) DEFAULT NULL, "
 			+ "CITY VARCHAR(100) DEFAULT NULL, "
 			+ "STATE VARCHAR(50) DEFAULT NULL, "
@@ -157,6 +159,9 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "DESCRIPTION VARCHAR(1000) DEFAULT NULL, "
 			+ "DATE TIMESTAMP, "
 			+ "VALUE DOUBLE)";
+		
+		String createKeyTable = "CREATE TABLE ROOTKEY (UID INT PRIMARY KEY, "
+			+ "PWDKEY VARCHAR(200))";
 
 		Statement stmt = dbConnection.createStatement();
 		stmt.executeUpdate(createUserTable); //takes table string as argument
@@ -173,6 +178,8 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		debugLog.info("INCOME table created successfully");
 		stmt.executeUpdate(createExpenseTable);
 		debugLog.info("EXPENSE table created successfully");
+		stmt.executeUpdate(createKeyTable);
+		debugLog.info("ROOTKEY table created successfully");
 
 
 	    } catch (SQLException sqlee) { //serious errors if this gets thrown

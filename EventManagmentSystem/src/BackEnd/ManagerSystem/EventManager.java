@@ -344,7 +344,7 @@ public class EventManager {
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
 
             newSubEvent = new SubEvent(subEventsTable.createSubEvent(
-                    new InputSubEventData(subEvent.getDescription(), subEvent.getLocation().getDetails(),
+                    new InputSubEventData(subEvent.getDescription(), null/*MODIFY ME!*/ , subEvent.getLocation().getDetails(), //FIX THIS LINE FOR ACTUAL TITLE!!!!
                     0, subEvent.getLocation().getStreet(), subEvent.getLocation().getCity(),
                     subEvent.getLocation().getState(), subEvent.getLocation().getZipCode(),
                     subEvent.getLocation().getCountry(), subEvent.getTimeSchedule().getStartDateTimeTimestamp(),

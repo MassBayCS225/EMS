@@ -23,6 +23,8 @@ public interface Interface_SubEventData {
 
     public String getDetails(int uid) throws DoesNotExistException;
 
+    public String getTitle(int uid) throws DoesNotExistException;
+
     public String getStreet(int uid) throws DoesNotExistException; //location info
 
     public String getCity(int uid) throws DoesNotExistException; //location info
@@ -43,6 +45,8 @@ public interface Interface_SubEventData {
     public void setDescription(int uid, String description) throws DoesNotExistException;
 
     public void setDetails(int uid, String details) throws DoesNotExistException;
+
+    public void setTitle(int uid, String title) throws DoesNotExistException;
 
     public void setStreet(int uid, String street) throws DoesNotExistException; //location info
 
