@@ -213,9 +213,24 @@ public class CommitteePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(evt.getClickCount() == 2)
         {
-            TaskDialog td = new TaskDialog((JFrame)SwingUtilities.windowForComponent(this), true, (String)taskList.getSelectedValue());
+            manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getMaxSelectionIndex()));
+            TaskDialog td = new TaskDialog((JFrame)SwingUtilities.windowForComponent(this), true);
             td.setVisible(true);
+            if(td.getConfirm())
+            {
+                //UPDATE ALL TASK INFO
+                Task t = td.createTask();
+                try
+                {
+                    manager.getTaskManager().editCompleted(t.getCompleted(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
+        
     }//GEN-LAST:event_taskListMouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

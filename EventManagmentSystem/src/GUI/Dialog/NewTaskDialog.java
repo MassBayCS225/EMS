@@ -21,8 +21,6 @@ public class NewTaskDialog extends javax.swing.JDialog {
     public NewTaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        /* Added following line to center dialog. -Ketty */
-        setLocationRelativeTo(null);
         confirm = false;
     }
     

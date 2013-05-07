@@ -4,7 +4,10 @@
  */
 package GUI;
 
-import javax.swing.JOptionPane;
+import BackEnd.EventSystem.Task;
+import BackEnd.EventSystem.TimeSchedule;
+import BackEnd.ManagerSystem.MainManager;
+import BackEnd.UserSystem.Location;
 
 /**
  *
@@ -15,13 +18,36 @@ public class TaskPanel extends javax.swing.JPanel {
     /**
      * Creates new form TaskPanel
      */
+    MainManager manager;
     public TaskPanel() {
         initComponents();
+        manager = MainManager.getInstance();
+        updateInfo();
     }
     
-    public void setText(String text)
+    public void updateInfo()
     {
-        headerLabel.setText(text);
+        try
+        {
+            headerLabel.setText(manager.getTaskManager().getSelectedTask().getDescription());
+            completeCheckBox.setSelected(manager.getTaskManager().getSelectedTask().getCompleted());
+            dueDateLabel.setText("Due date: " + manager.getTaskManager().getSelectedTask().getTimeSchedule().getEndDateTimeTimestamp().toString());
+            startDateLabel.setText("Start date: " + manager.getTaskManager().getSelectedTask().getTimeSchedule().getStartDateTimeTimestamp().toString());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public Task createTask()
+    {
+        Task t = new Task();
+        t.setCompleted(completeCheckBox.isSelected());
+        t.setDescription(headerLabel.getText());
+        
+        return t;
     }
     /**
      * This method is called from within the constructor to initialize the form.
