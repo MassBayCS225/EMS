@@ -15,6 +15,7 @@ import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
 import EMS_Database.impl.Expense_Table;
 import EMS_Database.impl.Income_Table;
+import EMS_Database.impl.RootKey;
 import EMS_Database.impl.SubEvent_Table;
 import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
@@ -40,7 +41,9 @@ public class UnitTesting {
     UserData_Table udt = new UserData_Table();
     Expense_Table exTable = new Expense_Table();
     Income_Table inTable = new Income_Table();
-    //Universal data insertions
+    RootKey key = new RootKey();
+    
+    //Universal insertion data.
     Timestamp startDate = new Timestamp(new Date().getTime());
     Timestamp endDate = new Timestamp(new Date().getTime());
     ArrayList<Integer> list = new ArrayList<Integer>();
@@ -187,6 +190,7 @@ public class UnitTesting {
     }
 
     @Test
+    @Ignore
     public void testTasksTable() {
 	try {
 	    int uid = 2;
@@ -233,6 +237,14 @@ public class UnitTesting {
 	    System.err.println(dnee.getMessage());
 	}
     }
+    
+    @Test
+    public void testRootKey(){
+	key.removeKey();
+	key.addKey("somepasskey");
+	System.out.println(key.getKey());
+	
+    }
 
     @After
     public void tearDownTables() {
@@ -243,6 +255,7 @@ public class UnitTesting {
 	udt.removeAll("USERS");
 	inTable.removeAll("INCOME");
 	exTable.removeAll("EXPENSE");	
+	key.removeKey();
 	System.out.println("Data removed.");
     }
 //    @AfterClass
