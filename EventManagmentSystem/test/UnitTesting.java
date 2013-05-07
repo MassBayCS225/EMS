@@ -239,11 +239,18 @@ public class UnitTesting {
     }
     
     @Test
+    @Ignore
     public void testRootKey(){
 	key.removeKey();
 	key.addKey("somepasskey");
 	System.out.println(key.getKey());
 	
+    }
+    
+    @Test
+    @Ignore
+    public void testEmailFunction(){
+	System.out.println(udt.checkEmail("AB@A.com"));
     }
 
     @After
