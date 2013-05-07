@@ -191,7 +191,7 @@ public class EventManager {
 
     private Task rebuildTask(int taskID, ArrayList<Participant> userList)
             throws DoesNotExistException {
-        Task task = new Task(taskID, tasksTable.getDescription(taskID));
+        Task task = new Task(taskID, tasksTable.getTitle(taskID));
         task.setLocation(new Location(tasksTable.getStreet(taskID), tasksTable.getCity(taskID),
                 tasksTable.getState(taskID), tasksTable.getZipcode(taskID), tasksTable.getCountry(taskID),
                 tasksTable.getDetails(taskID)));

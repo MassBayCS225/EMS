@@ -227,7 +227,8 @@ public class CommitteePanel extends javax.swing.JPanel {
                 try
                 {
                     manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
-                    manager.getTaskManager().editTitle(t.getTitle(), u,e,c);
+                    manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
+                    manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
                 }
                 catch (Exception ex)
                 {
@@ -235,6 +236,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                 }
             }
         }
+        updateInfo();
         
     }//GEN-LAST:event_taskListMouseClicked
 
