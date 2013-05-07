@@ -139,7 +139,7 @@ public class SetUpData {
                     {
                         Task t = new Task();
                         manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent()));
-                        manager.getTaskManager().editDescription("Task " + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                        manager.getTaskManager().editTitle("Task " + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                     }
                     for(int i = 1; i < 4; i++)
                     {
