@@ -8,6 +8,7 @@ import BackEnd.EventSystem.Task;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.Location;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +30,8 @@ public class TaskPanel extends javax.swing.JPanel {
     {
         try
         {
-            headerLabel.setText(manager.getTaskManager().getSelectedTask().getDescription());
+            headerLabel.setText(manager.getTaskManager().getSelectedTask().getTitle());
+            descriptionTextArea.setText(manager.getTaskManager().getSelectedTask().getDescription());
             completeCheckBox.setSelected(manager.getTaskManager().getSelectedTask().getCompleted());
             dueDateLabel.setText("Due date: " + manager.getTaskManager().getSelectedTask().getTimeSchedule().getEndDateTimeTimestamp().toString());
             startDateLabel.setText("Start date: " + manager.getTaskManager().getSelectedTask().getTimeSchedule().getStartDateTimeTimestamp().toString());
@@ -45,7 +47,8 @@ public class TaskPanel extends javax.swing.JPanel {
     {
         Task t = new Task();
         t.setCompleted(completeCheckBox.isSelected());
-        t.setDescription(headerLabel.getText());
+        t.setDescription(descriptionTextArea.getText());
+        t.setTitle(headerLabel.getText());
         
         return t;
     }
@@ -67,6 +70,7 @@ public class TaskPanel extends javax.swing.JPanel {
         completeCheckBox = new javax.swing.JCheckBox();
         startDateLabel = new javax.swing.JLabel();
         dueDateLabel = new javax.swing.JLabel();
+        changeNameButton = new javax.swing.JButton();
 
         headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         headerLabel.setText("Task Name");
@@ -91,6 +95,13 @@ public class TaskPanel extends javax.swing.JPanel {
 
         dueDateLabel.setText("Due Date : MM/DD/YY - 00:00 AM");
 
+        changeNameButton.setText("change");
+        changeNameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeNameButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,36 +109,43 @@ public class TaskPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(descriptionScrollPane))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(headerLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(dueDateLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(148, 148, 148)
+                                .addComponent(headerLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(changeNameButton))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(startDateLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                                .addComponent(completeCheckBox))))
+                                .addGap(36, 36, 36)
+                                .addComponent(membersLabel)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(membersLabel)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(descriptionScrollPane)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(dueDateLabel)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(startDateLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                                        .addComponent(completeCheckBox)))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(headerLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(headerLabel)
+                    .addComponent(changeNameButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(descriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(membersLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +160,13 @@ public class TaskPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed
+            // TODO add your handling code here:
+        headerLabel.setText(JOptionPane.showInputDialog("New Name"));
+    }//GEN-LAST:event_changeNameButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton changeNameButton;
     private javax.swing.JCheckBox completeCheckBox;
     private javax.swing.JScrollPane descriptionScrollPane;
     private javax.swing.JTextArea descriptionTextArea;

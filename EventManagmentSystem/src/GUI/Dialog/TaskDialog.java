@@ -22,6 +22,8 @@ public class TaskDialog extends javax.swing.JDialog {
         initComponents();
         taskPanel1.updateInfo();
         confirm = false;
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
     }
    
     public boolean getConfirm()
