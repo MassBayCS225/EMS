@@ -3,42 +3,81 @@ CS225_EventManagement
 
 - TO DO LIST:
 - Fix the spelling of EventManagementSystem
-- possible email address verifier
-- report printing
-- possible email contact list
 
-UPDATED SCHEDULE:
 
-Saturday: 4/27:
-    (by 8 PM) Individual status check-in.
+Personal Responsibilities:
 
-Monday: 4/29
-    (by class) Prototype GUI that will be able to traverse the different panels
+Anderson:
+Bug finding:
+committees panel (by 5/9)
+calendar panel (by 5/11)
+Budget panel and any other general bugs (by 5/13)
 
-Wednesday: 5/1
-    (by class) Partially integrated GUI and back end.
 
-Monday: 5/6
-    (by class) Fully integrated program. Begin debugging process.
+David:
+Password encryption    (by 5/8)
+User management: collapse all buttons to one single save button,
+-format user selection window, admin / event creation privilege editing, user friendliness improvesments (by 5/11)
+bugs in user creation and any other general bugs (by 5/13)
 
-Wednesday: 5/9
-    (by class) Everyone should do at least a cursory review of the program, and consider missing / additional functionality.
-    **(in class) Discuss missing functionality / additional functionality.
 
+John:
+Clean up driver and and set up for run from scratch (by 5/9)
+Clean up committee panel and related dialogs, resize / orient properly
+-either implement or remove sorting and other random buttons (by 5/11)
+option to send emails to specific committees, entire event, etc (by 5/13)
+
+
+Ketty:
+Organizer access panel (by 5/9)
+Committee access panel (by 5/11)
+Generic user access panel (by 5/13)
+
+
+Mike:
+Database updates
+Clean up main.java side panel, resize / orient properly (by 5/9)
+Email improvements, option to send to specific committees, entire event, etc, confirmation dialogs for send/discard, discard text upon sending email (by 5/13)
+
+
+Richard:
+clean up Calendar Panel, resize / orient properly, clear event button, event details display    (by 5/11)
+clean up Sub Event Panel, improve user friendliness, am / pm radio button        (by 5/13)
+
+Sara:
+Completed Sign up Panel and proper checks, cancel button (by 5/8)
+Committee Budget panels by (5/11)
+Total budget panel (5/13)
+
+Shaunt:
+Report Panels (by 5/9)
+Printing (by Sunday 5/11)
+any general bugs (5/13)
+
+
+
+General Schedule:
+
+Saturday: 5/10
+    (by 8 PM) Check in via email – tell me the status of  all of your responsibilities.
+ 
 Monday: 5/13
-    (by class) Have a full-featured program.
+    (by 8 PM) Have a full-featured program.
 
 Wednesday: 5/15
-    (by class) Have the final, bug free version of the project
+    (noon) Have as close to a bug free version of the project for the Presentation
 
 Friday: 5/17
-    (by 8PM) Tie up any loose ends, make sure all UMLs are up to date, make sure the program is absolutely bug free,
-                    make sure all files are properly commented, etc. and then SUBMIT the project.
+    (by 8 PM) Tie up any loose ends,
+                    make sure all UMLs are up to date,
+                    make sure the program is absolutely bug free,
+                    make sure all files are properly commented, etc.
+                    and then SUBMIT the project.
 
 
 RESPONSIBILITIES:
 
-Anderson:  Participant
+Anderson:  	Participant
 		PhoneNumber
 		Address
 		Location
@@ -48,26 +87,21 @@ David:		LogInManager
 		UserDetailsManager
 		UserManager
 		User
-		PrivilegeManager
 
 
 John:		SubEventGUI
 		CommitteeGUI
 		TaskGUI
+		Main
 
 
 Julian:		Reportable
-		Main
 		EventDetailsManager
 		SubEventManager
 		CommitteeManager
 		BudgetManager
 		TaskManager
-
-		Budget		(may be passed to Shaunt)
-		BudgetItem	(may be passed to Shaunt)
-		Income		(may be passed to Shaunt)
-		Expense		(may be passed to Shaunt)
+		PrivilegeManager
 
 
 Ketty:		Event
@@ -78,10 +112,14 @@ Ketty:		Event
 		TimeSchedule
 
 
-Mike:		Database	(the design is still pending)
+Mike:		Database
 
 
-Shaunt:		EmailSystem	(the design is still pending)
+Shaunt:		EmailSystem
+		Budget
+		BudgetItem
+		Income
+		Expense
 
 
 Richard:	CalendarGUI
@@ -90,9 +128,6 @@ Richard:	CalendarGUI
 
 
 Sara:		HomeGUI
-		BudgetGUi
+		BudgetGUI
 		LogInGUI
-
-
-still up in the air:	EventManagementSystem
-			Printing (for reports)
+		SignUpGUI
