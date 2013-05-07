@@ -15,6 +15,7 @@ import EMS_Database.impl.*;
  */
 public class MainManager {
 
+    // private ObjectRebuilder objectRebuilder;
     private BudgetItemManager budgetItemManager;
     private BudgetManager budgetManager;
     private CommitteeManager committeeManager;
@@ -37,6 +38,7 @@ public class MainManager {
          * */
 
         try {
+            // objectRebuilder = new ObjectRebuilder();
             userManager = new UserManager();
             logInManager = new LoginManager(userManager.getUserList());
             taskManager = new TaskManager();

@@ -8,7 +8,7 @@ import BackEnd.UserSystem.Location;
  */
 
 public class ScheduleItem {
-    private String description;
+    private String title, description;
     private Location location;
     private TimeSchedule timeSchedule;
     
@@ -18,8 +18,9 @@ public class ScheduleItem {
         timeSchedule = new TimeSchedule();
     }
     
-    public ScheduleItem(String description) {
-        this.description = description;
+    public ScheduleItem(String title) {
+        this.title = title;
+        this.description = new String();
         location = new Location();
         timeSchedule = new TimeSchedule();
     }
@@ -28,6 +29,14 @@ public class ScheduleItem {
         description = scheduleItem.getDescription();
         location = scheduleItem.getLocation();
         timeSchedule = scheduleItem.getTimeSchedule();
+    }
+    
+    public void setTitle(String title){
+        this.title = title;
+    }
+    
+    public String getTitle(){
+        return title;
     }
     
     public void setDescription(String description) {
