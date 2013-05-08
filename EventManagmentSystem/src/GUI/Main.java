@@ -21,6 +21,7 @@ public class Main extends javax.swing.JPanel {
 
     
     private MainManager manager;
+    private UserManagementPanel ump;
     /**
      * Creates new form Main
      */
@@ -31,8 +32,10 @@ public class Main extends javax.swing.JPanel {
         MainPanel.add(cp, BorderLayout.NORTH);
         CommitteeListPanel clp = new CommitteeListPanel();
         EmailPanel ep = new EmailPanel();
+        ump = new UserManagementPanel();
         SwitchingPanelHolder.add(clp, "committees");
         SwitchingPanelHolder.add(ep, "email");
+        SwitchingPanelHolder.add(ump, "userManagement");
         manager = MainManager.getInstance();
         setSize(950,750);
         updateInfo();
@@ -435,6 +438,10 @@ public class Main extends javax.swing.JPanel {
         cl.show(SwitchingPanelHolder, "userManagement");
     }//GEN-LAST:event_changeUserManagementButtonActionPerformed
 
+    /* Added method. -Ketty */
+    public UserManagementPanel getUserManagementPanel() {
+        return ump;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChangeHomeButton;
     private javax.swing.JPanel MainPanel;

@@ -464,6 +464,14 @@ public class UserManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addressButtonActionPerformed
 
+    /* Added following two methods. -Ketty */
+    public javax.swing.JButton getChangeInfoButton() {
+        return changeInfoButton;
+    }
+    
+    public javax.swing.JButton getChangeUserButton() {
+        return changeUserButton;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChangeInfoPanel;
     private javax.swing.JPanel ChangeUserPanel;
