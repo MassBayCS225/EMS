@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="signupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="informationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="nameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="phoneNumberLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="addressLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -48,23 +48,19 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" pref="24" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="signinLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="emailLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="passwordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="passwordField" alignment="0" pref="350" max="32767" attributes="0"/>
-                          <Component id="reenterPasswordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="reenterPassWordField" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="emailField" min="-2" pref="350" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="signinLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="passwordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="reenterPasswordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="emailField" alignment="0" pref="350" max="32767" attributes="0"/>
+                  <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="signupButton" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="reenterPassWordField" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="10" max="32767" attributes="0"/>
           </Group>
@@ -79,7 +75,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="informationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="signinLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -99,7 +95,7 @@
                               <Component id="reenterPasswordLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="reenterPassWordField" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="signupButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -171,6 +167,10 @@
           <Dimension value="[380, 28]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="firstNameFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="firstNameFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="lastNameField">
       <Properties>
@@ -179,6 +179,10 @@
           <Dimension value="[360, 28]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="lastNameFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="lastNameFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="emailLabel">
       <Properties>
@@ -190,7 +194,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="emailField">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
+    <Component class="javax.swing.JLabel" name="informationLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Candara" size="14" style="1"/>
@@ -206,8 +210,6 @@
         <Property name="text" type="java.lang.String" value="Create a password"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="passwordField">
-    </Component>
     <Component class="javax.swing.JLabel" name="reenterPasswordLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -216,8 +218,6 @@
         <Property name="text" type="java.lang.String" value="Reenter password"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="reenterPassWordField">
-    </Component>
     <Component class="javax.swing.JTextField" name="phoneNumberField">
       <Properties>
         <Property name="text" type="java.lang.String" value="(XXX) XXX - XXXX"/>
@@ -225,6 +225,10 @@
           <Dimension value="[380, 28]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="phoneNumberFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="phoneNumberFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="addressLabel">
       <Properties>
@@ -241,26 +245,46 @@
           <Dimension value="[380, 28]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="streetFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="streetFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="cityField">
       <Properties>
         <Property name="text" type="java.lang.String" value="City"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cityFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cityFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="stateField">
       <Properties>
         <Property name="text" type="java.lang.String" value="State"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="stateFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="stateFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="countryField">
       <Properties>
         <Property name="text" type="java.lang.String" value="Country"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="countryFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="countryFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="zipcodeField">
       <Properties>
         <Property name="text" type="java.lang.String" value="Zip Code"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="zipcodeFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="zipcodeFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="signupLabel">
       <Properties>
@@ -268,6 +292,9 @@
           <Font name="Candara" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Sign Up"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Default Cursor"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -291,6 +318,10 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passwordField">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="reenterPassWordField">
     </Component>
   </SubComponents>
 </Form>
