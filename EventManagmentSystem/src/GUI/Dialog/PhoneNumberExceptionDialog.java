@@ -16,6 +16,8 @@ public class PhoneNumberExceptionDialog extends javax.swing.JDialog {
     public PhoneNumberExceptionDialog(java.awt.Frame parent, boolean modal, Exception e) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         this.e = e;
         errorLabel.setText(e.toString());
     }

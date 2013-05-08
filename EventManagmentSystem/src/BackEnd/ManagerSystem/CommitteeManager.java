@@ -99,7 +99,7 @@ public class CommitteeManager {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getMemberList().remove(member);
             ArrayList<Integer> newMemberList = committeesTable.getCommitteeMembers(selectedCommittee.getCOMMITTEE_ID());
-            newMemberList.remove(member.getUserId());
+            newMemberList.remove(new Integer(member.getUserId())); //!!HERE
             committeesTable.setCommitteeMembers(selectedCommittee.getCOMMITTEE_ID(), newMemberList);
         }
     }
@@ -115,7 +115,7 @@ public class CommitteeManager {
             }
             
             newTask = new Task(tasksTable.createTask(new InputTask(
-                    task.getDescription(), task.getLocation().getDetails(), task.getLocation().getStreet(), task.getLocation().getCity(),
+                    task.getDescription(), task.getTitle(), task.getLocation().getDetails(), task.getLocation().getStreet(), task.getLocation().getCity(), //FIX THIS LINE FOR ACTUAL TITLE!!!!
                     task.getLocation().getState(), task.getLocation().getZipCode(), task.getLocation().getCountry(),
                     task.getTimeSchedule().getStartDateTimeTimestamp(), task.getTimeSchedule().getEndDateTimeTimestamp(),
                     (task.getCompleted() == true? 1 : 0), responsibleIDList))
@@ -135,7 +135,7 @@ public class CommitteeManager {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getTaskList().remove(task);
             ArrayList<Integer> newTaskList = committeesTable.getTaskList(selectedCommittee.getCOMMITTEE_ID());
-            newTaskList.remove(task.getTASK_ID());
+            newTaskList.remove(new Integer(task.getTASK_ID()));
             committeesTable.setTaskList(selectedCommittee.getCOMMITTEE_ID(), newTaskList);
             tasksTable.removeTask(task.getTASK_ID());
         }

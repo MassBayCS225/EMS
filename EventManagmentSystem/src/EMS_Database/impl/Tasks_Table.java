@@ -34,7 +34,9 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 		returnQuery.append(rs.getString("DESCRIPTION"));
 		returnQuery.append(",");
 		returnQuery.append(rs.getString("DETAILS"));
-		returnQuery.append(",");		
+		returnQuery.append(",");
+		returnQuery.append(rs.getString("TITLE"));
+		returnQuery.append(",");
 		returnQuery.append(rs.getString("STREET"));
 		returnQuery.append(",");
 		returnQuery.append(rs.getString("CITY"));
@@ -51,7 +53,7 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 		returnQuery.append(",");
 		returnQuery.append(rs.getString("COMPLETE"));
 		returnQuery.append(",");
-		returnQuery.append(stringToList(rs.getString("MANAGER")));		
+		returnQuery.append(stringToList(rs.getString("MANAGER")));
 		returnQuery.append("\n");
 	    }
 
@@ -61,14 +63,14 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 	}
 
 	return returnQuery.toString();
-    }    
-    
+    }
+
     /**
      * Inserts a new task into the Task table based on the parameters specified
      * by InputTask.
      *
      * @param task The collected data to be inserted into the Task table
-     * @return an int of the UID of the created task.     
+     * @return an int of the UID of the created task.
      */
     @Override
     public int createTask(InputTask task) {
@@ -76,19 +78,20 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 
 	try {
 	    //Creating Statement
-	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO TASKS VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO TASKS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	    AddAddressStmt.setInt(1, newUID);
 	    AddAddressStmt.setString(2, task.getDescripton());
 	    AddAddressStmt.setString(3, task.getDetails());
-	    AddAddressStmt.setString(4, task.getStreet());
-	    AddAddressStmt.setString(5, task.getCity());
-	    AddAddressStmt.setString(6, task.getState());
-	    AddAddressStmt.setString(7, task.getZipcode());
-	    AddAddressStmt.setString(8, task.getCountry());
-	    AddAddressStmt.setTimestamp(9, task.getStartDate());
-	    AddAddressStmt.setTimestamp(10, task.getEndDate());
-	    AddAddressStmt.setInt(11, task.getComplete());
-	    AddAddressStmt.setString(12, listToString(task.getManager()));
+	    AddAddressStmt.setString(4, task.getTitle());
+	    AddAddressStmt.setString(5, task.getStreet());
+	    AddAddressStmt.setString(6, task.getCity());
+	    AddAddressStmt.setString(7, task.getState());
+	    AddAddressStmt.setString(8, task.getZipcode());
+	    AddAddressStmt.setString(9, task.getCountry());
+	    AddAddressStmt.setTimestamp(10, task.getStartDate());
+	    AddAddressStmt.setTimestamp(11, task.getEndDate());
+	    AddAddressStmt.setInt(12, task.getComplete());
+	    AddAddressStmt.setString(13, listToString(task.getManager()));
 
 	    //Execute Statement
 	    AddAddressStmt.executeUpdate();
@@ -150,16 +153,16 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
-	
+
 	try {
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM " + table + " WHERE UID=?");
 	    idQueryStmt.setInt(1, uid);
 	    idQueryStmt.executeUpdate();
 
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage());
-	    System.err.println("Deleting stuff from "+table+" is dangerous...");
-	}	
+	    System.err.println("Deleting stuff from " + table + " is dangerous...");
+	}
     }
 
     ///////////////////////////GETTERS/////////////////////////////
@@ -171,6 +174,11 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
 	return getDBString("DETAILS", tableName, uid);
+    }
+
+    @Override
+    public String getTitle(int uid) throws DoesNotExistException {
+	return getDBString("TITLE", tableName, uid);
     }
 
     @Override
@@ -200,77 +208,82 @@ public class Tasks_Table extends InitDB implements Interface_TaskData {
 
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-	return getDBTimestamp("STARTDATE",tableName,uid);
+	return getDBTimestamp("STARTDATE", tableName, uid);
     }
 
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-	return getDBTimestamp("ENDDATE",tableName,uid);
+	return getDBTimestamp("ENDDATE", tableName, uid);
     }
 
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-	return getDBInt("COMPLETE",tableName,uid);
+	return getDBInt("COMPLETE", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getAuthority(int uid) throws DoesNotExistException {
-	return getDBArrayList("MANAGER",tableName,uid);
+	return getDBArrayList("MANAGER", tableName, uid);
     }
 
     /////////////////////////////SETTERS//////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-	setDBString("DESCRIPTION",tableName,uid,description);
+	setDBString("DESCRIPTION", tableName, uid, description);
     }
 
     @Override
     public void setDetails(int uid, String details) throws DoesNotExistException {
-	setDBString("DETAILS",tableName,uid,details);
+	setDBString("DETAILS", tableName, uid, details);
     }
 
-     @Override
+    @Override
+    public void setTitle(int uid, String title) throws DoesNotExistException {
+	setDBString("TITLE", tableName, uid, title);
+    }
+
+    @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-	setDBString("STREET",tableName,uid,street);
+	setDBString("STREET", tableName, uid, street);
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-	setDBString("CITY",tableName,uid,city);
+	setDBString("CITY", tableName, uid, city);
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-	setDBString("STATE",tableName,uid,state);
+	setDBString("STATE", tableName, uid, state);
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-	setDBString("ZIPCODE",tableName,uid,zipcode);
+	setDBString("ZIPCODE", tableName, uid, zipcode);
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-	setDBString("COUNTRY",tableName,uid,country);
-    }    
-    
+	setDBString("COUNTRY", tableName, uid, country);
+    }
+
     @Override
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-	setDBTimestamp("STARTDATE",tableName,uid,time);
+	setDBTimestamp("STARTDATE", tableName, uid, time);
     }
 
     @Override
     public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-	setDBTimestamp("ENDDATE",tableName,uid,time);
+	setDBTimestamp("ENDDATE", tableName, uid, time);
     }
 
     @Override
     public void setComplete(int uid, int complete) throws DoesNotExistException {
-	setDBInt("COMPLETE",tableName,uid,complete);
+	setDBInt("COMPLETE", tableName, uid, complete);
     }
 
     @Override
     public void setAuthority(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {
-	setDBArrayList("MANAGER",tableName,uid,committeeList);
+	setDBArrayList("MANAGER", tableName, uid, committeeList);
     }
 }

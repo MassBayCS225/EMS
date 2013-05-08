@@ -36,6 +36,15 @@ public class SubEventManager {
     public SubEvent getSelectedSubEvent() {
         return selectedSubEvent;
     }
+    
+      public void editTitle(String title, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+        
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            selectedSubEvent.setTitle(title);
+            subEventsTable.setTitle(selectedSubEvent.getSUB_EVENT_ID(), title);
+        }
+    }
 
     public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {

@@ -25,7 +25,7 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
      * InputSubEventData
      *
      * @param subevent the collected data to be inserted
-     * @return an int of the UID upon successful creation.     
+     * @return an int of the UID upon successful creation.
      */
     @Override
     public int createSubEvent(InputSubEventData subevent) {
@@ -33,18 +33,19 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
 
 	try {
 	    //Creating Statement
-	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO SUBEVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO SUBEVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
 	    AddAddressStmt.setInt(1, newUID);
 	    AddAddressStmt.setString(2, subevent.getDescription());
 	    AddAddressStmt.setString(3, subevent.getDetails());
-	    AddAddressStmt.setInt(4, subevent.getComplete());
-	    AddAddressStmt.setString(5, subevent.getStreet());
-	    AddAddressStmt.setString(6, subevent.getCity());
-	    AddAddressStmt.setString(7, subevent.getState());
-	    AddAddressStmt.setString(8, subevent.getZipcode());
-	    AddAddressStmt.setString(9, subevent.getCountry());
-	    AddAddressStmt.setTimestamp(10, subevent.getStartTime());
-	    AddAddressStmt.setTimestamp(11, subevent.getEndTime());
+	    AddAddressStmt.setString(4, subevent.getTitle());
+	    AddAddressStmt.setInt(5, subevent.getComplete());
+	    AddAddressStmt.setString(6, subevent.getStreet());
+	    AddAddressStmt.setString(7, subevent.getCity());
+	    AddAddressStmt.setString(8, subevent.getState());
+	    AddAddressStmt.setString(9, subevent.getZipcode());
+	    AddAddressStmt.setString(10, subevent.getCountry());
+	    AddAddressStmt.setTimestamp(11, subevent.getStartTime());
+	    AddAddressStmt.setTimestamp(12, subevent.getEndTime());
 
 	    //Execute Statement
 	    AddAddressStmt.executeUpdate();
@@ -107,6 +108,8 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
 		returnQuery.append(",");
 		returnQuery.append(rs.getString("DETAILS"));
 		returnQuery.append(",");
+		returnQuery.append(rs.getString("TITLE"));
+		returnQuery.append(",");
 		returnQuery.append(rs.getInt("COMPLETE"));
 		returnQuery.append(",");
 		returnQuery.append(rs.getString("STREET"));
@@ -156,16 +159,16 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
 	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
 	    throw new DoesNotExistException("check debug log. " + table + " table error.");
 	}
-	
+
 	try {
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM " + table + " WHERE UID=?");
 	    idQueryStmt.setInt(1, uid);
 	    idQueryStmt.executeUpdate();
 
 	} catch (SQLException sqle) {
 	    System.err.println(sqle.getMessage());
-	    System.err.println("Deleting stuff from "+table+" is dangerous...");
-	}	
+	    System.err.println("Deleting stuff from " + table + " is dangerous...");
+	}
     }
 
     ////////////////////////GETTERS/////////////////////////
@@ -177,6 +180,11 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
 	return getDBString("DETAILS", tableName, uid);
+    }
+
+    @Override
+    public String getTitle(int uid) throws DoesNotExistException {
+	return getDBString("TITLE", tableName, uid);
     }
 
     @Override
@@ -228,6 +236,11 @@ public class SubEvent_Table extends InitDB implements Interface_SubEventData {
     @Override
     public void setDetails(int uid, String details) throws DoesNotExistException {
 	setDBString("DETAILS", tableName, uid, details);
+    }
+
+    @Override
+    public void setTitle(int uid, String title) throws DoesNotExistException {
+	setDBString("TITLE", tableName, uid, title);
     }
 
     @Override

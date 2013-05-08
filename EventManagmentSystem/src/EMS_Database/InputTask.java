@@ -14,6 +14,7 @@ public class InputTask {
 
     private String descripton;
     private String details;
+    private String title;
     private String street;
     private String city;
     private String state;
@@ -29,6 +30,7 @@ public class InputTask {
 	Timestamp time = new Timestamp(new Date().getTime()); //gets current time.
 	this.descripton = null;
 	this.details = null;
+	this.title = null;
 	this.street = null;
 	this.city = null;
 	this.state = null;
@@ -40,9 +42,10 @@ public class InputTask {
 	this.manager = list;
     }
 
-    public InputTask(String descripton, String details, String street, String city, String state, String zipcode, String country, Timestamp startDate, Timestamp endDate, int complete, ArrayList<Integer> manager) {
+    public InputTask(String descripton, String details, String title, String street, String city, String state, String zipcode, String country, Timestamp startDate, Timestamp endDate, int complete, ArrayList<Integer> manager) {
 	this.descripton = descripton;
 	this.details = details;
+	this.title = title;
 	this.street = street;
 	this.city = city;
 	this.state = state;
@@ -60,6 +63,10 @@ public class InputTask {
 
     public String getDetails() {
 	return details;
+    }
+
+    public String getTitle() {
+	return title;
     }
 
     public String getStreet() {
@@ -106,6 +113,10 @@ public class InputTask {
 	this.details = details;
     }
 
+    public void setTitle(String title) {
+	this.title = title;
+    }
+
     public void setStreet(String street) {
 	this.street = street;
     }
@@ -141,5 +152,7 @@ public class InputTask {
     public void setManager(ArrayList<Integer> manager) {
 	this.manager = manager;
     }
+
+    
                 
 }

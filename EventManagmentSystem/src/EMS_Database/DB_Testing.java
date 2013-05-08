@@ -185,14 +185,14 @@ public class DB_Testing {
 
 //	System.out.println(et.queryEntireTable());
 	// System.out.println(); //blank line.
-	//try {
+//	try {
 //	    for (int x = 0; x < 20; x++) {
 //		uid = et.createEvent(ied);
 //	    }
 //	    
-
-
-
+//
+//
+//
 //            System.out.println(et.getDescription(uid));
 //	    System.out.println(et.getDetails(uid));
 //            System.out.println(et.getStartDate(uid));

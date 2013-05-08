@@ -6,13 +6,16 @@ package GUI;
 import GUI.Dialog.TaskDialog;
 import javax.swing.*;
 import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Task;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
 import GUI.Dialog.BudgetDialog;
 import GUI.Dialog.EmailExceptionDialog;
 import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTaskDialog;
+import java.util.Calendar;
 /**
  *
  * @author Sid
@@ -50,8 +53,6 @@ public class CommitteePanel extends javax.swing.JPanel {
         tasksLabel = new javax.swing.JLabel();
         taskProgressBar = new javax.swing.JProgressBar();
         budgetButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
-        closeButton = new javax.swing.JButton();
         addMemberButton = new javax.swing.JButton();
         removeMemberButton = new javax.swing.JButton();
         removeTaskButton = new javax.swing.JButton();
@@ -59,14 +60,15 @@ public class CommitteePanel extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         committeeChangeButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(153, 204, 255));
         setMinimumSize(new java.awt.Dimension(387, 327));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        headerLabel.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         headerLabel.setText("Committee Name");
         headerLabel.setPreferredSize(new java.awt.Dimension(200, 25));
-        add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 22, -1, -1));
 
+        memberList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         memberList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -74,17 +76,16 @@ public class CommitteePanel extends javax.swing.JPanel {
         });
         memberScrollPane.setViewportView(memberList);
 
-        add(memberScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 97, 150));
-
+        membersLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         membersLabel.setText("Members");
-        add(membersLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 79, -1, -1));
 
+        headLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         headLabel.setText("Head: ");
-        add(headLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 57, -1, -1));
 
+        headNameLabel.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         headNameLabel.setText("committee head");
-        add(headNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 57, -1, -1));
 
+        taskList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         taskList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -97,80 +98,142 @@ public class CommitteePanel extends javax.swing.JPanel {
         });
         taskScrollPane.setViewportView(taskList);
 
-        add(taskScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 97, 150));
-
+        tasksLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         tasksLabel.setText("Tasks");
-        add(tasksLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 79, -1, -1));
 
         taskProgressBar.setOrientation(1);
-        add(taskProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 99, -1, -1));
 
-        budgetButton.setText("Budget");
+        budgetButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        budgetButton.setText("View Budget");
         budgetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 budgetButtonActionPerformed(evt);
             }
         });
-        add(budgetButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 99, -1, -1));
 
-        saveButton.setText("Save");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-        add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 293, -1, -1));
-
-        closeButton.setText("Close");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeButtonActionPerformed(evt);
-            }
-        });
-        add(closeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 293, -1, -1));
-
+        addMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         addMemberButton.setText("+");
         addMemberButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addMemberButtonActionPerformed(evt);
             }
         });
-        add(addMemberButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
 
+        removeMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         removeMemberButton.setText("-");
         removeMemberButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeMemberButtonActionPerformed(evt);
             }
         });
-        add(removeMemberButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, -1, -1));
 
+        removeTaskButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         removeTaskButton.setText("-");
         removeTaskButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeTaskButtonActionPerformed(evt);
             }
         });
-        add(removeTaskButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, -1, -1));
 
+        addTaskButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         addTaskButton.setText("+");
         addTaskButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addTaskButtonActionPerformed(evt);
             }
         });
-        add(addTaskButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, -1, -1));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 99, 20, 146));
 
+        committeeChangeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         committeeChangeButton.setText("change");
         committeeChangeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 committeeChangeButtonActionPerformed(evt);
             }
         });
-        add(committeeChangeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(membersLabel)
+                                .addGap(227, 227, 227)
+                                .addComponent(tasksLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(addMemberButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(removeMemberButton)))
+                                    .addComponent(budgetButton))
+                                .addGap(60, 60, 60)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(55, 55, 55)
+                                            .addComponent(committeeChangeButton))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(headLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(headNameLabel)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(addTaskButton)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(removeTaskButton)))
+                                        .addGap(10, 10, 10)
+                                        .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(headLabel)
+                    .addComponent(headNameLabel)
+                    .addComponent(budgetButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(committeeChangeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(membersLabel)
+                    .addComponent(tasksLabel))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(removeMemberButton)
+                            .addComponent(addMemberButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(taskProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(taskScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(removeTaskButton)
+                            .addComponent(addTaskButton))))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
  
     public void setCommittee(Committee c)
@@ -192,14 +255,14 @@ public class CommitteePanel extends javax.swing.JPanel {
         DefaultListModel tModel = new DefaultListModel();
         DefaultListModel mModel = new DefaultListModel();
         for(User m : c.getMemberList()){
-            mModel.addElement(m.getFirstName() + " " + m.getLastName());
+            mModel.addElement(m);
         }
         for(Task t : c.getTaskList()){
-            tModel.addElement(t.getDescription());
+            tModel.addElement(t);
         }
         taskList.setModel(tModel);
         memberList.setModel(mModel);
-        
+        taskProgressBar.setValue(manager.getCommitteeManager().getSelectedCommittee().getCompletePercent());
     }
     
     private void budgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetButtonActionPerformed
@@ -213,20 +276,48 @@ public class CommitteePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(evt.getClickCount() == 2)
         {
-            TaskDialog td = new TaskDialog((JFrame)SwingUtilities.windowForComponent(this), true, (String)taskList.getSelectedValue());
+            manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getMaxSelectionIndex()));
+            TaskDialog td = new TaskDialog((JFrame)SwingUtilities.windowForComponent(this), true);
             td.setVisible(true);
+            if(td.getConfirm())
+            {
+                //UPDATE ALL TASK INFO
+                Task t = td.createTask();
+                User u = manager.getLogInManager().getLoggedInUser();
+                Event e = manager.getEventManager().getSelectedEvent();
+                Committee c = manager.getCommitteeManager().getSelectedCommittee();
+                try
+                {
+                    manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
+                    manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
+                    manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
+//                    for(User us : t.getResponsibleList())
+//                    {
+//                        manager.getTaskManager().addResponsible(us, u, e, c);
+//                    }
+                    TimeSchedule ts = t.getTimeSchedule();
+                    int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
+                    int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
+                    int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+                    int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
+                    int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
+                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute, u, e, c);
+                    year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
+                    month = ts.getEndDateTimeCalendar().get(Calendar.MONTH)+1;
+                    day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+                    hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
+                    minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);  
+                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute, u, e, c);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        updateInfo();
         }
+        
     }//GEN-LAST:event_taskListMouseClicked
-
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
-    }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
-    }//GEN-LAST:event_closeButtonActionPerformed
 
     private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
         // TODO add your handling code here:
@@ -249,10 +340,13 @@ public class CommitteePanel extends javax.swing.JPanel {
         }
         catch (Exception e)
         {
-            EmailExceptionDialog eed = new EmailExceptionDialog((JFrame)SwingUtilities.windowForComponent(this), true, e);
-            eed.setVisible(true);
+            e.printStackTrace();
         }
         updateInfo();
+        if(taskList.getModel().getSize() >= 0)
+        {
+            taskList.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_removeTaskButtonActionPerformed
 
     private void addMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMemberButtonActionPerformed
@@ -281,7 +375,28 @@ public class CommitteePanel extends javax.swing.JPanel {
         {
             try
             {
-                manager.getCommitteeManager().createTask(ntd.createTask(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                Task t = ntd.createTask();
+                User u = manager.getLogInManager().getLoggedInUser();
+                Event e = manager.getEventManager().getSelectedEvent();
+                Committee c = manager.getCommitteeManager().getSelectedCommittee();
+                manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, u, e));
+                manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
+                manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
+                manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
+                manager.getTaskManager().addResponsible(u, u, e, c);
+                    TimeSchedule ts = t.getTimeSchedule();
+                    int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
+                    int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
+                    int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+                    int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
+                    int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
+                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute, u, e, c);
+                    year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
+                    month = ts.getEndDateTimeCalendar().get(Calendar.MONTH)+1;
+                    day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+                    hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
+                    minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);  
+                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute, u, e, c);                
             }
             catch (Exception e)
             {
@@ -314,7 +429,6 @@ public class CommitteePanel extends javax.swing.JPanel {
     private javax.swing.JButton addMemberButton;
     private javax.swing.JButton addTaskButton;
     private javax.swing.JButton budgetButton;
-    private javax.swing.JButton closeButton;
     private javax.swing.JButton committeeChangeButton;
     private javax.swing.JLabel headLabel;
     private javax.swing.JLabel headNameLabel;
@@ -325,7 +439,6 @@ public class CommitteePanel extends javax.swing.JPanel {
     private javax.swing.JLabel membersLabel;
     private javax.swing.JButton removeMemberButton;
     private javax.swing.JButton removeTaskButton;
-    private javax.swing.JButton saveButton;
     private javax.swing.JList taskList;
     private javax.swing.JProgressBar taskProgressBar;
     private javax.swing.JScrollPane taskScrollPane;

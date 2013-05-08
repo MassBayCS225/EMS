@@ -4,11 +4,12 @@
  */
 package GUI;
 import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.LoginDialog;
-import javax.swing.JFrame;
+import GUI.Dialog.SignupDialog;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
 
@@ -31,16 +32,76 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
-        try
+        
+        //CHECK IF WE HAVE USERS
+        while(manager.getUserManager().getUserList().isEmpty())
         {
-            while (manager.getLogInManager().getLoggedInUser() == null) {
-                LoginDialog ld = new LoginDialog(this, true);
-                ld.setVisible(true);
-                if (ld.getConfirm()) {
-                    ld.createUser();
-                    manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
+            //CREATE A USER
+            JOptionPane.showMessageDialog(this, "There are no users in the user list.  Please create an administrator account first.");
+            SignupDialog sd = new SignupDialog(this, true);
+            sd.setVisible(true);
+        }
+        
+        //LOG IN
+        while (manager.getLogInManager().getLoggedInUser() == null) 
+        {
+           LoginDialog ld = new LoginDialog(this, true);
+           ld.setVisible(true);
+           if (ld.getConfirm()) 
+           {
+               ld.createUser();
+               manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
+           }
+        }
+        
+        //CHECK IF WE HAVE EVENTS
+        if(manager.getEventManager().getEventList().isEmpty())
+        {
+            //CREATE ONE
+            try
+            {
+                JOptionPane.showMessageDialog(this, "An event has not been created yet.  Please create one first.");
+                NewEventDialog ned = new NewEventDialog(this, true);
+                ned.setVisible(true);
+                if(ned.getConfirm())
+                {
+                    Event event = ned.createEvent();
+                
+                        manager.getEventManager().setSelectedEvent(manager.getEventManager().createEvent(
+                                event, manager.getLogInManager().getLoggedInUser()));
+                        manager.getEventManager().editDescription(
+                                event.getDescription(), manager.getLogInManager().getLoggedInUser());
+                        TimeSchedule ts = event.getTimeSchedule();
+                        int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
+                        int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
+                        int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
+                        int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH);
+                        int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+                        manager.getEventManager().editStartDateTime(
+                                year, month, day, hour, minute, manager.getLogInManager().getLoggedInUser());
+                        hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
+                        minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);
+                        year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
+                        month = ts.getEndDateTimeCalendar().get(Calendar.MONTH);
+                        day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);  
+                        manager.getEventManager().editEndDateTime(
+                                year, month, day, hour, minute, manager.getLogInManager().getLoggedInUser());
+                System.out.println("CREATED AN EVENT");
                 }
             }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        //OR LOAD IT
+        else
+        {
+            manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+        }
+        
+        try
+        {
             Main m = new Main();
             add(m);
         }

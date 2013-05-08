@@ -23,6 +23,8 @@ public class NewSubEventDialog extends javax.swing.JDialog {
     public NewSubEventDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         setSize(500,500);
         sep.setVisible(true);
         sePanel.add(sep);

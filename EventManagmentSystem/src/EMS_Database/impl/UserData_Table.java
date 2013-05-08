@@ -222,6 +222,35 @@ public class UserData_Table extends InitDB implements Interface_UserData {
 
         return returnQuery.toString();
     }
+    
+    /**
+     * Checks the provided email against those currently in the database.
+     * <p>
+     * If a hit is found the function returns true indicating that the email exists.
+     * Otherwise a false is returned.
+     * @param email a string of the email to be checked.
+     * @return if that email already exists or not. 
+     */
+    public boolean checkEmail(String email){	
+        try {	    
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM USERS");
+            ResultSet rs = idQueryStmt.executeQuery();
+	    
+	    //check all users emails against the one provided.
+            while (rs.next()) {                
+		if(email.equals(rs.getString("EMAIL"))){
+		    return true;
+		}                
+            }	    
+        } catch (SQLException sqle) {
+	    System.err.println("check email function having issues.");
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+	return false;
+
+        
+    }
 
     ///////////////////// GETTERS ////////////////////////////        
     public User getUser(int uid) throws DoesNotExistException {

@@ -11,6 +11,7 @@ public class InputSubEventData {
     
     private String description;
     private String details;
+    private String title;
     private int complete;
     private String street;
     private String city;
@@ -24,6 +25,7 @@ public class InputSubEventData {
 	Timestamp time = new Timestamp(new Date().getTime()); //gets current time.
 	this.description = null;
 	this.details = null;	
+	this.title = null;
 	this.complete = 0;
 	this.street = null;
 	this.city = null;
@@ -34,9 +36,10 @@ public class InputSubEventData {
 	this.endTime = time;
     }
 
-    public InputSubEventData(String description, String details, int complete, String street, String city, String state, String zipcode, String country, Timestamp startTime, Timestamp endTime) {
+    public InputSubEventData(String description, String details, String title, int complete, String street, String city, String state, String zipcode, String country, Timestamp startTime, Timestamp endTime) {
 	this.description = description;
 	this.details = details;
+	this.title = title;
 	this.complete = complete;
 	this.street = street;
 	this.city = city;
@@ -53,6 +56,10 @@ public class InputSubEventData {
 
     public String getDetails() {
 	return details;
+    }
+
+    public String getTitle() {
+	return title;
     }
 
     public int getComplete() {
@@ -95,6 +102,10 @@ public class InputSubEventData {
 	this.details = details;
     }
 
+    public void setTitle(String title) {
+	this.title = title;
+    }
+
     public void setComplete(int complete) {
 	this.complete = complete;
     }
@@ -126,8 +137,9 @@ public class InputSubEventData {
     public void setEndTime(Timestamp endTime) {
 	this.endTime = endTime;
     }
+    
+    
 
-   
-
+    
     
 }

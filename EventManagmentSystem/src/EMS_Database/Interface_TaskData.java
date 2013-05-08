@@ -11,10 +11,10 @@ public interface Interface_TaskData {
 
     // SPECIAL CASE FUNCTIONS
     public String queryEntireTable();
-    
+
     public int createTask(InputTask task);
 
-    public int nextValidUID();    
+    public int nextValidUID();
 
     public void removeTask(int uid) throws DoesNotExistException;
 
@@ -22,6 +22,8 @@ public interface Interface_TaskData {
     public String getDescription(int uid) throws DoesNotExistException;
 
     public String getDetails(int uid) throws DoesNotExistException;
+    
+    public String getTitle(int uid) throws DoesNotExistException;
 
     public Timestamp getStartDate(int uid) throws DoesNotExistException;
 
@@ -45,6 +47,8 @@ public interface Interface_TaskData {
     public void setDescription(int uid, String description) throws DoesNotExistException;
 
     public void setDetails(int uid, String details) throws DoesNotExistException;
+    
+    public void setTitle(int uid, String title) throws DoesNotExistException;
 
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException;
 

@@ -27,7 +27,7 @@ public class Login extends javax.swing.JPanel {
     {
         try
         {
-            manager.getLogInManager().setLoggedInUser(emailTextField.getText(), passwordField.getText());
+            manager.getLogInManager().setLoggedInUser(emailTextField.getText(), new String(passwordField.getPassword()));
         }
         catch (Exception e)
         {
@@ -60,6 +60,14 @@ public class Login extends javax.swing.JPanel {
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailTextFieldActionPerformed(evt);
+            }
+        });
+        emailTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailTextFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailTextFieldFocusLost(evt);
             }
         });
 
@@ -114,8 +122,16 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_signUpButtonActionPerformed
 
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_emailTextFieldActionPerformed
+
+    private void emailTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusGained
+        
+    }//GEN-LAST:event_emailTextFieldFocusGained
+
+    private void emailTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusLost
+        
+    }//GEN-LAST:event_emailTextFieldFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;

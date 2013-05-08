@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Task;
+import BackEnd.ManagerSystem.MainManager;
+import BackEnd.UserSystem.User;
+import GUI.Dialog.FindMemberDialog;
+import GUI.Dialog.NewTimeStampDialog;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,13 +21,46 @@ public class TaskPanel extends javax.swing.JPanel {
     /**
      * Creates new form TaskPanel
      */
+    
+    private Task task;
+    private MainManager manager;
     public TaskPanel() {
         initComponents();
+        manager = MainManager.getInstance();
+        task = manager.getTaskManager().getSelectedTask();
+        updateInfo();
     }
     
-    public void setText(String text)
+    public void updateInfo()
     {
-        headerLabel.setText(text);
+        try
+        {
+            headerLabel.setText(task.getTitle());
+            descriptionTextArea.setText(task.getDescription());
+            completeCheckBox.setSelected(task.getCompleted());
+            dueDateLabel.setText("Due date: " + task.getTimeSchedule().getEndDateTimeTimestamp().toString());
+            startDateLabel.setText("Start date: " + task.getTimeSchedule().getStartDateTimeTimestamp().toString());
+            DefaultListModel model = new DefaultListModel();
+            for(User u : task.getResponsibleList())
+            {
+                model.addElement(u);
+            }
+            membersList.setModel(model);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public Task createTask()
+    {
+        task.setCompleted(completeCheckBox.isSelected());
+        task.setDescription(descriptionTextArea.getText());
+        task.setTitle(headerLabel.getText());
+        
+        return task;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,95 +75,201 @@ public class TaskPanel extends javax.swing.JPanel {
         descriptionScrollPane = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
         memberScrollPane = new javax.swing.JScrollPane();
-        membersLit = new javax.swing.JList();
+        membersList = new javax.swing.JList();
         membersLabel = new javax.swing.JLabel();
         completeCheckBox = new javax.swing.JCheckBox();
         startDateLabel = new javax.swing.JLabel();
         dueDateLabel = new javax.swing.JLabel();
+        changeNameButton = new javax.swing.JButton();
+        editTimeScheduleButton = new javax.swing.JButton();
+        addMemberButton = new javax.swing.JButton();
+        removeMemberButton = new javax.swing.JButton();
 
-        headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        headerLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         headerLabel.setText("Task Name");
 
         descriptionTextArea.setColumns(20);
+        descriptionTextArea.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         descriptionTextArea.setRows(5);
         descriptionTextArea.setText("Description...");
+        descriptionTextArea.setMaximumSize(new java.awt.Dimension(204, 79));
         descriptionScrollPane.setViewportView(descriptionTextArea);
 
-        membersLit.setModel(new javax.swing.AbstractListModel() {
+        membersList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        membersList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        memberScrollPane.setViewportView(membersLit);
+        memberScrollPane.setViewportView(membersList);
 
+        membersLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        membersLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         membersLabel.setText("Members");
 
+        completeCheckBox.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         completeCheckBox.setText("Is Complete");
 
+        startDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         startDateLabel.setText("Start Date: MM/DD/YY - 00:00 AM");
 
+        dueDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         dueDateLabel.setText("Due Date : MM/DD/YY - 00:00 AM");
+
+        changeNameButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        changeNameButton.setText("change");
+        changeNameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeNameButtonActionPerformed(evt);
+            }
+        });
+
+        editTimeScheduleButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        editTimeScheduleButton.setText("edit");
+        editTimeScheduleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTimeScheduleButtonActionPerformed(evt);
+            }
+        });
+
+        addMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addMemberButton.setText("+");
+        addMemberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMemberButtonActionPerformed(evt);
+            }
+        });
+
+        removeMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        removeMemberButton.setText("-");
+        removeMemberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeMemberButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(descriptionScrollPane))
+                        .addGap(138, 138, 138)
+                        .addComponent(headerLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(changeNameButton)
+                        .addGap(0, 117, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(headerLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(startDateLabel)
+                            .addComponent(dueDateLabel)
+                            .addComponent(completeCheckBox)
+                            .addComponent(editTimeScheduleButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(membersLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(memberScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(dueDateLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(startDateLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                                .addComponent(completeCheckBox))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(membersLabel)))
+                                .addComponent(addMemberButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(removeMemberButton))))
+                    .addComponent(descriptionScrollPane, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(headerLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(headerLabel)
+                    .addComponent(changeNameButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addGap(4, 4, 4)
                 .addComponent(membersLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(startDateLabel)
-                            .addComponent(completeCheckBox))
+                        .addComponent(startDateLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dueDateLabel)))
-                .addGap(37, 37, 37))
+                        .addComponent(dueDateLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editTimeScheduleButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(completeCheckBox))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addMemberButton)
+                            .addComponent(removeMemberButton))))
+                .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed
+            // TODO add your handling code here:
+        headerLabel.setText(JOptionPane.showInputDialog("New Name"));
+    }//GEN-LAST:event_changeNameButtonActionPerformed
+
+    private void addMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMemberButtonActionPerformed
+        // TODO add your handling code here:
+        FindMemberDialog fmd = new FindMemberDialog(null, true);
+        fmd.setVisible(true);
+        if(fmd.getConfirm())
+        {
+            try
+            {
+                task.getResponsibleList().add(fmd.createUser());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        updateInfo();
+    }//GEN-LAST:event_addMemberButtonActionPerformed
+
+    private void editTimeScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTimeScheduleButtonActionPerformed
+        // TODO add your handling code here:
+        NewTimeStampDialog ntsd = new NewTimeStampDialog(null, true, task.getTimeSchedule());
+        ntsd.setVisible(true);
+        if(ntsd.getConfirm())
+        {
+            task.setTimeSchedule(ntsd.createTimeSchedule());
+        }
+        updateInfo();
+    }//GEN-LAST:event_editTimeScheduleButtonActionPerformed
+
+    private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
+        // TODO add your handling code here:
+        User u = (User)membersList.getModel().getElementAt(membersList.getSelectedIndex());
+        try
+        {
+            task.getResponsibleList().remove(u);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        updateInfo();
+    }//GEN-LAST:event_removeMemberButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addMemberButton;
+    private javax.swing.JButton changeNameButton;
     private javax.swing.JCheckBox completeCheckBox;
     private javax.swing.JScrollPane descriptionScrollPane;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JLabel dueDateLabel;
+    private javax.swing.JButton editTimeScheduleButton;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JScrollPane memberScrollPane;
     private javax.swing.JLabel membersLabel;
-    private javax.swing.JList membersLit;
+    private javax.swing.JList membersList;
+    private javax.swing.JButton removeMemberButton;
     private javax.swing.JLabel startDateLabel;
     // End of variables declaration//GEN-END:variables
 }

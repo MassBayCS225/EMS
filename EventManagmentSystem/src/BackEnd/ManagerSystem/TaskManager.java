@@ -37,7 +37,7 @@ public class TaskManager {
     public Task getSelectedTask() {
         return selectedTask;
     }
-
+    
     public void addResponsible(User responsible, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
@@ -55,8 +55,17 @@ public class TaskManager {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.getResponsibleList().remove(responsible);
             ArrayList<Integer> newResponsibleList = tasksTable.getAuthority(selectedTask.getTASK_ID());
-            newResponsibleList.remove(responsible.getUserId());
+            newResponsibleList.remove(new Integer(responsible.getUserId())); //!!HERE
             tasksTable.setAuthority(selectedTask.getTASK_ID(), newResponsibleList);
+        }
+    }
+    
+    public void editTitle(String title, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+        
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            selectedTask.setTitle(title);
+            tasksTable.setTitle(selectedTask.getTASK_ID(), title);
         }
     }
 
