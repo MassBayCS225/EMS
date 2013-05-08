@@ -100,10 +100,18 @@ public class Home extends javax.swing.JFrame {
             manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
         }
         
+        /* Changed this try block. -Ketty */
         try
         {
             Main m = new Main();
-            add(m);
+            if (manager.getUserManager().getSelectedUser().getAdminPrivilege()) {
+                add(m);
+            }
+            else {
+                m.getUserManagementPanel().getChangeInfoButton().setVisible(false);
+                m.getUserManagementPanel().getChangeUserButton().setVisible(false);
+                add(m);
+            }
         }
         catch (Exception e)
         {
