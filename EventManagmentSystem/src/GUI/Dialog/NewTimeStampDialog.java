@@ -27,32 +27,45 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         initComponents();
         confirm = false;
         original = t;
-        DefaultComboBoxModel yearModel = new DefaultComboBoxModel();
-        DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
-        DefaultComboBoxModel minModel = new DefaultComboBoxModel();
+        DefaultComboBoxModel yearModelS = new DefaultComboBoxModel();
+        DefaultComboBoxModel dayModelS = new DefaultComboBoxModel();
+        DefaultComboBoxModel minModelS = new DefaultComboBoxModel();
+        DefaultComboBoxModel yearModelE = new DefaultComboBoxModel();
+        DefaultComboBoxModel dayModelE = new DefaultComboBoxModel();
+        DefaultComboBoxModel minModelE = new DefaultComboBoxModel();
         for(int i = 0; i < 32; i++)
         {
             if(i == 0)
-            { dayModel.addElement("Day"); }
+            { 
+                dayModelS.addElement("Day"); 
+                dayModelE.addElement("Day");
+            }
             else
-            { dayModel.addElement(i); }
+            { 
+                dayModelS.addElement(i); 
+                dayModelE.addElement(i);
+            }
         }
-        yearModel.addElement("Year");
+        yearModelS.addElement("Year");
+        yearModelE.addElement("Year");
         for(int i = 2013; i < 2050; i++)
         {
-            yearModel.addElement(i);
+            yearModelS.addElement(i);
+            yearModelE.addElement(i);
         }
-        minModel.addElement("Minute");
-        for(int i = 1; i < 61; i++)
+        minModelS.addElement("Minute");
+        minModelE.addElement("Minute");
+        for(int i = 0; i < 60; i++)
         {
-            minModel.addElement(i);
+            minModelS.addElement(i);
+            minModelE.addElement(i);
         }
-        startMinute.setModel(minModel);
-        endMinute.setModel(minModel);
-        startYear.setModel(yearModel);
-        endYear.setModel(yearModel);
-        startDay.setModel(dayModel);
-        endDay.setModel(dayModel);
+        startMinute.setModel(minModelS);
+        endMinute.setModel(minModelE);
+        startYear.setModel(yearModelS);
+        endYear.setModel(yearModelE);
+        startDay.setModel(dayModelS);
+        endDay.setModel(dayModelE);
         updateInfo(t);
     }
     
@@ -97,8 +110,8 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
     {
         TimeSchedule t = new TimeSchedule();
         
-        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), startHour.getSelectedIndex(), startMinute.getSelectedIndex());
-        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), endHour.getSelectedIndex(), endMinute.getSelectedIndex());
+        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), startHour.getSelectedIndex(), startMinute.getSelectedIndex()-1);
+        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), endHour.getSelectedIndex(), endMinute.getSelectedIndex()-1);
         return t;
     }
     /**
@@ -131,10 +144,13 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        startHour.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startHour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hour", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 
+        startMinute.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startMinute.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Minute" }));
 
+        startPM.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startPM.setText("PM");
         startPM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,16 +158,22 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
             }
         });
 
+        startYear.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startYear.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Year" }));
 
+        startDay.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startDay.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Day" }));
 
+        startMonth.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startMonth.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
+        endHour.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endHour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hour", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 
+        endMinute.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endMinute.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Minute" }));
 
+        endPM.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endPM.setText("PM");
         endPM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,22 +181,27 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
             }
         });
 
+        endYear.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endYear.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Year" }));
 
+        endDay.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endDay.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Day" }));
 
+        endMonth.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endMonth.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel1.setText("Start Time");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel2.setText("End Time");
 
+        jCheckBox1.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         jCheckBox1.setText("Use Current Time");
 
+        saveButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,6 +209,7 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
             }
         });
 
+        closeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         closeButton.setText("Close");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

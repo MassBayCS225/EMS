@@ -5,10 +5,9 @@
 package GUI;
 import GUI.Dialog.NewCommitteeDialog;
 import javax.swing.*;
-import BackEnd.ManagerSystem.EventManager;
 import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
-import BackEnd.UserSystem.User;
+import java.awt.CardLayout;
 /**
  *
  * @author Sid
@@ -25,18 +24,39 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         manager = MainManager.getInstance();
         committeePanel = new CommitteePanel();
         committeePanel.setSize(500,600);
-        committeePanelHolder.add(committeePanel);
+        committeePanelHolder.add(committeePanel, "committee");
+        committeePanelHolder.add(noPanel, "no");
         updateInfo();
+        if(committeeList.getModel().getSize() == 0)
+        {
+            CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
+            cl.show(committeePanelHolder, "no");
+        }
+        else
+        {
+            CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
+            cl.show(committeePanelHolder, "committee");
+            committeeList.setSelectedIndex(0);
+        }
     }
     
     public void updateInfo()
     {
         DefaultListModel model = new DefaultListModel();
-        model.clear();
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
             model.addElement(c.getTitle());
         }
         committeeList.setModel(model);
+        if(model.isEmpty())
+        {
+            noPanel.setVisible(true);  
+            committeePanel.setVisible(false);
+        }
+        else
+        {
+            committeePanel.setVisible(true);
+            noPanel.setVisible(false);
+        }
     }
     
     /**
@@ -48,25 +68,20 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        noPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         committeeListScrollPane = new javax.swing.JScrollPane();
         committeeList = new javax.swing.JList();
         committeeListLabel = new javax.swing.JLabel();
         addCommitteeButton = new javax.swing.JButton();
         removeCommitteeButton = new javax.swing.JButton();
         committeePanelHolder = new javax.swing.JPanel();
+        noPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
-        noPanel.setBackground(java.awt.SystemColor.activeCaption);
-
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("No committees Created Yet");
-        noPanel.add(jLabel1);
-
+        setBackground(new java.awt.Color(153, 204, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(750, 600));
 
+        committeeList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         committeeList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -79,8 +94,11 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         });
         committeeListScrollPane.setViewportView(committeeList);
 
+        committeeListLabel.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        committeeListLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         committeeListLabel.setText("Committee List");
 
+        addCommitteeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         addCommitteeButton.setText("+");
         addCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +106,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             }
         });
 
+        removeCommitteeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         removeCommitteeButton.setText("-");
         removeCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,17 +115,17 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         });
 
         committeePanelHolder.setBackground(java.awt.SystemColor.activeCaption);
+        committeePanelHolder.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout committeePanelHolderLayout = new javax.swing.GroupLayout(committeePanelHolder);
-        committeePanelHolder.setLayout(committeePanelHolderLayout);
-        committeePanelHolderLayout.setHorizontalGroup(
-            committeePanelHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 611, Short.MAX_VALUE)
-        );
-        committeePanelHolderLayout.setVerticalGroup(
-            committeePanelHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        noPanel.setBackground(new java.awt.Color(153, 204, 255));
+
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("No committees Created Yet");
+        noPanel.add(jLabel1);
+
+        committeePanelHolder.add(noPanel, "no");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,18 +133,15 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(committeeListLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addCommitteeButton)
-                                .addGap(9, 9, 9)
-                                .addComponent(removeCommitteeButton)))
-                        .addGap(20, 20, 20)
-                        .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(committeeListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(addCommitteeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeCommitteeButton))
+                    .addComponent(committeeListScrollPane))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,13 +149,15 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(committeeListLabel)
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(committeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addCommitteeButton)
-                    .addComponent(removeCommitteeButton)))
+                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addCommitteeButton)
+                            .addComponent(removeCommitteeButton))))
+                .addGap(0, 142, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,13 +178,12 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             try
             {
                 manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(cd.createCommittee(),manager.getLogInManager().getLoggedInUser()));
-                committeeList.setSelectedIndex(manager.getEventManager().getSelectedEvent().getCommitteeList().size()-1);
-                committeePanel.setVisible(true);
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
             updateInfo();
+            committeeList.setSelectedIndex(manager.getEventManager().getSelectedEvent().getCommitteeList().size()-1);
             
         }
     }//GEN-LAST:event_addCommitteeButtonActionPerformed
@@ -184,14 +201,16 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 System.out.println(e);
                 e.printStackTrace();
         }
+        int lastSelect = committeeList.getSelectedIndex();
         updateInfo();
         if(committeeList.getModel().getSize() > 0)
         {
-            committeeList.setSelectedIndex(0);
-        }
-        else
-        {
-            committeePanel.setVisible(false);
+            if(lastSelect > 1)
+            committeeList.setSelectedIndex(lastSelect-1);
+            else
+            {
+                 committeeList.setSelectedIndex(0);
+            }
         }
     }//GEN-LAST:event_removeCommitteeButtonActionPerformed
 

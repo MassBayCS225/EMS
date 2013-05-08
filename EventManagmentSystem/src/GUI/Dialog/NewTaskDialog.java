@@ -5,8 +5,7 @@
 package GUI.Dialog;
 
 import BackEnd.EventSystem.Task;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
+import BackEnd.EventSystem.TimeSchedule;
 
 /**
  *
@@ -19,13 +18,14 @@ public class NewTaskDialog extends javax.swing.JDialog {
      */
     
     private boolean confirm;
-    
+    Task task;
     public NewTaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
         confirm = false;
+        task = new Task();
     }
     
     public boolean getConfirm()
@@ -33,8 +33,9 @@ public class NewTaskDialog extends javax.swing.JDialog {
     
     public Task createTask()
     {
-        Task t = new Task(1,taskNameLabel.getText());
-        return t;
+        task.setTitle(taskNameLabel.getText());
+        task.setDescription(descriptionTextArea.getText());
+        return task;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,30 +50,31 @@ public class NewTaskDialog extends javax.swing.JDialog {
         taskNameLabel = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descriptionTextArea = new javax.swing.JTextArea();
         dueDate = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
         startDate = new javax.swing.JLabel();
         startDateLabel = new javax.swing.JLabel();
         dueDateLabel = new javax.swing.JLabel();
-        editStartButton = new javax.swing.JButton();
         editDueButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Task Name");
 
-        taskNameLabel.setText("jTextField1");
-
+        jLabel2.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         jLabel2.setText("Description");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        descriptionTextArea.setColumns(20);
+        descriptionTextArea.setRows(5);
+        jScrollPane1.setViewportView(descriptionTextArea);
 
+        dueDate.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         dueDate.setText("Due Date");
 
+        saveButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +82,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
             }
         });
 
+        closeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,15 +90,22 @@ public class NewTaskDialog extends javax.swing.JDialog {
             }
         });
 
+        startDate.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         startDate.setText("StartDate");
 
-        startDateLabel.setText("jLabel3");
+        startDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        startDateLabel.setText(" MM/DD/YY - 00:00 AM");
 
-        dueDateLabel.setText("jLabel3");
+        dueDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        dueDateLabel.setText("MM/DD/YY - 00:00 AM");
 
-        editStartButton.setText("Edit");
-
+        editDueButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         editDueButton.setText("Edit");
+        editDueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editDueButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,17 +128,14 @@ public class NewTaskDialog extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(dueDate)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dueDateLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(editDueButton))
+                                .addGap(18, 18, 18)
+                                .addComponent(dueDateLabel))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(startDate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(startDateLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(editStartButton)))
-                        .addGap(0, 199, Short.MAX_VALUE)))
+                                .addComponent(startDateLabel))
+                            .addComponent(editDueButton))
+                        .addGap(0, 187, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -142,17 +149,17 @@ public class NewTaskDialog extends javax.swing.JDialog {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startDate)
-                    .addComponent(startDateLabel)
-                    .addComponent(editStartButton))
-                .addGap(18, 18, 18)
+                    .addComponent(startDateLabel))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dueDate)
-                    .addComponent(dueDateLabel)
-                    .addComponent(editDueButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                    .addComponent(dueDateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editDueButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(closeButton))
@@ -172,6 +179,18 @@ public class NewTaskDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void editDueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDueButtonActionPerformed
+        // TODO add your handling code here:
+        NewTimeStampDialog ntsd = new NewTimeStampDialog(null, true, new TimeSchedule());
+        ntsd.setVisible(true);
+        if(ntsd.getConfirm())
+        {
+            task.setTimeSchedule(ntsd.createTimeSchedule());
+        }
+        startDateLabel.setText(task.getTimeSchedule().getStartDateTimeTimestamp().toString());
+        dueDateLabel.setText(task.getTimeSchedule().getEndDateTimeTimestamp().toString());
+    }//GEN-LAST:event_editDueButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,14 +235,13 @@ public class NewTaskDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
+    private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JLabel dueDate;
     private javax.swing.JLabel dueDateLabel;
     private javax.swing.JButton editDueButton;
-    private javax.swing.JButton editStartButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel startDate;
     private javax.swing.JLabel startDateLabel;

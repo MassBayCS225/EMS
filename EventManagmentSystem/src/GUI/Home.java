@@ -4,9 +4,11 @@
  */
 package GUI;
 import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.LoginDialog;
 import GUI.Dialog.SignupDialog;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
@@ -58,8 +60,33 @@ public class Home extends javax.swing.JFrame {
             //CREATE ONE
             try
             {
-                manager.getEventManager().setSelectedEvent(manager.getEventManager().createEvent(new Event(), manager.getLogInManager().getLoggedInUser()));
+                NewEventDialog ned = new NewEventDialog(this, true);
+                ned.setVisible(true);
+                if(ned.getConfirm())
+                {
+                    Event event = ned.createEvent();
+                
+                        manager.getEventManager().setSelectedEvent(manager.getEventManager().createEvent(
+                                event, manager.getLogInManager().getLoggedInUser()));
+                        manager.getEventManager().editDescription(
+                                event.getDescription(), manager.getLogInManager().getLoggedInUser());
+                        TimeSchedule ts = event.getTimeSchedule();
+                        int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
+                        int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
+                        int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
+                        int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH);
+                        int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+                        manager.getEventManager().editStartDateTime(
+                                year, month, day, hour, minute, manager.getLogInManager().getLoggedInUser());
+                        hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
+                        minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);
+                        year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
+                        month = ts.getEndDateTimeCalendar().get(Calendar.MONTH);
+                        day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);  
+                        manager.getEventManager().editEndDateTime(
+                                year, month, day, hour, minute, manager.getLogInManager().getLoggedInUser());
                 System.out.println("CREATED AN EVENT");
+                }
             }
             catch (Exception e)
             {

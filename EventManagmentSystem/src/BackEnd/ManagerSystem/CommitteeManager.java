@@ -99,7 +99,7 @@ public class CommitteeManager {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getMemberList().remove(member);
             ArrayList<Integer> newMemberList = committeesTable.getCommitteeMembers(selectedCommittee.getCOMMITTEE_ID());
-            newMemberList.remove(member.getUserId());
+            newMemberList.remove(new Integer(member.getUserId())); //!!HERE
             committeesTable.setCommitteeMembers(selectedCommittee.getCOMMITTEE_ID(), newMemberList);
         }
     }

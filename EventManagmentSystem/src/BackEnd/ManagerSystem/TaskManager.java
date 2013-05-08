@@ -55,7 +55,7 @@ public class TaskManager {
         if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
             selectedTask.getResponsibleList().remove(responsible);
             ArrayList<Integer> newResponsibleList = tasksTable.getAuthority(selectedTask.getTASK_ID());
-            newResponsibleList.remove(responsible.getUserId());
+            newResponsibleList.remove(new Integer(responsible.getUserId())); //!!HERE
             tasksTable.setAuthority(selectedTask.getTASK_ID(), newResponsibleList);
         }
     }
