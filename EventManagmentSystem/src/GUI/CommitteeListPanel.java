@@ -44,7 +44,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     {
         DefaultListModel model = new DefaultListModel();
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
-            model.addElement(c.getTitle());
+            model.addElement(c);
         }
         committeeList.setModel(model);
         if(model.isEmpty())
@@ -81,12 +81,13 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(750, 600));
 
+        committeeListScrollPane.setBackground(new java.awt.Color(153, 153, 153));
+        committeeListScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         committeeList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
-        committeeList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        committeeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        committeeList.setMaximumSize(new java.awt.Dimension(100, 370));
+        committeeList.setPreferredSize(new java.awt.Dimension(100, 370));
         committeeList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 committeeListValueChanged(evt);
@@ -132,32 +133,37 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(committeeListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(addCommitteeButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(removeCommitteeButton))
-                    .addComponent(committeeListScrollPane))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(addCommitteeButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(removeCommitteeButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(committeeListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(committeeListLabel)
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(committeeListLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addCommitteeButton)
-                            .addComponent(removeCommitteeButton))))
-                .addGap(0, 142, Short.MAX_VALUE))
+                            .addComponent(removeCommitteeButton)))
+                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 146, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -177,20 +183,23 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         if(cd.getConfirm()){
             try
             {
-                manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(cd.createCommittee(),manager.getLogInManager().getLoggedInUser()));
+                manager.getCommitteeManager().setSelectedCommittee(
+                        manager.getEventManager().createCommittee(
+                        cd.createCommittee(),manager.getLogInManager().getLoggedInUser()));
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
             updateInfo();
-            committeeList.setSelectedIndex(manager.getEventManager().getSelectedEvent().getCommitteeList().size()-1);
+            committeeList.setSelectedIndex(
+                    manager.getEventManager().getSelectedEvent().getCommitteeList().size()-1);
             
         }
     }//GEN-LAST:event_addCommitteeButtonActionPerformed
 
     private void removeCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCommitteeButtonActionPerformed
         // TODO add your handling code here:
-        Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
+        Committee c = (Committee)committeeList.getModel().getElementAt(committeeList.getSelectedIndex());
         //System.out.println(c);
         try
         {

@@ -37,7 +37,7 @@ public class Home extends javax.swing.JFrame {
         while(manager.getUserManager().getUserList().isEmpty())
         {
             //CREATE A USER
-            JOptionPane.showMessageDialog(this, "First run, create a user.");
+            JOptionPane.showMessageDialog(this, "There are no users in the user list.  Please create an administrator account first.");
             SignupDialog sd = new SignupDialog(this, true);
             sd.setVisible(true);
         }
@@ -60,6 +60,7 @@ public class Home extends javax.swing.JFrame {
             //CREATE ONE
             try
             {
+                JOptionPane.showMessageDialog(this, "An event has not been created yet.  Please create one first.");
                 NewEventDialog ned = new NewEventDialog(this, true);
                 ned.setVisible(true);
                 if(ned.getConfirm())

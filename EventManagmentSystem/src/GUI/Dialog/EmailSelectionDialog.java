@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.DefaultListModel;
 
@@ -20,7 +21,7 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
      * Creates new form EmailSelectionDialog
      */
     private MainManager manager;
-    private DefaultListModel toModel;
+    private DefaultListModel toModel, memberModel, committeeModel;
     private boolean confirm;
     
     public EmailSelectionDialog(java.awt.Frame parent, boolean modal) {
@@ -29,16 +30,22 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         manager = new MainManager();
         manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
         toModel = new DefaultListModel();
+        memberModel = new DefaultListModel();
+        committeeModel = new DefaultListModel();
         toList.setModel(toModel);
+        memberList.setModel(memberModel);
+        committeeList.setModel(committeeModel);
         confirm = false;
         updateInfo();
     }
     
+    public boolean getConfirm()
+    { return confirm; }
     
     public void updateInfo()
     {
-        DefaultListModel memberModel = new DefaultListModel();
-        DefaultListModel committeeModel = new DefaultListModel();
+        memberModel.clear();
+        committeeModel.clear();
         for(User u : manager.getEventManager().getSelectedEvent().getOrganizerList())
         {
             memberModel.addElement(u);
@@ -47,8 +54,7 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         {
             committeeModel.addElement(c);
         }
-        memberList.setModel(memberModel);
-        committeeList.setModel(committeeModel);
+        toModel.clear();
     }
     
     public HashSet<String> createAddresses()
@@ -71,6 +77,18 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
                 }
             }
         }
+        //System.out.println(addr);
+        return addr;
+    }
+    
+    public ArrayList<String> addressesToArray()
+    {
+        ArrayList<String> addr = new ArrayList<String>();
+        for(Object o : createAddresses().toArray())
+        {
+            addr.add((String)o);
+        }
+        //System.out.println(addr);
         return addr;
     }
     /**
@@ -96,6 +114,8 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
+        everyoneButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -144,6 +164,20 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
 
         closeButton.setText("Cancel");
 
+        everyoneButton.setText("Everyone");
+        everyoneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                everyoneButtonActionPerformed(evt);
+            }
+        });
+
+        clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,27 +187,37 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(saveButton)
-                                .addGap(349, 349, 349)
-                                .addComponent(closeButton))
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(membersLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(19, 19, 19)
+                                    .addComponent(membersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(saveButton)
+                                .addGap(78, 78, 78)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(everyoneButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(removeButton)
                                     .addComponent(addButton))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(35, 35, 35)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(clearButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(closeButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -183,31 +227,31 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(membersLabel)
-                            .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane3)))
+                        .addComponent(jScrollPane3))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(addButton)
+                        .addGap(45, 45, 45)
+                        .addComponent(removeButton)
+                        .addGap(0, 102, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(membersLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(addButton)
-                                .addGap(45, 45, 45)
-                                .addComponent(removeButton)
-                                .addGap(0, 81, Short.MAX_VALUE)))))
-                .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
-                    .addComponent(closeButton))
+                    .addComponent(closeButton)
+                    .addComponent(everyoneButton)
+                    .addComponent(clearButton))
                 .addContainerGap())
         );
 
@@ -225,22 +269,64 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         {
             toModel.addElement((Committee)committeeList.getModel().getElementAt(i2));
         }
+        
+        for(int i = memberList.getSelectedIndices().length-1; i >= 0; i--)
+        {
+            memberModel.removeElementAt(memberList.getSelectedIndices()[i]);
+        }
+        for(int i = committeeList.getSelectedIndices().length-1; i >=0; i--)
+        {
+            committeeModel.removeElementAt(committeeList.getSelectedIndices()[i]);
+        }
+        memberList.clearSelection();
+        committeeList.clearSelection();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
         for(int i : toList.getSelectedIndices())
         {
-            toModel.remove(i);
+            if(toModel.get(i) instanceof User)
+            {
+                memberModel.addElement((User)toModel.get(i));
+            }
+            if(toModel.get(i) instanceof Committee)
+            {
+                committeeModel.addElement((Committee)toModel.get(i));
+            }
+        }
+        for(int i = toList.getSelectedIndices().length-1; i >=0; i--)
+        {
+            toModel.removeElementAt(toList.getSelectedIndices()[i]);
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         confirm = true;
-        createAddresses();
+        //addressesToArray();
         this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void everyoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_everyoneButtonActionPerformed
+        // TODO add your handling code here:
+        updateInfo();
+        for(Object o : committeeModel.toArray())
+        {
+            toModel.addElement((Committee)o);
+        }
+        for(Object o : memberModel.toArray())
+        {
+            toModel.addElement((User)o);
+        }
+        committeeModel.clear();
+        memberModel.clear();
+    }//GEN-LAST:event_everyoneButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        // TODO add your handling code here:
+        updateInfo();
+    }//GEN-LAST:event_clearButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,8 +371,10 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton clearButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JList committeeList;
+    private javax.swing.JButton everyoneButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
