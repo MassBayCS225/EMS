@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Sat May 04 22:29:29 EDT 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-013e-7285-c5f7-000007194040 
-on database directory C:\Users\David Tersoff\Documents\GitHub\EMS\EventManagmentSystem\EMS_DB with class loader sun.misc.Launcher$AppClassLoader@12360be0 
-Loaded from file:/C:/Users/David%20Tersoff/Documents/GitHub/EMS/Database/db-derby-10.10.1.1-lib/lib/derby.jar
+Sat May 04 01:27:29 EDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-013e-6e02-5e14-00000e895900 
+on database directory /BIG/DOCUMENTS/CS225/EMS/EventManagmentSystem/EMS_DB with class loader sun.misc.Launcher$AppClassLoader@63c78e57 
+Loaded from file:/BIG/DOCUMENTS/CS225/EMS/Database/db-derby-10.10.1.1-lib/lib/derby.jar
 java.vendor=Sun Microsystems Inc.
-java.runtime.version=1.6.0_43-b01
-user.dir=C:\Users\David Tersoff\Documents\GitHub\EMS\EventManagmentSystem
-os.name=Windows 8
+java.runtime.version=1.6.0_41-b02
+user.dir=/BIG/DOCUMENTS/CS225/EMS/EventManagmentSystem
+os.name=Linux
 os.arch=amd64
-os.version=6.2
+os.version=3.5.0-17-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
