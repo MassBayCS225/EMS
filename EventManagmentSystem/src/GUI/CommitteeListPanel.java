@@ -18,11 +18,22 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     /**
      * Creates new form CommitteeListPanel
      */
-    MainManager manager;
+    private MainManager manager;
+    private CommitteePanel committeePanel;
     public CommitteeListPanel() {
         initComponents();
         manager = MainManager.getInstance();
+        committeePanel = new CommitteePanel();
+        committeePanelHolder.add(committeePanel);
         updateInfo();
+        if(committeeList.getModel().getSize() ==0)
+        {
+            committeePanel.setVisible(false);
+        }
+        else
+        {
+            committeeList.setSelectedIndex(0);
+        }
     }
     
     public void updateInfo()
@@ -44,30 +55,24 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sortByGroup = new javax.swing.ButtonGroup();
+        noPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         committeeListScrollPane = new javax.swing.JScrollPane();
         committeeList = new javax.swing.JList();
-        searchLabel = new javax.swing.JLabel();
-        searchTextField = new javax.swing.JTextField();
-        searchValueComboBox = new javax.swing.JComboBox();
-        taskProgressHighRadio = new javax.swing.JRadioButton();
-        taskProgressLowRadio = new javax.swing.JRadioButton();
-        expensesHighRadio = new javax.swing.JRadioButton();
-        expensesLowRadio = new javax.swing.JRadioButton();
-        incomeHighRadio = new javax.swing.JRadioButton();
-        incomeLowRadio = new javax.swing.JRadioButton();
-        sortByLabel = new javax.swing.JLabel();
-        numMembersRadio = new javax.swing.JRadioButton();
-        totalTasksRadio = new javax.swing.JRadioButton();
         committeeListLabel = new javax.swing.JLabel();
-        searchButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        committeePanel1 = new GUI.CommitteePanel();
         addCommitteeButton = new javax.swing.JButton();
         removeCommitteeButton = new javax.swing.JButton();
-        nameRadio = new javax.swing.JRadioButton();
+        committeePanelHolder = new javax.swing.JPanel();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        noPanel.setBackground(java.awt.SystemColor.activeCaption);
+
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("No committees Created Yet");
+        noPanel.add(jLabel1);
+
+        setPreferredSize(new java.awt.Dimension(750, 600));
 
         committeeList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -81,91 +86,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         });
         committeeListScrollPane.setViewportView(committeeList);
 
-        add(committeeListScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 116, 294));
-
-        searchLabel.setText("Find by Value:");
-        add(searchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 271, -1, -1));
-
-        searchTextField.setText("search term...");
-        searchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchTextFieldActionPerformed(evt);
-            }
-        });
-        add(searchTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 268, 100, -1));
-
-        searchValueComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Committee Name", "Chairperson Name", "Member Name", "etc..." }));
-        searchValueComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchValueComboBoxActionPerformed(evt);
-            }
-        });
-        add(searchValueComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 294, 172, -1));
-
-        sortByGroup.add(taskProgressHighRadio);
-        taskProgressHighRadio.setText("Task Progress(High)");
-        taskProgressHighRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                taskProgressHighRadioActionPerformed(evt);
-            }
-        });
-        add(taskProgressHighRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 58, -1, -1));
-
-        sortByGroup.add(taskProgressLowRadio);
-        taskProgressLowRadio.setText("Task Progress(Low)");
-        add(taskProgressLowRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 81, -1, -1));
-
-        sortByGroup.add(expensesHighRadio);
-        expensesHighRadio.setText("Expenses(High)");
-        expensesHighRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expensesHighRadioActionPerformed(evt);
-            }
-        });
-        add(expensesHighRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 127, -1, -1));
-
-        sortByGroup.add(expensesLowRadio);
-        expensesLowRadio.setText("Expenses(Low)");
-        add(expensesLowRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 150, -1, -1));
-
-        sortByGroup.add(incomeHighRadio);
-        incomeHighRadio.setText("Income(High)");
-        add(incomeHighRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 173, -1, -1));
-
-        sortByGroup.add(incomeLowRadio);
-        incomeLowRadio.setText("Income(Low)");
-        add(incomeLowRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 196, -1, -1));
-
-        sortByLabel.setText("Sort By....");
-        add(sortByLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 0, -1, -1));
-
-        sortByGroup.add(numMembersRadio);
-        numMembersRadio.setText("# of members");
-        add(numMembersRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 219, -1, -1));
-
-        sortByGroup.add(totalTasksRadio);
-        totalTasksRadio.setText("Total Tasks");
-        totalTasksRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                totalTasksRadioActionPerformed(evt);
-            }
-        });
-        add(totalTasksRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 104, -1, -1));
-
         committeeListLabel.setText("Committee List");
-        add(committeeListLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
-
-        searchButton.setText("Search");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
-        add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 320, -1, -1));
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 0, 10, 448));
-        add(committeePanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 11, -1, -1));
 
         addCommitteeButton.setText("+");
         addCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +94,6 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 addCommitteeButtonActionPerformed(evt);
             }
         });
-        add(addCommitteeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, -1));
 
         removeCommitteeButton.setText("-");
         removeCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -181,39 +101,52 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 removeCommitteeButtonActionPerformed(evt);
             }
         });
-        add(removeCommitteeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 320, -1, -1));
 
-        sortByGroup.add(nameRadio);
-        nameRadio.setText("Name");
-        add(nameRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 35, -1, -1));
+        committeePanelHolder.setBackground(java.awt.SystemColor.activeCaption);
+        committeePanelHolder.setLayout(new java.awt.CardLayout());
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(committeeListLabel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addCommitteeButton)
+                                .addGap(9, 9, 9)
+                                .addComponent(removeCommitteeButton)))
+                        .addGap(20, 20, 20)
+                        .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(committeeListLabel)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addCommitteeButton)
+                            .addComponent(removeCommitteeButton)))
+                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchTextFieldActionPerformed
-
-    private void searchValueComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchValueComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchValueComboBoxActionPerformed
-
-    private void taskProgressHighRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskProgressHighRadioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_taskProgressHighRadioActionPerformed
-
-    private void expensesHighRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expensesHighRadioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_expensesHighRadioActionPerformed
-
-    private void totalTasksRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalTasksRadioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_totalTasksRadioActionPerformed
 
     private void committeeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_committeeListValueChanged
         // TODO add your handling code here:
         if(committeeList.getSelectedIndex() >= 0){
             Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
             manager.getCommitteeManager().setSelectedCommittee(c);
-            committeePanel1.updateInfo();
+            committeePanel.updateInfo();
         }
     }//GEN-LAST:event_committeeListValueChanged
 
@@ -222,13 +155,17 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         NewCommitteeDialog cd = new NewCommitteeDialog((JFrame)SwingUtilities.windowForComponent(this), true);
         cd.setVisible(true);
         if(cd.getConfirm()){
-            try{
+            try
+            {
                 manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(cd.createCommittee(),manager.getLogInManager().getLoggedInUser()));
+                committeeList.setSelectedIndex(manager.getEventManager().getSelectedEvent().getCommitteeList().size()-1);
+                committeePanel.setVisible(true);
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
             updateInfo();
+            
         }
     }//GEN-LAST:event_addCommitteeButtonActionPerformed
 
@@ -246,35 +183,24 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 e.printStackTrace();
         }
         updateInfo();
+        if(committeeList.getModel().getSize() > 0)
+        {
+            committeeList.setSelectedIndex(0);
+        }
+        else
+        {
+            committeePanel.setVisible(false);
+        }
     }//GEN-LAST:event_removeCommitteeButtonActionPerformed
-
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Not implemented yet.");
-    }//GEN-LAST:event_searchButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCommitteeButton;
     private javax.swing.JList committeeList;
     private javax.swing.JLabel committeeListLabel;
     private javax.swing.JScrollPane committeeListScrollPane;
-    private GUI.CommitteePanel committeePanel1;
-    private javax.swing.JRadioButton expensesHighRadio;
-    private javax.swing.JRadioButton expensesLowRadio;
-    private javax.swing.JRadioButton incomeHighRadio;
-    private javax.swing.JRadioButton incomeLowRadio;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JRadioButton nameRadio;
-    private javax.swing.JRadioButton numMembersRadio;
+    private javax.swing.JPanel committeePanelHolder;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel noPanel;
     private javax.swing.JButton removeCommitteeButton;
-    private javax.swing.JButton searchButton;
-    private javax.swing.JLabel searchLabel;
-    private javax.swing.JTextField searchTextField;
-    private javax.swing.JComboBox searchValueComboBox;
-    private javax.swing.ButtonGroup sortByGroup;
-    private javax.swing.JLabel sortByLabel;
-    private javax.swing.JRadioButton taskProgressHighRadio;
-    private javax.swing.JRadioButton taskProgressLowRadio;
-    private javax.swing.JRadioButton totalTasksRadio;
     // End of variables declaration//GEN-END:variables
 }

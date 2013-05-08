@@ -43,7 +43,7 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
             yearModel.addElement(i);
         }
         minModel.addElement("Minute");
-        for(int i = 1; i < 61; i++)
+        for(int i = 0; i < 60; i++)
         {
             minModel.addElement(i);
         }
@@ -97,8 +97,8 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
     {
         TimeSchedule t = new TimeSchedule();
         
-        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), startHour.getSelectedIndex(), startMinute.getSelectedIndex());
-        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), endHour.getSelectedIndex(), endMinute.getSelectedIndex());
+        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), startHour.getSelectedIndex(), startMinute.getSelectedIndex()-1);
+        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), endHour.getSelectedIndex(), endMinute.getSelectedIndex()-1);
         return t;
     }
     /**

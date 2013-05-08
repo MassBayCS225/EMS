@@ -33,7 +33,9 @@ public class NewTaskDialog extends javax.swing.JDialog {
     
     public Task createTask()
     {
-        Task t = new Task(1,taskNameLabel.getText());
+        Task t = new Task();
+        t.setTitle(taskNameField.getText());
+        t.setDescription(descriptionTextArea.getText());
         return t;
     }
     /**
@@ -46,10 +48,10 @@ public class NewTaskDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        taskNameLabel = new javax.swing.JTextField();
+        taskNameField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descriptionTextArea = new javax.swing.JTextArea();
         dueDate = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
@@ -63,13 +65,13 @@ public class NewTaskDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Task Name");
 
-        taskNameLabel.setText("jTextField1");
+        taskNameField.setText("jTextField1");
 
         jLabel2.setText("Description");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        descriptionTextArea.setColumns(20);
+        descriptionTextArea.setRows(5);
+        jScrollPane1.setViewportView(descriptionTextArea);
 
         dueDate.setText("Due Date");
 
@@ -114,7 +116,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(taskNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(dueDate)
@@ -137,7 +139,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(taskNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -216,6 +218,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
+    private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JLabel dueDate;
     private javax.swing.JLabel dueDateLabel;
     private javax.swing.JButton editDueButton;
@@ -223,10 +226,9 @@ public class NewTaskDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel startDate;
     private javax.swing.JLabel startDateLabel;
-    private javax.swing.JTextField taskNameLabel;
+    private javax.swing.JTextField taskNameField;
     // End of variables declaration//GEN-END:variables
 }
