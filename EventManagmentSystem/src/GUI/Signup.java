@@ -341,6 +341,10 @@ public class Signup extends javax.swing.JPanel {
             newUser.getAddress().setCountry(countryField.getText());
             newUser.setPhoneNumber(new PhoneNumber(phoneNumberField.getText()));  
             
+            if(userManager.getUserList().isEmpty())
+            {
+                newUser.setAdminPrivilege(true);
+            }
             userManager.getUserList().add(userManager.createUser(newUser));
             parentDialog.dispose();
             

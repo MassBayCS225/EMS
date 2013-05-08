@@ -6,9 +6,8 @@ package GUI;
 import BackEnd.EventSystem.Event;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.LoginDialog;
-import javax.swing.JFrame;
+import GUI.Dialog.SignupDialog;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
 
@@ -31,16 +30,50 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
+        
+        //CHECK IF WE HAVE USERS
+        while(manager.getUserManager().getUserList().isEmpty())
+        {
+            //CREATE A USER
+            JOptionPane.showMessageDialog(this, "First run, create a user.");
+            SignupDialog sd = new SignupDialog(this, true);
+            sd.setVisible(true);
+        }
+        
+        //LOG IN
+        while (manager.getLogInManager().getLoggedInUser() == null) 
+        {
+           LoginDialog ld = new LoginDialog(this, true);
+           ld.setVisible(true);
+           if (ld.getConfirm()) 
+           {
+               ld.createUser();
+               manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
+           }
+        }
+        
+        //CHECK IF WE HAVE EVENTS
+        if(manager.getEventManager().getEventList().isEmpty())
+        {
+            //CREATE ONE
+            try
+            {
+                manager.getEventManager().setSelectedEvent(manager.getEventManager().createEvent(new Event(), manager.getLogInManager().getLoggedInUser()));
+                System.out.println("CREATED AN EVENT");
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        //OR LOAD IT
+        else
+        {
+            manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+        }
+        
         try
         {
-            while (manager.getLogInManager().getLoggedInUser() == null) {
-                LoginDialog ld = new LoginDialog(this, true);
-                ld.setVisible(true);
-                if (ld.getConfirm()) {
-                    ld.createUser();
-                    manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
-                }
-            }
             Main m = new Main();
             add(m);
         }
