@@ -145,6 +145,22 @@ public class Committee implements Reportable {
         return chair;
     }
     
+    public int getCompletePercent()
+    {
+        int pct = 0;
+        float complete = 0.0f;
+        float total = taskList.size();
+        for(Task t : taskList)
+        {
+            if(t.getCompleted())
+            {
+                complete += 1;
+            }
+        }
+        pct = (int)(complete/total *100);
+        return pct;
+    }
+    
     public void setTaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
