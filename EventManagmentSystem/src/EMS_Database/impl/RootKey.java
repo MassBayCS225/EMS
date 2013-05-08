@@ -2,6 +2,9 @@ package EMS_Database.impl;
 
 import EMS_Database.DoesNotExistException;
 import EMS_Database.InitDB;
+import static EMS_Database.InitDB.debugLog;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -11,31 +14,58 @@ import java.sql.SQLException;
  */
 public class RootKey extends InitDB {
 
+    private String tableName = "ROOTKEY";
+
     /**
-     * This table is designed for storage of the password encryption key.
-     * @param key the hash key to be stored.
+     * This function is designed to store the private RSA mod/exp key pair.
+     * @param mod the modulus value to be stored
+     * @param exp the exponent value to be stored
      */
-    public void addKey(String key) {
+    public void addPrivKey(BigInteger mod, BigInteger exp) {
+	BigDecimal dmod = new BigDecimal(mod);
+	BigDecimal dexp = new BigDecimal(exp);
 	try {
-	    String table = "ROOTKEY";
 	    //Creating Statement
-	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO "+table+" VALUES(?,?)");
+	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO " + tableName + " VALUES(?,?,?)");
 	    AddAddressStmt.setInt(1, 1);
-	    AddAddressStmt.setString(2, key);
+	    AddAddressStmt.setLong(2, dmod.longValue());
+	    AddAddressStmt.setLong(3, dexp.longValue());
 	    //Execute Statement
 	    AddAddressStmt.executeUpdate();
 	} catch (SQLException sqle) {
-	    System.err.println("Seriously dude? This function can only be called once. Call remove key first or rebuild database.");
+	    debugLog.severe("Private RSA key could not be stored.");
+	    System.err.println("Seriously dude? check debug log");
 	}
     }
 
     /**
-     * Pretty self explanitory.
+     * This function is designed to store the public RSA mod/exp key pair.
+     * @param mod the modulus value to be stored
+     * @param exp the exponent value to be stored
      */
-    public void removeKey() {
-	String table = "ROOTKEY";
+    public void addPubKey(BigInteger mod, BigInteger exp) {
+	BigDecimal dmod = new BigDecimal(mod);
+	BigDecimal dexp = new BigDecimal(exp);
 	try {
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM " + table + " WHERE UID=?");
+	    //Creating Statement
+	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO " + tableName + " VALUES(?,?,?)");
+	    AddAddressStmt.setInt(1, 2);
+	    AddAddressStmt.setLong(2, dmod.longValue());
+	    AddAddressStmt.setLong(3, dexp.longValue());
+	    //Execute Statement
+	    AddAddressStmt.executeUpdate();
+	} catch (SQLException sqle) {
+	    debugLog.severe("Public RSA key could not be stored.");
+	    System.err.println("Seriously dude? check debug log");
+	}
+    }
+
+    /**
+     * A function to erase the currently stored private key.
+     */
+    public void removePrivKey() {
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM " + tableName + " WHERE UID=?");
 	    idQueryStmt.setInt(1, 1);
 	    idQueryStmt.executeUpdate();
 
@@ -43,16 +73,55 @@ public class RootKey extends InitDB {
 	    System.err.println(sqle.getMessage());
 	}
     }
+
+    /**
+     * A function to erase the currently stored private key.
+     */
+    public void removePubKey() {
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM " + tableName + " WHERE UID=?");
+	    idQueryStmt.setInt(1, 2);
+	    idQueryStmt.executeUpdate();
+
+	} catch (SQLException sqle) {
+	    System.err.println(sqle.getMessage());
+	}
+    }
+
     /**
      * Also pretty self explanitory,
-     * @return the stored key as a String.
-     */
-    public String getKey() {
+     *
+     * @return the stored key as a BIGINT.
+     */    
+    public BigInteger getPrivMod() throws DoesNotExistException {
 	try {
-	    return getDBString("PWDKEY", "ROOTKEY", 1);
+	    return getDBBigInt("MOD", tableName, 1);
 	} catch (DoesNotExistException dnee) {
-	    System.err.println("Getting RootKey Issue...");
+	    throw new DoesNotExistException("Private RSA mod key error. HOLY FUCKBALLS! " + dnee.getMessage());
 	}
-	return "Serious Key Issues...";
+    }
+
+    public BigInteger getPrivExp() throws DoesNotExistException {
+	try {
+	    return getDBBigInt("EXP", tableName, 1);
+	} catch (DoesNotExistException dnee) {
+	    throw new DoesNotExistException("Private RSA exp key error. HOLY FUCKBALLS! " + dnee.getMessage());
+	}
+    }
+
+    public BigInteger getPubMod() throws DoesNotExistException {
+	try {
+	    return getDBBigInt("MOD", tableName, 2);
+	} catch (DoesNotExistException dnee) {
+	    throw new DoesNotExistException("Public RSA mod key error. HOLY FUCKBALLS! " + dnee.getMessage());
+	}
+    }
+
+    public BigInteger getPubExp() throws DoesNotExistException {
+	try {
+	    return getDBBigInt("EXP", tableName, 2);
+	} catch (DoesNotExistException dnee) {
+	    throw new DoesNotExistException("Public RSA exp key error. HOLY FUCKBALLS! " + dnee.getMessage());
+	}
     }
 }

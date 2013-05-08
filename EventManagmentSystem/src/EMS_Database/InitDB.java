@@ -1,6 +1,8 @@
 package EMS_Database;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -161,7 +163,8 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "VALUE DOUBLE)";
 		
 		String createKeyTable = "CREATE TABLE ROOTKEY (UID INT PRIMARY KEY, "
-			+ "PWDKEY VARCHAR(200))";
+			+ "MOD BIGINT, "
+			+ "EXP BIGINT)";
 
 		Statement stmt = dbConnection.createStatement();
 		stmt.executeUpdate(createUserTable); //takes table string as argument
@@ -462,6 +465,52 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 		returnQuery = rs.getInt(query); //Should not have two uids with the same name                            
 	    }
 	    return returnQuery; //should always return here.
+
+	} catch (SQLException sqle) {
+	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");
+	    sqle.printStackTrace();
+	    System.exit(1);
+	}
+	throw new DoesNotExistException("Should not get here...");
+    }
+    
+    /**
+     * This Function is used mostly for accessing items for RSA encryption keys which require a BigInteger
+     * @param query The column to be selected.
+     * @param table The table to select the column from.
+     * @param uid The uid in the table to be used for the value based on the two aformentioned parameters.
+     * @return A BigInt that that holds the key value.
+     * @throws DoesNotExistException if the uid that you are looking for does not exist.
+     */
+    public BigInteger getDBBigInt(String query, String table, int uid) throws DoesNotExistException {
+	//checking for existance of that uid
+	boolean exists = false;
+	for (int validID : currentUIDList(table)) {
+	    if (validID == uid) {
+		exists = true;
+		break;
+	    }
+	}
+	//nice error logging if uid does not exist in table.
+	if (exists == false) {
+	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling get {2}", new Object[]{uid, table, query});
+	    throw new DoesNotExistException("check debug log. " + table + " table error.");
+	}
+	//executing query
+	try {
+	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE UID=?");
+	    idQueryStmt.setInt(1, uid);
+	    ResultSet rs = idQueryStmt.executeQuery();
+
+	    //Gets the row with uid specified
+	    long returnQuery = 0; //BIGINT == storing in database as a long.
+	    
+	    while (rs.next()) {		
+		returnQuery = rs.getLong(query); //Should not have two uids with the same name                            
+	    }	    
+	    //parsing long to BigInteger using BigDecimal.
+	    BigDecimal returnVal = new BigDecimal(returnQuery);	    
+	    return returnVal.toBigInteger(); //should always return here.
 
 	} catch (SQLException sqle) {
 	    debugLog.log(Level.SEVERE, "SERIOUS DATABASE ERROR IN " + table + " TABLE.");

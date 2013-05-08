@@ -19,6 +19,7 @@ import EMS_Database.impl.RootKey;
 import EMS_Database.impl.SubEvent_Table;
 import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +34,6 @@ import org.junit.Test;
  */
 public class UnitTesting {
     //Make sure that all tables exist throughout testing
-
     Events_Table et = new Events_Table();
     SubEvent_Table set = new SubEvent_Table();
     Tasks_Table tt = new Tasks_Table();
@@ -53,6 +53,7 @@ public class UnitTesting {
 //    @BeforeClass
 //    public static void setUpClass() {
 //    }
+
     @Before
     public void setUpBogusData() {
 	//BOGUS Events table data
@@ -237,19 +238,27 @@ public class UnitTesting {
 	    System.err.println(dnee.getMessage());
 	}
     }
-    
-    @Test
+
+    @Test    
     @Ignore
-    public void testRootKey(){
-	key.removeKey();
-	key.addKey("somepasskey");
-	System.out.println(key.getKey());
-	
+    public void testRootKey() {
+	key.addPrivKey(BigInteger.ONE, BigInteger.ONE);
+	key.addPubKey(BigInteger.TEN, BigInteger.TEN);
+	try {
+	    System.out.println(key.getPrivExp().toString());
+	    System.out.println(key.getPrivMod().toString());
+	    System.out.println(key.getPubMod().toString());
+	    System.out.println(key.getPubExp().toString());
+	} catch (DoesNotExistException dnee) {
+	    System.err.println(dnee.getMessage());
+	}
+	key.removePrivKey();
+	key.removePubKey();
     }
-    
+
     @Test
     @Ignore
-    public void testEmailFunction(){
+    public void testEmailFunction() {
 	System.out.println(udt.checkEmail("AB@A.com"));
     }
 
@@ -261,8 +270,7 @@ public class UnitTesting {
 	ct.removeAll("COMMITTEE");
 	udt.removeAll("USERS");
 	inTable.removeAll("INCOME");
-	exTable.removeAll("EXPENSE");	
-	key.removeKey();
+	exTable.removeAll("EXPENSE");
 	System.out.println("Data removed.");
     }
 //    @AfterClass
