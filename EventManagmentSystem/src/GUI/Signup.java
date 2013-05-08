@@ -8,6 +8,10 @@ import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.UserManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
+import BackEnd.UserSystem.PhoneNumberInvalidLengthException;
+import BackEnd.UserSystem.PhoneNumberNonNumericException;
+import BackEnd.UserSystem.ZipCodeInvalidFormatException;
+import BackEnd.UserSystem.ZipCodeInvalidLengthException;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
 import javax.swing.JDialog;
@@ -63,6 +67,7 @@ public class Signup extends javax.swing.JPanel {
         signupLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         signupButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -81,20 +86,9 @@ public class Signup extends javax.swing.JPanel {
 
         lastNameField.setText("Last");
         lastNameField.setPreferredSize(new java.awt.Dimension(360, 28));
-        lastNameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lastNameFieldActionPerformed(evt);
-            }
-        });
 
         emailLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         emailLabel.setText("Email");
-
-        emailField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel7.setText("What is your information?");
@@ -102,20 +96,8 @@ public class Signup extends javax.swing.JPanel {
         passwordLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         passwordLabel.setText("Create a password");
 
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-
         reenterPasswordLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         reenterPasswordLabel.setText("Reenter password");
-
-        reenterPassWordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reenterPassWordFieldActionPerformed(evt);
-            }
-        });
 
         phoneNumberField.setText("(XXX) XXX - XXXX");
         phoneNumberField.setPreferredSize(new java.awt.Dimension(380, 28));
@@ -125,27 +107,12 @@ public class Signup extends javax.swing.JPanel {
 
         streetField.setText("Street");
         streetField.setPreferredSize(new java.awt.Dimension(380, 28));
-        streetField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                streetFieldActionPerformed(evt);
-            }
-        });
 
         cityField.setText("City");
-        cityField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityFieldActionPerformed(evt);
-            }
-        });
 
         stateField.setText("State");
 
         countryField.setText("Country");
-        countryField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                countryFieldActionPerformed(evt);
-            }
-        });
 
         zipcodeField.setText("Zip Code");
 
@@ -159,6 +126,13 @@ public class Signup extends javax.swing.JPanel {
         signupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signupButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -187,7 +161,7 @@ public class Signup extends javax.swing.JPanel {
                     .add(countryField))
                 .add(18, 18, 18)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 21, Short.MAX_VALUE)
+                .add(18, 24, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
@@ -198,8 +172,11 @@ public class Signup extends javax.swing.JPanel {
                             .add(reenterPasswordLabel)
                             .add(reenterPassWordField))
                         .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 350, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, signupButton))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .add(cancelButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(signupButton)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -220,7 +197,7 @@ public class Signup extends javax.swing.JPanel {
                             .add(layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 51, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
                                 .add(passwordLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(passwordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -229,7 +206,9 @@ public class Signup extends javax.swing.JPanel {
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(reenterPassWordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(signupButton)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                    .add(signupButton)
+                                    .add(cancelButton))
                                 .add(269, 269, 269))
                             .add(layout.createSequentialGroup()
                                 .add(firstNameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -257,78 +236,66 @@ public class Signup extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lastNameFieldActionPerformed
-
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void reenterPassWordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reenterPassWordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reenterPassWordFieldActionPerformed
-
-    private void streetFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_streetFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_streetFieldActionPerformed
-
-    private void cityFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cityFieldActionPerformed
-
-    private void countryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_countryFieldActionPerformed
-
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        String message = "";
+        //String message = "";
         
-        if (firstNameField.getText().equals("") || firstNameField.getText().equals("First")){
-            message += "\nMissing first name.";}
+        //if (firstNameField.getText().equals("") || firstNameField.getText().equals("First")){
+          //  message += "\nMissing first name.";}
         
-        if (lastNameField.getText().equals("") || lastNameField.getText().equals("Last")){
-            message += "\nMissing last name.";}
+       // if (lastNameField.getText().equals("") || lastNameField.getText().equals("Last")){
+         //   message += "\nMissing last name.";}
         
-        if (emailField.getText().equals("")){
-            message += "\nMissing email address.";}
+        //if (emailField.getText().equals("")){
+          //  message += "\nMissing email address.";}
         
-        if (passwordField.getText().equals("")){
-            message += "\nMissing password.";}
+        //if (passwordField.getText().equals("")){
+          //  message += "\nMissing password.";}
         
-        if (reenterPassWordField.getText().equals("")){
-            message += "\nMissing reenter password.";}
+        //if (reenterPassWordField.getText().equals("")){
+          //  message += "\nMissing reenter password.";}
         
-        if(!passwordField.getText().equals(reenterPassWordField.getText())){
-            message += "\nPasswords don't match.";}
+        ////if(!passwordField.getText().equals(reenterPassWordField.getText())){
+          ////  message += "\nPasswords don't match.";}
         
-        if(phoneNumberField.getText().equals("") || phoneNumberField.getText().equals("(XXX) XXX - XXXX")){
-            message += "\nMissing phone number.";}    
+        //if(phoneNumberField.getText().equals("") || phoneNumberField.getText().equals("(XXX) XXX - XXXX")){
+          //  message += "\nMissing phone number.";}    
         
-        if(streetField.getText().equals("") || streetField.getText().equals("Street")){
-            message += "\nMissing street.";}
+        //if(streetField.getText().equals("") || streetField.getText().equals("Street")){
+          //  message += "\nMissing street.";}
         
-        if(cityField.getText().equals("") || cityField.getText().equals("City")){
-            message += "\nMissing city.";}
+        //if(cityField.getText().equals("") || cityField.getText().equals("City")){
+          //  message += "\nMissing city.";}
         
-        if(stateField.getText().equals("") || stateField.getText().equals("State")){
-            message += "\nMissing state.";}
+        //if(stateField.getText().equals("") || stateField.getText().equals("State")){
+          //  message += "\nMissing state.";}
         
-        if(zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code")){
-            message += "\nMissing zip code.";}
+        //if(zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code")){
+          //  message += "\nMissing zip code.";}
         
-        if(zipcodeField.getText().length() < 5){
-            message += "\nMissing a 5 digits zip code.";}
+        //if(zipcodeField.getText().length() < 5){
+          //  message += "\nMissing a 5 digits zip code.";}
         
-        if(countryField.getText().equals("") || countryField.getText().equals("Country")){
-            message += "\nMissing country.";}
+        //if(countryField.getText().equals("") || countryField.getText().equals("Country")){
+          //  message += "\nMissing country.";}
         
-        if (!message.equals("")){
-            JOptionPane.showMessageDialog(this, message);  
+        
+        //if (!message.equals("")){
+           // JOptionPane.showMessageDialog(this, message);  
+        //}
+        
+        if(firstNameField.getText().equals("") || firstNameField.getText().equals("First") 
+                || lastNameField.getText().equals("") || lastNameField.getText().equals("Last") 
+                || emailField.getText().equals("") 
+                || passwordField.getText().equals("") 
+                || reenterPassWordField.getText().equals("") 
+                || phoneNumberField.getText().equals("") || phoneNumberField.getText().equals("(XXX) XXX - XXXX") 
+                || streetField.getText().equals("") || streetField.getText().equals("Street") 
+                || cityField.getText().equals("") || cityField.getText().equals("City") 
+                || stateField.getText().equals("") || stateField.getText().equals("State") 
+                || zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code") 
+                || countryField.getText().equals("") || countryField.getText().equals("Country")){
+            String message = "Please fill out all fields.";
+            JOptionPane.showMessageDialog(this, message);
         }
         else{
         try {
@@ -351,16 +318,32 @@ public class Signup extends javax.swing.JPanel {
             userManager.getUserList().add(userManager.createUser(newUser));
             parentDialog.dispose();
             
-        } catch (PasswordMismatchError e) {
+        } catch (PasswordMismatchError error) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match.");
         } catch (IllegalCharacterException error) {
+            JOptionPane.showMessageDialog(this, "Illegal characters found.");
+        } catch (PhoneNumberInvalidLengthException error){
+            JOptionPane.showMessageDialog(this, "Please enter a valid phone number.");    
+        } catch (PhoneNumberNonNumericException error){
+            JOptionPane.showMessageDialog(this, "Please enter a valid phone number.");    
+        } catch (ZipCodeInvalidFormatException error){
+            JOptionPane.showMessageDialog(this, "Please enter a valid zip code."); 
+        } catch (ZipCodeInvalidLengthException error){
+            JOptionPane.showMessageDialog(this, "Please enter a valid zip code."); 
         }
         }
         
 
     }//GEN-LAST:event_signupButtonActionPerformed
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+        parentDialog.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JTextField cityField;
     private javax.swing.JTextField countryField;
     private javax.swing.JTextField emailField;
