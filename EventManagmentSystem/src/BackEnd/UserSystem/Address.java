@@ -114,14 +114,17 @@ public class Address {
      *   otherwise throws an exception
      */
     private boolean verifyZipCodeFormat(String zipCode){
-//        if(zipCode.length() == ZIP_CODE_LENGTH){
-//            for(int i = 0; i < zipCode.length(); i++){
-//                if(Character.isDigit(zipCode.charAt(i)) == false)
-//                    throw new ZipCodeInvalidFormatException(
-//                      "Invalid zip code format");
-//            }
-//        } else throw new ZipCodeInvalidLengthException(
-//                      "Invalid zip code length");
+        if(zipCode.equals("")){
+            return true;
+        }
+        else if(zipCode.length() == ZIP_CODE_LENGTH){
+            for(int i = 0; i < zipCode.length(); i++){
+                if(Character.isDigit(zipCode.charAt(i)) == false)
+                    throw new ZipCodeInvalidFormatException(
+                      "Invalid zip code format");
+            }
+        } else throw new ZipCodeInvalidLengthException(
+                      "Invalid zip code length");
         return true;
     }
     
