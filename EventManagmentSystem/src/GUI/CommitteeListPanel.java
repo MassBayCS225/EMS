@@ -24,16 +24,9 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         initComponents();
         manager = MainManager.getInstance();
         committeePanel = new CommitteePanel();
+        committeePanel.setSize(500,600);
         committeePanelHolder.add(committeePanel);
         updateInfo();
-        if(committeeList.getModel().getSize() ==0)
-        {
-            committeePanel.setVisible(false);
-        }
-        else
-        {
-            committeeList.setSelectedIndex(0);
-        }
     }
     
     public void updateInfo()
@@ -103,7 +96,17 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         });
 
         committeePanelHolder.setBackground(java.awt.SystemColor.activeCaption);
-        committeePanelHolder.setLayout(new java.awt.CardLayout());
+
+        javax.swing.GroupLayout committeePanelHolderLayout = new javax.swing.GroupLayout(committeePanelHolder);
+        committeePanelHolder.setLayout(committeePanelHolderLayout);
+        committeePanelHolderLayout.setHorizontalGroup(
+            committeePanelHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 611, Short.MAX_VALUE)
+        );
+        committeePanelHolderLayout.setVerticalGroup(
+            committeePanelHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -122,7 +125,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                                 .addComponent(removeCommitteeButton)))
                         .addGap(20, 20, 20)
                         .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,14 +133,13 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(committeeListLabel)
                 .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(committeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addCommitteeButton)
-                            .addComponent(removeCommitteeButton)))
-                    .addComponent(committeePanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(addCommitteeButton)
+                    .addComponent(removeCommitteeButton)))
         );
     }// </editor-fold>//GEN-END:initComponents
 

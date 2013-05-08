@@ -49,8 +49,8 @@
           <Group type="102" attributes="0">
               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="committeeListLabel" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Component id="committeeListLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="committeeListScrollPane" min="-2" pref="90" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -59,11 +59,11 @@
                               <Component id="removeCommitteeButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="committeePanelHolder" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,16 +73,14 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="committeeListLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="committeePanelHolder" max="32767" attributes="0"/>
+                  <Component id="committeeListScrollPane" pref="460" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="committeeListScrollPane" min="-2" pref="460" max="-2" attributes="0"/>
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="addCommitteeButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="removeCommitteeButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="committeePanelHolder" min="-2" max="-2" attributes="0"/>
+                  <Component id="addCommitteeButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="removeCommitteeButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -142,7 +140,18 @@
         </Property>
       </Properties>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="611" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
     </Container>
   </SubComponents>
 </Form>
