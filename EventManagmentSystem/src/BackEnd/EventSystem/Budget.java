@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Shaunt
  */
 
-public class Budget {
+public class Budget implements Reportable{
 
     ArrayList<Income> incomeList;
     ArrayList<Expense> expenseList;
@@ -50,6 +50,23 @@ public class Budget {
         return total;
     }
     
+    public double getTotalIncome() {
+        double total = 0;
+        for (int i = 0; i < incomeList.size(); i++) {
+            total += incomeList.get(i).getValue();
+        }
+        return total;
+    }
+
+    public double getTotalExpense() {
+
+        double total = 0;
+        for (int i = 0; i < expenseList.size(); i++) {
+            total -= expenseList.get(i).getValue();
+        }
+        return total;
+    }
+    
     @Override
     public String toString() {
         return "Budget{" + ", incomeList=" + incomeList + ", expenseList=" + 
@@ -74,9 +91,31 @@ public class Budget {
         return true;
     }
     
-    public String getReport() {
-        //TODO
-        return null;
+    @Override
+    public ArrayList<Object> getReport() {
+        
+        ArrayList<Object> report = new ArrayList<Object>();
+        ArrayList<String> income = new ArrayList<String>();
+        ArrayList<String> expense = new ArrayList<String>();
+        
+        for(int i = 0; i < incomeList.size(); i ++) {
+            income.add("" + incomeList.get(i).getValue());
+            income.add("" + incomeList.get(i).getDescription());
+            income.add("" + incomeList.get(i).getDate().getTime());
+        }
+        for(int i = 0; i < expenseList.size(); i ++) {
+            expense.add("" + expenseList.get(i).getValue());
+            expense.add("" + expenseList.get(i).getDescription());
+            expense.add("" + expenseList.get(i).getDate().getTime());
+        }
+
+        report.add(income);
+        report.add(expense);
+        report.add("" + this.getTotalBudget());
+        report.add("" + this.getTotalExpense());
+        report.add("" + this.getTotalIncome());
+        
+        return report;
     }
     
     

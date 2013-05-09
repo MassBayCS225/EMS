@@ -108,9 +108,74 @@ public class Event extends ScheduleItem implements Reportable {
                 "\n\n" + super.getTimeSchedule().toString();
     }
     
-    public ArrayList<String> getReport() {
-        // I had to change this sorry. It was driving me crazy -MM
-        throw new UnsupportedOperationException("Not supported yet.");
-        // Just remove these lines when you are ready to implement this function -MM
+    @Override
+    public ArrayList<Object> getReport() {
+        ArrayList<Object> report = new ArrayList<Object>();
+        ArrayList<String> organizer = new ArrayList<String>();
+        ArrayList<String> subEvent = new ArrayList<String>();
+        ArrayList<String> committee = new ArrayList<String>();
+        ArrayList<String> participant = new ArrayList<String>();
+
+
+        int numOfOrganizers = 0;
+
+        for (int i = 0; i < organizerList.size(); i++) {
+            numOfOrganizers++;
+            if (i == organizerList.size() - 1) {
+                organizer.add("" + numOfOrganizers);
+            }
+
+        }
+        for (int i = 0; i < subEventList.size(); i++) {
+            subEvent.add("" + subEventList.get(i).getTitle());
+            subEvent.add("" + subEventList.get(i).getDescription());
+            subEvent.add("" + subEventList.get(i).getLocation());
+            subEvent.add("" + subEventList.get(i).getTimeSchedule().getStartDateTimeCalendar());
+            subEvent.add("" + subEventList.get(i).getTimeSchedule().getEndDateTimeCalendar());
+        }
+        int numOfMembers = 0;
+        for (int i = 0; i < committeeList.size(); i++) {
+            committee.add("" + committeeList.get(i).getTitle());
+            committee.add("" + committeeList.get(i).getBudget().getTotalIncome());
+            committee.add("" + committeeList.get(i).getBudget().getTotalExpense());
+            committee.add("" + committeeList.get(i).getBudget().getTotalIncome());
+            committee.add("" + committeeList.get(i).getChair().getFirstName());
+            committee.add("" + committeeList.get(i).getChair().getLastName());
+            committee.add("" + committeeList.get(i).getChair().getEmailAddress());
+            committee.add("" + committeeList.get(i).getChair().getAddress().getCity());
+            committee.add("" + committeeList.get(i).getChair().getAddress().getCountry());
+            committee.add("" + committeeList.get(i).getChair().getAddress().getState());
+            committee.add("" + committeeList.get(i).getChair().getAddress().getStreet());
+            committee.add("" + committeeList.get(i).getChair().getAddress().getZipCode());
+            committee.add("" + committeeList.get(i).getChair().getAdminPrivilege());
+            committee.add("" + committeeList.get(i).getChair().getEventCreationPrivilege());
+            committee.add("" + committeeList.get(i).getChair().getPhoneNumber());
+            committee.add("" + committeeList.get(i).getChair().getUserId());
+
+
+            for (int j = 0; j < committeeList.get(i).getMemberList().size(); j++) {
+                numOfMembers++;
+                if (j == committeeList.get(i).getMemberList().size() - 1) {
+                    committee.add("" + numOfMembers);
+                }
+            }
+            committee.add("" + committeeList.get(i).isFinished());
+
+        }
+        int numOfParticipants = 0;
+        for (int i = 0; i < participantList.size(); i++) {
+            numOfParticipants++;
+            if (i == participantList.size() - 1) {
+                participant.add("" + numOfParticipants);
+            }
+        }
+
+
+        report.add(organizer);
+        report.add(subEvent);
+        report.add(committee);
+        report.add(participant);
+
+        return report;
     }
 }

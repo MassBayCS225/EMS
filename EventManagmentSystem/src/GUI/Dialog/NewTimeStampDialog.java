@@ -109,8 +109,17 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
     public TimeSchedule createTimeSchedule()
     {
         TimeSchedule t = new TimeSchedule();
-        
-        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), startHour.getSelectedIndex(), startMinute.getSelectedIndex()-1);
+        int hour = startHour.getSelectedIndex();
+        if(startPM.isSelected())
+        {
+            hour += 12;
+        }
+        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), hour, startMinute.getSelectedIndex()-1);
+        hour = endHour.getSelectedIndex();
+        if(endPM.isSelected())
+        {
+            hour += 12;
+        }
         t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), endHour.getSelectedIndex(), endMinute.getSelectedIndex()-1);
         return t;
     }
