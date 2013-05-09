@@ -191,12 +191,13 @@ public class Committee implements Reportable {
     }
     
     public String toString() {
-        String taskDescriptions = "";
-        
-        for (Task task : taskList)
-            taskDescriptions += task.toString() + "\n";
-            
-        return "Committee Title: " + title + "\nTotal Budget: $" + budget.getTotalBudget() + "\nTask List: \n" + taskDescriptions;
+//        String taskDescriptions = "";
+//        
+//        for (Task task : taskList)
+//            taskDescriptions += task.toString() + "\n";
+//            
+//        return "Committee Title: " + title + "\nTotal Budget: $" + budget.getTotalBudget() + "\nTask List: \n" + taskDescriptions;
+        return title;
     }
     
     public ArrayList<String> getReport() {

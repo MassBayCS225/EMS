@@ -65,6 +65,7 @@ public class Task extends ScheduleItem {
     }
     
     public String toString() {
-        return "Task Description: \n" + super.getDescription() + "\nTask Complete: " + completed;
+        //return "Task Description: \n" + super.getDescription() + "\nTask Complete: " + completed;
+        return super.getTitle();
     }
 }
