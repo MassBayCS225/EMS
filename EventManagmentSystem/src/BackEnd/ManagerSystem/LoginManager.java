@@ -22,12 +22,12 @@ public class LoginManager {
     private User loggedInUser;
     private ArrayList<Participant> userList;
     private final String INCORRECT_LOG_IN = "Incorrect log in information.";
-    private PasswordEncryptor encryptor;
+    
 
     public LoginManager(ArrayList<Participant> userList)throws 
             DoesNotExistException{
 	this.userList = userList;
-        encryptor = new PasswordEncryptor();
+        
     }
 
     public void setLoggedInUser(String emailAddress, String password)
@@ -51,7 +51,7 @@ public class LoginManager {
     private boolean checkPassword(User user, String password) throws
             LogInIncorrectException {
 
-	if (user.getPassword().equals(encryptor.decrypt(password))) {
+	if (user.getPassword().equals(password)) {
 	    return true;
 	} else {
 	    throw new LogInIncorrectException(INCORRECT_LOG_IN);
