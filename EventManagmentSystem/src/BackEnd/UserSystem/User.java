@@ -1,6 +1,6 @@
 package BackEnd.UserSystem;
 
-import BackEnd.ManagerSystem.PasswordEncryptor;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -22,7 +22,7 @@ public class User extends Participant {
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
-    private PasswordEncryptor encryptor;
+    
 
     public User() {
         super();
@@ -77,13 +77,7 @@ public class User extends Participant {
             IllegalCharacterException, PasswordMismatchError{
         if (checkCharacters(pword)) {
             if (verifyPassword(pword, pwordMatch)) {
-                try{
-                    password = encryptor.encrypt(pword);
-                } catch (InvalidKeyException e){
-                } catch (UnsupportedEncodingException e){
-                } catch (IllegalBlockSizeException e){
-                } catch (BadPaddingException e){
-                }
+                
             } else {
                 throw new PasswordMismatchError();
             }
@@ -109,7 +103,7 @@ public class User extends Participant {
      * @return password
      */
     public String getPassword() {
-        return encryptor.decrypt(password);
+        return password;
     }
 
     /**
