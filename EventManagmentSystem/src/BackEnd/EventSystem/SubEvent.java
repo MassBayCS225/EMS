@@ -46,7 +46,15 @@ public class SubEvent extends ScheduleItem implements Reportable {
         return "Sub-Event Description: \n" + super.getDescription();
     }
     
-    public ArrayList<String> getReport() {
-       return null;
+    @Override
+    public ArrayList<Object> getReport() {
+        ArrayList<Object> report = new ArrayList<Object>();
+            report.add("" + this.getTitle());
+            report.add("" + this.getDescription());
+            report.add("" + this.getLocation());
+            report.add("" + this.getTimeSchedule().getStartDateTimeCalendar());
+            report.add("" + this.getTimeSchedule().getEndDateTimeCalendar());
+        
+        return report;
     }
 }

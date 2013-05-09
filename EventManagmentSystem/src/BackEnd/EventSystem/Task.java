@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Ketty Lezama 
  */
 
-public class Task extends ScheduleItem {
+public class Task extends ScheduleItem implements Reportable {
     private int TASK_ID;
     private ArrayList<User> responsibleList;
     private boolean completed;
@@ -63,9 +63,43 @@ public class Task extends ScheduleItem {
         else
             return false;
     }
+
+     public String toString() {
+	 //return "Task Description: \n" + super.getDescription() + "\nTask Complete: " + completed;
+	 return super.getTitle();
+     }
+
     
-    public String toString() {
-        //return "Task Description: \n" + super.getDescription() + "\nTask Complete: " + completed;
-        return super.getTitle();
+     @Override
+    public ArrayList<Object> getReport() {
+        ArrayList<Object> report = new ArrayList<Object>();
+        ArrayList<String> responsible = new ArrayList<String>();
+        
+        for(int i = 0; i < responsibleList.size(); i++) {
+            responsible.add("" + responsibleList.get(i).getFirstName());
+            responsible.add("" + responsibleList.get(i).getLastName());
+            responsible.add("" + responsibleList.get(i).getEmailAddress());
+            responsible.add("" + responsibleList.get(i).getAddress().getCity());
+            responsible.add("" + responsibleList.get(i).getAddress().getCountry());
+            responsible.add("" + responsibleList.get(i).getAddress().getState());
+            responsible.add("" + responsibleList.get(i).getAddress().getStreet());
+            responsible.add("" + responsibleList.get(i).getAddress().getZipCode());
+            responsible.add("" + responsibleList.get(i).getAdminPrivilege());
+            responsible.add("" + responsibleList.get(i).getEventCreationPrivilege());
+            responsible.add("" + responsibleList.get(i).getPhoneNumber());
+            responsible.add("" + responsibleList.get(i).getUserId());
+            
+
+        }
+        
+        report.add(responsible);
+        report.add("" + this.getCompleted());
+        report.add("" + this.getDescription());
+        report.add("" + this.getTitle());
+        report.add("" + this.getLocation());
+        report.add("" + this.getTimeSchedule().getEndDateTimeCalendar());
+        report.add("" + this.getTimeSchedule().getStartDateTimeCalendar());
+        
+        return report;
     }
 }

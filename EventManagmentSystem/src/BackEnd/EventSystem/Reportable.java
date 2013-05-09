@@ -12,5 +12,5 @@ import java.util.ArrayList;
  * @author Julian Kuk
  */
 public interface Reportable {
-    public ArrayList<String> getReport();
+    public ArrayList<Object> getReport();
 }

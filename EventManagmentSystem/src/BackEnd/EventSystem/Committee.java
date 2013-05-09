@@ -200,7 +200,8 @@ public class Committee implements Reportable {
         return title;
     }
     
-    public ArrayList<String> getReport() {
+    @Override
+    public ArrayList<Object> getReport() {
         //TODO
         return null;
     }
