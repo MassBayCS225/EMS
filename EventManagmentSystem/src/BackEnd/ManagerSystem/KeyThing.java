@@ -5,6 +5,7 @@
 package BackEnd.ManagerSystem;
 
 //import EMS_Database.impl.RootKey;
+import EMS_Database.impl.RootKey;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -34,10 +35,10 @@ public class KeyThing {
         RSAPrivateKeySpec priv = fact.getKeySpec(kp.getPrivate(),
                 RSAPrivateKeySpec.class);
         
-//        RootKey table = new RootKey();
+        RootKey root = new RootKey();
         
-        //Mike: These lines have the setters I need.
-        //table.addPubKey(pub.getModulus(), pub.getPublicExponent());
-        //table.addPrivKey(priv.getModulus(), priv.getPrivateExponent());
+        
+        root.addPubKey(pub.getModulus(), pub.getPublicExponent());
+        root.addPrivKey(priv.getModulus(), priv.getPrivateExponent());
     }
 }
