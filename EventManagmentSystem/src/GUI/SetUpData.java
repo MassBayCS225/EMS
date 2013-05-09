@@ -7,6 +7,7 @@ package GUI;
 import BackEnd.EventSystem.Budget;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Expense;
 import BackEnd.EventSystem.Income;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.EventSystem.Task;
@@ -103,8 +104,10 @@ public class SetUpData {
         {
             for(User tu : uList)
             {
-                manager.getUserManager().setSelectedUser((manager.getUserManager().createUser(tu)));
-                manager.getEventManager().addOrganizer(manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser());
+                manager.getUserManager().setSelectedUser(
+                        (manager.getUserManager().createUser(tu)));
+                manager.getEventManager().addOrganizer(
+                        manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser());
                 System.out.println(manager.getLogInManager().getLoggedInUser());
             }
             System.out.println("Users created.");
@@ -132,21 +135,43 @@ public class SetUpData {
         {
             for(Committee tc : list)
                 {
-                    manager.getCommitteeManager().setSelectedCommittee(manager.getEventManager().createCommittee(tc, manager.getLogInManager().getLoggedInUser()));
-                    manager.getCommitteeManager().addMember(manager.getUserManager().getSelectedUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    manager.getCommitteeManager().setSelectedCommittee(
+                            manager.getEventManager().createCommittee(
+                            tc, manager.getLogInManager().getLoggedInUser()));
+                    
+                    manager.getCommitteeManager().addMember(
+                            manager.getUserManager().getSelectedUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
                     //manager.getCommitteeManager().editChair(manager.g, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    
                     for(int i = 1; i < 4; i++)
                     {
                         Task t = new Task();
-                        manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent()));
-                        manager.getTaskManager().editTitle("Task " + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                        
+                        manager.getTaskManager().setSelectedTask(
+                                manager.getCommitteeManager().createTask(
+                                t, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent()));
+                        
+                        manager.getTaskManager().editTitle(
+                                "Task " + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                     }
+                    
                     for(int i = 1; i < 4; i++)
                     {
                         Budget b = manager.getCommitteeManager().getSelectedCommittee().getBudget();
                         manager.getBudgetManager().setSelectedBudget(b);
-                        manager.getBudgetItemManager().setSelectedBudgetItem(manager.getBudgetManager().createIncome(new Income(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
-                        manager.getBudgetItemManager().editDescription("test"+i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                        
+                        manager.getBudgetItemManager().setSelectedBudgetItem(
+                                manager.getBudgetManager().createIncome(
+                                new Income(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
+                        
+                        manager.getBudgetItemManager().editDescription(
+                                "test"+i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                        
+                        manager.getBudgetItemManager().setSelectedBudgetItem(
+                                manager.getBudgetManager().createExpense(
+                                new Expense(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
+                        manager.getBudgetItemManager().editDescription(
+                                "test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                     }
                 }
             System.out.println("Committees created.");
