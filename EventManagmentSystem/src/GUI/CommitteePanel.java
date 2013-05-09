@@ -59,6 +59,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         addTaskButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         committeeChangeButton = new javax.swing.JButton();
+        reportButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 204, 255));
         setMinimumSize(new java.awt.Dimension(387, 327));
@@ -153,6 +154,9 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
+        reportButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        reportButton.setText("View Report");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,7 +179,8 @@ public class CommitteePanel extends javax.swing.JPanel {
                                             .addComponent(addMemberButton)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(removeMemberButton)))
-                                    .addComponent(budgetButton))
+                                    .addComponent(budgetButton)
+                                    .addComponent(reportButton))
                                 .addGap(60, 60, 60)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -210,7 +215,9 @@ public class CommitteePanel extends javax.swing.JPanel {
                     .addComponent(headNameLabel)
                     .addComponent(budgetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(committeeChangeButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(committeeChangeButton)
+                    .addComponent(reportButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(membersLabel)
@@ -232,7 +239,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(removeTaskButton)
                             .addComponent(addTaskButton))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
  
@@ -439,6 +446,7 @@ public class CommitteePanel extends javax.swing.JPanel {
     private javax.swing.JLabel membersLabel;
     private javax.swing.JButton removeMemberButton;
     private javax.swing.JButton removeTaskButton;
+    private javax.swing.JButton reportButton;
     private javax.swing.JList taskList;
     private javax.swing.JProgressBar taskProgressBar;
     private javax.swing.JScrollPane taskScrollPane;
