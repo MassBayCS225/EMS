@@ -66,7 +66,7 @@ public class IncomePanel extends javax.swing.JPanel {
         deleteIncomeButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(325, 500));
+        setPreferredSize(new java.awt.Dimension(395, 500));
 
         incomeLabel.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         incomeLabel.setText("Income");
@@ -84,13 +84,26 @@ public class IncomePanel extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        incomeTable.setPreferredSize(new java.awt.Dimension(384, 407));
         incomeTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(incomeTable);
+        incomeTable.getColumnModel().getColumn(0).setResizable(false);
+        incomeTable.getColumnModel().getColumn(0).setPreferredWidth(15);
+        incomeTable.getColumnModel().getColumn(1).setResizable(false);
+        incomeTable.getColumnModel().getColumn(2).setResizable(false);
+        incomeTable.getColumnModel().getColumn(2).setPreferredWidth(30);
 
         addIncomeButton.setText("Add Income");
         addIncomeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,28 +126,29 @@ public class IncomePanel extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(10, 10, 10)
-                        .add(incomeLabel)
-                        .add(250, 430, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(deleteIncomeButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(addIncomeButton))
                     .add(layout.createSequentialGroup()
-                        .add(addIncomeButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(deleteIncomeButton)))
+                        .addContainerGap()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createSequentialGroup()
+                                .add(incomeLabel)
+                                .add(0, 0, Short.MAX_VALUE))
+                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
                 .add(incomeLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .add(12, 12, 12)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(deleteIncomeButton)
-                    .add(addIncomeButton))
-                .add(18, 18, 18))
+                    .add(addIncomeButton)
+                    .add(deleteIncomeButton)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
