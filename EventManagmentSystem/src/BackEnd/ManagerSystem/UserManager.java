@@ -27,11 +27,11 @@ public class UserManager {
     private ArrayList<Participant> userList;
     private User selectedUser;
     private UserData_Table usersTable;
-    private PasswordEncryptor encryptor;
+    
 
     public UserManager()
             throws DoesNotExistException {
-        encryptor = new PasswordEncryptor();
+    
         usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
         rebuildUserList();
@@ -158,7 +158,7 @@ public class UserManager {
 
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPassword(password, passwordMatch);
-            usersTable.setPwd(selectedUser.getUserId(), encryptor.encrypt(password));
+            usersTable.setPwd(selectedUser.getUserId(),password);
         }
     }
 
