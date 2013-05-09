@@ -4,6 +4,14 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Expense;
+import BackEnd.ManagerSystem.MainManager;
+import GUI.Dialog.NewExpenseDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author sara
@@ -13,9 +21,34 @@ public class Expenses extends javax.swing.JPanel {
     /**
      * Creates new form Expenses
      */
+    private MainManager manager;
     public Expenses() {
         initComponents();
+        manager = MainManager.getInstance();
+        updateInfo();
     }
+    
+    public void updateInfo()
+    {
+        DefaultTableModel model = getTableModel();
+        model.setRowCount(0);
+        if(manager.getCommitteeManager().getSelectedCommittee() != null)
+        {
+            Committee c = manager.getCommitteeManager().getSelectedCommittee();
+            for(Expense e : c.getBudget().getExpenseList())
+            {
+                model.addRow(
+                    new Object[]
+                    {
+                        e.getBUDGET_ITEM_ID(),e.getDescription(),e.getValue()
+                    });
+            }
+        }
+        
+    }
+    
+    public DefaultTableModel getTableModel()
+    { return (DefaultTableModel)expensesTable.getModel(); }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,6 +106,11 @@ public class Expenses extends javax.swing.JPanel {
         });
 
         deleteExpenseButton.setText("Delete Expense");
+        deleteExpenseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteExpenseButtonActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -88,7 +126,7 @@ public class Expenses extends javax.swing.JPanel {
                     .add(layout.createSequentialGroup()
                         .add(expensesLabel)
                         .add(0, 0, Short.MAX_VALUE))
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -97,7 +135,7 @@ public class Expenses extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(expensesLabel)
                 .add(18, 18, 18)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(deleteExpenseButton)
@@ -107,8 +145,36 @@ public class Expenses extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addExpenseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExpenseButtonActionPerformed
-        // TODO add your handling code here:
+        NewExpenseDialog ned = new NewExpenseDialog(null, true);
+        ned.setVisible(true);
+        if(ned.getConfirm())
+        {
+            try
+            {
+                Expense e = ned.createExpense();
+                manager.getBudgetManager().createExpense(e, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        updateInfo();
     }//GEN-LAST:event_addExpenseButtonActionPerformed
+
+    private void deleteExpenseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteExpenseButtonActionPerformed
+        int selection = expensesTable.getSelectedRow();
+        Expense expense = manager.getCommitteeManager().getSelectedCommittee().getBudget().getExpenseList().get(selection);
+        try
+        {
+            manager.getBudgetManager().deleteExpense(expense, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        updateInfo();
+    }//GEN-LAST:event_deleteExpenseButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addExpenseButton;
