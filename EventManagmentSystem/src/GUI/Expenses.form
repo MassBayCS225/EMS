@@ -36,7 +36,7 @@
                       <Component id="expensesLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="480" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="313" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -48,7 +48,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="expensesLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="510" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="414" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="deleteExpenseButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -127,6 +127,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Delete Expense"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteExpenseButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -99,7 +99,7 @@ public class BudgetPanel extends javax.swing.JPanel {
                         .add(expenseButton)
                         .add(18, 18, 18)
                         .add(incomeButton)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(256, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -111,7 +111,7 @@ public class BudgetPanel extends javax.swing.JPanel {
                     .add(expenseButton)
                     .add(incomeButton))
                 .add(11, 11, 11)
-                .add(BudgetSwitchingPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .add(BudgetSwitchingPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .add(75, 75, 75))
         );
     }// </editor-fold>//GEN-END:initComponents

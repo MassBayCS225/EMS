@@ -34,7 +34,6 @@ public class Signup extends javax.swing.JPanel {
         this.parentDialog = parentDialog;
         MainManager mainManager = MainManager.getInstance();
         userManager = mainManager.getUserManager();
-        parentDialog.requestFocusInWindow();
     }
 
     /**
@@ -71,6 +70,7 @@ public class Signup extends javax.swing.JPanel {
         reenterPassWordField = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         signinLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N

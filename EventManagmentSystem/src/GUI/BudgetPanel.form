@@ -42,7 +42,7 @@
                       <Component id="expenseButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="incomeButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="256" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -59,7 +59,7 @@
                   <Component id="incomeButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Component id="BudgetSwitchingPanel" pref="480" max="32767" attributes="0"/>
+              <Component id="BudgetSwitchingPanel" pref="479" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
           </Group>
       </Group>
