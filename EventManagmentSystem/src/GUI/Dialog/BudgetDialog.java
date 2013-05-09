@@ -16,18 +16,18 @@ public class BudgetDialog extends javax.swing.JDialog {
     /**
      * Creates new form BudgetDialog
      */
-    //BudgetPanel budgetPanel;
     CommitteeBudget budgetPanel;
     public BudgetDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        /* Added following line to center dialog. -Ketty */
-        setLocationRelativeTo(null);
-        //budgetPanel = new BudgetPanel();
+        
         budgetPanel = new CommitteeBudget();
         budgetPanel.setSize(800,600);
         add(budgetPanel);
         setSize(800,600);
+        
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
     }
 
     /**
