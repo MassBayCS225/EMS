@@ -11,179 +11,173 @@ import javax.crypto.IllegalBlockSizeException;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author David Tersoff
  */
-public class User extends Participant
-{
+public class User extends Participant {
     // private int UID;
+
     private String password;
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
     private PasswordEncryptor encryptor;
-    
-    public User(){
+
+    public User() {
         super();
         password = new String();
     }
-    
-    
+
     /**
      * Constructor, creates a User object
-     * @param pword         the desired password
-     * @param pwordMatch    the password entered a second time to verify it
+     *
+     * @param pword the desired password
+     * @param pwordMatch the password entered a second time to verify it
      */
     public User(String firstName, String lastName, String emailAddress, String pword, String pwordMatch)
-            throws PasswordMismatchError, IllegalCharacterException,
-            InvalidKeyException, UnsupportedEncodingException, 
-            IllegalBlockSizeException, BadPaddingException
-    {
+            throws PasswordMismatchError, IllegalCharacterException {
         super(firstName, lastName, emailAddress);
         setPassword(pword, pwordMatch);
-            
+        
+
     }
-    
+
     /*
-    public User(int uid, String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
-    {
-        super(uid, firstName, lastName, emailAddress);
-        setPassword(pword, pwordMatch);
+     public User(int uid, String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+     {
+     super(uid, firstName, lastName, emailAddress);
+     setPassword(pword, pwordMatch);
             
-    }*/
-    
-    public User(int userID, User user) throws InvalidKeyException,
-            UnsupportedEncodingException, IllegalBlockSizeException,
-            BadPaddingException, IOException{
-        super(userID, (Participant)user);
+     }*/
+    public User(int userID, User user) {
+        super(userID, (Participant) user);
+
         password = user.getPassword();
+
         adminPrivilege = user.getAdminPrivilege();
         eventCreationPrivilege = user.getEventCreationPrivilege();
     }
-    
-    
-    public User(int uid, String firstName, String lastName, String emailAddress, String pword)
-    {
+
+    public User(int uid, String firstName, String lastName, String emailAddress, String pword) {
         super(uid, firstName, lastName, emailAddress);
         password = pword;
     }
 
     /**
-     * 
-     * @param pword         The new password
-     * @param pwordMatch    repeated password, for verification
-     * @throws IllegalCharacterException    throws exception if the password contains illegal characters
-     * @throws PasswordMismatchError        throws exception if the passwords don't match.
+     *
+     * @param pword The new password
+     * @param pwordMatch repeated password, for verification
+     * @throws IllegalCharacterException throws exception if the password
+     * contains illegal characters
+     * @throws PasswordMismatchError throws exception if the passwords don't
+     * match.
      */
-    public void setPassword(String pword, String pwordMatch)throws
-            IllegalCharacterException, PasswordMismatchError,
-            InvalidKeyException, UnsupportedEncodingException, 
-            IllegalBlockSizeException, BadPaddingException
-    {
-        if(checkCharacters(pword))
-        {
-            if(verifyPassword(pword, pwordMatch))
-            {
-                password = encryptor.encrypt(pword);
-            }
-            else
+    public void setPassword(String pword, String pwordMatch) throws
+            IllegalCharacterException, PasswordMismatchError{
+        if (checkCharacters(pword)) {
+            if (verifyPassword(pword, pwordMatch)) {
+                try{
+                    password = encryptor.encrypt(pword);
+                } catch (InvalidKeyException e){
+                } catch (UnsupportedEncodingException e){
+                } catch (IllegalBlockSizeException e){
+                } catch (BadPaddingException e){
+                }
+            } else {
                 throw new PasswordMismatchError();
-        }
-        else
+            }
+        } else {
             throw new IllegalCharacterException("Password contains illegal characters");
+        }
     }
-    private boolean verifyPassword(String pword, String pwordMatch)
-    {
-        if(pword.equals(pwordMatch))
+
+    private boolean verifyPassword(String pword, String pwordMatch) {
+        if (pword.equals(pwordMatch)) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
+
     /**
-     * 
+     *
      * @return username
      */
     /**
-     * 
+     *
      * @return password
      */
-    public String getPassword() throws InvalidKeyException,
-            UnsupportedEncodingException, IllegalBlockSizeException,
-            BadPaddingException, IOException
-    {
+    public String getPassword() {
         return encryptor.decrypt(password);
     }
+
     /**
      * Checks a String object such as a username or password to see whether or
      * not it contains any illegal characters.
-     * 
+     *
      * @param s The String to be checked
-     * @return  Returns false if the string contains illegal characters,
-     *          otherwise returns true
+     * @return Returns false if the string contains illegal characters,
+     * otherwise returns true
      */
-    public boolean checkCharacters(String s)
-    {
+    public boolean checkCharacters(String s) {
         boolean b = true;
-        for(char ic : ILLEGAL_CHARACTERS)
-        {
-            for(int x = 0; x < s.length(); x++)
-            {
-                if(ic ==s.charAt(x))
+        for (char ic : ILLEGAL_CHARACTERS) {
+            for (int x = 0; x < s.length(); x++) {
+                if (ic == s.charAt(x)) {
                     b = false;
+                }
             }
         }
         return b;
     }
+
     /**
-     * 
+     *
      * @param b boolean value determining if the user has admin privileges
      */
-    public void setAdminPrivilege(boolean b)
-    {
+    public void setAdminPrivilege(boolean b) {
         adminPrivilege = b;
     }
+
     /**
-     * 
+     *
      * @return the user's admin privileges.
      */
-    public boolean getAdminPrivilege()
-    {
+    public boolean getAdminPrivilege() {
         return adminPrivilege;
     }
+
     /**
-     * 
-     * @param b boolean value determining if the user has event creation privileges
+     *
+     * @param b boolean value determining if the user has event creation
+     * privileges
      */
-    public void setEventCreationPrivilege(boolean b)
-    {
+    public void setEventCreationPrivilege(boolean b) {
         eventCreationPrivilege = b;
     }
+
     /**
-     * 
+     *
      * @return the user's event creation privileges
      */
-    public boolean getEventCreationPrivilege()
-    {
+    public boolean getEventCreationPrivilege() {
         return eventCreationPrivilege;
     }
-    
-    public boolean equals(User user)
-    {
-        if(user == null)
-        {
+
+    public boolean equals(User user) {
+        if (user == null) {
             return false;
         }
         String s = this.getEmailAddress();
-        if(s.equals(user.getEmailAddress()))
+        if (s.equals(user.getEmailAddress())) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
-    public String toString()
-    {
+    public String toString() {
 //        String output = "\n" + super.toString() +
 //                "\nPassword: " + password +
 //                "\nAdmin Privileges: " + adminPrivilege +

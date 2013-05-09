@@ -30,8 +30,7 @@ public class UserManager {
     private PasswordEncryptor encryptor;
 
     public UserManager()
-            throws DoesNotExistException, NoSuchAlgorithmException, 
-            InvalidKeySpecException, NoSuchPaddingException {
+            throws DoesNotExistException {
         encryptor = new PasswordEncryptor();
         usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
