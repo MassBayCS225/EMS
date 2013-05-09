@@ -29,58 +29,82 @@ import sun.misc.BASE64Encoder;
  * @author David Tersoff
  */
 public class PasswordEncryptor {
+
     private PublicKey pubKey;
     private PrivateKey privKey;
     private Cipher cipher;
     private RootKey root;
-    
-    public PasswordEncryptor() throws
-            NoSuchAlgorithmException, InvalidKeySpecException, 
-            DoesNotExistException, NoSuchPaddingException
-    {
-        setPubKey(root.getPubMod(), root.getPubExp());
-        setPrivKey(root.getPrivMod(), root.getPrivExp());
-        cipher = cipher.getInstance("RSA");
+
+    public PasswordEncryptor() {
+        try {
+            setPubKey(root.getPubMod(), root.getPubExp());
+
+            setPrivKey(root.getPrivMod(), root.getPrivExp());
+            cipher = cipher.getInstance("RSA");
+        } catch (DoesNotExistException e){
+        } catch (NoSuchAlgorithmException e){
+        } catch (InvalidKeySpecException e){
+        } catch (NoSuchPaddingException e){
+        }
     }
-    public void setPubKey(BigInteger m, BigInteger e) throws 
-            NoSuchAlgorithmException, InvalidKeySpecException
-    {
-        RSAPublicKeySpec keySpec = new RSAPublicKeySpec(m,e);
-        KeyFactory fact = KeyFactory.getInstance("RSA");
-        pubKey = fact.generatePublic(keySpec);
+
+    public void setPubKey(BigInteger m, BigInteger e) {
+        try {
+            RSAPublicKeySpec keySpec = new RSAPublicKeySpec(m, e);
+            KeyFactory fact = KeyFactory.getInstance("RSA");
+            pubKey = fact.generatePublic(keySpec);
+        } catch (NoSuchAlgorithmException x) {
+        } catch (InvalidKeySpecException x) {
+        }
     }
+
     public void setPrivKey(BigInteger m, BigInteger e) throws
-            NoSuchAlgorithmException, InvalidKeySpecException
-    {
+            NoSuchAlgorithmException, InvalidKeySpecException {
         RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(m, e);
         KeyFactory fact = KeyFactory.getInstance("RSA");
         privKey = fact.generatePrivate(keySpec);
     }
+
     public String encrypt(String message) throws InvalidKeyException,
             UnsupportedEncodingException, IllegalBlockSizeException,
-            BadPaddingException
-    {
+            BadPaddingException {
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-        
+
         byte[] stringBytes = message.getBytes("UTF8");
-        
+
         byte[] raw = cipher.doFinal(stringBytes);
         BASE64Encoder encoder = new BASE64Encoder();
         String base64 = encoder.encode(raw);
         return base64;
     }
-    public String decrypt(String encrypted) throws InvalidKeyException,
-            UnsupportedEncodingException, IllegalBlockSizeException,
-            BadPaddingException, IOException
-    {
-        cipher.init(Cipher.DECRYPT_MODE, privKey);
-        
+
+    public String decrypt(String encrypted) {
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, privKey);
+        } catch (InvalidKeyException e) {
+        }
+
         BASE64Decoder decoder = new BASE64Decoder();
-        byte[] raw = decoder.decodeBuffer(encrypted);
-        byte[] stringBytes = cipher.doFinal(raw);
-        
-        String clear = new String(stringBytes, "UTF8");
-        
+        byte[] raw;
+        try {
+            raw = decoder.decodeBuffer(encrypted);
+        } catch (IOException e) {
+            raw = new byte[0];
+        }
+        byte[] stringBytes;
+        try {
+            stringBytes = cipher.doFinal(raw);
+        } catch (IllegalBlockSizeException e) {
+            stringBytes = new byte[0];
+        } catch (BadPaddingException e) {
+            stringBytes = new byte[0];
+        }
+        String clear = "";
+        try {
+            clear = new String(stringBytes, "UTF8");
+        } catch (UnsupportedEncodingException e) {
+        }
+
         return clear;
     }
 }

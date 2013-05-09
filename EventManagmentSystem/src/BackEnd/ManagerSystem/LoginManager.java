@@ -25,16 +25,13 @@ public class LoginManager {
     private PasswordEncryptor encryptor;
 
     public LoginManager(ArrayList<Participant> userList)throws 
-            NoSuchAlgorithmException, InvalidKeySpecException,
-            DoesNotExistException, NoSuchPaddingException {
+            DoesNotExistException{
 	this.userList = userList;
         encryptor = new PasswordEncryptor();
     }
 
     public void setLoggedInUser(String emailAddress, String password)
-	    throws LogInIncorrectException, InvalidKeyException,
-            UnsupportedEncodingException, IllegalBlockSizeException,
-            BadPaddingException, IOException {
+	    throws LogInIncorrectException{
 
 	User user = checkEmailAddress(emailAddress);
 	checkPassword(user, password);
@@ -52,9 +49,7 @@ public class LoginManager {
     }
 
     private boolean checkPassword(User user, String password) throws
-            LogInIncorrectException, InvalidKeyException,
-            UnsupportedEncodingException, IllegalBlockSizeException,
-            BadPaddingException, IOException {
+            LogInIncorrectException {
 
 	if (user.getPassword().equals(encryptor.decrypt(password))) {
 	    return true;
