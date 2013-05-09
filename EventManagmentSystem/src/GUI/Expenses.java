@@ -66,7 +66,7 @@ public class Expenses extends javax.swing.JPanel {
         deleteExpenseButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(325, 500));
+        setPreferredSize(new java.awt.Dimension(395, 500));
 
         expensesLabel.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         expensesLabel.setText("Expenses");
@@ -84,19 +84,26 @@ public class Expenses extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        expensesTable.setPreferredSize(new java.awt.Dimension(384, 407));
         expensesTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(expensesTable);
         expensesTable.getColumnModel().getColumn(0).setResizable(false);
-        expensesTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        expensesTable.getColumnModel().getColumn(0).setPreferredWidth(15);
         expensesTable.getColumnModel().getColumn(1).setResizable(false);
-        expensesTable.getColumnModel().getColumn(1).setPreferredWidth(300);
         expensesTable.getColumnModel().getColumn(2).setResizable(false);
-        expensesTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        expensesTable.getColumnModel().getColumn(2).setPreferredWidth(30);
 
         addExpenseButton.setText("Add Expense");
         addExpenseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -119,28 +126,29 @@ public class Expenses extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(addExpenseButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(deleteExpenseButton))
                     .add(layout.createSequentialGroup()
                         .add(expensesLabel)
                         .add(0, 0, Short.MAX_VALUE))
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
-                .addContainerGap())
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                            .add(layout.createSequentialGroup()
+                                .add(0, 0, Short.MAX_VALUE)
+                                .add(deleteExpenseButton)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(addExpenseButton)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
                 .add(expensesLabel)
-                .add(18, 18, 18)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .add(12, 12, 12)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(deleteExpenseButton)
-                    .add(addExpenseButton))
-                .addContainerGap())
+                    .add(addExpenseButton)
+                    .add(deleteExpenseButton)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
