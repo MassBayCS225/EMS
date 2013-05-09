@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import GUI.EmailPanel;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.DefaultListModel;
@@ -163,6 +164,11 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         });
 
         closeButton.setText("Cancel");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         everyoneButton.setText("Everyone");
         everyoneButton.addActionListener(new java.awt.event.ActionListener() {
@@ -302,9 +308,8 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-        confirm = true;
-        //addressesToArray();
+        // TODO add your handling code here:		
+        confirm = true;        
         this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -327,6 +332,11 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         updateInfo();
     }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        confirm = false;
+	this.dispose();
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
      * @param args the command line arguments
