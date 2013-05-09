@@ -9,7 +9,14 @@ import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.InputUser;
 import EMS_Database.impl.UserData_Table;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  *
@@ -20,9 +27,12 @@ public class UserManager {
     private ArrayList<Participant> userList;
     private User selectedUser;
     private UserData_Table usersTable;
+    private PasswordEncryptor encryptor;
 
     public UserManager()
-            throws DoesNotExistException {
+            throws DoesNotExistException, NoSuchAlgorithmException, 
+            InvalidKeySpecException, NoSuchPaddingException {
+        encryptor = new PasswordEncryptor();
         usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
         rebuildUserList();
@@ -142,11 +152,14 @@ public class UserManager {
     }
 
     public void editPassword(String password, String passwordMatch, User loggedInUser)
-            throws IllegalCharacterException, PasswordMismatchError, PrivilegeInsufficientException, DoesNotExistException {
+            throws IllegalCharacterException, PasswordMismatchError,
+            PrivilegeInsufficientException, DoesNotExistException,
+            InvalidKeyException, UnsupportedEncodingException,
+            IllegalBlockSizeException, BadPaddingException {
 
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPassword(password, passwordMatch);
-            usersTable.setPwd(selectedUser.getUserId(), ""+password.hashCode());
+            usersTable.setPwd(selectedUser.getUserId(), encryptor.encrypt(password));
         }
     }
 
