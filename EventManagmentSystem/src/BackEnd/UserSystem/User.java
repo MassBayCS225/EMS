@@ -1,6 +1,11 @@
 package BackEnd.UserSystem;
 
-import EMS_Database.impl.UserData_Table;
+import BackEnd.ManagerSystem.PasswordEncryptor;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 
 /*
  * To change this template, choose Tools | Templates
@@ -18,6 +23,7 @@ public class User extends Participant
     private boolean adminPrivilege;
     private boolean eventCreationPrivilege;
     final private char[] ILLEGAL_CHARACTERS = {'@', '/', '\\', ' '};
+    private PasswordEncryptor encryptor;
     
     public User(){
         super();
@@ -30,7 +36,10 @@ public class User extends Participant
      * @param pword         the desired password
      * @param pwordMatch    the password entered a second time to verify it
      */
-    public User(String firstName, String lastName, String emailAddress, String pword, String pwordMatch) throws PasswordMismatchError, IllegalCharacterException
+    public User(String firstName, String lastName, String emailAddress, String pword, String pwordMatch)
+            throws PasswordMismatchError, IllegalCharacterException,
+            InvalidKeyException, UnsupportedEncodingException, 
+            IllegalBlockSizeException, BadPaddingException
     {
         super(firstName, lastName, emailAddress);
         setPassword(pword, pwordMatch);
@@ -45,7 +54,9 @@ public class User extends Participant
             
     }*/
     
-    public User(int userID, User user){
+    public User(int userID, User user) throws InvalidKeyException,
+            UnsupportedEncodingException, IllegalBlockSizeException,
+            BadPaddingException, IOException{
         super(userID, (Participant)user);
         password = user.getPassword();
         adminPrivilege = user.getAdminPrivilege();
@@ -66,13 +77,16 @@ public class User extends Participant
      * @throws IllegalCharacterException    throws exception if the password contains illegal characters
      * @throws PasswordMismatchError        throws exception if the passwords don't match.
      */
-    public void setPassword(String pword, String pwordMatch)throws IllegalCharacterException, PasswordMismatchError
+    public void setPassword(String pword, String pwordMatch)throws
+            IllegalCharacterException, PasswordMismatchError,
+            InvalidKeyException, UnsupportedEncodingException, 
+            IllegalBlockSizeException, BadPaddingException
     {
         if(checkCharacters(pword))
         {
             if(verifyPassword(pword, pwordMatch))
             {
-                password = ""+pword.hashCode();
+                password = encryptor.encrypt(pword);
             }
             else
                 throw new PasswordMismatchError();
@@ -95,9 +109,11 @@ public class User extends Participant
      * 
      * @return password
      */
-    public String getPassword()
+    public String getPassword() throws InvalidKeyException,
+            UnsupportedEncodingException, IllegalBlockSizeException,
+            BadPaddingException, IOException
     {
-        return password;
+        return encryptor.decrypt(password);
     }
     /**
      * Checks a String object such as a username or password to see whether or
