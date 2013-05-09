@@ -168,10 +168,11 @@ public class User extends Participant
 
     public String toString()
     {
-        String output = "\n" + super.toString() +
-                "\nPassword: " + password +
-                "\nAdmin Privileges: " + adminPrivilege +
-                "\nEvent Creation Privileges: " + eventCreationPrivilege;
-        return output;
+//        String output = "\n" + super.toString() +
+//                "\nPassword: " + password +
+//                "\nAdmin Privileges: " + adminPrivilege +
+//                "\nEvent Creation Privileges: " + eventCreationPrivilege;
+//        return output;
+        return super.getFirstName() + " " + super.getLastName();
     }
 }
