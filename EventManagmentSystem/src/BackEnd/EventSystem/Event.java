@@ -134,6 +134,7 @@ public class Event extends ScheduleItem implements Reportable {
             subEvent.add("" + subEventList.get(i).getTimeSchedule().getEndDateTimeCalendar());
         }
         int numOfMembers = 0;
+        int numOfTasks = 0;
         for (int i = 0; i < committeeList.size(); i++) {
             committee.add("" + committeeList.get(i).getTitle());
             committee.add("" + committeeList.get(i).getBudget().getTotalIncome());
@@ -157,6 +158,14 @@ public class Event extends ScheduleItem implements Reportable {
                 numOfMembers++;
                 if (j == committeeList.get(i).getMemberList().size() - 1) {
                     committee.add("" + numOfMembers);
+                }
+            }
+            committee.add("" + committeeList.get(i).isFinished());
+            
+            for (int j = 0; j < committeeList.get(i).getTaskList().size(); j++) {
+                numOfTasks++;
+                if (j == committeeList.get(i).getTaskList().size() - 1) {
+                    committee.add("" + numOfTasks);
                 }
             }
             committee.add("" + committeeList.get(i).isFinished());

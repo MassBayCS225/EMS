@@ -202,7 +202,70 @@ public class Committee implements Reportable {
     
     @Override
     public ArrayList<Object> getReport() {
-        //TODO
-        return null;
+        ArrayList<Object> report = new ArrayList<Object>();
+        ArrayList<String> member = new ArrayList<String>();
+        ArrayList<String> budgetAccess = new ArrayList<String>();
+        ArrayList<String> task = new ArrayList<String>();
+        
+        for(int i = 0; i < memberList.size();i++) {
+            member.add("" + memberList.get(i).getFirstName());
+            member.add("" + memberList.get(i).getLastName());
+            member.add("" + memberList.get(i).getEmailAddress());
+            member.add("" + memberList.get(i).getAddress().getCity());
+            member.add("" + memberList.get(i).getAddress().getCountry());
+            member.add("" + memberList.get(i).getAddress().getState());
+            member.add("" + memberList.get(i).getAddress().getStreet());
+            member.add("" + memberList.get(i).getAddress().getZipCode());
+            member.add("" + memberList.get(i).getAdminPrivilege());
+            member.add("" + memberList.get(i).getEventCreationPrivilege());
+            member.add("" + memberList.get(i).getPhoneNumber());
+            member.add("" + memberList.get(i).getUserId());
+        }
+        for(int i = 0; i < budgetAccessList.size();i++) {
+            budgetAccess.add("" + budgetAccessList.get(i).getFirstName());
+            budgetAccess.add("" + budgetAccessList.get(i).getLastName());
+            budgetAccess.add("" + budgetAccessList.get(i).getEmailAddress());
+            budgetAccess.add("" + budgetAccessList.get(i).getAddress().getCity());
+            budgetAccess.add("" + budgetAccessList.get(i).getAddress().getCountry());
+            budgetAccess.add("" + budgetAccessList.get(i).getAddress().getState());
+            budgetAccess.add("" + budgetAccessList.get(i).getAddress().getStreet());
+            budgetAccess.add("" + budgetAccessList.get(i).getAddress().getZipCode());
+            budgetAccess.add("" + budgetAccessList.get(i).getAdminPrivilege());
+            budgetAccess.add("" + budgetAccessList.get(i).getEventCreationPrivilege());
+            budgetAccess.add("" + budgetAccessList.get(i).getPhoneNumber());
+            budgetAccess.add("" + budgetAccessList.get(i).getUserId());
+        }
+        for(int i = 0; i < taskList.size();i++) {
+            /*task.add("" + taskList.get(i).getDescription());
+            task.add("" + taskList.get(i).getTitle());
+            task.add("" + taskList.get(i).getCompleted());
+            task.add("" + taskList.get(i).getLocation().getCity());
+            task.add("" + taskList.get(i).getLocation().getCountry());
+            task.add("" + taskList.get(i).getLocation().getState());
+            task.add("" + taskList.get(i).getLocation().getStreet());
+            task.add("" + taskList.get(i).getLocation().getZipCode());
+            task.add("" + taskList.get(i).getLocation().getDetails());
+            task.add("" + taskList.get(i).getTimeSchedule().getEndDateTimeCalendar());
+            task.add("" + taskList.get(i).getTimeSchedule().getStartDateTimeCalendar());
+            for(int j = 0; j < taskList.get(i).getResponsibleList().size();j++) {
+                task.add("" + taskList.get(i).getResponsibleList().get(j).getEmailAddress());
+                task.add("" + taskList.get(i).getResponsibleList().get(j).getFirstName());
+                task.add("" + taskList.get(i).getResponsibleList().get(j).getLastName());
+                task.add("" + taskList.get(i).getResponsibleList().get(j).getAddress().getCity());
+            
+            }*/
+            
+        }
+        
+        report.add("" + taskList.size());
+        report.add("" + budget.getTotalBudget());
+        report.add("" + budget.getExpenseList());
+        report.add("" + budget.getIncomeList());
+        report.add("" + this.getTitle());
+        report.add("" + this.isFinished());
+        
+        
+        return report;
+        
     }
 }
