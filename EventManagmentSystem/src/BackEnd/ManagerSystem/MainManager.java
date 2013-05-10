@@ -5,7 +5,6 @@
 package BackEnd.ManagerSystem;
 
 import EMS_Database.DoesNotExistException;
-import EMS_Database.impl.*;
 
 /**
  * This class holds all the other Manager classes, to facilitate passing the
@@ -15,7 +14,6 @@ import EMS_Database.impl.*;
  */
 public class MainManager {
 
-    // private ObjectRebuilder objectRebuilder;
     private BudgetItemManager budgetItemManager;
     private BudgetManager budgetManager;
     private CommitteeManager committeeManager;
@@ -25,20 +23,13 @@ public class MainManager {
     private UserManager userManager;
     private LoginManager logInManager;
 
+    /**
+     * initializes the main manager, which holds all the managers that the GUI
+     * interacts with
+     */
     public MainManager() {
 
-        /*
-         Committees_Table committees = new Committees_Table();
-         Events_Table events = new Events_Table();
-         Expense_Table expenses = new Expense_Table();
-         Income_Table incomes = new Income_Table();
-         SubEvent_Table subEvents = new SubEvent_Table();
-         Tasks_Table tasks = new Tasks_Table();
-         UserData_Table users = new UserData_Table();
-         * */
-
         try {
-            // objectRebuilder = new ObjectRebuilder();
             userManager = new UserManager();
             logInManager = new LoginManager(userManager.getUserList());
             taskManager = new TaskManager();
@@ -62,38 +53,83 @@ public class MainManager {
         public static MainManager instance = new MainManager();
     }
 
+    /**
+     * returns an instance of the main manager
+     *
+     * @return an instance of the main manager
+     */
     public static MainManager getInstance() {
         return Main.instance;
     }
 
+    /**
+     * returns the budget item manager
+     *
+     * @return the budget item manager
+     */
     public BudgetItemManager getBudgetItemManager() {
         return budgetItemManager;
     }
 
+    /**
+     * returns the budget manager
+     *
+     * @return the budget manager
+     */
     public BudgetManager getBudgetManager() {
         return budgetManager;
     }
 
+    /**
+     * returns the committee manager
+     *
+     * @return the committee manager
+     */
     public CommitteeManager getCommitteeManager() {
         return committeeManager;
     }
 
+    /**
+     * returns the event manager
+     *
+     * @return the event manager
+     */
     public EventManager getEventManager() {
         return eventManager;
     }
 
+    /**
+     * returns the sub event manager
+     *
+     * @return the sub event manager
+     */
     public SubEventManager getSubEventManager() {
         return subEventManager;
     }
 
+    /**
+     * returns the task manager
+     *
+     * @return the task manager
+     */
     public TaskManager getTaskManager() {
         return taskManager;
     }
 
+    /**
+     * returns the user manager
+     *
+     * @return the user manager
+     */
     public UserManager getUserManager() {
         return userManager;
     }
 
+    /**
+     * returns the log in manager
+     *
+     * @return the log in manager
+     */
     public LoginManager getLogInManager() {
         return logInManager;
     }
