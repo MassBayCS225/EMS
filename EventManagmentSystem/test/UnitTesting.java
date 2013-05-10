@@ -105,40 +105,44 @@ public class UnitTesting {
 	System.out.print(exTable.queryEntireTable());
     }
 
-    @Test
+    @Test    
     @Ignore
     public void testEventsTable() {
 	try {
 	    int uid = 2;
-	    System.out.println(et.getDescription(uid));
-	    System.out.println(et.getDetails(uid));
-	    System.out.println(et.getStartDate(uid));
-	    System.out.println(et.getEndDate(uid));
-	    System.out.println(et.getComplete(uid));
-	    System.out.println(et.getStreet(uid));
-	    System.out.println(et.getCity(uid));
-	    System.out.println(et.getState(uid));
-	    System.out.println(et.getZipcode(uid));
-	    System.out.println(et.getCountry(uid));
-	    System.out.println(et.getOrganizerList(uid));
-	    System.out.println(et.getSubEventList(uid));
-	    System.out.println(et.getParticipantList(uid));
-	    System.out.println(et.getCommittee(uid));
+	    //System.out.println(et.getDescription(uid));
+	    //System.out.println(et.getDetails(uid));
+            System.out.println(et.getTitle(uid));
+//	    System.out.println(et.getStartDate(uid));
+//	    System.out.println(et.getEndDate(uid));
+//	    System.out.println(et.getComplete(uid));
+//	    System.out.println(et.getStreet(uid));
+//	    System.out.println(et.getCity(uid));
+//	    System.out.println(et.getState(uid));
+//	    System.out.println(et.getZipcode(uid));
+//	    System.out.println(et.getCountry(uid));
+//	    System.out.println(et.getOrganizerList(uid));
+//	    System.out.println(et.getSubEventList(uid));
+//	    System.out.println(et.getParticipantList(uid));
+//	    System.out.println(et.getCommittee(uid));
 
-	    et.setDescription(uid, "al;skdjf;alskdf");
-	    et.setDetails(uid, "new details");
-	    et.setStartDate(uid, startDate);
-	    et.setEndDate(uid, endDate);
-	    et.setComplete(uid, 1);
-	    et.setStreet(uid, "Mulholland Drive");
-	    et.setCity(uid, "Tokyo");
-	    et.setState(uid, "XYZ");
-	    et.setZipcode(uid, "90210");
-	    et.setCountry(uid, "JAPAN!");
-	    et.setOrganizerList(uid, list);
-	    et.setSubEventList(uid, list);
-	    et.setParticipantList(uid, list);
-	    et.setCommittee(uid, list);
+//	    et.setDescription(uid, "al;skdjf;alskdf");
+//	    et.setDetails(uid, "new details");
+            et.setTitle(uid, "penguin");
+//	    et.setStartDate(uid, startDate);
+//	    et.setEndDate(uid, endDate);
+//	    et.setComplete(uid, 1);
+//	    et.setStreet(uid, "Mulholland Drive");
+//	    et.setCity(uid, "Tokyo");
+//	    et.setState(uid, "XYZ");
+//	    et.setZipcode(uid, "90210");
+//	    et.setCountry(uid, "JAPAN!");
+//	    et.setOrganizerList(uid, list);
+//	    et.setSubEventList(uid, list);
+//	    et.setParticipantList(uid, list);
+//	    et.setCommittee(uid, list);
+            
+            System.out.println(et.getTitle(uid));
 
 
 	} catch (DoesNotExistException dnee) {

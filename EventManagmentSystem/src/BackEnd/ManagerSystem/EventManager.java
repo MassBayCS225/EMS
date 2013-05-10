@@ -133,7 +133,7 @@ public class EventManager {
             committeeIDList = new ArrayList<Integer>();
 
             newEvent = new Event(eventsTable.createEvent(new InputEventData(
-                    event.getDescription(), event.getLocation().getDetails(), "IGNORE",
+                    event.getDescription(), event.getLocation().getDetails(), null/*FIX THIS!*/ , "IGNORE", //added null for title. replace with your title function
                     event.getTimeSchedule().getStartDateTimeTimestamp(), event.getTimeSchedule().getEndDateTimeTimestamp(),
                     0, committeeIDList, organizerIDList, subEventIDList, participantIDList,
                     event.getLocation().getStreet(), event.getLocation().getCity(),

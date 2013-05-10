@@ -19,6 +19,8 @@ public interface Interface_EventData {
     public void removeEvent(int uid) throws DoesNotExistException;
 
     // GETTERS
+    public String getTitle(int uid) throws DoesNotExistException;
+    
     public String getDescription(int uid) throws DoesNotExistException;
     
     public String getDetails(int uid) throws DoesNotExistException;
@@ -47,7 +49,9 @@ public interface Interface_EventData {
 
     public String getCountry(int uid) throws DoesNotExistException; //location info
 
-    // SETTERS      
+    // SETTERS     
+    public void setTitle(int uid, String title) throws DoesNotExistException;
+    
     public void setDescription(int uid, String description) throws DoesNotExistException;
     
     public void setDetails(int uid, String details) throws DoesNotExistException;
