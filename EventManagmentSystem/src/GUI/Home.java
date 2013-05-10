@@ -6,6 +6,7 @@ package GUI;
 import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
+import BackEnd.ManagerSystem.PrivilegeManager;
 import GUI.Dialog.LoginDialog;
 import GUI.Dialog.SignupDialog;
 import java.util.Calendar;
@@ -107,7 +108,8 @@ public class Home extends javax.swing.JFrame {
             if (manager.getUserManager().getSelectedUser().getAdminPrivilege()) {
                 add(m);
             }
-            else {
+            else if (PrivilegeManager.hasEventPrivilege(manager.getUserManager().getSelectedUser(), 
+                    manager.getEventManager().getSelectedEvent())){
                 m.getUserManagementPanel().getChangeInfoButton().setVisible(false);
                 m.getUserManagementPanel().getChangeUserButton().setVisible(false);
                 add(m);
