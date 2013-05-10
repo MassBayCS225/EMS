@@ -137,7 +137,7 @@ public class CommitteeManager {
         if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
             selectedCommittee.getBudgetAccessList().remove(budgetAccess);
             ArrayList<Integer> newBudgetAccessList = committeesTable.getBudgetAccessList(selectedCommittee.getCOMMITTEE_ID());
-            newBudgetAccessList.remove(budgetAccess.getUserId());
+            newBudgetAccessList.remove(new Integer(budgetAccess.getUserId()));
             committeesTable.setBudgetAccessList(selectedCommittee.getCOMMITTEE_ID(), newBudgetAccessList);
         }
     }
