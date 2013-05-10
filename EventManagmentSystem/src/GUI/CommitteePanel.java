@@ -65,6 +65,11 @@ public class CommitteePanel extends javax.swing.JPanel {
         committeeChangeButton = new javax.swing.JButton();
         addToBudgetButton = new javax.swing.JButton();
         removeMemberFromBudgetButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        addMemberLabel = new javax.swing.JLabel();
+        removeMemberLabel = new javax.swing.JLabel();
+        addTaskLabel = new javax.swing.JLabel();
+        removeTaskLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 204, 255));
         setMinimumSize(new java.awt.Dimension(387, 327));
@@ -179,6 +184,41 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\edit1.png")); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        addMemberLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\add1.png")); // NOI18N
+        addMemberLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMemberLabelMouseClicked(evt);
+            }
+        });
+
+        removeMemberLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\remove1.png")); // NOI18N
+        removeMemberLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeMemberLabelMouseClicked(evt);
+            }
+        });
+
+        addTaskLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\add1.png")); // NOI18N
+        addTaskLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addTaskLabelMouseClicked(evt);
+            }
+        });
+
+        removeTaskLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\remove1.png")); // NOI18N
+        removeTaskLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeTaskLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,40 +236,52 @@ public class CommitteePanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
+                                    .addComponent(budgetButton)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                             .addComponent(addMemberButton)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(removeMemberButton)))
-                                    .addComponent(budgetButton)))
+                                            .addComponent(removeMemberButton))
+                                        .addComponent(memberScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(addMemberLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(removeMemberLabel)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(addToBudgetButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(removeMemberFromBudgetButton)))
-                        .addGap(60, 60, 60)
+                        .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(55, 55, 55)
-                                    .addComponent(committeeChangeButton))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(headLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(headNameLabel)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(55, 55, 55)
+                                        .addComponent(committeeChangeButton))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(headLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(headNameLabel)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(addTaskButton)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(addTaskButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(removeTaskButton)))
-                                .addGap(10, 10, 10)
-                                .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(removeTaskButton)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(addTaskLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(removeTaskLabel)))
+                                        .addGap(10, 10, 10)
+                                        .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,10 +289,12 @@ public class CommitteePanel extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(headLabel)
-                    .addComponent(headNameLabel)
-                    .addComponent(budgetButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(headLabel)
+                        .addComponent(headNameLabel)
+                        .addComponent(budgetButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(committeeChangeButton)
@@ -255,19 +309,25 @@ public class CommitteePanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(removeMemberButton)
-                            .addComponent(addMemberButton)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(removeMemberLabel)
+                            .addComponent(addMemberLabel)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(taskProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(taskScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(removeTaskButton)
-                            .addComponent(addTaskButton))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(removeTaskLabel)
+                            .addComponent(addTaskLabel))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addMemberButton)
+                    .addComponent(removeMemberButton)
+                    .addComponent(addTaskButton)
+                    .addComponent(removeTaskButton))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
  
@@ -506,22 +566,102 @@ public class CommitteePanel extends javax.swing.JPanel {
         updateInfo();
     }//GEN-LAST:event_removeMemberFromBudgetButtonActionPerformed
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        FindMemberDialog fmd = new FindMemberDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        fmd.setVisible(true);
+        if(fmd.getConfirm())
+        {
+            try
+            {
+            manager.getCommitteeManager().editChair(fmd.createUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        updateInfo();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void addMemberLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMemberLabelMouseClicked
+        // TODO add your handling code here:
+        FindMemberDialog fmd = new FindMemberDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        fmd.setVisible(true);
+        if(fmd.getConfirm())
+        {
+            User u = fmd.createUser();
+            if(manager.getCommitteeManager().getSelectedCommittee().getMemberListWithChair().contains(u))
+            {
+                JOptionPane.showMessageDialog(null, "User already exists in member list.");
+            }
+            else
+            {
+                try
+                {
+                    manager.getCommitteeManager().addMember(u, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+       }
+        updateInfo();
+    }//GEN-LAST:event_addMemberLabelMouseClicked
+
+    private void removeMemberLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMemberLabelMouseClicked
+        // TODO add your handling code here:
+        if(manager.getCommitteeManager().getSelectedCommittee().getChair().equals((User)memberList.getSelectedValue())) 
+        {
+            JOptionPane.showMessageDialog(null, "Can not remove chair.  Change chair first and then remove.", "Remove Chair Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            try
+            {
+                manager.getCommitteeManager().removeMember(
+                        manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(
+                        memberList.getSelectedIndex()), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        updateInfo();
+
+    }//GEN-LAST:event_removeMemberLabelMouseClicked
+
+    private void addTaskLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTaskLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addTaskLabelMouseClicked
+
+    private void removeTaskLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeTaskLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeTaskLabelMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMemberButton;
+    private javax.swing.JLabel addMemberLabel;
     private javax.swing.JButton addTaskButton;
+    private javax.swing.JLabel addTaskLabel;
     private javax.swing.JButton addToBudgetButton;
     private javax.swing.JButton budgetButton;
     private javax.swing.JButton committeeChangeButton;
     private javax.swing.JLabel headLabel;
     private javax.swing.JLabel headNameLabel;
     private javax.swing.JLabel headerLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList memberList;
     private javax.swing.JScrollPane memberScrollPane;
     private javax.swing.JLabel membersLabel;
     private javax.swing.JButton removeMemberButton;
     private javax.swing.JButton removeMemberFromBudgetButton;
+    private javax.swing.JLabel removeMemberLabel;
     private javax.swing.JButton removeTaskButton;
+    private javax.swing.JLabel removeTaskLabel;
     private javax.swing.JList taskList;
     private javax.swing.JProgressBar taskProgressBar;
     private javax.swing.JScrollPane taskScrollPane;
