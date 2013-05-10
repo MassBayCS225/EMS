@@ -155,21 +155,18 @@ public class LoginDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-	// TODO add your handling code here:
     }//GEN-LAST:event_emailFieldActionPerformed
     
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-	// TODO add your handling code here:
 	confirm = true;
 	this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-	System.exit(0);// TODO add your handling code here:
+	System.exit(0);
     }//GEN-LAST:event_formWindowClosing
     
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-	// TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
     
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
@@ -178,10 +175,7 @@ public class LoginDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_signUpActionPerformed
     
     private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
-	// TODO add your handling code here:
-	if (new String(passwordField.getPassword()).equals("password")) {
-	    passwordField.selectAll();
-	}
+        passwordField.selectAll();
     }//GEN-LAST:event_passwordFieldFocusGained
     
     private void emailFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusGained

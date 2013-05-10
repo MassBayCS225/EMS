@@ -66,7 +66,8 @@ public class ScheduleItem {
     }
     
     public boolean equals(ScheduleItem scheduleItem) {
-        if (this.getDescription().equalsIgnoreCase(scheduleItem.getDescription()) 
+        if (this.getTitle().equalsIgnoreCase(scheduleItem.getTitle()) &&
+                this.getDescription().equalsIgnoreCase(scheduleItem.getDescription()) 
                 && this.getLocation().equals(scheduleItem.getLocation())
                 && this.getTimeSchedule().equals(scheduleItem.getTimeSchedule()))
             return true;
