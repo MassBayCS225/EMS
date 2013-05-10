@@ -104,8 +104,9 @@ public class Event extends ScheduleItem implements Reportable {
     }
     
     public String toString() {
-        return "Event Description: \n" + super.getDescription() + "\n\n" + super.getLocation().toString() + 
-                "\n\n" + super.getTimeSchedule().toString();
+        return "Event Title: " + getTitle() +
+               "Event Description: \n" + super.getDescription() + "\n\n" + super.getLocation().toString() + 
+               "\n\n" + super.getTimeSchedule().toString();
     }
     
     @Override
