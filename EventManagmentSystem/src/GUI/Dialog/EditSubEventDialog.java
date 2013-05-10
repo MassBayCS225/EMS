@@ -26,16 +26,18 @@ public class EditSubEventDialog extends javax.swing.JDialog {
     private SubEvent selectedSubEvent;
     private MainManager manager;
     private SubEventPanel sep = new SubEventPanel();
+    private TimeSchedule tempTimeSchedule;
     /**
      * Creates new form EditSubEventDialog
      */
     public EditSubEventDialog(java.awt.Frame parent, SubEvent se, boolean modal) {
         super(parent, modal);
         selectedSubEvent = se;
+        tempTimeSchedule = se.getTimeSchedule();
         initComponents();
+        initLabels();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
-        nameField.setText(selectedSubEvent.getDescription());
         manager = MainManager.getInstance();
         confirm = false;
         
@@ -59,9 +61,6 @@ public class EditSubEventDialog extends javax.swing.JDialog {
         {
             minModel.addElement(i);
         }
-        daySelect.setModel((ComboBoxModel)dayModel);
-        yearSelect.setModel((ComboBoxModel)yearModel);
-        minuteSelect.setModel(minModel);
         
     }
     
@@ -79,22 +78,15 @@ public class EditSubEventDialog extends javax.swing.JDialog {
 
         saveSubEventButton = new javax.swing.JButton();
         cancelChangesButton = new javax.swing.JButton();
-        monthSelect = new javax.swing.JComboBox();
-        monthDayYearLabel = new javax.swing.JLabel();
-        daySelect = new javax.swing.JComboBox();
-        yearSelect = new javax.swing.JComboBox();
         locationField = new javax.swing.JTextField();
-        minuteSelect = new javax.swing.JComboBox();
-        durationField = new javax.swing.JTextField();
-        durationLabel = new javax.swing.JLabel();
         locationLabel = new javax.swing.JLabel();
-        pmCheck = new javax.swing.JCheckBox();
-        startLabel = new javax.swing.JLabel();
-        hourSelect = new javax.swing.JComboBox();
         headerLabel = new javax.swing.JLabel();
         descriptionScrollPane = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
         nameField = new javax.swing.JTextField();
+        startDateLabel = new javax.swing.JLabel();
+        editTimeScheduleButton = new javax.swing.JButton();
+        dueDateLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,37 +104,7 @@ public class EditSubEventDialog extends javax.swing.JDialog {
             }
         });
 
-        monthSelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
-
-        monthDayYearLabel.setText("Month/Day/Year");
-
-        daySelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Day" }));
-
-        yearSelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Year" }));
-
-        minuteSelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Minute" }));
-
-        durationField.setText("00:00");
-        durationField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                durationFieldActionPerformed(evt);
-            }
-        });
-
-        durationLabel.setText("Duration:");
-
         locationLabel.setText("Location:");
-
-        pmCheck.setText("PM");
-        pmCheck.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pmCheckActionPerformed(evt);
-            }
-        });
-
-        startLabel.setText("Start Time:");
-
-        hourSelect.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hour", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 
         headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         headerLabel.setText("SubEvent Name");
@@ -151,6 +113,20 @@ public class EditSubEventDialog extends javax.swing.JDialog {
         descriptionTextArea.setRows(5);
         descriptionTextArea.setText("Description of this event.\nDoesn't do anything yet.");
         descriptionScrollPane.setViewportView(descriptionTextArea);
+
+        startDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        startDateLabel.setText("Start Date: MM/DD/YY - 00:00 AM");
+
+        editTimeScheduleButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        editTimeScheduleButton.setText("edit");
+        editTimeScheduleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTimeScheduleButtonActionPerformed(evt);
+            }
+        });
+
+        dueDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        dueDateLabel.setText("Due Date : MM/DD/YY - 00:00 AM");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,70 +137,42 @@ public class EditSubEventDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(monthDayYearLabel)
-                                    .addComponent(startLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(monthSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(daySelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(yearSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(durationField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(locationField, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(hourSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(minuteSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(pmCheck))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(durationLabel)
-                                    .addComponent(locationLabel)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(saveSubEventButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cancelChangesButton)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(88, 88, 88))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(headerLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nameField)))
-                        .addContainerGap())))
+                                .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(83, 83, 83)
+                                .addComponent(locationField, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(locationLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(saveSubEventButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cancelChangesButton))
+                            .addComponent(startDateLabel)
+                            .addComponent(dueDateLabel)
+                            .addComponent(editTimeScheduleButton))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headerLabel)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(descriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(monthSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(monthDayYearLabel)
-                    .addComponent(daySelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(startDateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(startLabel)
-                    .addComponent(pmCheck)
-                    .addComponent(hourSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minuteSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(dueDateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(durationLabel)
-                    .addComponent(durationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(editTimeScheduleButton)
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(locationLabel)
@@ -239,36 +187,21 @@ public class EditSubEventDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void durationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_durationFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_durationFieldActionPerformed
-
-    private void pmCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmCheckActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pmCheckActionPerformed
-
     private void cancelChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelChangesButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelChangesButtonActionPerformed
 
     private void saveSubEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSubEventButtonActionPerformed
         try {
-            int year = yearSelect.getSelectedIndex() + 2012;
-            int month = monthSelect.getSelectedIndex();
-            int day = daySelect.getSelectedIndex();
-            int hour = hourSelect.getSelectedIndex();
-            if(pmCheck.isSelected())
-            {
-                hour += 12;
-            }
-            int min = minuteSelect.getSelectedIndex();
-            TimeSchedule t = new TimeSchedule();
-            t.setStartDateTime(year, month, day, hour, min);
-            selectedSubEvent.setTimeSchedule(t);
-            selectedSubEvent.setLocation(new Location(locationField.getText()));
-            selectedSubEvent.setDescription(nameField.getText());
-            
-            manager.getEventManager().createSubEvent(selectedSubEvent, manager.getLogInManager().getLoggedInUser());
+            manager.getSubEventManager().setSelectedSubEvent(selectedSubEvent);
+            manager.getSubEventManager().editTimeSchedule(tempTimeSchedule, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getSubEventManager().editLocation(new Location(locationField.getText()), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getSubEventManager().editTitle(nameField.getText(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getSubEventManager().editDescription(descriptionTextArea.getText(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getSubEventManager().editLocation(new Location(locationLabel.getText()), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+
+            confirm = true;
+            this.dispose();
         } catch (PrivilegeInsufficientException ex) {
             Logger.getLogger(EditSubEventDialog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DoesNotExistException ex) {
@@ -276,27 +209,45 @@ public class EditSubEventDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_saveSubEventButtonActionPerformed
 
+    private void editTimeScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTimeScheduleButtonActionPerformed
+        // TODO add your handling code here:
+        NewTimeStampDialog ntsd = new NewTimeStampDialog(null, true, tempTimeSchedule);
+        ntsd.setVisible(true);
+        if(ntsd.getConfirm())
+        {
+            tempTimeSchedule = ntsd.createTimeSchedule();
+        }
+        updateLabels();
+    }//GEN-LAST:event_editTimeScheduleButtonActionPerformed
+
+    private void initLabels()
+    {
+        nameField.setText(selectedSubEvent.getTitle());
+        descriptionTextArea.setText(selectedSubEvent.getDescription());
+        dueDateLabel.setText("Due date: " + tempTimeSchedule.getEndDateTimeTimestamp().toString());
+        startDateLabel.setText("Start date: " + tempTimeSchedule.getStartDateTimeTimestamp().toString());
+        locationLabel.setText(selectedSubEvent.getLocation().getDetails());
+    }
+    
+    private void updateLabels()
+    {
+        dueDateLabel.setText("Due date: " + tempTimeSchedule.getEndDateTimeTimestamp().toString());
+        startDateLabel.setText("Start date: " + tempTimeSchedule.getStartDateTimeTimestamp().toString());
+    }
     /**
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelChangesButton;
-    private javax.swing.JComboBox daySelect;
     private javax.swing.JScrollPane descriptionScrollPane;
     private javax.swing.JTextArea descriptionTextArea;
-    private javax.swing.JTextField durationField;
-    private javax.swing.JLabel durationLabel;
+    private javax.swing.JLabel dueDateLabel;
+    private javax.swing.JButton editTimeScheduleButton;
     private javax.swing.JLabel headerLabel;
-    private javax.swing.JComboBox hourSelect;
     private javax.swing.JTextField locationField;
     private javax.swing.JLabel locationLabel;
-    private javax.swing.JComboBox minuteSelect;
-    private javax.swing.JLabel monthDayYearLabel;
-    private javax.swing.JComboBox monthSelect;
     private javax.swing.JTextField nameField;
-    private javax.swing.JCheckBox pmCheck;
     private javax.swing.JButton saveSubEventButton;
-    private javax.swing.JLabel startLabel;
-    private javax.swing.JComboBox yearSelect;
+    private javax.swing.JLabel startDateLabel;
     // End of variables declaration//GEN-END:variables
 }

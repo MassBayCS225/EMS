@@ -17,8 +17,8 @@ public class Task extends ScheduleItem implements Reportable {
         responsibleList = new ArrayList<User>();
     }
     
-    public Task(int task_id, String description){
-        super(description);
+    public Task(int task_id, String title){
+        super(title);
         TASK_ID = task_id;
         responsibleList = new ArrayList<User>();
         completed = false;

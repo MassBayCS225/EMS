@@ -163,7 +163,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                     CalendarTable.setValueAt(cEvent, weekOfMonth, dayOfWeek);
 
                 } else {
-                    CalendarTable.setValueAt("-", weekOfMonth, dayOfWeek);
+                    CalendarTable.setValueAt("", weekOfMonth, dayOfWeek);
                 }
                 calendarSlot++;
             }

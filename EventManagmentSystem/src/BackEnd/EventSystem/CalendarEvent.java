@@ -46,14 +46,14 @@ public class CalendarEvent {
         {
             for (int i = 0; i < subEventList.size(); i++)
             {
-                events += "\n" + subEventList.get(i).getDescription();
+                events += "\n" + subEventList.get(i).getTitle();
             }
         }
         else
         {
             for (int i = 0; i < 3; i++)
             {
-                events += "\n" + subEventList.get(i).getDescription();
+                events += "\n" + subEventList.get(i).getTitle();
             }
             events += "\n...";
         }

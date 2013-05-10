@@ -43,8 +43,6 @@ public class BudgetPanel extends javax.swing.JPanel {
 
         budgetLabel = new javax.swing.JLabel();
         BudgetSwitchingPanel = new javax.swing.JPanel();
-        expenses1 = new GUI.Expenses();
-        income1 = new GUI.IncomePanel();
         viewBudgetButton = new javax.swing.JButton();
         expenseButton = new javax.swing.JButton();
         incomeButton = new javax.swing.JButton();
@@ -57,8 +55,6 @@ public class BudgetPanel extends javax.swing.JPanel {
         budgetLabel.setText("Budget");
 
         BudgetSwitchingPanel.setLayout(new java.awt.CardLayout());
-        BudgetSwitchingPanel.add(expenses1, "expense");
-        BudgetSwitchingPanel.add(income1, "income");
 
         viewBudgetButton.setText("View All Budget Items");
         viewBudgetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +107,7 @@ public class BudgetPanel extends javax.swing.JPanel {
                     .add(expenseButton)
                     .add(incomeButton))
                 .add(11, 11, 11)
-                .add(BudgetSwitchingPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+                .add(BudgetSwitchingPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                 .add(75, 75, 75))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -138,8 +134,6 @@ public class BudgetPanel extends javax.swing.JPanel {
     private javax.swing.JPanel BudgetSwitchingPanel;
     private javax.swing.JLabel budgetLabel;
     private javax.swing.JButton expenseButton;
-    private GUI.Expenses expenses1;
-    private GUI.IncomePanel income1;
     private javax.swing.JButton incomeButton;
     private javax.swing.JButton viewBudgetButton;
     // End of variables declaration//GEN-END:variables

@@ -25,23 +25,53 @@ public class CommitteeManager {
     private Tasks_Table tasksTable;
     private Committee selectedCommittee;
     
+    /**
+     * initializes the committee manager
+     *
+     * @param tasksTable the tasks table
+     */
     public CommitteeManager(Tasks_Table tasksTable) {
         committeesTable = new Committees_Table();
         this.tasksTable = tasksTable;
     }
     
+    /**
+     * returns the committees table
+     *
+     * @return the committee table
+     */
     public Committees_Table getCommitteesTable(){
         return committeesTable;
     }
 
+    /**
+     * stores the committee selected by the user
+     *
+     * @param selectedCommittee the the selected committee
+     */
     public void setSelectedCommittee(Committee selectedCommittee) {
         this.selectedCommittee = selectedCommittee;
     }
 
+    /**
+     * returns the selected committee
+     *
+     * @return the selected committee
+     */
     public Committee getSelectedCommittee() {
         return selectedCommittee;
     }
 
+    /**
+     * edits the title of the selected committee, if the user has
+     * sufficient privilege
+     *
+     * @param title the title
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void editTitle(String title, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
@@ -51,6 +81,16 @@ public class CommitteeManager {
         }
     }
 
+    /**
+     * edits the chair of the selected committee, if the user has
+     * sufficient privilege
+     *
+     * @param chair the chair to change to
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void editChair(User chair, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
@@ -60,6 +100,16 @@ public class CommitteeManager {
         }
     }
 
+    /**
+     * add a user to the budget access list, if the logged in user
+     * has sufficient privilege
+     *
+     * @param budgetAccess the user to add
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void addBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
@@ -71,6 +121,16 @@ public class CommitteeManager {
         }
     }
 
+    /**
+     * removes a user from the budget access list, if the user has
+     * sufficient privilege
+     *
+     * @param budgetAccess the user to remove
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void removeBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
@@ -82,6 +142,16 @@ public class CommitteeManager {
         }
     }
 
+    /**
+     * add a member to the selected committee, if the user has
+     * sufficient privilege
+     *
+     * @param member the member to add
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void addMember(User member, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
@@ -93,6 +163,16 @@ public class CommitteeManager {
         }
     }
 
+    /**
+     * remove a member from the selected committee, if the user has
+     * sufficient privilege
+     *
+     * @param member the member to remove
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void removeMember(User member, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
@@ -104,6 +184,18 @@ public class CommitteeManager {
         }
     }
 
+    /**
+     * create a task entry in the database, if the user has
+     * sufficient privilege
+     *
+     * @param task the task to create
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @return the task object created in the database
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     * @throws DuplicateInsertionException
+     */
     public Task createTask(Task task, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException, DuplicateInsertionException {
         
@@ -129,6 +221,16 @@ public class CommitteeManager {
         return newTask;
     }
     
+    /**
+     * delete the selected task from the database, if the user has
+     * sufficient privilege
+     *
+     * @param task the task to delete
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
     public void deleteTask(Task task, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         

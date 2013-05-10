@@ -4,12 +4,10 @@
  */
 package GUI;
 
-import BackEnd.ManagerSystem.MainManager;
-import BackEnd.UserSystem.Address;
-import BackEnd.UserSystem.PhoneNumber;
-import BackEnd.UserSystem.User;
 import EMS_Database.impl.Committees_Table;
 import EMS_Database.impl.Events_Table;
+import EMS_Database.impl.Expense_Table;
+import EMS_Database.impl.Income_Table;
 import EMS_Database.impl.SubEvent_Table;
 import EMS_Database.impl.Tasks_Table;
 import EMS_Database.impl.UserData_Table;
@@ -41,6 +39,14 @@ public class ClearData {
             System.out.println("DELETING TASKS");
             Tasks_Table tt = new Tasks_Table();
             tt.removeAll("TASKS");
+            
+            System.out.println("DELETE INCOMES");
+            Income_Table incomeTable = new Income_Table();
+            incomeTable.removeAll("INCOME");
+            
+            System.out.println("DELETE EXPENSES");
+            Expense_Table expenseTable = new Expense_Table();
+            expenseTable.removeAll("EXPENSE");
 //            MainManager manager = MainManager.getInstance();
 //            try
 //            {

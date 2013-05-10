@@ -1,10 +1,28 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.*;
-import BackEnd.UserSystem.*;
-import EMS_Database.*;
-import EMS_Database.impl.*;
-
+import BackEnd.EventSystem.Budget;
+import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Expense;
+import BackEnd.EventSystem.Income;
+import BackEnd.EventSystem.SubEvent;
+import BackEnd.EventSystem.Task;
+import BackEnd.UserSystem.Location;
+import BackEnd.UserSystem.Participant;
+import BackEnd.UserSystem.User;
+import EMS_Database.DoesNotExistException;
+import EMS_Database.DuplicateInsertionException;
+import EMS_Database.InputCommittee;
+import EMS_Database.InputEventData;
+import EMS_Database.InputSubEventData;
+import EMS_Database.InputUser;
+import EMS_Database.impl.Committees_Table;
+import EMS_Database.impl.Events_Table;
+import EMS_Database.impl.Expense_Table;
+import EMS_Database.impl.Income_Table;
+import EMS_Database.impl.SubEvent_Table;
+import EMS_Database.impl.Tasks_Table;
+import EMS_Database.impl.UserData_Table;
 import java.util.ArrayList;
 
 /**
@@ -27,12 +45,22 @@ public class EventManager {
     private ArrayList<Event> eventList;
     private Event selectedEvent;
 
+    /**
+     * initializes the event manager
+     *
+     * @param userList the list of users in the database
+     * @param usersTable the users table
+     * @param tasksTable the tasks table
+     * @param subEventsTable the sub events table
+     * @param committeesTable the committees table
+     * @param incomeTable the income table
+     * @param expenseTable the expense table
+     */
     public EventManager(
             ArrayList<Participant> userList, UserData_Table usersTable, Tasks_Table tasksTable,
             SubEvent_Table subEventsTable, Committees_Table committeesTable,
             Income_Table incomeTable, Expense_Table expenseTable)
             throws DoesNotExistException {
-
         this.eventList = new ArrayList<Event>();
         this.usersTable = usersTable;
         this.eventsTable = new Events_Table();
@@ -43,7 +71,434 @@ public class EventManager {
         this.expenseTable = expenseTable;
         rebuildEventList(userList);
     }
+    
+    /**
+     * returns the events table
+     *
+     * @return the events table
+     */
+    public Events_Table getEventsTable(){
+        return eventsTable;
+    }
 
+    /**
+     * returns the event list
+     *
+     * @return the event list
+     */
+    public ArrayList<Event> getEventList() {
+        return eventList;
+    }
+
+    /**
+     * stores the event selected by the user
+     *
+     * @param selectedEvent the selected event
+     */
+    public void setSelectedEvent(Event selectedEvent) {
+        this.selectedEvent = selectedEvent;
+    }
+
+    /**
+     * returns the selected event
+     *
+     * @return the selected event
+     */
+    public Event getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    /**
+     * create an event entry in the database, if the user has
+     * sufficient privilege
+     *
+     * @param event the event to create
+     * @param loggedInUser the currently logged in user
+     * @return the event object created in the database proper ID
+     * @throws PrivilegeInsufficientException
+     * @throws DuplicateInsertionException
+     */
+    public Event createEvent(Event event, User loggedInUser)
+            throws PrivilegeInsufficientException, DuplicateInsertionException {
+
+        Event newEvent = null;
+        if (PrivilegeManager.hasEventCreationPrivilege(loggedInUser)) {
+            ArrayList<Integer> organizerIDList, subEventIDList, participantIDList, committeeIDList;
+            organizerIDList = new ArrayList<Integer>();
+            organizerIDList.add(loggedInUser.getUserId());
+            subEventIDList = new ArrayList<Integer>();
+            participantIDList = new ArrayList<Integer>();
+            committeeIDList = new ArrayList<Integer>();
+
+            newEvent = new Event(eventsTable.createEvent(new InputEventData(
+                    event.getDescription(), event.getLocation().getDetails(), "IGNORE",
+                    event.getTimeSchedule().getStartDateTimeTimestamp(), event.getTimeSchedule().getEndDateTimeTimestamp(),
+                    0, committeeIDList, organizerIDList, subEventIDList, participantIDList,
+                    event.getLocation().getStreet(), event.getLocation().getCity(),
+                    event.getLocation().getState(), event.getLocation().getZipCode(),
+                    event.getLocation().getCountry())), event);
+
+            eventList.add(newEvent);
+            selectedEvent = newEvent;
+        }
+        return newEvent;
+    }
+
+    /**
+     * delete the selected event from the database, if the user has
+     * sufficient privilege
+     *
+     * @param loggedInUser the currently logged in user
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void deleteEvent(User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            for (int i = selectedEvent.getCommitteeList().size() - 1; i >= 0; i--) {
+                deleteCommittee(selectedEvent.getCommitteeList().get(i), loggedInUser);
+            }
+            for (int j = selectedEvent.getSubEventList().size() - 1; j >= 0; j--) {
+                deleteSubEvent(selectedEvent.getSubEventList().get(j), loggedInUser);
+            }
+            for (int k = selectedEvent.getParticipantList().size() - 1; k >= 0; k--) {
+                deleteParticipant(selectedEvent.getParticipantList().get(k), loggedInUser);
+            }
+            eventsTable.removeEvent(selectedEvent.getEVENT_ID());
+            eventList.remove(selectedEvent.getEVENT_ID());
+            selectedEvent = null;
+        }
+    }
+
+    /**
+     * add an organizer to the organizer list, if the user has
+     * sufficient privilege
+     *
+     * @param organizer the organizer to add
+     * @param loggedInUser the currently logged in user
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void addOrganizer(User organizer, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            Integer organizerUserID = new Integer(usersTable.getUIDByEmail(organizer.getEmailAddress()));
+            ArrayList<Integer> newOrganizerList = eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
+            newOrganizerList.add(organizerUserID);
+
+            eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(), newOrganizerList);
+            selectedEvent.getOrganizerList().add(organizer);
+        }
+    }
+
+    /**
+     * remove an organizer from the list, if the user has
+     * sufficient privilege
+     *
+     * @param organizer the organizer to remove
+     * @param loggedInUser the currently selected user
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void removeOrganizer(User organizer, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            Integer organizerUserID = new Integer(usersTable.getUIDByEmail(organizer.getEmailAddress()));
+            ArrayList<Integer> newOrganizerList = eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
+            newOrganizerList.remove(organizerUserID);
+
+            eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(), newOrganizerList);
+            selectedEvent.getOrganizerList().remove(organizer);
+        }
+    }
+
+    /**
+     * create a sub event entry in the database, if the user has
+     * sufficient privilege
+     *
+     * @param subEvent the sub event to create
+     * @param loggedInUser the currently logged in user
+     * @return the sub event object created in the database
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public SubEvent createSubEvent(SubEvent subEvent, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        SubEvent newSubEvent = null;
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+
+            newSubEvent = new SubEvent(subEventsTable.createSubEvent(
+                    new InputSubEventData(subEvent.getDescription(), subEvent.getLocation().getDetails(), subEvent.getTitle(),
+                    0, subEvent.getLocation().getStreet(), subEvent.getLocation().getCity(),
+                    subEvent.getLocation().getState(), subEvent.getLocation().getZipCode(),
+                    subEvent.getLocation().getCountry(), subEvent.getTimeSchedule().getStartDateTimeTimestamp(),
+                    subEvent.getTimeSchedule().getEndDateTimeTimestamp())), subEvent);
+
+            ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
+            newSubEventList.add(newSubEvent.getSUB_EVENT_ID());
+
+            eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
+            selectedEvent.getSubEventList().add(newSubEvent);
+        }
+        return newSubEvent;
+    }
+
+    /**
+     * 
+     *
+     * @param subEvent
+     * @param loggedInUser
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void deleteSubEvent(SubEvent subEvent, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+
+            Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
+            ArrayList<Integer> newSubEventIDList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
+            newSubEventIDList.remove(subEventID);
+
+            eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventIDList);
+            subEventsTable.removeSubEvent(subEventID);
+            selectedEvent.getSubEventList().remove(subEvent);
+        }
+    }
+
+    /**
+     *
+     * @param committee
+     * @param loggedInUser
+     * @return
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public Committee createCommittee(Committee committee, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+        
+        Committee newCommittee = null;
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            ArrayList<Integer> budgetAccessIDList = new ArrayList<Integer>();
+            for (int i = 0; i < committee.getBudgetAccessList().size(); i++) {
+                budgetAccessIDList.add(committee.getBudgetAccessList().get(i).getUserId());
+            }
+            ArrayList<Integer> memberIDList = new ArrayList<Integer>();
+            for (int i = 0; i < committee.getMemberList().size(); i++) {
+                memberIDList.add(committee.getMemberList().get(i).getUserId());
+            }
+            ArrayList<Integer> incomeIDList = new ArrayList<Integer>();
+            for (int i = 0; i < committee.getBudget().getIncomeList().size(); i++) {
+                incomeIDList.add(committee.getBudget().getIncomeList().get(i).getBUDGET_ITEM_ID());
+            }
+            ArrayList<Integer> expenseIDList = new ArrayList<Integer>();
+            for (int i = 0; i < committee.getBudget().getExpenseList().size(); i++) {
+                expenseIDList.add(committee.getBudget().getExpenseList().get(i).getBUDGET_ITEM_ID());
+            }
+            ArrayList<Integer> taskIDList = new ArrayList<Integer>();
+            for (int i = 0; i < committee.getTaskList().size(); i++) {
+                taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
+            }
+            
+            if (committee.getChair().getUserId() == 0) {
+                committee.setChair(loggedInUser);
+            }
+            newCommittee = new Committee(committeesTable.createCommittee(new InputCommittee(
+                    committee.getTitle(), committee.getChair().getUserId(), budgetAccessIDList,
+                    memberIDList, taskIDList, incomeIDList, expenseIDList, 0)), committee);
+
+            ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
+            newCommitteeIDList.add(newCommittee.getCOMMITTEE_ID());
+
+            eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeIDList);
+            selectedEvent.getCommitteeList().add(newCommittee);
+        }
+        return newCommittee;
+    }
+
+    /**
+     *
+     * @param committee
+     * @param loggedInUser
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void deleteCommittee(Committee committee, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            deleteTaskList(committee);
+            deleteIncomeList(committee);
+            deleteExpenseList(committee);
+            ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
+            newCommitteeIDList.remove(new Integer(committee.getCOMMITTEE_ID()));
+
+            eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeIDList);
+            committeesTable.removeCommittee(committee.getCOMMITTEE_ID());
+            selectedEvent.getCommitteeList().remove(committee);
+        }
+    }
+
+    private void deleteTaskList(Committee committee)
+            throws DoesNotExistException {
+
+        ArrayList<Integer> taskIDList = committeesTable.getTaskList(committee.getCOMMITTEE_ID());
+        for (Integer taskID : taskIDList) {
+            tasksTable.removeTask(taskID);
+        }
+        for (int i = committee.getTaskList().size() - 1; i >= 0; i--) {
+            committee.getTaskList().remove(i);
+        }
+    }
+
+    private void deleteIncomeList(Committee committee)
+            throws DoesNotExistException {
+
+        ArrayList<Integer> incomeIDList = committeesTable.getIncome(committee.getCOMMITTEE_ID());
+        for (Integer incomeID : incomeIDList) {
+            incomeTable.removeBudgetItem(incomeID);
+        }
+        for (int i = committee.getBudget().getIncomeList().size() - 1; i >= 0; i--) {
+            committee.getBudget().getIncomeList().remove(i);
+        }
+    }
+
+    private void deleteExpenseList(Committee committee)
+            throws DoesNotExistException {
+
+        ArrayList<Integer> expenseIDList = committeesTable.getExpense(committee.getCOMMITTEE_ID());
+        for (Integer expenseID : expenseIDList) {
+            expenseTable.removeBudgetItem(expenseID);
+        }
+        for (int i = committee.getBudget().getExpenseList().size() - 1; i >= 0; i--) {
+            committee.getBudget().getExpenseList().remove(i);
+        }
+    }
+
+    /**
+     *
+     * @param participant
+     * @param loggedInUser
+     * @return
+     * @throws DoesNotExistException
+     */
+    public Participant createParticipant(Participant participant, User loggedInUser)
+            throws DoesNotExistException {
+
+        Participant newParticipant = null;
+        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());;
+        if (loggedInUser == null) {
+            newParticipant = new Participant(usersTable.createUser(new InputUser(participant))
+                    , participant);
+            newParticipantList.add(newParticipant.getUserId());
+            selectedEvent.getParticipantList().add(newParticipant);
+        } else {
+            newParticipantList.add(loggedInUser.getUserId());
+            selectedEvent.getParticipantList().add(loggedInUser);
+        }
+        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
+        return newParticipant;
+    }
+
+    /**
+     *
+     * @param participant
+     * @param loggedInUser
+     * @throws DoesNotExistException
+     */
+    public void deleteParticipant(Participant participant, User loggedInUser)
+            throws DoesNotExistException {
+
+        if (!(participant instanceof User)) {
+            usersTable.removeUser(participant.getUserId());
+        }
+        ArrayList<Integer> newParticipantIDList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
+        newParticipantIDList.remove(new Integer(participant.getUserId()));
+
+        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantIDList);
+        selectedEvent.getParticipantList().remove(participant);
+    }
+    
+    /**
+     *
+     * @param description
+     * @param loggedInUser
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void editDescription(String description, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            eventsTable.setDescription(selectedEvent.getEVENT_ID(), description);
+            selectedEvent.setDescription(description);
+        }
+    }
+
+    /**
+     *
+     * @param location
+     * @param loggedInUser
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void editLocation(Location location, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            eventsTable.setDetails(selectedEvent.getEVENT_ID(), location.getDetails());
+            eventsTable.setStreet(selectedEvent.getEVENT_ID(), location.getStreet());
+            eventsTable.setCity(selectedEvent.getEVENT_ID(), location.getCity());
+            eventsTable.setState(selectedEvent.getEVENT_ID(), location.getState());
+            eventsTable.setZipcode(selectedEvent.getEVENT_ID(), location.getZipCode());
+            eventsTable.setCountry(selectedEvent.getEVENT_ID(), location.getCountry());
+            selectedEvent.setLocation(location);
+        }
+    }
+
+    /**
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param loggedInUser
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
+            selectedEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
+        }
+    }
+
+    /**
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param loggedInUser
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getEndDateTimeTimestamp());
+            selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
+        }
+    }
     
     private void rebuildEventList(ArrayList<Participant> userList)
             throws DoesNotExistException {
@@ -85,7 +540,8 @@ public class EventManager {
     private SubEvent rebuildSubEvent(int subEventID)
             throws DoesNotExistException {
 
-        SubEvent subEvent = new SubEvent(subEventID, subEventsTable.getDescription(subEventID));
+        SubEvent subEvent = new SubEvent(subEventID, subEventsTable.getTitle(subEventID));
+        subEvent.setDescription(subEventsTable.getDescription(subEventID));
         subEvent.setLocation(
                 new Location(subEventsTable.getStreet(subEventID), subEventsTable.getCity(subEventID),
                 subEventsTable.getState(subEventID), subEventsTable.getZipcode(subEventID),
@@ -247,296 +703,5 @@ public class EventManager {
             throws DoesNotExistException {
         Expense expense = new Expense(expenseID, expenseTable.getValue(expenseID), expenseTable.getDescription(expenseID));
         return expense;
-    }
-    
-    
-    public Events_Table getEventsTable(){
-        return eventsTable;
-    }
-
-    public ArrayList<Event> getEventList() {
-        return eventList;
-    }
-
-    public void setSelectedEvent(Event selectedEvent) {
-        this.selectedEvent = selectedEvent;
-    }
-
-    public Event getSelectedEvent() {
-        return selectedEvent;
-    }
-
-    public Event createEvent(Event event, User loggedInUser)
-            throws PrivilegeInsufficientException, DuplicateInsertionException {
-
-        Event newEvent = null;
-        if (PrivilegeManager.hasEventCreationPrivilege(loggedInUser)) {
-            ArrayList<Integer> organizerIDList, subEventIDList, participantIDList, committeeIDList;
-            organizerIDList = new ArrayList<Integer>();
-            organizerIDList.add(loggedInUser.getUserId());
-            subEventIDList = new ArrayList<Integer>();
-            participantIDList = new ArrayList<Integer>();
-            committeeIDList = new ArrayList<Integer>();
-
-            newEvent = new Event(eventsTable.createEvent(new InputEventData(
-                    event.getDescription(), event.getLocation().getDetails(), "IGNORE",
-                    event.getTimeSchedule().getStartDateTimeTimestamp(), event.getTimeSchedule().getEndDateTimeTimestamp(),
-                    0, committeeIDList, organizerIDList, subEventIDList, participantIDList,
-                    event.getLocation().getStreet(), event.getLocation().getCity(),
-                    event.getLocation().getState(), event.getLocation().getZipCode(),
-                    event.getLocation().getCountry())), event);
-
-            eventList.add(newEvent);
-            selectedEvent = newEvent;
-        }
-        return newEvent;
-    }
-
-    public void deleteEvent(User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            for (int i = selectedEvent.getCommitteeList().size() - 1; i >= 0; i--) {
-                deleteCommittee(selectedEvent.getCommitteeList().get(i), loggedInUser);
-            }
-            for (int j = selectedEvent.getSubEventList().size() - 1; j >= 0; j--) {
-                deleteSubEvent(selectedEvent.getSubEventList().get(j), loggedInUser);
-            }
-            for (int k = selectedEvent.getParticipantList().size() - 1; k >= 0; k--) {
-                deleteParticipant(selectedEvent.getParticipantList().get(k), loggedInUser);
-            }
-            eventsTable.removeEvent(selectedEvent.getEVENT_ID());
-            eventList.remove(selectedEvent.getEVENT_ID());
-            selectedEvent = null;
-        }
-    }
-
-    public void addOrganizer(User organizer, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            Integer organizerUserID = new Integer(usersTable.getUIDByEmail(organizer.getEmailAddress()));
-            ArrayList<Integer> newOrganizerList = eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
-            newOrganizerList.add(organizerUserID);
-
-            eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(), newOrganizerList);
-            selectedEvent.getOrganizerList().add(organizer);
-        }
-    }
-
-    public void removeOrganizer(User organizer, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            Integer organizerUserID = new Integer(usersTable.getUIDByEmail(organizer.getEmailAddress()));
-            ArrayList<Integer> newOrganizerList = eventsTable.getOrganizerList(selectedEvent.getEVENT_ID());
-            newOrganizerList.remove(organizerUserID);
-
-            eventsTable.setOrganizerList(selectedEvent.getEVENT_ID(), newOrganizerList);
-            selectedEvent.getOrganizerList().remove(organizer);
-        }
-    }
-
-    public SubEvent createSubEvent(SubEvent subEvent, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        SubEvent newSubEvent = null;
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-
-            newSubEvent = new SubEvent(subEventsTable.createSubEvent(
-                    new InputSubEventData(subEvent.getDescription(), subEvent.getTitle() , subEvent.getLocation().getDetails(), //FIX THIS LINE FOR ACTUAL TITLE!!!!
-                    0, subEvent.getLocation().getStreet(), subEvent.getLocation().getCity(),
-                    subEvent.getLocation().getState(), subEvent.getLocation().getZipCode(),
-                    subEvent.getLocation().getCountry(), subEvent.getTimeSchedule().getStartDateTimeTimestamp(),
-                    subEvent.getTimeSchedule().getEndDateTimeTimestamp())), subEvent);
-
-            ArrayList<Integer> newSubEventList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
-            newSubEventList.add(newSubEvent.getSUB_EVENT_ID());
-
-            eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventList);
-            selectedEvent.getSubEventList().add(newSubEvent);
-        }
-        return newSubEvent;
-    }
-
-    public void deleteSubEvent(SubEvent subEvent, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-
-            Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
-            ArrayList<Integer> newSubEventIDList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
-            newSubEventIDList.remove(subEventID);
-
-            eventsTable.setSubEventList(selectedEvent.getEVENT_ID(), newSubEventIDList);
-            subEventsTable.removeSubEvent(subEventID);
-            selectedEvent.getSubEventList().remove(subEvent);
-        }
-    }
-
-    public Committee createCommittee(Committee committee, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-        
-        Committee newCommittee = null;
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            ArrayList<Integer> budgetAccessIDList = new ArrayList<Integer>();
-            for (int i = 0; i < committee.getBudgetAccessList().size(); i++) {
-                budgetAccessIDList.add(committee.getBudgetAccessList().get(i).getUserId());
-            }
-            ArrayList<Integer> memberIDList = new ArrayList<Integer>();
-            for (int i = 0; i < committee.getMemberList().size(); i++) {
-                memberIDList.add(committee.getMemberList().get(i).getUserId());
-            }
-            ArrayList<Integer> incomeIDList = new ArrayList<Integer>();
-            for (int i = 0; i < committee.getBudget().getIncomeList().size(); i++) {
-                incomeIDList.add(committee.getBudget().getIncomeList().get(i).getBUDGET_ITEM_ID());
-            }
-            ArrayList<Integer> expenseIDList = new ArrayList<Integer>();
-            for (int i = 0; i < committee.getBudget().getExpenseList().size(); i++) {
-                expenseIDList.add(committee.getBudget().getExpenseList().get(i).getBUDGET_ITEM_ID());
-            }
-            ArrayList<Integer> taskIDList = new ArrayList<Integer>();
-            for (int i = 0; i < committee.getTaskList().size(); i++) {
-                taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
-            }
-            
-            if (committee.getChair().getUserId() == 0) {
-                committee.setChair(loggedInUser);
-            }
-            newCommittee = new Committee(committeesTable.createCommittee(new InputCommittee(
-                    committee.getTitle(), committee.getChair().getUserId(), budgetAccessIDList,
-                    memberIDList, taskIDList, incomeIDList, expenseIDList, 0)), committee);
-
-            ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
-            newCommitteeIDList.add(newCommittee.getCOMMITTEE_ID());
-
-            eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeIDList);
-            selectedEvent.getCommitteeList().add(newCommittee);
-        }
-        return newCommittee;
-    }
-
-    public void deleteCommittee(Committee committee, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            deleteTaskList(committee);
-            deleteIncomeList(committee);
-            deleteExpenseList(committee);
-            ArrayList<Integer> newCommitteeIDList = eventsTable.getCommittee(selectedEvent.getEVENT_ID());
-            newCommitteeIDList.remove(new Integer(committee.getCOMMITTEE_ID()));
-
-            eventsTable.setCommittee(selectedEvent.getEVENT_ID(), newCommitteeIDList);
-            committeesTable.removeCommittee(committee.getCOMMITTEE_ID());
-            selectedEvent.getCommitteeList().remove(committee);
-        }
-    }
-
-    private void deleteTaskList(Committee committee)
-            throws DoesNotExistException {
-
-        ArrayList<Integer> taskIDList = committeesTable.getTaskList(committee.getCOMMITTEE_ID());
-        for (Integer taskID : taskIDList) {
-            tasksTable.removeTask(taskID);
-        }
-        for (int i = committee.getTaskList().size() - 1; i >= 0; i--) {
-            committee.getTaskList().remove(i);
-        }
-    }
-
-    private void deleteIncomeList(Committee committee)
-            throws DoesNotExistException {
-
-        ArrayList<Integer> incomeIDList = committeesTable.getIncome(committee.getCOMMITTEE_ID());
-        for (Integer incomeID : incomeIDList) {
-            incomeTable.removeBudgetItem(incomeID);
-        }
-        for (int i = committee.getBudget().getIncomeList().size() - 1; i >= 0; i--) {
-            committee.getBudget().getIncomeList().remove(i);
-        }
-    }
-
-    private void deleteExpenseList(Committee committee)
-            throws DoesNotExistException {
-
-        ArrayList<Integer> expenseIDList = committeesTable.getExpense(committee.getCOMMITTEE_ID());
-        for (Integer expenseID : expenseIDList) {
-            expenseTable.removeBudgetItem(expenseID);
-        }
-        for (int i = committee.getBudget().getExpenseList().size() - 1; i >= 0; i--) {
-            committee.getBudget().getExpenseList().remove(i);
-        }
-    }
-
-    public Participant createParticipant(Participant participant, User loggedInUser)
-            throws DoesNotExistException {
-
-        Participant newParticipant = null;
-        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());;
-        if (loggedInUser == null) {
-            newParticipant = new Participant(usersTable.createUser(new InputUser(participant))
-                    , participant);
-            newParticipantList.add(newParticipant.getUserId());
-            selectedEvent.getParticipantList().add(newParticipant);
-        } else {
-            newParticipantList.add(loggedInUser.getUserId());
-            selectedEvent.getParticipantList().add(loggedInUser);
-        }
-        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
-        return newParticipant;
-    }
-
-    public void deleteParticipant(Participant participant, User loggedInUser)
-            throws DoesNotExistException {
-
-        if (!(participant instanceof User)) {
-            usersTable.removeUser(participant.getUserId());
-        }
-        ArrayList<Integer> newParticipantIDList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
-        newParticipantIDList.remove(new Integer(participant.getUserId()));
-
-        eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantIDList);
-        selectedEvent.getParticipantList().remove(participant);
-    }
-    
-    public void editDescription(String description, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            eventsTable.setDescription(selectedEvent.getEVENT_ID(), description);
-            selectedEvent.setDescription(description);
-        }
-    }
-
-    public void editLocation(Location location, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            eventsTable.setDetails(selectedEvent.getEVENT_ID(), location.getDetails());
-            eventsTable.setStreet(selectedEvent.getEVENT_ID(), location.getStreet());
-            eventsTable.setCity(selectedEvent.getEVENT_ID(), location.getCity());
-            eventsTable.setState(selectedEvent.getEVENT_ID(), location.getState());
-            eventsTable.setZipcode(selectedEvent.getEVENT_ID(), location.getZipCode());
-            eventsTable.setCountry(selectedEvent.getEVENT_ID(), location.getCountry());
-            selectedEvent.setLocation(location);
-        }
-    }
-
-    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
-            selectedEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
-        }
-    }
-
-    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser)
-            throws PrivilegeInsufficientException, DoesNotExistException {
-
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
-            eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getEndDateTimeTimestamp());
-            selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
-        }
     }
 }
