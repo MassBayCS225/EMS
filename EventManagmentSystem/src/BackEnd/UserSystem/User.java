@@ -77,7 +77,7 @@ public class User extends Participant {
             IllegalCharacterException, PasswordMismatchError{
         if (checkCharacters(pword)) {
             if (verifyPassword(pword, pwordMatch)) {
-                
+                password = pword;
             } else {
                 throw new PasswordMismatchError();
             }
