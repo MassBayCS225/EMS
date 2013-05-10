@@ -289,7 +289,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             
         DefaultListModel tModel = new DefaultListModel();
         DefaultListModel mModel = new DefaultListModel();
-        for(User m : c.getMemberList()){
+        for(User m : c.getMemberListWithChair()){
             mModel.addElement(m);
         }
         for(Task t : c.getTaskList()){
@@ -391,15 +391,23 @@ public class CommitteePanel extends javax.swing.JPanel {
         fmd.setVisible(true);
         if(fmd.getConfirm())
         {
-            try
+            User u = fmd.createUser();
+            if(manager.getCommitteeManager().getSelectedCommittee().getMemberListWithChair().contains(u))
             {
-                manager.getCommitteeManager().addMember(fmd.createUser(), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                JOptionPane.showMessageDialog(null, "User already exists in member list.");
             }
-            catch (Exception e)
+            else
             {
-                e.printStackTrace();
+                try
+                {
+                    manager.getCommitteeManager().addMember(u, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-        }
+       }
         updateInfo();
     }//GEN-LAST:event_addMemberButtonActionPerformed
 
@@ -531,28 +539,30 @@ public class CommitteePanel extends javax.swing.JPanel {
                                                    boolean isSelected,
                                                    boolean cellHasFocus) 
           {
-              User u = (User)value;
-              if(manager.getCommitteeManager().getSelectedCommittee().getChair().equals(u))
+              if(value instanceof User)
               {
-                  setText(u.toString()+"(C)");
-                  setBackground(Color.GREEN);
-              }
-              else if(manager.getCommitteeManager().getSelectedCommittee().getBudgetAccessList().contains(u))
-              {
-                  setText(u.toString()+"*");
-                  setBackground(Color.ORANGE);
-              }
+                User u = (User)value;
+                if(manager.getCommitteeManager().getSelectedCommittee().getChair().equals(u))
+                {
+                     setText(u.toString()+"(C)");
+                     setBackground(Color.GREEN);
+                }
+                else if(manager.getCommitteeManager().getSelectedCommittee().getBudgetAccessList().contains(u))
+                {
+                     setText(u.toString()+"*");
+                     setBackground(Color.ORANGE);
+                }
               
-              else
-              {
-                  setText(u.toString());
-                  setBackground(Color.WHITE);
+                else
+                {
+                     setText(u.toString());
+                    setBackground(Color.WHITE);
+                }
+                if(isSelected)
+                {
+                     setBackground(Color.LIGHT_GRAY);
+                }
               }
-              if(isSelected)
-              {
-                  setBackground(Color.LIGHT_GRAY);
-              }
-              
               return this;
           }
           
