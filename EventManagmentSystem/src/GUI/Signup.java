@@ -23,8 +23,17 @@ import javax.swing.JOptionPane;
  */
 public class Signup extends javax.swing.JPanel {
 
-    UserManager userManager;
-    JDialog parentDialog;
+    private UserManager userManager;
+    private JDialog parentDialog;
+    private final String FIRST_NAME_FIELD = "First";
+    private final String LAST_NAME_FIELD = "Last";
+    private final String PHONE_NUMBER_FIELD = "(XXX) XXX - XXXX";
+    private final String STREET_FIELD = "Street";
+    private final String CITY_FIELD = "City";
+    private final String STATE_FIELD = "State";
+    private final String ZIP_CODE_FIELD = "Zip Code";
+    private final String COUNTRY_FIELD = "Country";
+
     /**
      * Creates new form Signup
      */
@@ -61,13 +70,18 @@ public class Signup extends javax.swing.JPanel {
         cityField = new javax.swing.JTextField();
         stateField = new javax.swing.JTextField();
         countryField = new javax.swing.JTextField();
-        zipcodeField = new javax.swing.JTextField();
+        zipCodeField = new javax.swing.JTextField();
         signupLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         signupButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
         reenterPassWordField = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -82,7 +96,7 @@ public class Signup extends javax.swing.JPanel {
         phoneNumberLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         phoneNumberLabel.setText("Phone Number");
 
-        firstNameField.setText("First");
+        firstNameField.setText(FIRST_NAME_FIELD);
         firstNameField.setPreferredSize(new java.awt.Dimension(380, 28));
         firstNameField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -93,7 +107,7 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
-        lastNameField.setText("Last");
+        lastNameField.setText(LAST_NAME_FIELD);
         lastNameField.setPreferredSize(new java.awt.Dimension(360, 28));
         lastNameField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -114,9 +128,9 @@ public class Signup extends javax.swing.JPanel {
         passwordLabel.setText("Create a password");
 
         reenterPasswordLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        reenterPasswordLabel.setText("Reenter password");
+        reenterPasswordLabel.setText("Re-enter password");
 
-        phoneNumberField.setText("(XXX) XXX - XXXX");
+        phoneNumberField.setText(PHONE_NUMBER_FIELD);
         phoneNumberField.setPreferredSize(new java.awt.Dimension(380, 28));
         phoneNumberField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -130,7 +144,7 @@ public class Signup extends javax.swing.JPanel {
         addressLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         addressLabel.setText("Address");
 
-        streetField.setText("Street");
+        streetField.setText(STREET_FIELD);
         streetField.setPreferredSize(new java.awt.Dimension(380, 28));
         streetField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -141,7 +155,7 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
-        cityField.setText("City");
+        cityField.setText(CITY_FIELD);
         cityField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cityFieldFocusGained(evt);
@@ -151,7 +165,7 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
-        stateField.setText("State");
+        stateField.setText(STATE_FIELD);
         stateField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 stateFieldFocusGained(evt);
@@ -161,7 +175,7 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
-        countryField.setText("Country");
+        countryField.setText(COUNTRY_FIELD);
         countryField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 countryFieldFocusGained(evt);
@@ -171,18 +185,18 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
-        zipcodeField.setText("Zip Code");
-        zipcodeField.addFocusListener(new java.awt.event.FocusAdapter() {
+        zipCodeField.setText(ZIP_CODE_FIELD);
+        zipCodeField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                zipcodeFieldFocusGained(evt);
+                zipCodeFieldFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                zipcodeFieldFocusLost(evt);
+                zipCodeFieldFocusLost(evt);
             }
         });
 
         signupLabel.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
-        signupLabel.setText("Sign Up");
+        signupLabel.setText("Sign up");
         signupLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -202,6 +216,16 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("*");
+
+        jLabel2.setText("*");
+
+        jLabel3.setText("*");
+
+        jLabel4.setText("*");
+
+        jLabel5.setText("* Indicates required fields");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,7 +235,10 @@ public class Signup extends javax.swing.JPanel {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(signupLabel)
                     .add(informationLabel)
-                    .add(nameLabel)
+                    .add(layout.createSequentialGroup()
+                        .add(nameLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(phoneNumberLabel)
                     .add(addressLabel)
                     .add(layout.createSequentialGroup()
@@ -219,7 +246,7 @@ public class Signup extends javax.swing.JPanel {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(stateField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 77, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(zipcodeField))
+                        .add(zipCodeField))
                     .add(streetField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(phoneNumberField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(lastNameField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -227,20 +254,34 @@ public class Signup extends javax.swing.JPanel {
                     .add(countryField))
                 .add(18, 18, 18)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 24, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, signinLabel)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, emailLabel)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, passwordLabel)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, reenterPasswordLabel)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, emailField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, passwordField)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(layout.createSequentialGroup()
+                        .add(0, 2, Short.MAX_VALUE)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, signinLabel)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                                .add(emailLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                                .add(passwordLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                                .add(reenterPasswordLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, emailField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, passwordField)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, reenterPassWordField)))
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel5)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(cancelButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(signupButton))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, reenterPassWordField))
-                .addContainerGap(10, Short.MAX_VALUE))
+                        .add(signupButton)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -255,24 +296,37 @@ public class Signup extends javax.swing.JPanel {
                             .add(signinLabel))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, emailLabel)
-                            .add(nameLabel))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                .add(emailLabel)
+                                .add(jLabel2))
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                .add(nameLabel)
+                                .add(jLabel1)))
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
-                                .add(passwordLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 50, Short.MAX_VALUE)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                    .add(passwordLabel)
+                                    .add(jLabel3))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(passwordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(reenterPasswordLabel)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                    .add(reenterPasswordLabel)
+                                    .add(jLabel4))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(reenterPassWordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(12, 12, 12)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                                    .add(signupButton)
-                                    .add(cancelButton))
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(layout.createSequentialGroup()
+                                        .add(12, 12, 12)
+                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                            .add(signupButton)
+                                            .add(cancelButton)))
+                                    .add(layout.createSequentialGroup()
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                        .add(jLabel5)))
                                 .add(269, 269, 269))
                             .add(layout.createSequentialGroup()
                                 .add(firstNameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -290,7 +344,7 @@ public class Signup extends javax.swing.JPanel {
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(cityField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                     .add(stateField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(zipcodeField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(zipCodeField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(countryField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -302,54 +356,84 @@ public class Signup extends javax.swing.JPanel {
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
 
-        if(firstNameField.getText().equals("") || firstNameField.getText().equals("First") 
-                || lastNameField.getText().equals("") || lastNameField.getText().equals("Last") 
-                || phoneNumberField.getText().equals("") || phoneNumberField.getText().equals("(XXX) XXX - XXXX") 
-                || streetField.getText().equals("") || streetField.getText().equals("Street") 
-                || cityField.getText().equals("") || cityField.getText().equals("City") 
-                || stateField.getText().equals("") || stateField.getText().equals("State") 
-                || zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code") 
-                || countryField.getText().equals("") || countryField.getText().equals("Country")   
-                || emailField.getText().equals("") 
-                || new String(passwordField.getPassword()).equals("") 
-                || new String(reenterPassWordField.getPassword()).equals("")){
-            String message = "Please fill out all fields.";
+        if (firstNameField.getText().equals("") || firstNameField.getText().equals(FIRST_NAME_FIELD)
+                || lastNameField.getText().equals("") || lastNameField.getText().equals(LAST_NAME_FIELD)
+                || emailField.getText().equals("")
+                || new String(passwordField.getPassword()).equals("")
+                || new String(reenterPassWordField.getPassword()).equals("")) {
+            String message = "Please fill out all the required fields.";
             JOptionPane.showMessageDialog(this, message);
-        }
-        else{
-        try {
-            User newUser = new User(firstNameField.getText(),
-                    lastNameField.getText(),
-                    emailField.getText(),
-                    new String(passwordField.getPassword()),
-                    new String(reenterPassWordField.getPassword()));
-            newUser.getAddress().setStreet(streetField.getText());
-            newUser.getAddress().setCity(cityField.getText());
-            newUser.getAddress().setState(stateField.getText());
-            newUser.getAddress().setZipCode(zipcodeField.getText());
-            newUser.getAddress().setCountry(countryField.getText());
-            newUser.setPhoneNumber(new PhoneNumber(phoneNumberField.getText()));  
-            
-            if(userManager.getUserList().isEmpty())
-            {
-                newUser.setAdminPrivilege(true);
+        } else {
+
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            String street, city, state, zipCode, country, phoneNumber;
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+            String reenterPassword = new String(reenterPassWordField.getPassword());
+
+
+            if (streetField.getText().equals(STREET_FIELD)) {
+                street = "";
+            } else {
+                street = streetField.getText();
             }
-            userManager.getUserList().add(userManager.createUser(newUser));
-            parentDialog.dispose();
-            
-        } catch (PasswordMismatchError error) {
-            JOptionPane.showMessageDialog(this, "Passwords do not match.");
-        } catch (IllegalCharacterException error) {
-            JOptionPane.showMessageDialog(this, "Illegal characters found.");
-        } catch (PhoneNumberInvalidLengthException error){
-            JOptionPane.showMessageDialog(this, "Please enter a valid phone number.");    
-        } catch (PhoneNumberNonNumericException error){
-            JOptionPane.showMessageDialog(this, "Please enter a valid phone number.");    
-        } catch (ZipCodeInvalidFormatException error){
-            JOptionPane.showMessageDialog(this, "Please enter a valid zip code."); 
-        } catch (ZipCodeInvalidLengthException error){
-            JOptionPane.showMessageDialog(this, "Please enter a valid zip code."); 
-        }
+            if (cityField.getText().equals(CITY_FIELD)) {
+                city = "";
+            } else {
+                city = cityField.getText();
+            }
+            if (stateField.getText().equals(STATE_FIELD)) {
+                state = "";
+            } else {
+                state = stateField.getText();
+            }
+            if (zipCodeField.getText().equals(ZIP_CODE_FIELD)) {
+                zipCode = "";
+            } else {
+                zipCode = zipCodeField.getText();
+            }
+            if (countryField.getText().equals(COUNTRY_FIELD)) {
+                country = "";
+            } else {
+                country = countryField.getText();
+            }
+            if (phoneNumberField.getText().equals(PHONE_NUMBER_FIELD)) {
+                phoneNumber = "";
+            } else {
+                phoneNumber = phoneNumberField.getText();
+            }
+
+            try {
+                User newUser = new User(firstName, lastName,
+                        email, password, reenterPassword);
+                newUser.getAddress().setStreet(street);
+                newUser.getAddress().setCity(city);
+                newUser.getAddress().setState(state);
+                newUser.getAddress().setZipCode(zipCode);
+                newUser.getAddress().setCountry(country);
+                newUser.setPhoneNumber(new PhoneNumber(phoneNumber));
+
+                if (userManager.getUserList().isEmpty()) {
+                    newUser.setAdminPrivilege(true);
+                }
+                newUser = userManager.createUser(newUser);
+                userManager.getUserList().add(newUser);
+                parentDialog.dispose();
+
+            } catch (PasswordMismatchError error) {
+                JOptionPane.showMessageDialog(this, "Passwords do not match.");
+            } catch (IllegalCharacterException error) {
+                JOptionPane.showMessageDialog(this, "Illegal characters found.");
+            } catch (PhoneNumberInvalidLengthException error) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid phone number.");
+            } catch (PhoneNumberNonNumericException error) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid phone number.");
+            } catch (ZipCodeInvalidFormatException error) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid zip code.");
+            } catch (ZipCodeInvalidLengthException error) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid zip code.");
+            }
         }
     }//GEN-LAST:event_signupButtonActionPerformed
 
@@ -358,85 +442,100 @@ public class Signup extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void firstNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusGained
-        firstNameField.setText("");
+        if (firstNameField.getText().equals(FIRST_NAME_FIELD)) {
+            firstNameField.setText("");
+        }
     }//GEN-LAST:event_firstNameFieldFocusGained
 
     private void firstNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusLost
-        if(firstNameField.getText().equals("") || firstNameField.getText().equals("First")){
-	    firstNameField.setText("First");	    
-	}
+        if (firstNameField.getText().equals("") || firstNameField.getText().equals(FIRST_NAME_FIELD)) {
+            firstNameField.setText(FIRST_NAME_FIELD);
+        }
     }//GEN-LAST:event_firstNameFieldFocusLost
 
     private void lastNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lastNameFieldFocusGained
-        lastNameField.setText("");
+        if (lastNameField.getText().equals(LAST_NAME_FIELD)) {
+            lastNameField.setText("");
+        }
     }//GEN-LAST:event_lastNameFieldFocusGained
 
     private void lastNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lastNameFieldFocusLost
-        if(lastNameField.getText().equals("") || lastNameField.getText().equals("Last")){
-            lastNameField.setText("Last");
+        if (lastNameField.getText().equals("") || lastNameField.getText().equals(LAST_NAME_FIELD)) {
+            lastNameField.setText(LAST_NAME_FIELD);
         }
     }//GEN-LAST:event_lastNameFieldFocusLost
 
     private void phoneNumberFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFieldFocusGained
-        phoneNumberField.setText("");
+        if (phoneNumberField.getText().equals(PHONE_NUMBER_FIELD)) {
+            phoneNumberField.setText("");
+        }
     }//GEN-LAST:event_phoneNumberFieldFocusGained
 
     private void phoneNumberFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFieldFocusLost
-        if(phoneNumberField.getText().equals("") || phoneNumberField.getText().equals("(XXX) XXX - XXXX")){
-            phoneNumberField.setText("(XXX) XXX - XXXX");
+        if (phoneNumberField.getText().equals("") || phoneNumberField.getText().equals(PHONE_NUMBER_FIELD)) {
+            phoneNumberField.setText(PHONE_NUMBER_FIELD);
         }
     }//GEN-LAST:event_phoneNumberFieldFocusLost
 
     private void streetFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_streetFieldFocusGained
-        streetField.setText("");
+        if (streetField.getText().equals(STREET_FIELD)) {
+            streetField.setText("");
+        }
     }//GEN-LAST:event_streetFieldFocusGained
 
     private void streetFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_streetFieldFocusLost
-        if(streetField.getText().equals("") || streetField.getText().equals("Street")){
-            streetField.setText("Street");
+        if (streetField.getText().equals("") || streetField.getText().equals(STREET_FIELD)) {
+            streetField.setText(STREET_FIELD);
         }
     }//GEN-LAST:event_streetFieldFocusLost
 
     private void cityFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cityFieldFocusGained
-        cityField.setText("");
+        if (cityField.getText().equals(CITY_FIELD)) {
+            cityField.setText("");
+        }
     }//GEN-LAST:event_cityFieldFocusGained
 
     private void cityFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cityFieldFocusLost
-        if(cityField.getText().equals("") || cityField.getText().equals("City")){
-            cityField.setText("City");
+        if (cityField.getText().equals("") || cityField.getText().equals(CITY_FIELD)) {
+            cityField.setText(CITY_FIELD);
         }
     }//GEN-LAST:event_cityFieldFocusLost
 
     private void stateFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stateFieldFocusGained
-        stateField.setText("");
+        if (stateField.getText().equals(STATE_FIELD)) {
+            stateField.setText("");
+        }
     }//GEN-LAST:event_stateFieldFocusGained
 
     private void stateFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stateFieldFocusLost
-        if(stateField.getText().equals("") || stateField.getText().equals("State")){
-            stateField.setText("State");
+        if (stateField.getText().equals("") || stateField.getText().equals(STATE_FIELD)) {
+            stateField.setText(STATE_FIELD);
         }
     }//GEN-LAST:event_stateFieldFocusLost
 
-    private void zipcodeFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipcodeFieldFocusGained
-        zipcodeField.setText("");
-    }//GEN-LAST:event_zipcodeFieldFocusGained
-
-    private void zipcodeFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipcodeFieldFocusLost
-        if(zipcodeField.getText().equals("") || zipcodeField.getText().equals("Zip Code")){
-            zipcodeField.setText("Zip Code");
+    private void zipCodeFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipCodeFieldFocusGained
+        if (zipCodeField.equals(ZIP_CODE_FIELD)) {
+            zipCodeField.setText("");
         }
-    }//GEN-LAST:event_zipcodeFieldFocusLost
+    }//GEN-LAST:event_zipCodeFieldFocusGained
+
+    private void zipCodeFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipCodeFieldFocusLost
+        if (zipCodeField.getText().equals("") || zipCodeField.getText().equals(ZIP_CODE_FIELD)) {
+            zipCodeField.setText(ZIP_CODE_FIELD);
+        }
+    }//GEN-LAST:event_zipCodeFieldFocusLost
 
     private void countryFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFieldFocusGained
-        countryField.setText("");
+        if (countryField.getText().equals(COUNTRY_FIELD)) {
+            countryField.setText("");
+        }
     }//GEN-LAST:event_countryFieldFocusGained
 
     private void countryFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFieldFocusLost
-        if(countryField.getText().equals("") || countryField.getText().equals("Country")){
-            countryField.setText("Country");
+        if (countryField.getText().equals("") || countryField.getText().equals(COUNTRY_FIELD)) {
+            countryField.setText(COUNTRY_FIELD);
         }
     }//GEN-LAST:event_countryFieldFocusLost
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
     private javax.swing.JButton cancelButton;
@@ -446,6 +545,11 @@ public class Signup extends javax.swing.JPanel {
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel informationLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JLabel nameLabel;
@@ -460,6 +564,6 @@ public class Signup extends javax.swing.JPanel {
     private javax.swing.JLabel signupLabel;
     private javax.swing.JTextField stateField;
     private javax.swing.JTextField streetField;
-    private javax.swing.JTextField zipcodeField;
+    private javax.swing.JTextField zipCodeField;
     // End of variables declaration//GEN-END:variables
 }

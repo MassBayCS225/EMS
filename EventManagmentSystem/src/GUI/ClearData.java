@@ -40,11 +40,11 @@ public class ClearData {
             Tasks_Table tt = new Tasks_Table();
             tt.removeAll("TASKS");
             
-            System.out.println("DELETE INCOMES");
+            System.out.println("DELETING INCOMES");
             Income_Table incomeTable = new Income_Table();
             incomeTable.removeAll("INCOME");
             
-            System.out.println("DELETE EXPENSES");
+            System.out.println("DELETING EXPENSES");
             Expense_Table expenseTable = new Expense_Table();
             expenseTable.removeAll("EXPENSE");
 //            MainManager manager = MainManager.getInstance();

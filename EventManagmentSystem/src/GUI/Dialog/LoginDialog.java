@@ -72,7 +72,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
         jLabel2.setText("Password");
 
-        emailField.setText("you@domain.com");
+        emailField.setText("email@domain.com");
         emailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailFieldActionPerformed(evt);
@@ -185,12 +185,14 @@ public class LoginDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_passwordFieldFocusGained
     
     private void emailFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusGained
-	emailField.setText("");	
+        if (emailField.getText().equals("email@domain.com")) {
+            emailField.setText("");
+        }
     }//GEN-LAST:event_emailFieldFocusGained
-    
+
     private void emailFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusLost
-	if (emailField.getText().equals("email@yahoo.com") || emailField.getText().equals("")) {
-	    emailField.setText("email@yahoo.com");	    
+	if (emailField.getText().equals("")) {
+	    emailField.setText("email@domain.com");	    
 	}
     }//GEN-LAST:event_emailFieldFocusLost
 
