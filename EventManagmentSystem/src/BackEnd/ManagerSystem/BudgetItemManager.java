@@ -24,7 +24,8 @@ public class BudgetItemManager {
     private BudgetItem selectedBudgetItem;
 
     /**
-     * No arg constructor
+     * initializes the budget item manager, and connects to the budget item
+     * database
      */
     public BudgetItemManager() {
         incomeTable = new Income_Table();

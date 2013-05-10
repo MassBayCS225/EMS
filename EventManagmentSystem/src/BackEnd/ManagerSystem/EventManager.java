@@ -7,6 +7,7 @@ import BackEnd.EventSystem.Expense;
 import BackEnd.EventSystem.Income;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.EventSystem.Task;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.UserSystem.Location;
 import BackEnd.UserSystem.Participant;
 import BackEnd.UserSystem.User;
@@ -46,7 +47,7 @@ public class EventManager {
     private Event selectedEvent;
 
     /**
-     * initializes the event manager
+     * initializes the event manager, and connects to the event database
      *
      * @param userList the list of users in the database
      * @param usersTable the users table
@@ -55,6 +56,7 @@ public class EventManager {
      * @param committeesTable the committees table
      * @param incomeTable the income table
      * @param expenseTable the expense table
+     * @throws DoesNotExistException
      */
     public EventManager(
             ArrayList<Participant> userList, UserData_Table usersTable, Tasks_Table tasksTable,
@@ -71,13 +73,13 @@ public class EventManager {
         this.expenseTable = expenseTable;
         rebuildEventList(userList);
     }
-    
+
     /**
      * returns the events table
      *
      * @return the events table
      */
-    public Events_Table getEventsTable(){
+    public Events_Table getEventsTable() {
         return eventsTable;
     }
 
@@ -109,8 +111,8 @@ public class EventManager {
     }
 
     /**
-     * create an event entry in the database, if the user has
-     * sufficient privilege
+     * create an event entry in the database, if the user has sufficient
+     * privilege
      *
      * @param event the event to create
      * @param loggedInUser the currently logged in user
@@ -145,8 +147,8 @@ public class EventManager {
     }
 
     /**
-     * delete the selected event from the database, if the user has
-     * sufficient privilege
+     * delete the selected event from the database, if the user has sufficient
+     * privilege
      *
      * @param loggedInUser the currently logged in user
      * @throws PrivilegeInsufficientException
@@ -172,8 +174,8 @@ public class EventManager {
     }
 
     /**
-     * add an organizer to the organizer list, if the user has
-     * sufficient privilege
+     * add an organizer to the organizer list, if the user has sufficient
+     * privilege
      *
      * @param organizer the organizer to add
      * @param loggedInUser the currently logged in user
@@ -194,8 +196,7 @@ public class EventManager {
     }
 
     /**
-     * remove an organizer from the list, if the user has
-     * sufficient privilege
+     * remove an organizer from the list, if the user has sufficient privilege
      *
      * @param organizer the organizer to remove
      * @param loggedInUser the currently selected user
@@ -216,8 +217,8 @@ public class EventManager {
     }
 
     /**
-     * create a sub event entry in the database, if the user has
-     * sufficient privilege
+     * create a sub event entry in the database, if the user has sufficient
+     * privilege
      *
      * @param subEvent the sub event to create
      * @param loggedInUser the currently logged in user
@@ -248,10 +249,11 @@ public class EventManager {
     }
 
     /**
-     * 
+     * delete a sub event entry from the database, if the user has sufficient
+     * privilege
      *
-     * @param subEvent
-     * @param loggedInUser
+     * @param subEvent the sub event to delete
+     * @param loggedInUser the currently logged in user
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
@@ -271,16 +273,18 @@ public class EventManager {
     }
 
     /**
+     * create a committee entry in the database, if the user has sufficient
+     * privilege
      *
-     * @param committee
-     * @param loggedInUser
-     * @return
+     * @param committee the committee to create
+     * @param loggedInUser the currently logged in user
+     * @return the committee object created in the database
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
     public Committee createCommittee(Committee committee, User loggedInUser)
             throws PrivilegeInsufficientException, DoesNotExistException {
-        
+
         Committee newCommittee = null;
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             ArrayList<Integer> budgetAccessIDList = new ArrayList<Integer>();
@@ -303,7 +307,7 @@ public class EventManager {
             for (int i = 0; i < committee.getTaskList().size(); i++) {
                 taskIDList.add(committee.getTaskList().get(i).getTASK_ID());
             }
-            
+
             if (committee.getChair().getUserId() == 0) {
                 committee.setChair(loggedInUser);
             }
@@ -321,9 +325,11 @@ public class EventManager {
     }
 
     /**
+     * deletes a committee object from the database, if the user has sufficient
+     * privilege
      *
-     * @param committee
-     * @param loggedInUser
+     * @param committee the committee to delete
+     * @param loggedInUser the currently logged in user
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
@@ -380,6 +386,8 @@ public class EventManager {
     }
 
     /**
+     * create a participant in the database, if the user has sufficient
+     * privilege
      *
      * @param participant
      * @param loggedInUser
@@ -392,8 +400,7 @@ public class EventManager {
         Participant newParticipant = null;
         ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());;
         if (loggedInUser == null) {
-            newParticipant = new Participant(usersTable.createUser(new InputUser(participant))
-                    , participant);
+            newParticipant = new Participant(usersTable.createUser(new InputUser(participant)), participant);
             newParticipantList.add(newParticipant.getUserId());
             selectedEvent.getParticipantList().add(newParticipant);
         } else {
@@ -422,7 +429,7 @@ public class EventManager {
         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantIDList);
         selectedEvent.getParticipantList().remove(participant);
     }
-    
+
     /**
      *
      * @param description
@@ -440,6 +447,8 @@ public class EventManager {
     }
 
     /**
+     * edit the location of the selected event, if the user has sufficient
+     * privilege
      *
      * @param location
      * @param loggedInUser
@@ -461,13 +470,15 @@ public class EventManager {
     }
 
     /**
+     * edit the start date / time of the selected event, if the user has
+     * sufficient privilege
      *
-     * @param year
-     * @param month
-     * @param day
-     * @param hour
-     * @param minute
-     * @param loggedInUser
+     * @param year the year
+     * @param month the month
+     * @param day the day
+     * @param hour the hour
+     * @param minute the minute
+     * @param loggedInUser the currently logged in user
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
@@ -481,13 +492,35 @@ public class EventManager {
     }
 
     /**
+     * edits the time schedule for the selected event, if the user has
+     * sufficient privilege
      *
-     * @param year
-     * @param month
-     * @param day
-     * @param hour
-     * @param minute
-     * @param loggedInUser
+     * @param timeSchedule the new time schedule
+     * @param loggedInUser the currently logged in user
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */
+    public void editTimeSchedule(TimeSchedule timeSchedule, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            selectedEvent.getTimeSchedule().setStartDateTime(timeSchedule.getStartDateTimeTimestamp());
+            eventsTable.setStartDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
+            selectedEvent.getTimeSchedule().setEndDateTime(timeSchedule.getStartDateTimeTimestamp());
+            eventsTable.setEndDate(selectedEvent.getEVENT_ID(), selectedEvent.getTimeSchedule().getStartDateTimeTimestamp());
+        }
+    }
+
+    /**
+     * edit the end date / time of the selected event, if the user has
+     * sufficient privilege
+     *
+     * @param year the year
+     * @param month the month
+     * @param day the day
+     * @param hour the hour
+     * @param minute the minute
+     * @param loggedInUser the currently logged in user
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
@@ -499,10 +532,16 @@ public class EventManager {
             selectedEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
         }
     }
-    
+
+    /**
+     * private method for rebuilding the event list
+     *
+     * @param userList the list of users in the database
+     * @throws DoesNotExistException
+     */
     private void rebuildEventList(ArrayList<Participant> userList)
             throws DoesNotExistException {
-        
+
         ArrayList<Integer> eventIDList = eventsTable.currentUIDList("EVENTS");
         for (Integer eventID : eventIDList) {
             eventList.add(rebuildEvent(eventID, userList));
@@ -594,7 +633,7 @@ public class EventManager {
         Committee committee = new Committee(committeeID, committeesTable.getTitle(committeeID));
         for (Participant user : userList) {
             if (user.getUserId() == committeesTable.getChairman(committeeID)) {
-                committee.setChair((User)user);
+                committee.setChair((User) user);
                 break;
             }
         }

@@ -19,6 +19,13 @@ public class PrivilegeManager {
     private PrivilegeManager() {
     }
 
+    /**
+     * checks to see if a user is an administrator
+     *
+     * @param loggedInUser the currently logged in user
+     * @return whether the user has sufficient privilege
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasAdminPrivilege(User loggedInUser)
             throws PrivilegeInsufficientException {
 
@@ -29,6 +36,14 @@ public class PrivilegeManager {
         }
     }
 
+    /**
+     * checks to see if the user has the privilege to edit an account
+     *
+     * @param loggedInUser the currently logged in user
+     * @param selectedUser the currently selected user
+     * @return whether the user has sufficient privilege
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasUserPrivilege(User loggedInUser, User selectedUser)
             throws PrivilegeInsufficientException {
 
@@ -39,6 +54,13 @@ public class PrivilegeManager {
         }
     }
 
+    /**
+     * checks to see if a user has event creation privileges
+     *
+     * @param loggedInUser the currently logged in user
+     * @return whether the user has event creation privileges
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasEventCreationPrivilege(User loggedInUser)
             throws PrivilegeInsufficientException {
 
@@ -49,6 +71,14 @@ public class PrivilegeManager {
         }
     }
 
+    /**
+     * checks to see if a user has event privileges
+     *
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @return whether the user has event privileges
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasEventPrivilege(User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException {
 
@@ -59,16 +89,40 @@ public class PrivilegeManager {
         }
     }
 
-    public static boolean hasSubEventPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    /**
+     * checks to see if a user has sub event privileges
+     *
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @return whether the user has sub event privileges
+     * @throws PrivilegeInsufficientException
+     */
+    public static boolean hasSubEventPrivilege(User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException {
 
-        if (selectedCommittee.getChair().equals(loggedInUser)) {
+        boolean hasPrivilege = true;
+        for (Committee committee : selectedEvent.getCommitteeList()) {
+            if (!(committee.getChair().equals(loggedInUser))) {
+                hasPrivilege = false;
+            }
+        }
+
+        if (hasPrivilege) {
             return true;
         } else {
             return hasEventPrivilege(loggedInUser, selectedEvent);
         }
     }
 
+    /**
+     * checks to see if a user has committee privileges
+     *
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @param selectedCommittee the currently selected committee
+     * @return whether the user has committee privileges
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasCommitteePrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException {
 
@@ -79,6 +133,16 @@ public class PrivilegeManager {
         }
     }
 
+    /**
+     * checks to see whether a user has task privileges
+     *
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @param selectedCommittee the currently selected committee
+     * @param selectedTask the currently selected task
+     * @return whether the user has task privileges
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasTaskPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee, Task selectedTask)
             throws PrivilegeInsufficientException {
 
@@ -89,6 +153,15 @@ public class PrivilegeManager {
         }
     }
 
+    /**
+     * checks to see whether a user has budget privileges
+     *
+     * @param loggedInUser the currently logged in user
+     * @param selectedEvent the currently selected event
+     * @param selectedCommittee the currently selected committee
+     * @return whether the user has budget privileges
+     * @throws PrivilegeInsufficientException
+     */
     public static boolean hasBudgetPrivilege(User loggedInUser, Event selectedEvent, Committee selectedCommittee)
             throws PrivilegeInsufficientException {
 
