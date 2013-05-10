@@ -35,7 +35,6 @@ public class CommitteeMain extends javax.swing.JPanel {
         MainPanel.setLayout(new BorderLayout());
         MainPanel.add(cp, BorderLayout.NORTH);
         
-        TaskPanel tp = new TaskPanel();
         c = new CommitteePanel();
         UserManagementPanel ump = new UserManagementPanel();
         ump.setNonAdminView();
