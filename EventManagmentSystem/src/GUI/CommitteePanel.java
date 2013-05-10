@@ -37,6 +37,25 @@ public class CommitteePanel extends javax.swing.JPanel {
         
     }
 
+    public void setChairView() {
+        committeeChangeButton.setVisible(false);
+    }
+    
+    public void setCommitteeMemberView() {
+        setChairView();
+        budgetButton.setVisible(false);
+        addToBudgetButton.setVisible(false);
+        removeMemberFromBudgetButton.setVisible(false);
+        addMemberButton.setVisible(false);
+        removeMemberButton.setVisible(false);
+        addTaskButton.setVisible(false);
+        removeTaskButton.setVisible(false);
+    }
+    
+    public void setBudgetAccessMemberView() {
+        setCommitteeMemberView();
+        budgetButton.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

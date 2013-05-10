@@ -71,6 +71,11 @@ public class UserManagementPanel extends javax.swing.JPanel {
         countryField.setText(manager.getUserManager().getSelectedUser().getAddress().getCountry());
     }
 
+    public void setNonAdminView() {
+        changeInfoButton.setVisible(false);
+        changeUserButton.setVisible(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -464,14 +469,6 @@ public class UserManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addressButtonActionPerformed
 
-    /* Added following two methods. -Ketty */
-    public javax.swing.JButton getChangeInfoButton() {
-        return changeInfoButton;
-    }
-    
-    public javax.swing.JButton getChangeUserButton() {
-        return changeUserButton;
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChangeInfoPanel;
     private javax.swing.JPanel ChangeUserPanel;
