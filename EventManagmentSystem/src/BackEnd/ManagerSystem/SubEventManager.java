@@ -1,8 +1,8 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.SubEvent;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.UserSystem.Location;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
@@ -37,7 +37,7 @@ public class SubEventManager {
         return selectedSubEvent;
     }
     
-      public void editTitle(String title, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+      public void editTitle(String title, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
         if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
@@ -46,19 +46,19 @@ public class SubEventManager {
         }
     }
 
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editDescription(String description, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedSubEvent.setDescription(description);  
             subEventsTable.setDescription(selectedSubEvent.getSUB_EVENT_ID(), description);    
         }
     }
 
-    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editLocation(Location location, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedSubEvent.setLocation(location);
             subEventsTable.setDetails(selectedSubEvent.getSUB_EVENT_ID(), location.getDetails());
             subEventsTable.setStreet(selectedSubEvent.getSUB_EVENT_ID(), location.getStreet());
@@ -68,20 +68,31 @@ public class SubEventManager {
             subEventsTable.setCountry(selectedSubEvent.getSUB_EVENT_ID(), location.getCountry());
         }
     }
+    
+    public void editTimeSchedule(TimeSchedule timeSchedule, User loggedInUser, Event selectedEvent)
+            throws PrivilegeInsufficientException, DoesNotExistException {
 
-    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            selectedSubEvent.getTimeSchedule().setStartDateTime(timeSchedule.getStartDateTimeTimestamp());
+            subEventsTable.setStartDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getStartDateTimeTimestamp());
+            selectedSubEvent.getTimeSchedule().setEndDateTime(timeSchedule.getStartDateTimeTimestamp());
+            subEventsTable.setEndDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getStartDateTimeTimestamp());
+        }
+    }
+
+    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedSubEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
             subEventsTable.setStartDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getStartDateTimeTimestamp()); 
         }
     }
 
-    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent)
             throws PrivilegeInsufficientException, DoesNotExistException {
         
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
             selectedSubEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
             subEventsTable.setEndDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getEndDateTimeTimestamp()); 
         }

@@ -12,9 +12,10 @@ import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
 import GUI.Dialog.BudgetDialog;
-import GUI.Dialog.EmailExceptionDialog;
 import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTaskDialog;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.Calendar;
 /**
  *
@@ -26,10 +27,13 @@ public class CommitteePanel extends javax.swing.JPanel {
      * Creates new form CommitteePanel
      */
     private MainManager manager;
+    private MembersCellRenderer memberRenderer;
     
     public CommitteePanel() {
         initComponents();
         manager = MainManager.getInstance();
+        memberRenderer = new MembersCellRenderer();
+        memberList.setCellRenderer(memberRenderer);
         
     }
 
@@ -59,6 +63,8 @@ public class CommitteePanel extends javax.swing.JPanel {
         addTaskButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         committeeChangeButton = new javax.swing.JButton();
+        addToBudgetButton = new javax.swing.JButton();
+        removeMemberFromBudgetButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 204, 255));
         setMinimumSize(new java.awt.Dimension(387, 327));
@@ -73,6 +79,11 @@ public class CommitteePanel extends javax.swing.JPanel {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        memberList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                memberListValueChanged(evt);
+            }
         });
         memberScrollPane.setViewportView(memberList);
 
@@ -153,6 +164,21 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
+        addToBudgetButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addToBudgetButton.setText("+");
+        addToBudgetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addToBudgetButtonActionPerformed(evt);
+            }
+        });
+
+        removeMemberFromBudgetButton.setText("-");
+        removeMemberFromBudgetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeMemberFromBudgetButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,12 +188,13 @@ public class CommitteePanel extends javax.swing.JPanel {
                     .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
+                        .addComponent(membersLabel)
+                        .addGap(227, 227, 227)
+                        .addComponent(tasksLabel))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(membersLabel)
-                                .addGap(227, 227, 227)
-                                .addComponent(tasksLabel))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,28 +202,33 @@ public class CommitteePanel extends javax.swing.JPanel {
                                             .addComponent(addMemberButton)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(removeMemberButton)))
-                                    .addComponent(budgetButton))
-                                .addGap(60, 60, 60)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(55, 55, 55)
-                                            .addComponent(committeeChangeButton))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(headLabel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(headNameLabel)))
+                                    .addComponent(budgetButton)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(addToBudgetButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(removeMemberFromBudgetButton)))
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(55, 55, 55)
+                                    .addComponent(committeeChangeButton))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(headLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(headNameLabel)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(40, 40, 40)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(taskScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(addTaskButton)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(removeTaskButton)))
-                                        .addGap(10, 10, 10)
-                                        .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(addTaskButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(removeTaskButton)))
+                                .addGap(10, 10, 10)
+                                .addComponent(taskProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -210,7 +242,10 @@ public class CommitteePanel extends javax.swing.JPanel {
                     .addComponent(headNameLabel)
                     .addComponent(budgetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(committeeChangeButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(committeeChangeButton)
+                    .addComponent(addToBudgetButton)
+                    .addComponent(removeMemberFromBudgetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(membersLabel)
@@ -232,7 +267,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(removeTaskButton)
                             .addComponent(addTaskButton))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
  
@@ -263,6 +298,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         taskList.setModel(tModel);
         memberList.setModel(mModel);
         taskProgressBar.setValue(manager.getCommitteeManager().getSelectedCommittee().getCompletePercent());
+        
     }
     
     private void budgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetButtonActionPerformed
@@ -425,9 +461,47 @@ public class CommitteePanel extends javax.swing.JPanel {
         updateInfo();
     }//GEN-LAST:event_committeeChangeButtonActionPerformed
 
+    private void addToBudgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToBudgetButtonActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            manager.getCommitteeManager().addBudgetAccess(
+                    manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        updateInfo();
+    }//GEN-LAST:event_addToBudgetButtonActionPerformed
+
+    private void memberListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_memberListValueChanged
+        // TODO add your handling code here:
+        if(memberList.getSelectedValue() instanceof User)
+        {
+            User u = (User)memberList.getSelectedValue();
+            manager.getUserManager().setSelectedUser(u);
+        }
+    }//GEN-LAST:event_memberListValueChanged
+
+    private void removeMemberFromBudgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberFromBudgetButtonActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            manager.getCommitteeManager().removeBudgetAccess(
+                    manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        updateInfo();
+    }//GEN-LAST:event_removeMemberFromBudgetButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMemberButton;
     private javax.swing.JButton addTaskButton;
+    private javax.swing.JButton addToBudgetButton;
     private javax.swing.JButton budgetButton;
     private javax.swing.JButton committeeChangeButton;
     private javax.swing.JLabel headLabel;
@@ -438,10 +512,52 @@ public class CommitteePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane memberScrollPane;
     private javax.swing.JLabel membersLabel;
     private javax.swing.JButton removeMemberButton;
+    private javax.swing.JButton removeMemberFromBudgetButton;
     private javax.swing.JButton removeTaskButton;
     private javax.swing.JList taskList;
     private javax.swing.JProgressBar taskProgressBar;
     private javax.swing.JScrollPane taskScrollPane;
     private javax.swing.JLabel tasksLabel;
     // End of variables declaration//GEN-END:variables
+ 
+    class MembersCellRenderer extends JLabel implements ListCellRenderer {
+         public MembersCellRenderer() 
+         {
+            setOpaque(true);
+         }
+          public Component getListCellRendererComponent(JList list,
+                                                   Object value,
+                                                   int index,
+                                                   boolean isSelected,
+                                                   boolean cellHasFocus) 
+          {
+              User u = (User)value;
+              if(manager.getCommitteeManager().getSelectedCommittee().getChair().equals(u))
+              {
+                  setText(u.toString()+"(C)");
+                  setBackground(Color.GREEN);
+              }
+              else if(manager.getCommitteeManager().getSelectedCommittee().getBudgetAccessList().contains(u))
+              {
+                  setText(u.toString()+"*");
+                  setBackground(Color.ORANGE);
+              }
+              
+              else
+              {
+                  setText(u.toString());
+                  setBackground(Color.WHITE);
+              }
+              if(isSelected)
+              {
+                  setBackground(Color.LIGHT_GRAY);
+              }
+              
+              return this;
+          }
+          
+    }
+
+
+
 }

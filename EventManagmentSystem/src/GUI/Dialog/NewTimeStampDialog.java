@@ -120,7 +120,7 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         {
             hour += 12;
         }
-        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), endHour.getSelectedIndex(), endMinute.getSelectedIndex()-1);
+        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), hour, endMinute.getSelectedIndex()-1);
         return t;
     }
     /**
@@ -220,6 +220,11 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
 
         closeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -340,6 +345,12 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         confirm = true;
         this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
      * @param args the command line arguments

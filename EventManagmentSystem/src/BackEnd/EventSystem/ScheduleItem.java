@@ -13,6 +13,7 @@ public class ScheduleItem {
     private TimeSchedule timeSchedule;
     
     public ScheduleItem(){
+        title = new String();
         description = new String();
         location = new Location();
         timeSchedule = new TimeSchedule();
@@ -26,6 +27,7 @@ public class ScheduleItem {
     }
     
     public ScheduleItem(ScheduleItem scheduleItem){
+        title = scheduleItem.getTitle();
         description = scheduleItem.getDescription();
         location = scheduleItem.getLocation();
         timeSchedule = scheduleItem.getTimeSchedule();
