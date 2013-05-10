@@ -3,6 +3,7 @@ package BackEnd.ManagerSystem;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Task;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.UserSystem.Location;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
@@ -98,6 +99,17 @@ public class TaskManager {
             tasksTable.setState(selectedTask.getTASK_ID(), location.getState());
             tasksTable.setZipcode(selectedTask.getTASK_ID(), location.getZipCode());
             tasksTable.setCountry(selectedTask.getTASK_ID(), location.getCountry());
+        }
+    }
+    
+    public void editTimeSchedule(TimeSchedule timeSchedule, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+            selectedTask.getTimeSchedule().setStartDateTime(timeSchedule.getStartDateTimeTimestamp());
+            tasksTable.setStartDate(selectedTask.getTASK_ID(), selectedTask.getTimeSchedule().getStartDateTimeTimestamp());
+            selectedTask.getTimeSchedule().setEndDateTime(timeSchedule.getStartDateTimeTimestamp());
+            tasksTable.setEndDate(selectedTask.getTASK_ID(), selectedTask.getTimeSchedule().getStartDateTimeTimestamp());
         }
     }
 

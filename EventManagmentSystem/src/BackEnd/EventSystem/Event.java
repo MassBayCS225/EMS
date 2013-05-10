@@ -24,8 +24,8 @@ public class Event extends ScheduleItem implements Reportable {
         participantList = new ArrayList<Participant>();
     }
     
-    public Event(int event_id, String description) {
-        super(description);
+    public Event(int event_id, String title) {
+        super(title);
         EVENT_ID = event_id;
         organizerList = new ArrayList<User>();
         subEventList = new ArrayList<SubEvent>();
