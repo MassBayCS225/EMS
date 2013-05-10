@@ -100,8 +100,9 @@ public abstract class InitDB implements Interface_FunctionWrapper {
 			+ "EVENTLEVEL INT NOT NULL)";
 
 		String createEventsTable = "CREATE TABLE EVENTS (UID INT PRIMARY KEY, "
-			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "
+			+ "DESCRIPTION VARCHAR(5000) DEFAULT NULL, "                        
 			+ "DETAILS VARCHAR(500) DEFAULT NULL, "
+                        + "TITLE VARCHAR(100) DEFAULT NULL, "
 			+ "STARTDATE TIMESTAMP, "
 			+ "ENDDATE TIMESTAMP, "
 			+ "COMPLETE INT, "

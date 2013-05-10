@@ -27,40 +27,41 @@ public class Events_Table extends InitDB implements Interface_EventData {
      * valid input object
      *
      * @param event of type InputEvent for row insertion.
-     * @return the UID of the created event.     
+     * @return the UID of the created event.
      */
     @Override
     public int createEvent(InputEventData event) {
-	int newUID = nextValidUID();
+        int newUID = nextValidUID();
 
-	try {
-	    //Creating Statement
-	    PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO EVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-	    AddAddressStmt.setInt(1, newUID);
-	    AddAddressStmt.setString(2, event.getDescription());
-	    AddAddressStmt.setString(3, event.getDetails());
-	    AddAddressStmt.setTimestamp(4, event.getStartDate());
-	    AddAddressStmt.setTimestamp(5, event.getEndDate());
-	    AddAddressStmt.setInt(6, event.getComplete());
-	    AddAddressStmt.setString(7, event.getStreet());
-	    AddAddressStmt.setString(8, event.getCity());
-	    AddAddressStmt.setString(9, event.getState());
-	    AddAddressStmt.setString(10, event.getZipcode());
-	    AddAddressStmt.setString(11, event.getCountry());
-	    AddAddressStmt.setString(12, listToString(event.getOrganizerList())); //inserted as a string
-	    AddAddressStmt.setString(13, listToString(event.getSubEventList())); //inserted as a string
-	    AddAddressStmt.setString(14, listToString(event.getParticipantList())); //inserted as a string
-	    AddAddressStmt.setString(15, listToString(event.getCommittee())); //inserted as a string
+        try {
+            //Creating Statement
+            PreparedStatement AddAddressStmt = dbConnection.prepareStatement("INSERT INTO EVENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            AddAddressStmt.setInt(1, newUID);
+            AddAddressStmt.setString(2, event.getDescription());
+            AddAddressStmt.setString(3, event.getDetails());
+            AddAddressStmt.setString(4, event.getTitle());
+            AddAddressStmt.setTimestamp(5, event.getStartDate());
+            AddAddressStmt.setTimestamp(6, event.getEndDate());
+            AddAddressStmt.setInt(7, event.getComplete());
+            AddAddressStmt.setString(8, event.getStreet());
+            AddAddressStmt.setString(9, event.getCity());
+            AddAddressStmt.setString(10, event.getState());
+            AddAddressStmt.setString(11, event.getZipcode());
+            AddAddressStmt.setString(12, event.getCountry());
+            AddAddressStmt.setString(13, listToString(event.getOrganizerList())); //inserted as a string
+            AddAddressStmt.setString(14, listToString(event.getSubEventList())); //inserted as a string
+            AddAddressStmt.setString(15, listToString(event.getParticipantList())); //inserted as a string
+            AddAddressStmt.setString(16, listToString(event.getCommittee())); //inserted as a string
 
-	    //Execute Statement
-	    AddAddressStmt.executeUpdate();
-	    
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	} finally {
-	    return newUID;
-	}
-    }   
+            //Execute Statement
+            AddAddressStmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        } finally {
+            return newUID;
+        }
+    }
 
     /**
      * Gets the next vaild UID in the Events table
@@ -69,23 +70,23 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public int nextValidUID() {
-	int newUID = 0;
-	try {
+        int newUID = 0;
+        try {
 
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
-	    ResultSet rs = idQueryStmt.executeQuery();
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
+            ResultSet rs = idQueryStmt.executeQuery();
 
-	    while (rs.next()) {
-		newUID = rs.getInt("UID");
-		//System.out.println(newUID);
-	    }
-	    return (newUID + 1);
+            while (rs.next()) {
+                newUID = rs.getInt("UID");
+                //System.out.println(newUID);
+            }
+            return (newUID + 1);
 
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
-	return newUID; // should not be zero
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
+        return newUID; // should not be zero
     }
 
     /**
@@ -95,50 +96,52 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public String queryEntireTable() {
-	StringBuilder returnQuery = new StringBuilder();
-	try {
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
-	    ResultSet rs = idQueryStmt.executeQuery();
+        StringBuilder returnQuery = new StringBuilder();
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("SELECT * FROM EVENTS");
+            ResultSet rs = idQueryStmt.executeQuery();
 
-	    while (rs.next()) {
-		returnQuery.append(rs.getString("UID"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("DESCRIPTION"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("DETAILS"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getTimestamp("STARTDATE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getTimestamp("ENDDATE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("COMPLETE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("STREET"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("CITY"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("STATE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("ZIPCODE"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("COUNTRY"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("ORGANIZER"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("SUBEVENT"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("PARTICIPANT"));
-		returnQuery.append(",");
-		returnQuery.append(rs.getString("COMMITTEE"));
-		returnQuery.append("\n");
-	    }
+            while (rs.next()) {
+                returnQuery.append(rs.getString("UID"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("DESCRIPTION"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("DETAILS"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("TITLE"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getTimestamp("STARTDATE"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getTimestamp("ENDDATE"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("COMPLETE"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("STREET"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("CITY"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("STATE"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("ZIPCODE"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("COUNTRY"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("ORGANIZER"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("SUBEVENT"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("PARTICIPANT"));
+                returnQuery.append(",");
+                returnQuery.append(rs.getString("COMMITTEE"));
+                returnQuery.append("\n");
+            }
 
-	} catch (SQLException sqle) {
-	    sqle.printStackTrace();
-	    System.exit(1);
-	}
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            System.exit(1);
+        }
 
-	return returnQuery.toString();
+        return returnQuery.toString();
     }
 
     /**
@@ -150,30 +153,30 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public void removeEvent(int uid) throws DoesNotExistException {
-	String table = "EVENTS";
-	//checking for existance of that uid
-	boolean exists = false;
-	for (int validID : currentUIDList(table)) {
-	    if (validID == uid) {
-		exists = true;
-		break;
-	    }
-	}
-	//what to do if that uid does not exist
-	if (exists == false) {
-	    debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
-	    throw new DoesNotExistException("check debug log. " + table + " table error.");
-	}
-	
-	try {
-	    PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM "+table+" WHERE UID=?");
-	    idQueryStmt.setInt(1, uid);
-	    idQueryStmt.executeUpdate();
+        String table = "EVENTS";
+        //checking for existance of that uid
+        boolean exists = false;
+        for (int validID : currentUIDList(table)) {
+            if (validID == uid) {
+                exists = true;
+                break;
+            }
+        }
+        //what to do if that uid does not exist
+        if (exists == false) {
+            debugLog.log(Level.WARNING, "UID={0} does not exist in {1} table. Error occurred while calling removeEvent", new Object[]{uid, table});
+            throw new DoesNotExistException("check debug log. " + table + " table error.");
+        }
 
-	} catch (SQLException sqle) {
-	    System.err.println(sqle.getMessage());
-	    System.err.println("Deleting stuff from "+table+" is dangerous...");
-	}	
+        try {
+            PreparedStatement idQueryStmt = dbConnection.prepareStatement("DELETE FROM " + table + " WHERE UID=?");
+            idQueryStmt.setInt(1, uid);
+            idQueryStmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+            System.err.println("Deleting stuff from " + table + " is dangerous...");
+        }
     }
 
     //////////////////////GETTERS////////////////////////////
@@ -187,12 +190,17 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public String getDescription(int uid) throws DoesNotExistException {
-	return getDBString("DESCRIPTION", tableName, uid);
+        return getDBString("DESCRIPTION", tableName, uid);
     }
 
     @Override
     public String getDetails(int uid) throws DoesNotExistException {
-	return getDBString("DETAILS", tableName, uid);
+        return getDBString("DETAILS", tableName, uid);
+    }
+
+    @Override
+    public String getTitle(int uid) throws DoesNotExistException {
+        return getDBString("TITLE", tableName, uid);
     }
 
     /**
@@ -204,7 +212,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public Timestamp getStartDate(int uid) throws DoesNotExistException {
-	return getDBTimestamp("STARTDATE", tableName, uid);
+        return getDBTimestamp("STARTDATE", tableName, uid);
     }
 
     /**
@@ -216,7 +224,7 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public Timestamp getEndDate(int uid) throws DoesNotExistException {
-	return getDBTimestamp("ENDDATE", tableName, uid);
+        return getDBTimestamp("ENDDATE", tableName, uid);
     }
 
     /**
@@ -228,122 +236,127 @@ public class Events_Table extends InitDB implements Interface_EventData {
      */
     @Override
     public int getComplete(int uid) throws DoesNotExistException {
-	return getDBInt("COMPLETE", tableName, uid);
+        return getDBInt("COMPLETE", tableName, uid);
     }
 
     @Override
     public String getStreet(int uid) throws DoesNotExistException {
-	return getDBString("STREET", tableName, uid);
+        return getDBString("STREET", tableName, uid);
     }
 
     @Override
     public String getCity(int uid) throws DoesNotExistException {
-	return getDBString("CITY", tableName, uid);
+        return getDBString("CITY", tableName, uid);
     }
 
     @Override
     public String getState(int uid) throws DoesNotExistException {
-	return getDBString("STATE", tableName, uid);
+        return getDBString("STATE", tableName, uid);
     }
 
     @Override
     public String getZipcode(int uid) throws DoesNotExistException {
-	return getDBString("ZIPCODE", tableName, uid);
+        return getDBString("ZIPCODE", tableName, uid);
     }
 
     @Override
     public String getCountry(int uid) throws DoesNotExistException {
-	return getDBString("COUNTRY", tableName, uid);
+        return getDBString("COUNTRY", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getOrganizerList(int uid) throws DoesNotExistException {
-	return getDBArrayList("ORGANIZER", tableName, uid);
+        return getDBArrayList("ORGANIZER", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getSubEventList(int uid) throws DoesNotExistException {
-	return getDBArrayList("SUBEVENT", tableName, uid);
+        return getDBArrayList("SUBEVENT", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getParticipantList(int uid) throws DoesNotExistException {
-	return getDBArrayList("PARTICIPANT", tableName, uid);
+        return getDBArrayList("PARTICIPANT", tableName, uid);
     }
 
     @Override
     public ArrayList<Integer> getCommittee(int uid) throws DoesNotExistException {
-	return getDBArrayList("COMMITTEE", tableName, uid);
+        return getDBArrayList("COMMITTEE", tableName, uid);
     }
 
     ////////////////////////SETTERS///////////////////////////////
     @Override
     public void setDescription(int uid, String description) throws DoesNotExistException {
-	setDBString("DESCRIPTION", tableName, uid, description);
+        setDBString("DESCRIPTION", tableName, uid, description);
     }
 
     @Override
     public void setDetails(int uid, String details) throws DoesNotExistException {
-	setDBString("DETAILS",tableName,uid,details);		
+        setDBString("DETAILS", tableName, uid, details);
+    }
+
+    @Override
+    public void setTitle(int uid, String title) throws DoesNotExistException {
+        setDBString("TITLE", tableName, uid, title);
     }
 
     @Override
     public void setStartDate(int uid, Timestamp time) throws DoesNotExistException {
-	setDBTimestamp("STARTDATE",tableName,uid,time);
+        setDBTimestamp("STARTDATE", tableName, uid, time);
     }
 
     @Override
     public void setEndDate(int uid, Timestamp time) throws DoesNotExistException {
-	setDBTimestamp("ENDDATE",tableName,uid,time);
+        setDBTimestamp("ENDDATE", tableName, uid, time);
     }
 
     @Override
     public void setComplete(int uid, int complete) throws DoesNotExistException {
-	setDBInt("COMPLETE",tableName,uid,complete);
+        setDBInt("COMPLETE", tableName, uid, complete);
     }
 
     @Override
     public void setStreet(int uid, String street) throws DoesNotExistException {
-	setDBString("STREET",tableName,uid,street);
+        setDBString("STREET", tableName, uid, street);
     }
 
     @Override
     public void setCity(int uid, String city) throws DoesNotExistException {
-	setDBString("CITY",tableName,uid,city);
+        setDBString("CITY", tableName, uid, city);
     }
 
     @Override
     public void setState(int uid, String state) throws DoesNotExistException {
-	setDBString("STATE",tableName,uid,state);
+        setDBString("STATE", tableName, uid, state);
     }
 
     @Override
     public void setZipcode(int uid, String zipcode) throws DoesNotExistException {
-	setDBString("ZIPCODE",tableName,uid,zipcode);
+        setDBString("ZIPCODE", tableName, uid, zipcode);
     }
 
     @Override
     public void setCountry(int uid, String country) throws DoesNotExistException {
-	setDBString("COUNTRY",tableName,uid,country);
+        setDBString("COUNTRY", tableName, uid, country);
     }
 
     @Override
     public void setOrganizerList(int uid, ArrayList<Integer> organizerList) throws DoesNotExistException {
-	setDBArrayList("ORGANIZER",tableName,uid,organizerList);
+        setDBArrayList("ORGANIZER", tableName, uid, organizerList);
     }
 
     @Override
     public void setSubEventList(int uid, ArrayList<Integer> subEventList) throws DoesNotExistException {
-	setDBArrayList("SUBEVENT",tableName,uid,subEventList);
+        setDBArrayList("SUBEVENT", tableName, uid, subEventList);
     }
 
     @Override
     public void setParticipantList(int uid, ArrayList<Integer> participantList) throws DoesNotExistException {
-	setDBArrayList("PARTICIPANT",tableName,uid,participantList);	
+        setDBArrayList("PARTICIPANT", tableName, uid, participantList);
     }
 
     @Override
     public void setCommittee(int uid, ArrayList<Integer> committeeList) throws DoesNotExistException {
-	setDBArrayList("COMMITTEE",tableName,uid,committeeList);
+        setDBArrayList("COMMITTEE", tableName, uid, committeeList);
     }
 }
