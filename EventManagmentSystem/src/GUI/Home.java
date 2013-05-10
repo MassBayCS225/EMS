@@ -33,6 +33,8 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
+        /* Added following line to center dialog. -Ketty */
+        setLocationRelativeTo(null);
         
         //CHECK IF WE HAVE USERS
         while(manager.getUserManager().getUserList().isEmpty())
@@ -105,14 +107,18 @@ public class Home extends javax.swing.JFrame {
         try
         {
             Main m = new Main();
+            CommitteeMain cm = new CommitteeMain();
             if (manager.getUserManager().getSelectedUser().getAdminPrivilege()) {
                 add(m);
             }
-            else if (PrivilegeManager.hasEventPrivilege(manager.getUserManager().getSelectedUser(), 
+            /*else if (PrivilegeManager.hasEventPrivilege(manager.getUserManager().getSelectedUser(), 
                     manager.getEventManager().getSelectedEvent())){
-                m.getUserManagementPanel().getChangeInfoButton().setVisible(false);
-                m.getUserManagementPanel().getChangeUserButton().setVisible(false);
+                m.getUserManagementPanel().setNonAdminView();
                 add(m);
+            }*/
+            else {
+                cm.getCommitteePanel().setChairView();
+                add(cm);
             }
         }
         catch (Exception e)
