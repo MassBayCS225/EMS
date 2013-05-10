@@ -133,7 +133,7 @@ public class EventManager {
             committeeIDList = new ArrayList<Integer>();
 
             newEvent = new Event(eventsTable.createEvent(new InputEventData(
-                    event.getDescription(), event.getLocation().getDetails(), null/*FIX THIS!*/ , "IGNORE", //added null for title. replace with your title function
+                    event.getDescription(), event.getLocation().getDetails(), event.getTitle() , "IGNORE",
                     event.getTimeSchedule().getStartDateTimeTimestamp(), event.getTimeSchedule().getEndDateTimeTimestamp(),
                     0, committeeIDList, organizerIDList, subEventIDList, participantIDList,
                     event.getLocation().getStreet(), event.getLocation().getCity(),
@@ -429,11 +429,31 @@ public class EventManager {
         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantIDList);
         selectedEvent.getParticipantList().remove(participant);
     }
+    
+    /**
+     * edits the title of the selected event, if the user has
+     * sufficient privilege
+     *
+     * @param title the title to change to
+     * @param loggedInUser the currently logged in user
+     * @throws PrivilegeInsufficientException
+     * @throws DoesNotExistException
+     */    
+    public void editTitle(String title, User loggedInUser)
+            throws PrivilegeInsufficientException, DoesNotExistException {
+
+        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+            eventsTable.setTitle(selectedEvent.getEVENT_ID(), title);
+            selectedEvent.setTitle(title);
+        }
+    }
 
     /**
+     * edits the description of the selected event, if the user has
+     * sufficient privilege
      *
-     * @param description
-     * @param loggedInUser
+     * @param description the description to change to
+     * @param loggedInUser the currently logged in user
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
@@ -551,7 +571,8 @@ public class EventManager {
     private Event rebuildEvent(int eventID, ArrayList<Participant> userList)
             throws DoesNotExistException {
 
-        Event event = new Event(eventID, eventsTable.getDescription(eventID));
+        Event event = new Event(eventID, eventsTable.getTitle(eventID));
+        event.setDescription(eventsTable.getDescription(eventID));
         event.setSubEventList(rebuildSubEventList(eventID));
         event.setOrganizerList(rebuildOrganizerList(eventID, userList));
         event.setParticipantList(rebuildParticipantList(eventID, userList));

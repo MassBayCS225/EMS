@@ -41,7 +41,7 @@ public class LoginManager {
     private User checkEmailAddress(String emailAddress) throws LogInIncorrectException {
 	
 	for (int i = 0; i < userList.size(); i++) {
-	    if (userList.get(i).getEmailAddress().equals(emailAddress)) {
+	    if (userList.get(i).getEmailAddress().equalsIgnoreCase(emailAddress)) {
 		return (User) userList.get(i);
 	    }
 	}
