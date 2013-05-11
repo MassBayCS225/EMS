@@ -19,13 +19,13 @@ public class DesignDefault {
      * COLORS
      * 
      ********************************/
-    private Color bgColor = new Color(200,200,200);
+    private Color bgColor = new Color(160,160,160);
     public Color getBGColor()
     { return bgColor; }
     public void setBGColor(Color c)
     { bgColor = c; }
     
-    private  Color panelBGColor = new Color(120,120,120);
+    private  Color panelBGColor = new Color(128,128,128);
     public Color getPanelBGColor()
     { return panelBGColor; }
     public void setPanelBGColor(Color c)

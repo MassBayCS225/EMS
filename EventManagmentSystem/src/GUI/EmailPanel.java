@@ -8,7 +8,6 @@ import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import Email.Email;
 import GUI.Dialog.EmailSelectionDialog;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -23,15 +22,17 @@ import javax.swing.SwingUtilities;
 public class EmailPanel extends javax.swing.JPanel {
 
     private MainManager manager;
-
+    private DesignDefault dd;
     /**
      * Creates new form EmailPanel
      */
     public EmailPanel() throws PrivilegeInsufficientException {
-	initComponents();
+	dd = DesignDefault.getInstance();
+                   initComponents();
 	manager = MainManager.getInstance();
 	// welcomeLabel.setText("Welcome " + manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName());
 	setVisible(true);
+                   this.setBackground(dd.getPanelBGColor());
     }
 
     /**
@@ -59,12 +60,12 @@ public class EmailPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(760, 620));
         setPreferredSize(new java.awt.Dimension(760, 620));
 
-        emailWindowLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        emailWindowLabel.setFont(dd.getHeaderText());
         emailWindowLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emailWindowLabel.setText("Email");
 
-        toLabel.setBackground(new java.awt.Color(204, 204, 204));
-        toLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        toLabel.setBackground(dd.getPanelBGColor());
+        toLabel.setFont(dd.getStandardText());
         toLabel.setText(" To:");
         toLabel.setMaximumSize(new java.awt.Dimension(25, 20));
         toLabel.setMinimumSize(new java.awt.Dimension(25, 20));
@@ -77,7 +78,9 @@ public class EmailPanel extends javax.swing.JPanel {
             }
         });
 
+        addCommittee.setFont(dd.getStandardText());
         addCommittee.setText("Add User/Committee");
+        addCommittee.setSize(dd.getBigButtonDimension());
         addCommittee.setToolTipText("menu for adding many recipients");
         addCommittee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,9 +94,9 @@ public class EmailPanel extends javax.swing.JPanel {
             }
         });
 
-        subject.setBackground(new java.awt.Color(204, 204, 204));
-        subject.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        subject.setFont(dd.getStandardText());
         subject.setText("Subject:");
+        subject.setBackground(dd.getPanelBGColor());
         subject.setMaximumSize(new java.awt.Dimension(50, 20));
         subject.setMinimumSize(new java.awt.Dimension(50, 20));
         subject.setOpaque(true);
@@ -114,14 +117,18 @@ public class EmailPanel extends javax.swing.JPanel {
         messageArea.setPreferredSize(new java.awt.Dimension(730, 450));
         messageScrollPane.setViewportView(messageArea);
 
+        sendButton.setFont(dd.getStandardText());
         sendButton.setText("Send");
+        sendButton.setSize(dd.getBigButtonDimension());
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendButtonActionPerformed(evt);
             }
         });
 
+        discardButton.setFont(dd.getStandardText());
         discardButton.setText("Discard");
+        discardButton.setSize(dd.getBigButtonDimension());
         discardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 discardButtonActionPerformed(evt);
@@ -135,24 +142,26 @@ public class EmailPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(messageScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sendButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(discardButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(emailWindowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(toLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(toLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(subject, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(toField)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(addCommittee))
-                            .addComponent(subjectField))))
+                            .addComponent(subjectField)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(messageScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sendButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(discardButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
