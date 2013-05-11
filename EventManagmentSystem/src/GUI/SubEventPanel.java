@@ -37,9 +37,9 @@ public class SubEventPanel extends javax.swing.JPanel {
             tempTimeSchedule = new TimeSchedule();;
         }
         
-        tempTimeSchedule.setStartDateTime(tempTimeSchedule.getStartDateTimeCalendar().get(Calendar.YEAR), 
-                tempTimeSchedule.getStartDateTimeCalendar().get(Calendar.MONTH),
-                tempTimeSchedule.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH), 13, 0);
+//        tempTimeSchedule.setStartDateTime(tempTimeSchedule.getStartDateTimeCalendar().get(Calendar.YEAR), 
+//                tempTimeSchedule.getStartDateTimeCalendar().get(Calendar.MONTH),
+//                tempTimeSchedule.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH), 13, 0);
         setSize(450, 400);
         DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
         for (int i = 0; i < 32; i++) {
@@ -60,7 +60,8 @@ public class SubEventPanel extends javax.swing.JPanel {
         {
             minModel.addElement(i);
         }
-        
+        dueDateLabel.setText("Due Date: " + tempTimeSchedule.getEndDateTimeTimestamp().toString());
+        startDateLabel.setText("Start Date: " + tempTimeSchedule.getStartDateTimeTimestamp().toString());
     }
     
     public SubEvent createEvent()

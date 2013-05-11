@@ -6,6 +6,7 @@ package GUI.Dialog;
 
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import GUI.DesignDefault;
 import javax.swing.DefaultListModel;
 
 /**
@@ -16,17 +17,21 @@ public class FindMemberDialog extends javax.swing.JDialog {
 
     private MainManager manager;
     private boolean confirm;
+    private DesignDefault dd;
     /**
      * Creates new form FindMemberDialog
      */
     public FindMemberDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        dd = DesignDefault.getInstance();
         initComponents();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
         manager = MainManager.getInstance();
         updateInfo();
         confirm = false;
+        this.setBackground(dd.getDialogBGColor());
+        this.setTitle("Select a Member");
     }
     
     public void updateInfo()
@@ -64,6 +69,7 @@ public class FindMemberDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        memberList.setFont(dd.getStandardText());
         memberList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -71,9 +77,12 @@ public class FindMemberDialog extends javax.swing.JDialog {
         });
         memberListScrollPane.setViewportView(memberList);
 
+        listLabel.setFont(dd.getStandardText());
         listLabel.setText("Member List");
 
+        SelectButton.setFont(dd.getStandardText());
         SelectButton.setText("Select");
+        SelectButton.setMinimumSize(dd.getBigButtonDimension());
         SelectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SelectButtonActionPerformed(evt);
