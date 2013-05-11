@@ -1,5 +1,6 @@
 package BackEnd.ManagerSystem;
 
+import BackEnd.ManagerSystem.ManagerExceptions.DuplicateEmailException;
 import BackEnd.UserSystem.Address;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.Participant;
@@ -11,12 +12,9 @@ import EMS_Database.InputUser;
 import EMS_Database.impl.UserData_Table;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 /**
  *
@@ -93,10 +91,16 @@ public class UserManager {
         return user;
     }
 
-    public User createUser(User user) {
-        User newUser = new User(usersTable.createUser(new InputUser(user)), user);
-        userList.add(newUser);
-        return newUser;
+    public User createUser(User user)
+            throws DuplicateEmailException {
+        
+        if (usersTable.checkEmail(user.getEmailAddress())) {
+            throw new DuplicateEmailException("Email address already exists in the system");
+        } else {
+            User newUser = new User(usersTable.createUser(new InputUser(user)), user);
+            userList.add(newUser);
+            return newUser;
+        }
     }
 
     public void deleteUser(User user)
