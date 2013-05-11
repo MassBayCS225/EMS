@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.SubEventPanel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -116,8 +117,19 @@ public class NewSubEventDialog extends javax.swing.JDialog {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        confirm = true;
-        this.dispose();
+        SubEvent se = sep.createEvent();
+        
+        if(se.getTitle().trim().isEmpty())
+        {
+            JOptionPane.showMessageDialog(
+                    null, "No name given for Sub Event, please enter a valid Sub Event name.", "No Sub Event Name", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else
+        {
+            confirm = true;
+            this.dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
