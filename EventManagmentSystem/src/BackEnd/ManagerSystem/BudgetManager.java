@@ -85,6 +85,7 @@ public class BudgetManager {
             ArrayList<Integer> newIncomeIDList = committeesTable.getIncome(selectedCommittee.getCOMMITTEE_ID());
             newIncomeIDList.add(newIncome.getBUDGET_ITEM_ID());
             committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newIncomeIDList);
+            
         }
         return newIncome;
     }
@@ -135,7 +136,7 @@ public class BudgetManager {
             selectedBudget.getExpenseList().add(newExpense);
             ArrayList<Integer> newExpenseIDList = committeesTable.getExpense(selectedCommittee.getCOMMITTEE_ID());
             newExpenseIDList.add(newExpense.getBUDGET_ITEM_ID());
-            committeesTable.setIncome(selectedCommittee.getCOMMITTEE_ID(), newExpenseIDList);
+            committeesTable.setExpense(selectedCommittee.getCOMMITTEE_ID(), newExpenseIDList);
         }
         return newExpense;
     }
