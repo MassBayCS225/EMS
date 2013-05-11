@@ -197,6 +197,8 @@ public class Home extends javax.swing.JFrame {
         registrationReportsMenuItem = new javax.swing.JMenuItem();
         budgetReportsMenuItem = new javax.swing.JMenuItem();
         databaseMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
@@ -207,6 +209,7 @@ public class Home extends javax.swing.JFrame {
 
         printMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         printMenuItem.setText("Print");
+        printMenuItem.setEnabled(false);
         printMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printMenuItemActionPerformed(evt);
@@ -215,6 +218,7 @@ public class Home extends javax.swing.JFrame {
         fileMenu.add(printMenuItem);
 
         printPreviewMenuItem.setText("Print Preview");
+        printPreviewMenuItem.setEnabled(false);
         printPreviewMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printPreviewMenuItemActionPerformed(evt);
@@ -225,6 +229,7 @@ public class Home extends javax.swing.JFrame {
 
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveMenuItem.setText("Save");
+        saveMenuItem.setEnabled(false);
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveMenuItemActionPerformed(evt);
@@ -274,6 +279,7 @@ public class Home extends javax.swing.JFrame {
         reportsMenu.setText("Reports");
 
         committeeReportsMenuItem.setText("Committee");
+        committeeReportsMenuItem.setEnabled(false);
         committeeReportsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 committeeReportsMenuItemActionPerformed(evt);
@@ -282,6 +288,7 @@ public class Home extends javax.swing.JFrame {
         reportsMenu.add(committeeReportsMenuItem);
 
         registrationReportsMenuItem.setText("Registration");
+        registrationReportsMenuItem.setEnabled(false);
         registrationReportsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrationReportsMenuItemActionPerformed(evt);
@@ -290,6 +297,7 @@ public class Home extends javax.swing.JFrame {
         reportsMenu.add(registrationReportsMenuItem);
 
         budgetReportsMenuItem.setText("Budget");
+        budgetReportsMenuItem.setEnabled(false);
         budgetReportsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 budgetReportsMenuItemActionPerformed(evt);
@@ -300,6 +308,18 @@ public class Home extends javax.swing.JFrame {
         toolsMenu.add(reportsMenu);
 
         databaseMenu.setText("Database");
+
+        jMenuItem1.setText("Import");
+        databaseMenu.add(jMenuItem1);
+
+        jMenuItem2.setText("Export");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        databaseMenu.add(jMenuItem2);
+
         toolsMenu.add(databaseMenu);
 
         emsMenuBar.add(toolsMenu);
@@ -381,6 +401,10 @@ public class Home extends javax.swing.JFrame {
         this.validate();    //repaint everything
     }//GEN-LAST:event_logOutMenuItemActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -394,6 +418,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JMenuItem logOutMenuItem;
