@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -6,9 +6,9 @@ package GUI;
 import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
-import BackEnd.ManagerSystem.PrivilegeManager;
 import GUI.Dialog.LoginDialog;
 import GUI.Dialog.SignupDialog;
+import java.awt.Component;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
@@ -26,42 +26,65 @@ public class Home extends javax.swing.JFrame {
      */
     private UndoManager undo = new UndoManager();
     private MainManager manager;
-    
+    private Main main;
+    private CommitteeMain committeeMain;
+    private Component activePanel;
     /**
      *
      */
+    
+    
+    
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
         
-        //CHECK IF WE HAVE USERS
-        while(manager.getUserManager().getUserList().isEmpty())
-        {
-            //CREATE A USER
-            JOptionPane.showMessageDialog(this, "There are no users in the user list.  Please create an administrator account first.");
+        while(checkForUsers())      //CHECK IF WE HAVE USERS
+        {  createFirstUser();  }
+        
+        while (checkLogIn())        //CHECK FOR LOGIN
+        {  logIn();  }
+        
+        if(checkForEvents())        //CHECK IF WE HAVE EVENTS
+        {  createFirstEvent();  }
+        
+        else
+        {  loadEvent();  }
+        
+        /* Changed this try block. -Ketty */
+        addPanel();
+        
+            
+        setVisible(true);
+    }
+    public void setEvent(Event e){
+        manager.getEventManager().setSelectedEvent(e);
+    }
+    
+    public boolean checkForUsers()
+    {
+        return manager.getUserManager().getUserList().isEmpty();
+    }
+    
+    public boolean checkForEvents()
+    {
+        return manager.getEventManager().getEventList().isEmpty();
+    }
+    public boolean checkLogIn()
+    {
+        return manager.getLogInManager().getLoggedInUser() == null;
+    }
+    public void createFirstUser()
+    {
+             JOptionPane.showMessageDialog(this, "There are no users in the user list.  Please create an administrator account first.");
             SignupDialog sd = new SignupDialog(this, true);
             sd.setVisible(true);
-        }
-        
-        //LOG IN
-        while (manager.getLogInManager().getLoggedInUser() == null) 
-        {
-           LoginDialog ld = new LoginDialog(this, true);
-           ld.setVisible(true);
-           if (ld.getConfirm()) 
-           {
-               ld.createUser();
-               manager.getUserManager().setSelectedUser(manager.getLogInManager().getLoggedInUser());
-           }
-        }
-        
-        //CHECK IF WE HAVE EVENTS
-        if(manager.getEventManager().getEventList().isEmpty())
-        {
-            //CREATE ONE
-            try
+    }
+    public void createFirstEvent()
+    {
+         try
             {
                 JOptionPane.showMessageDialog(this, "An event has not been created yet.  Please create one first.");
                 NewEventDialog ned = new NewEventDialog(this, true);
@@ -96,20 +119,34 @@ public class Home extends javax.swing.JFrame {
             {
                 e.printStackTrace();
             }
-        }
-        //OR LOAD IT
-        else
-        {
-            manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
-        }
-        
-        /* Changed this try block. -Ketty */
+    }
+    public void loadEvent()
+    {
+         manager.getEventManager().setSelectedEvent(
+                 manager.getEventManager().getEventList().get(0));
+    }
+    
+    public void logIn()
+    {
+           LoginDialog ld = new LoginDialog(this, true);
+           ld.setVisible(true);
+           if (ld.getConfirm()) 
+           {
+               ld.createUser();
+               manager.getUserManager().setSelectedUser(
+                       manager.getLogInManager().getLoggedInUser());
+           }
+    }
+    
+    public void addPanel()
+    {
         try
         {
-            Main m = new Main();
-            CommitteeMain cm = new CommitteeMain();
-            if (manager.getUserManager().getSelectedUser().getAdminPrivilege()) {
-                add(m);
+            main = new Main();
+            committeeMain = new CommitteeMain();
+            if (manager.getLogInManager().getLoggedInUser().getAdminPrivilege()) {
+                add(main);
+                activePanel = (Component)main;
             }
             /*else if (PrivilegeManager.hasEventPrivilege(manager.getUserManager().getSelectedUser(), 
                     manager.getEventManager().getSelectedEvent())){
@@ -117,8 +154,9 @@ public class Home extends javax.swing.JFrame {
                 add(m);
             }*/
             else {
-                cm.getCommitteePanel().setChairView();
-                add(cm);
+                committeeMain.getCommitteePanel().setChairView();
+                add(committeeMain);
+                activePanel = (Component)committeeMain;
             }
         }
         catch (Exception e)
@@ -126,12 +164,11 @@ public class Home extends javax.swing.JFrame {
             System.out.println("CAN'T CREATE HOME\n" + e);
             e.printStackTrace();
         }
-            
-        setVisible(true);
     }
-    public void setEvent(Event e){
-        manager.getEventManager().setSelectedEvent(e);
-    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,6 +185,7 @@ public class Home extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         saveMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        logOutMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem(new DefaultEditorKit.CutAction());
@@ -163,7 +201,7 @@ public class Home extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(950, 750));
+        setPreferredSize(new java.awt.Dimension(960, 700));
 
         fileMenu.setText("File");
 
@@ -194,6 +232,15 @@ public class Home extends javax.swing.JFrame {
         });
         fileMenu.add(saveMenuItem);
         fileMenu.add(jSeparator2);
+
+        logOutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        logOutMenuItem.setText("Logout");
+        logOutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(logOutMenuItem);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         exitMenuItem.setText("Exit");
@@ -275,11 +322,11 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 960, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 374, Short.MAX_VALUE)
+            .addGap(0, 679, Short.MAX_VALUE)
         );
 
         pack();
@@ -312,7 +359,7 @@ public class Home extends javax.swing.JFrame {
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "You're stuck forever!");
+        this.dispose();
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void committeeReportsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_committeeReportsMenuItemActionPerformed
@@ -324,6 +371,15 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "Why does saying budget report make me giggle?");
     }//GEN-LAST:event_budgetReportsMenuItemActionPerformed
+
+    private void logOutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMenuItemActionPerformed
+        // TODO add your handling code here:
+        this.remove(activePanel); //Remove whatever panel we're showing
+        this.repaint(); //Repaint to get grey background
+        logIn();    //show login dialog
+        addPanel(); //add the appropriate panel
+        this.validate();    //repaint everything
+    }//GEN-LAST:event_logOutMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -340,6 +396,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JMenuItem logOutMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem printMenuItem;
     private javax.swing.JMenuItem printPreviewMenuItem;
