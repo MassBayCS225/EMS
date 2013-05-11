@@ -146,24 +146,24 @@ public class SetUpData {
                             manager.getCommitteeManager().getSelectedCommittee());
                 }
 
-                for (int i = 1; i < 4; i++) {
-                    Budget b = manager.getCommitteeManager().getSelectedCommittee().getBudget();
-                    manager.getBudgetManager().setSelectedBudget(b);
+                manager.getBudgetManager().setSelectedBudget(
+                       manager.getCommitteeManager().getSelectedCommittee().getBudget());
 
+                for (int i = 1; i < 4; i++) {
                     manager.getBudgetItemManager().setSelectedBudgetItem(
                             manager.getBudgetManager().createIncome(
                             new Income(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
 
                     manager.getBudgetItemManager().editDescription(
-                            "test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
-
+                            "new test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                     manager.getBudgetItemManager().setSelectedBudgetItem(
                             manager.getBudgetManager().createExpense(
                             new Expense(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
                     manager.getBudgetItemManager().editDescription(
-                            "test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                            "new test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                 }
             }
+            System.out.println(manager.getEventManager().getSelectedEvent().getCommitteeList().get(0) + manager.getEventManager().getSelectedEvent().getCommitteeList().get(0).getBudget().toString());
             System.out.println("Committees created.");
         } catch (Exception ex3) {
             System.out.println("Can't add committees.");

@@ -743,7 +743,6 @@ public class EventManager {
         
         ArrayList<Income> incomeList = new ArrayList<Income>();
         ArrayList<Integer> incomeIDList = committeesTable.getIncome(committeeID);
-
         for (Integer incomeID : incomeIDList) {
             incomeList.add(rebuildIncome(incomeID));
         }
@@ -760,7 +759,6 @@ public class EventManager {
 
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
         ArrayList<Integer> expenseIDList = committeesTable.getExpense(committeeID);
-
         for (Integer expenseID : expenseIDList) {
             expenseList.add(rebuildExpense(expenseID));
         }
