@@ -38,18 +38,20 @@ public class Main extends javax.swing.JPanel {
         SwitchingPanelHolder.add(bp, "budget");
         SwitchingPanelHolder.add(ump, "userManagement");
         manager = MainManager.getInstance();
-        setSize(950,750);
+        setSize(960, 680);
         updateInfo();
     }
     
     public void updateInfo()
     {
+        
         DefaultComboBoxModel listModel = new DefaultComboBoxModel();
         listModel.removeAllElements();
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
             listModel.addElement(c.getTitle());
         }
-        committeesComboBox.setModel(listModel);
+        //committeesComboBox.setModel(listModel);
+        
     }
     
     public UserManagementPanel getUserManagementPanel()
@@ -69,17 +71,14 @@ public class Main extends javax.swing.JPanel {
         tasksPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
-        jButton3 = new javax.swing.JButton();
         committeesPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         changeCommitteesButton = new javax.swing.JButton();
-        committeesComboBox = new javax.swing.JComboBox();
         participantsPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         changeUserManagementButton = new javax.swing.JButton();
         reportsPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox();
         jButton6 = new javax.swing.JButton();
         budgetPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -93,20 +92,17 @@ public class Main extends javax.swing.JPanel {
         SwitchingPanelHolder = new javax.swing.JPanel();
         ChangeHomeButton = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(153, 153, 255));
-        setMaximumSize(new java.awt.Dimension(32767, 600));
-        setMinimumSize(new java.awt.Dimension(950, 750));
-        setPreferredSize(new java.awt.Dimension(950, 750));
+        setBackground(new java.awt.Color(160, 160, 160));
+        setMaximumSize(new java.awt.Dimension(960, 680));
+        setMinimumSize(new java.awt.Dimension(960, 680));
+        setPreferredSize(new java.awt.Dimension(960, 680));
+
+        tasksPanel.setMaximumSize(new java.awt.Dimension(160, 80));
+        tasksPanel.setMinimumSize(new java.awt.Dimension(160, 80));
+        tasksPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
         jLabel5.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel5.setText("Tasks Progress");
-
-        jButton3.setText("Details");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         org.jdesktop.layout.GroupLayout tasksPanelLayout = new org.jdesktop.layout.GroupLayout(tasksPanel);
         tasksPanel.setLayout(tasksPanelLayout);
@@ -117,12 +113,9 @@ public class Main extends javax.swing.JPanel {
                 .add(tasksPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(tasksPanelLayout.createSequentialGroup()
                         .add(jLabel5)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                        .add(0, 51, Short.MAX_VALUE))
+                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, tasksPanelLayout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
-                .add(jButton3))
         );
         tasksPanelLayout.setVerticalGroup(
             tasksPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -131,10 +124,12 @@ public class Main extends javax.swing.JPanel {
                 .add(jLabel5)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton3)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
+
+        committeesPanel.setMaximumSize(new java.awt.Dimension(160, 80));
+        committeesPanel.setMinimumSize(new java.awt.Dimension(160, 80));
+        committeesPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
         jLabel6.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel6.setText("Committees");
@@ -146,8 +141,6 @@ public class Main extends javax.swing.JPanel {
             }
         });
 
-        committeesComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         org.jdesktop.layout.GroupLayout committeesPanelLayout = new org.jdesktop.layout.GroupLayout(committeesPanel);
         committeesPanel.setLayout(committeesPanelLayout);
         committeesPanelLayout.setHorizontalGroup(
@@ -157,23 +150,21 @@ public class Main extends javax.swing.JPanel {
                 .add(changeCommitteesButton))
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(committeesComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(committeesPanelLayout.createSequentialGroup()
-                        .add(jLabel6)
-                        .add(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .add(jLabel6)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         committeesPanelLayout.setVerticalGroup(
             committeesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel6)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(committeesComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
                 .add(changeCommitteesButton))
         );
+
+        participantsPanel.setMaximumSize(new java.awt.Dimension(160, 80));
+        participantsPanel.setMinimumSize(new java.awt.Dimension(160, 80));
+        participantsPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
         jLabel7.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel7.setText("Participants");
@@ -192,7 +183,7 @@ public class Main extends javax.swing.JPanel {
             .add(participantsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel7)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, participantsPanelLayout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
                 .add(changeUserManagementButton))
@@ -202,14 +193,16 @@ public class Main extends javax.swing.JPanel {
             .add(participantsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel7)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
                 .add(changeUserManagementButton))
         );
 
+        reportsPanel.setMaximumSize(new java.awt.Dimension(160, 80));
+        reportsPanel.setMinimumSize(new java.awt.Dimension(160, 80));
+        reportsPanel.setPreferredSize(new java.awt.Dimension(160, 80));
+
         jLabel4.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel4.setText("Reports");
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton6.setText("View");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -224,12 +217,8 @@ public class Main extends javax.swing.JPanel {
             reportsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(reportsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(reportsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(reportsPanelLayout.createSequentialGroup()
-                        .add(jLabel4)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(jComboBox4, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .add(jLabel4)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, reportsPanelLayout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
                 .add(jButton6))
@@ -239,11 +228,13 @@ public class Main extends javax.swing.JPanel {
             .add(reportsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel4)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jComboBox4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
                 .add(jButton6))
         );
+
+        budgetPanel.setMaximumSize(new java.awt.Dimension(160, 160));
+        budgetPanel.setMinimumSize(new java.awt.Dimension(160, 160));
+        budgetPanel.setPreferredSize(new java.awt.Dimension(160, 160));
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel1.setText("Budget");
@@ -283,9 +274,13 @@ public class Main extends javax.swing.JPanel {
                 .add(jLabel2)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel3)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 68, Short.MAX_VALUE)
                 .add(changeBudgetButton))
         );
+
+        emailPanel.setMaximumSize(new java.awt.Dimension(160, 80));
+        emailPanel.setMinimumSize(new java.awt.Dimension(160, 80));
+        emailPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
         changeEmailButton.setText("Email");
         changeEmailButton.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +299,7 @@ public class Main extends javax.swing.JPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel8)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
                 .add(changeEmailButton))
@@ -314,16 +309,16 @@ public class Main extends javax.swing.JPanel {
             .add(emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel8)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
                 .add(changeEmailButton))
         );
 
         jLabel11.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jLabel11.setText("Manage Event");
 
-        SwitchingPanelHolder.setMaximumSize(new java.awt.Dimension(2147483647, 500));
-        SwitchingPanelHolder.setMinimumSize(new java.awt.Dimension(640, 720));
-        SwitchingPanelHolder.setPreferredSize(new java.awt.Dimension(640, 700));
+        SwitchingPanelHolder.setMaximumSize(new java.awt.Dimension(760, 620));
+        SwitchingPanelHolder.setMinimumSize(new java.awt.Dimension(760, 620));
+        SwitchingPanelHolder.setPreferredSize(new java.awt.Dimension(760, 620));
         SwitchingPanelHolder.setLayout(new java.awt.CardLayout());
 
         ChangeHomeButton.setText("Home");
@@ -342,41 +337,45 @@ public class Main extends javax.swing.JPanel {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
                         .add(jLabel11)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(ChangeHomeButton))
-                    .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 56, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(tasksPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(committeesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(participantsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(reportsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(budgetPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(emailPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 615, Short.MAX_VALUE)
+                        .add(ChangeHomeButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(layout.createSequentialGroup()
+                        .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 20, Short.MAX_VALUE)))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, tasksPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, participantsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, reportsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(budgetPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(tasksPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(committeesPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(participantsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(reportsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(budgetPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(emailPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 0, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(ChangeHomeButton))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 649, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(tasksPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(committeesPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(participantsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(reportsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(budgetPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(emailPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jLabel11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(ChangeHomeButton))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 620, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -389,10 +388,6 @@ public class Main extends javax.swing.JPanel {
         CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "budget");
     }//GEN-LAST:event_changeBudgetButtonActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -421,12 +416,9 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JButton changeCommitteesButton;
     private javax.swing.JButton changeEmailButton;
     private javax.swing.JButton changeUserManagementButton;
-    private javax.swing.JComboBox committeesComboBox;
     private javax.swing.JPanel committeesPanel;
     private javax.swing.JPanel emailPanel;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

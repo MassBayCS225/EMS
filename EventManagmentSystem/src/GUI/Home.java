@@ -226,7 +226,9 @@ public class Home extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(960, 700));
+        setMaximumSize(new java.awt.Dimension(960, 700));
+        setMinimumSize(new java.awt.Dimension(960, 700));
+        setResizable(false);
 
         fileMenu.setText("File");
 

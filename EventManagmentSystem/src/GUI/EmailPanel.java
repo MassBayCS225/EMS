@@ -30,7 +30,7 @@ public class EmailPanel extends javax.swing.JPanel {
     public EmailPanel() throws PrivilegeInsufficientException {
 	initComponents();
 	manager = MainManager.getInstance();
-	welcomeLabel.setText("Welcome " + manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName());
+	// welcomeLabel.setText("Welcome " + manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName());
 	setVisible(true);
     }
 
@@ -43,72 +43,33 @@ public class EmailPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        welcomeLabel = new javax.swing.JLabel();
-        EmailHolderPanel = new javax.swing.JPanel();
-        composeBox = new javax.swing.JPanel();
+        emailWindowLabel = new javax.swing.JLabel();
         toLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        titleField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        toField = new javax.swing.JTextField();
+        addCommittee = new javax.swing.JButton();
+        subjectField = new javax.swing.JTextField();
+        subject = new javax.swing.JLabel();
+        messageScrollPane = new javax.swing.JScrollPane();
         messageArea = new javax.swing.JTextArea();
         sendButton = new javax.swing.JButton();
         discardButton = new javax.swing.JButton();
-        toField = new javax.swing.JTextField();
-        addCommittee = new javax.swing.JButton();
-        sentBox = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(212, 231, 238));
+        setBackground(new java.awt.Color(128, 128, 128));
+        setMaximumSize(new java.awt.Dimension(760, 620));
+        setMinimumSize(new java.awt.Dimension(760, 620));
+        setPreferredSize(new java.awt.Dimension(760, 620));
 
-        welcomeLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        welcomeLabel.setText("Welcome User!");
-
-        EmailHolderPanel.setBackground(new java.awt.Color(255, 255, 255));
-        EmailHolderPanel.setLayout(new java.awt.CardLayout());
-
-        composeBox.setBackground(new java.awt.Color(204, 204, 204));
+        emailWindowLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        emailWindowLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emailWindowLabel.setText("Email");
 
         toLabel.setBackground(new java.awt.Color(204, 204, 204));
         toLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         toLabel.setText(" To:");
+        toLabel.setMaximumSize(new java.awt.Dimension(25, 20));
+        toLabel.setMinimumSize(new java.awt.Dimension(25, 20));
         toLabel.setOpaque(true);
-
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText(" Title:");
-        jLabel2.setOpaque(true);
-
-        titleField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel5.setText("Message:");
-        jLabel5.setOpaque(true);
-
-        messageArea.setColumns(20);
-        messageArea.setRows(5);
-        jScrollPane1.setViewportView(messageArea);
-
-        sendButton.setText("Send");
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendButtonActionPerformed(evt);
-            }
-        });
-
-        discardButton.setText("Discard");
-        discardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                discardButtonActionPerformed(evt);
-            }
-        });
+        toLabel.setPreferredSize(new java.awt.Dimension(25, 20));
 
         toField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,118 +85,102 @@ public class EmailPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout composeBoxLayout = new javax.swing.GroupLayout(composeBox);
-        composeBox.setLayout(composeBoxLayout);
-        composeBoxLayout.setHorizontalGroup(
-            composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(composeBoxLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(composeBoxLayout.createSequentialGroup()
-                        .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(toLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleField)
-                            .addGroup(composeBoxLayout.createSequentialGroup()
-                                .addComponent(toField, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addCommittee)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(composeBoxLayout.createSequentialGroup()
-                        .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(composeBoxLayout.createSequentialGroup()
-                                .addComponent(sendButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(discardButton)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        composeBoxLayout.setVerticalGroup(
-            composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(composeBoxLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toField)
-                    .addComponent(addCommittee))
-                .addGap(1, 1, 1)
-                .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(titleField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(composeBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sendButton)
-                    .addComponent(discardButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        subjectField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subjectFieldActionPerformed(evt);
+            }
+        });
 
-        EmailHolderPanel.add(composeBox, "compose");
+        subject.setBackground(new java.awt.Color(204, 204, 204));
+        subject.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        subject.setText("Subject:");
+        subject.setMaximumSize(new java.awt.Dimension(50, 20));
+        subject.setMinimumSize(new java.awt.Dimension(50, 20));
+        subject.setOpaque(true);
+        subject.setPreferredSize(new java.awt.Dimension(50, 20));
 
-        sentBox.setBackground(new java.awt.Color(255, 255, 255));
+        messageScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        messageScrollPane.setAutoscrolls(true);
+        messageScrollPane.setMaximumSize(new java.awt.Dimension(740, 460));
+        messageScrollPane.setMinimumSize(new java.awt.Dimension(740, 460));
+        messageScrollPane.setPreferredSize(new java.awt.Dimension(740, 460));
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Sent Messages");
+        messageArea.setColumns(20);
+        messageArea.setRows(5);
+        messageArea.setWrapStyleWord(true);
+        messageArea.setBorder(null);
+        messageArea.setMaximumSize(new java.awt.Dimension(730, 450));
+        messageArea.setMinimumSize(new java.awt.Dimension(730, 450));
+        messageArea.setPreferredSize(new java.awt.Dimension(730, 450));
+        messageScrollPane.setViewportView(messageArea);
 
-        javax.swing.GroupLayout sentBoxLayout = new javax.swing.GroupLayout(sentBox);
-        sentBox.setLayout(sentBoxLayout);
-        sentBoxLayout.setHorizontalGroup(
-            sentBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sentBoxLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        sentBoxLayout.setVerticalGroup(
-            sentBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sentBoxLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addContainerGap(371, Short.MAX_VALUE))
-        );
+        sendButton.setText("Send");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
 
-        EmailHolderPanel.add(sentBox, "sent");
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Mail");
+        discardButton.setText("Discard");
+        discardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discardButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(EmailHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(messageScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(sendButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(discardButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(emailWindowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(toLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(toField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addCommittee))
+                            .addComponent(subjectField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(welcomeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
+                .addGap(17, 17, 17)
+                .addComponent(emailWindowLabel)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(toLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toField)
+                    .addComponent(addCommittee))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EmailHolderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(subjectField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(messageScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sendButton)
+                    .addComponent(discardButton)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void titleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldActionPerformed
+    private void subjectFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectFieldActionPerformed
 	// TODO add your handling code here:
-    }//GEN-LAST:event_titleFieldActionPerformed
+    }//GEN-LAST:event_subjectFieldActionPerformed
 
     private void toFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toFieldActionPerformed
 	// TODO add your handling code here:
@@ -244,7 +189,7 @@ public class EmailPanel extends javax.swing.JPanel {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
 	ArrayList<String> toList = new ArrayList<String>(Arrays.asList(toField.getText().split(";")));
 	try {
-	    Email.send(manager.getLogInManager().getLoggedInUser().getEmailAddress(), toList, titleField.getText(), messageArea.getText(), (manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName()));
+	    Email.send(manager.getLogInManager().getLoggedInUser().getEmailAddress(), toList, subjectField.getText(), messageArea.getText(), (manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName()));
 	} catch (Exception ex) {
 	    Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
 	}
@@ -252,7 +197,7 @@ public class EmailPanel extends javax.swing.JPanel {
 
     private void discardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discardButtonActionPerformed
 	toField.setText("");
-	titleField.setText("");
+	subjectField.setText("");
 	messageArea.setText("");
     }//GEN-LAST:event_discardButtonActionPerformed
 
@@ -281,21 +226,15 @@ public class EmailPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_addCommitteeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel EmailHolderPanel;
     private javax.swing.JButton addCommittee;
-    private javax.swing.JPanel composeBox;
     private javax.swing.JButton discardButton;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel emailWindowLabel;
     private javax.swing.JTextArea messageArea;
+    private javax.swing.JScrollPane messageScrollPane;
     private javax.swing.JButton sendButton;
-    private javax.swing.JPanel sentBox;
-    private javax.swing.JTextField titleField;
+    private javax.swing.JLabel subject;
+    private javax.swing.JTextField subjectField;
     private javax.swing.JTextField toField;
     private javax.swing.JLabel toLabel;
-    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
