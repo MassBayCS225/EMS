@@ -211,7 +211,15 @@ public class TaskPanel extends javax.swing.JPanel {
 
     private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed
             // TODO add your handling code here:
-        headerLabel.setText(JOptionPane.showInputDialog("New Name"));
+        String input = JOptionPane.showInputDialog("New Name");
+        if(input.trim().length() == 0)
+        {
+            headerLabel.setText("(none)");
+        }
+        else
+        {
+            headerLabel.setText(input);
+        }
     }//GEN-LAST:event_changeNameButtonActionPerformed
 
     private void addMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMemberButtonActionPerformed
