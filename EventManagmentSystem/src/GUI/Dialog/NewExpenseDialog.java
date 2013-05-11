@@ -5,6 +5,7 @@
 package GUI.Dialog;
 
 import BackEnd.EventSystem.Expense;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,14 @@ public class NewExpenseDialog extends javax.swing.JDialog {
     public Expense createExpense()
     {
         Expense e = new Expense();
-        e.setValue(new Double(amountField.getText()));
+        if(amountField.getText().trim().length() > 0)
+        {
+            e.setValue(new Double(amountField.getText()));
+        }
+        else
+        {
+            e.setValue(0.0);
+        }
         e.setDescription(descriptionField.getText());
         return e;
     }
@@ -128,8 +136,25 @@ public class NewExpenseDialog extends javax.swing.JDialog {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        confirm = true;
-        this.dispose();
+        Expense e = createExpense();
+        
+        if(e.getDescription().trim().isEmpty())
+        {
+            JOptionPane.showMessageDialog(
+                    null, "Expense must have a name, please enter a valid name.", "No Expense Name", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else if(e.getValue() == 0.0)
+        {
+            JOptionPane.showMessageDialog(
+                    null, "Expense must have a value, please enter a valid value.", "No Expense Value", JOptionPane.ERROR_MESSAGE);
+         }
+        
+        else
+        {
+            confirm = true;
+            this.dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
