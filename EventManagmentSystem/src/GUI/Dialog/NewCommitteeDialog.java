@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.Committee;
 import BackEnd.UserSystem.User;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -113,8 +114,15 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        confirm = true;
-        dispose();
+        if(nameField.getText().trim().length() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "Name can not be blank.", "Blank Name", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            confirm = true;
+            dispose();
+        }
         //JOptionPane.showMessageDialog(this, "Not implemented yet.");
     }//GEN-LAST:event_saveButtonActionPerformed
 
