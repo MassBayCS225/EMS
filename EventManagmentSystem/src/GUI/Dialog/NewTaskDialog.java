@@ -37,7 +37,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
     
     public Task createTask()
     {
-        task.setTitle(taskNameLabel.getText());
+        task.setTitle(taskNameField.getText());
         task.setDescription(descriptionTextArea.getText());
         return task;
     }
@@ -51,7 +51,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        taskNameLabel = new javax.swing.JTextField();
+        taskNameField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
@@ -128,7 +128,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(taskNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(dueDate)
@@ -148,7 +148,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(taskNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,7 +177,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
     {
         for (Task t : manager.getCommitteeManager().getSelectedCommittee().getTaskList())
         {
-            if(t.getTitle().toLowerCase().trim().equals(t.getTitle().toLowerCase().trim()))
+            if(t.getTitle().toLowerCase().trim().equals(taskNameField.getText().toLowerCase().trim()))
                 return false;
         }
         return true;
@@ -188,6 +188,10 @@ public class NewTaskDialog extends javax.swing.JDialog {
         if(!checkNames())
         {
             JOptionPane.showMessageDialog(null, "Duplicate task name, please choose another." , "Duplicate Task", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(taskNameField.getText().trim().length() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "No task name given, please enter a name for this task", "No Task Name", JOptionPane.ERROR_MESSAGE);
         }
         else
         {
@@ -266,6 +270,6 @@ public class NewTaskDialog extends javax.swing.JDialog {
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel startDate;
     private javax.swing.JLabel startDateLabel;
-    private javax.swing.JTextField taskNameLabel;
+    private javax.swing.JTextField taskNameField;
     // End of variables declaration//GEN-END:variables
 }
