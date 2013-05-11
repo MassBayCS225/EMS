@@ -24,7 +24,9 @@ public class TaskPanel extends javax.swing.JPanel {
     
     private Task task;
     private MainManager manager;
+    private DesignDefault dd;
     public TaskPanel() {
+        dd = DesignDefault.getInstance();
         initComponents();
         manager = MainManager.getInstance();
         task = manager.getTaskManager().getSelectedTask();
@@ -85,17 +87,18 @@ public class TaskPanel extends javax.swing.JPanel {
         addMemberButton = new javax.swing.JButton();
         removeMemberButton = new javax.swing.JButton();
 
-        headerLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        headerLabel.setFont(dd.getHeaderText());
+        headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         headerLabel.setText("Task Name");
 
         descriptionTextArea.setColumns(20);
-        descriptionTextArea.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        descriptionTextArea.setFont(dd.getStandardText());
         descriptionTextArea.setRows(5);
         descriptionTextArea.setText("Description...");
         descriptionTextArea.setMaximumSize(new java.awt.Dimension(204, 79));
         descriptionScrollPane.setViewportView(descriptionTextArea);
 
-        membersList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        membersList.setFont(dd.getStandardText());
         membersList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -107,16 +110,17 @@ public class TaskPanel extends javax.swing.JPanel {
         membersLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         membersLabel.setText("Members");
 
-        completeCheckBox.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        completeCheckBox.setFont(dd.getStandardText());
         completeCheckBox.setText("Is Complete");
 
-        startDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        startDateLabel.setFont(dd.getStandardText());
         startDateLabel.setText("Start Date: MM/DD/YY - 00:00 AM");
 
-        dueDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        dueDateLabel.setFont(dd.getStandardText());
         dueDateLabel.setText("Due Date : MM/DD/YY - 00:00 AM");
 
-        changeNameButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        changeNameButton.setFont(dd.getStandardText());
+        changeNameButton.setMinimumSize(dd.getBigButtonDimension());
         changeNameButton.setText("change");
         changeNameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,15 +128,17 @@ public class TaskPanel extends javax.swing.JPanel {
             }
         });
 
-        editTimeScheduleButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        editTimeScheduleButton.setFont(dd.getStandardText());
         editTimeScheduleButton.setText("edit");
+        editTimeScheduleButton.setMinimumSize(dd.getBigButtonDimension());
         editTimeScheduleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editTimeScheduleButtonActionPerformed(evt);
             }
         });
 
-        addMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addMemberButton.setFont(dd.getStandardText());
+        addMemberButton.setMaximumSize(dd.getSmallButtonDimension());
         addMemberButton.setText("+");
         addMemberButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +146,8 @@ public class TaskPanel extends javax.swing.JPanel {
             }
         });
 
-        removeMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        removeMemberButton.setFont(dd.getStandardText());
+        removeMemberButton.setMaximumSize(dd.getSmallButtonDimension());
         removeMemberButton.setText("-");
         removeMemberButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,11 +163,10 @@ public class TaskPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(headerLabel)
+                        .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(changeNameButton)
-                        .addGap(0, 117, Short.MAX_VALUE))
+                        .addGap(0, 149, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(startDateLabel)
@@ -186,7 +192,7 @@ public class TaskPanel extends javax.swing.JPanel {
                     .addComponent(headerLabel)
                     .addComponent(changeNameButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addComponent(membersLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

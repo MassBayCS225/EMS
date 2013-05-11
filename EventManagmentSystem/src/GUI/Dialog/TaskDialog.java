@@ -5,6 +5,7 @@
 package GUI.Dialog;
 
 import BackEnd.EventSystem.Task;
+import GUI.DesignDefault;
 import GUI.TaskPanel;
 import javax.swing.JOptionPane;
 
@@ -19,9 +20,11 @@ public class TaskDialog extends javax.swing.JDialog {
      */
     private boolean confirm;
     private TaskPanel taskPanel;
+    private DesignDefault dd;
     
     public TaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        dd = DesignDefault.getInstance();
         initComponents();
         taskPanel = new TaskPanel();
         taskPanelHolder.add(taskPanel);
@@ -30,6 +33,8 @@ public class TaskDialog extends javax.swing.JDialog {
         confirm = false;
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
+        this.setBackground(dd.getBGColor());
+        this.setTitle("Edit Task");
     }
    
     public boolean getConfirm()
@@ -54,7 +59,8 @@ public class TaskDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        saveButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        saveButton.setFont(dd.getStandardText());
+        saveButton.setMinimumSize(dd.getBigButtonDimension());
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +68,8 @@ public class TaskDialog extends javax.swing.JDialog {
             }
         });
 
-        closeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        closeButton.setFont(dd.getStandardText());
+        closeButton.setMinimumSize(dd.getBigButtonDimension());
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +87,7 @@ public class TaskDialog extends javax.swing.JDialog {
         );
         taskPanelHolderLayout.setVerticalGroup(
             taskPanelHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
+            .addGap(0, 324, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,7 +107,7 @@ public class TaskDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(taskPanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .addComponent(taskPanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)

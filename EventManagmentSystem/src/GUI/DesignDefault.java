@@ -31,6 +31,12 @@ public class DesignDefault {
     public void setPanelBGColor(Color c)
     { panelBGColor = c; }
     
+    private Color dialogBGColor = new Color(112,112,112);
+    public Color getDialogBGColor()
+    { return dialogBGColor; }
+    public void setDialogBGColor(Color c)
+    { dialogBGColor = c; }
+    
     private  Color listSelectionColor = new Color(0,240,240);
     public Color getListSelectionColor()
     { return listSelectionColor; }

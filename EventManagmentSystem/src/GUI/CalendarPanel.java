@@ -6,6 +6,7 @@ package GUI;
 
 import BackEnd.EventSystem.CalendarEvent;
 import BackEnd.EventSystem.SubEvent;
+import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import EMS_Database.DoesNotExistException;
@@ -14,7 +15,6 @@ import GUI.Dialog.NewSubEventDialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +26,7 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormatSymbols;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -105,9 +106,10 @@ public class CalendarPanel extends javax.swing.JPanel {
         detailsList.setListData(tempDetailsList);
         
         detailsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        detailsList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        detailsList.setLayoutOrientation(JList.VERTICAL_WRAP);
         detailsList.setVisibleRowCount(-1);
         detailsList.addListSelectionListener(new DetailsListSelectionListener());
+        detailsList.setCellRenderer(new listCellRenderer());
     }
     
     public void populateCalendar() {
@@ -411,19 +413,21 @@ public class CalendarPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nextYearButton)
-                            .addComponent(lastYearButton)
-                            .addComponent(yearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lastYearButton)
+                                .addComponent(yearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(calendarTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(detailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(editSubEventButton)
-                                .addComponent(removeEventButton))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(removeEventButton)))
                             .addComponent(addEventButton)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
@@ -460,7 +464,15 @@ public class CalendarPanel extends javax.swing.JPanel {
             nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), selectedSubEvent, true);
         }
         else
-            nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), new SubEvent(), true);
+        {
+            SubEvent se = new SubEvent();
+            TimeSchedule ts = new TimeSchedule();
+            CalendarEvent ce = (CalendarEvent)calendarTable.getModel().getValueAt(calendarTable.getSelectedRow(), calendarTable.getSelectedColumn());
+            ts.setStartDateTime(year, month+1, ce.getDay(), 0, 0);
+            ts.setEndDateTime(year, month+1,ce.getDay() , 0, 0);
+            se.setTimeSchedule(ts);
+            nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), se, true);
+        }
         nsed.setVisible(true);
         if(nsed.getConfirm())
         {
@@ -586,5 +598,14 @@ class DetailsListSelectionListener implements ListSelectionListener {
     public void valueChanged(ListSelectionEvent e) {
         selectedSubEvent = (SubEvent)detailsList.getSelectedValue();
     }
+    }
+
+    class listCellRenderer extends DefaultListCellRenderer {
+
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            SubEvent v = (SubEvent)value;
+      String text = "<html><p>" + v.getTitle() + "</p></html>";
+        return super.getListCellRendererComponent(detailsList, text, index, isSelected, cellHasFocus);
+        }
     }
 }
