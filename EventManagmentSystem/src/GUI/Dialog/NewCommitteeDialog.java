@@ -5,10 +5,9 @@
 package GUI.Dialog;
 
 import BackEnd.EventSystem.Committee;
+import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,6 +20,7 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
      */
     private User chair;
     private boolean confirm;
+    private MainManager manager;
     public NewCommitteeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,6 +28,7 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         confirm = false;
         chair = null;
+        manager = MainManager.getInstance();
     }
     
     public boolean getConfirm()
@@ -112,9 +113,25 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public boolean checkName()
+    {
+        for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList())
+        {
+            if(c.getTitle().toLowerCase().trim().equals(nameField.getText().toLowerCase().trim()))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        if(nameField.getText().trim().length() == 0)
+        if(!checkName())
+        {
+                JOptionPane.showMessageDialog(null, "Duplicate committee name, please choose another.", "Duplicate Committee", JOptionPane.ERROR_MESSAGE);           
+        }
+        else if(nameField.getText().trim().length() == 0)
         {
             JOptionPane.showMessageDialog(null, "Name can not be blank.", "Blank Name", JOptionPane.ERROR_MESSAGE);
         }
