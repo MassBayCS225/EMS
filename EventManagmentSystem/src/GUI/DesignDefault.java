@@ -85,19 +85,19 @@ public class DesignDefault {
      * FONTS
      * 
      ********************************************/
-    private Font smallText = new Font("Caldera", 0, 10);
+    private Font smallText = new Font("Candara", 0, 10);
     public Font getSmallText()
     { return smallText; }
     public void setSmallText(Font f)
     { smallText = f; }
     
-    private Font standardText = new Font("Caldera", 0, 12);
+    private Font standardText = new Font("Candara", 0, 12);
     public Font getStandardText()
     { return standardText; }
     public void setStandardText(Font f)
     { standardText = f; }
     
-    private Font headerText = new Font("Caldera", Font.BOLD, 18);
+    private Font headerText = new Font("Candara", Font.BOLD, 18);
     public Font getHeaderText()
     { return headerText; }
     public void setHeaderText(Font f)
@@ -106,6 +106,16 @@ public class DesignDefault {
     public DesignDefault()
     {
         
+    }
+    
+    public static class Main
+    {
+        public static DesignDefault instance = new DesignDefault();
+    }
+    
+    public static  DesignDefault getInstance()
+    {
+        return Main.instance;
     }
     
     public void resetDefault()
@@ -119,8 +129,8 @@ public class DesignDefault {
          sidePanelDimension = new Dimension(160,80);
          smallButtonDimension = new Dimension(25,25);
          bigButtonDimension = new Dimension(100,25);
-         smallText = new Font("Caldera", 0, 10);
-         standardText = new Font("Caldera", 0, 12);
-         headerText = new Font("Caldera", Font.BOLD, 18);
+         smallText = new Font("Candara", 0, 10);
+         standardText = new Font("Candara", 0, 12);
+         headerText = new Font("Candara", Font.BOLD, 18);
     }
 }

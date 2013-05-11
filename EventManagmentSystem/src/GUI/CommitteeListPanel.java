@@ -19,7 +19,9 @@ public class CommitteeListPanel extends javax.swing.JPanel {
      */
     private MainManager manager;
     private CommitteePanel committeePanel;
+    private DesignDefault dd;
     public CommitteeListPanel() {
+        dd = DesignDefault.getInstance();
         initComponents();
         manager = MainManager.getInstance();
         committeePanel = new CommitteePanel();
@@ -38,6 +40,8 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             cl.show(committeePanelHolder, "committee");
             committeeList.setSelectedIndex(0);
         }
+        this.setBackground(dd.getPanelBGColor());
+        this.setSize(dd.getPanelDimension());
     }
     
     public void updateInfo()
@@ -95,11 +99,12 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         });
         committeeListScrollPane.setViewportView(committeeList);
 
-        committeeListLabel.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        committeeListLabel.setFont(dd.getHeaderText());
         committeeListLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         committeeListLabel.setText("Committee List");
 
-        addCommitteeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addCommitteeButton.setFont(dd.getSmallText());
+        addCommitteeButton.setSize(dd.getSmallButtonDimension());
         addCommitteeButton.setText("+");
         addCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +112,8 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             }
         });
 
-        removeCommitteeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        removeCommitteeButton.setFont(dd.getSmallText());
+        removeCommitteeButton.setSize(dd.getSmallButtonDimension());
         removeCommitteeButton.setText("-");
         removeCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,7 +169,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCommitteeButton)
                     .addComponent(removeCommitteeButton))
-                .addGap(0, 166, Short.MAX_VALUE))
+                .addGap(0, 170, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

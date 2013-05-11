@@ -68,7 +68,7 @@
                   <Component id="addCommitteeButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="removeCommitteeButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="166" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="170" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -111,8 +111,8 @@
     </Container>
     <Component class="javax.swing.JLabel" name="committeeListLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Candara" size="14" style="0"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="dd.getHeaderText()" type="code"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Committee List"/>
@@ -120,8 +120,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="addCommitteeButton">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Candara" size="11" style="0"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="addCommitteeButton.setSize(dd.getSmallButtonDimension());">
+          <Connection code="dd.getSmallText()" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="+"/>
       </Properties>
@@ -131,8 +131,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="removeCommitteeButton">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Candara" size="11" style="0"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="removeCommitteeButton.setSize(dd.getSmallButtonDimension());">
+          <Connection code="dd.getSmallText()" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="-"/>
       </Properties>
