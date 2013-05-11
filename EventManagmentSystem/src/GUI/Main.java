@@ -5,13 +5,11 @@
 package GUI;
 
 import BackEnd.EventSystem.Committee;
-import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
-import java.awt.BorderLayout;
+import GUI.Reportable.NewReportableDialog;
 import java.awt.CardLayout;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -22,10 +20,12 @@ public class Main extends javax.swing.JPanel {
     
     private MainManager manager;
     private UserManagementPanel ump;
+    private DesignDefault dd;
     /**
      * Creates new form Main
      */
     public Main() throws PrivilegeInsufficientException {
+        dd = DesignDefault.getInstance();
         initComponents();
         MainPanel mainPanel = new MainPanel();
         BudgetPanel bp = new BudgetPanel();
@@ -38,7 +38,8 @@ public class Main extends javax.swing.JPanel {
         SwitchingPanelHolder.add(bp, "budget");
         SwitchingPanelHolder.add(ump, "userManagement");
         manager = MainManager.getInstance();
-        setSize(960, 680);
+        this.setSize(dd.getFrameDimension());
+        this.setBackground(dd.getBGColor());
         updateInfo();
     }
     
@@ -97,11 +98,12 @@ public class Main extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(960, 680));
         setPreferredSize(new java.awt.Dimension(960, 680));
 
+        tasksPanel.setBackground(dd.getPanelBGColor());
         tasksPanel.setMaximumSize(new java.awt.Dimension(160, 80));
         tasksPanel.setMinimumSize(new java.awt.Dimension(160, 80));
         tasksPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
-        jLabel5.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel5.setFont(dd.getStandardText());
         jLabel5.setText("Tasks Progress");
 
         org.jdesktop.layout.GroupLayout tasksPanelLayout = new org.jdesktop.layout.GroupLayout(tasksPanel);
@@ -113,7 +115,7 @@ public class Main extends javax.swing.JPanel {
                 .add(tasksPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(tasksPanelLayout.createSequentialGroup()
                         .add(jLabel5)
-                        .add(0, 51, Short.MAX_VALUE))
+                        .add(0, 68, Short.MAX_VALUE))
                     .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -124,16 +126,19 @@ public class Main extends javax.swing.JPanel {
                 .add(jLabel5)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
+        committeesPanel.setBackground(dd.getPanelBGColor());
         committeesPanel.setMaximumSize(new java.awt.Dimension(160, 80));
         committeesPanel.setMinimumSize(new java.awt.Dimension(160, 80));
         committeesPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
-        jLabel6.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel6.setFont(dd.getStandardText());
         jLabel6.setText("Committees");
 
+        changeCommitteesButton.setFont(dd.getStandardText());
+        changeCommitteesButton.setMinimumSize(dd.getBigButtonDimension());
         changeCommitteesButton.setText("Manage");
         changeCommitteesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,17 +163,20 @@ public class Main extends javax.swing.JPanel {
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel6)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(changeCommitteesButton))
         );
 
+        participantsPanel.setBackground(dd.getPanelBGColor());
         participantsPanel.setMaximumSize(new java.awt.Dimension(160, 80));
         participantsPanel.setMinimumSize(new java.awt.Dimension(160, 80));
         participantsPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
-        jLabel7.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel7.setFont(dd.getStandardText());
         jLabel7.setText("Participants");
 
+        changeUserManagementButton.setFont(dd.getStandardText());
+        changeUserManagementButton.setMinimumSize(dd.getBigButtonDimension());
         changeUserManagementButton.setText("Manage");
         changeUserManagementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,18 +201,21 @@ public class Main extends javax.swing.JPanel {
             .add(participantsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel7)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(changeUserManagementButton))
         );
 
+        reportsPanel.setBackground(dd.getPanelBGColor());
         reportsPanel.setMaximumSize(new java.awt.Dimension(160, 80));
         reportsPanel.setMinimumSize(new java.awt.Dimension(160, 80));
         reportsPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
-        jLabel4.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel4.setFont(dd.getStandardText());
         jLabel4.setText("Reports");
 
+        jButton6.setFont(dd.getStandardText());
         jButton6.setText("View");
+        jButton6.setMinimumSize(dd.getBigButtonDimension());
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -228,10 +239,11 @@ public class Main extends javax.swing.JPanel {
             .add(reportsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel4)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(jButton6))
         );
 
+        budgetPanel.setBackground(dd.getPanelBGColor());
         budgetPanel.setMaximumSize(new java.awt.Dimension(160, 160));
         budgetPanel.setMinimumSize(new java.awt.Dimension(160, 160));
         budgetPanel.setPreferredSize(new java.awt.Dimension(160, 160));
@@ -243,7 +255,9 @@ public class Main extends javax.swing.JPanel {
 
         jLabel3.setText("Expenses:");
 
+        changeBudgetButton.setFont(dd.getStandardText());
         changeBudgetButton.setText("Details");
+        changeBudgetButton.setMinimumSize(dd.getBigButtonDimension());
         changeBudgetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeBudgetButtonActionPerformed(evt);
@@ -278,11 +292,14 @@ public class Main extends javax.swing.JPanel {
                 .add(changeBudgetButton))
         );
 
+        emailPanel.setBackground(dd.getPanelBGColor());
         emailPanel.setMaximumSize(new java.awt.Dimension(160, 80));
         emailPanel.setMinimumSize(new java.awt.Dimension(160, 80));
         emailPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
+        changeEmailButton.setFont(dd.getStandardText());
         changeEmailButton.setText("Email");
+        changeEmailButton.setMinimumSize(dd.getBigButtonDimension());
         changeEmailButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeEmailButtonActionPerformed(evt);
@@ -391,6 +408,8 @@ public class Main extends javax.swing.JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        NewReportableDialog nrd = new NewReportableDialog(null, true);
+        nrd.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void changeCommitteesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCommitteesButtonActionPerformed
