@@ -199,27 +199,34 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
     private void removeCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCommitteeButtonActionPerformed
         // TODO add your handling code here:
-        Committee c = (Committee)committeeList.getModel().getElementAt(committeeList.getSelectedIndex());
-        //System.out.println(c);
-        try
+        if(committeeList.getSelectedIndex() >=0)
         {
-            manager.getEventManager().deleteCommittee(c, manager.getUserManager().getSelectedUser());
-        }
-        catch (Exception e)
-        {
-                System.out.println(e);
-                e.printStackTrace();
-        }
-        int lastSelect = committeeList.getSelectedIndex();
-        updateInfo();
-        if(committeeList.getModel().getSize() > 0)
-        {
-            if(lastSelect > 1)
-            committeeList.setSelectedIndex(lastSelect-1);
-            else
+            Committee c = (Committee)committeeList.getModel().getElementAt(committeeList.getSelectedIndex());
+            //System.out.println(c);
+            try
             {
-                 committeeList.setSelectedIndex(0);
+                manager.getEventManager().deleteCommittee(c, manager.getUserManager().getSelectedUser());
             }
+            catch (Exception e)
+            {
+                    System.out.println(e);
+                    e.printStackTrace();
+            }
+            int lastSelect = committeeList.getSelectedIndex();
+            updateInfo();
+            if(committeeList.getModel().getSize() > 0)
+            {
+                if(lastSelect > 1)
+                committeeList.setSelectedIndex(lastSelect-1);
+                else
+                {
+                     committeeList.setSelectedIndex(0);
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Select a committee first.", "No Committee Selected.", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removeCommitteeButtonActionPerformed
 
