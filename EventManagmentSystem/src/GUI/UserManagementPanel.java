@@ -107,6 +107,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
         stateField = new javax.swing.JTextField();
         zipcodeField = new javax.swing.JTextField();
         countryField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         ChangeUserPanel = new javax.swing.JPanel();
         changeInfoButton = new javax.swing.JButton();
         changeUserButton = new javax.swing.JButton();
@@ -197,13 +198,20 @@ public class UserManagementPanel extends javax.swing.JPanel {
 
         countryField.setText("Country");
 
+        jButton1.setText("Save Changes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveChangesButtonPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ChangeInfoPanelLayout = new javax.swing.GroupLayout(ChangeInfoPanel);
         ChangeInfoPanel.setLayout(ChangeInfoPanelLayout);
         ChangeInfoPanelLayout.setHorizontalGroup(
             ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
                         .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lastNameLabel)
@@ -237,7 +245,10 @@ public class UserManagementPanel extends javax.swing.JPanel {
                                 .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(addressButton))))
-                    .addComponent(passwordButton))
+                    .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
+                        .addComponent(passwordButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         ChangeInfoPanelLayout.setVerticalGroup(
@@ -278,7 +289,9 @@ public class UserManagementPanel extends javax.swing.JPanel {
                     .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addressButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordButton)
+                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordButton)
+                    .addComponent(jButton1))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -469,6 +482,33 @@ public class UserManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addressButtonActionPerformed
 
+    private void saveChangesButtonPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonPerformed
+        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(null, "Do you want to save these changes?");
+        if(choice == JOptionPane.YES_OPTION)
+        {
+            PhoneNumber tempPhoneNumber = new PhoneNumber(phoneNumberField.getText());
+            Address tempAddress = new Address(streetField.getText(), cityField.getText(), stateField.getText(), zipcodeField.getText(), countryField.getText());
+            try 
+            {
+                manager.getUserManager().editFirstName(firstNameField.getText(), manager.getLogInManager().getLoggedInUser());
+                manager.getUserManager().editLastName(lastNameField.getText(), manager.getLogInManager().getLoggedInUser());
+                manager.getUserManager().editEmailAddress(emailField.getText(), manager.getLogInManager().getLoggedInUser());
+                manager.getUserManager().editPhoneNumber(tempPhoneNumber, manager.getLogInManager().getLoggedInUser());
+                manager.getUserManager().editAddress(tempAddress, manager.getLogInManager().getLoggedInUser());
+            } 
+            catch (PrivilegeInsufficientException ex) 
+            {
+                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+            catch (DoesNotExistException ex) 
+            {
+                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            updateLabels();
+        }
+    }//GEN-LAST:event_saveChangesButtonPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChangeInfoPanel;
     private javax.swing.JPanel ChangeUserPanel;
@@ -486,6 +526,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
     private javax.swing.JButton firstNameButton;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton lastNameButton;
     private javax.swing.JTextField lastNameField;
