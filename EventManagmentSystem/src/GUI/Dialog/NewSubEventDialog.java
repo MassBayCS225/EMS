@@ -5,6 +5,7 @@
 package GUI.Dialog;
 
 import BackEnd.EventSystem.SubEvent;
+import BackEnd.ManagerSystem.MainManager;
 import GUI.SubEventPanel;
 
 /**
@@ -17,11 +18,12 @@ public class NewSubEventDialog extends javax.swing.JDialog {
      * Creates new form NewSubEventDialog
      */
     
-    private SubEventPanel sep = new SubEventPanel();
+    private SubEventPanel sep;
     private boolean confirm;
     
-    public NewSubEventDialog(java.awt.Frame parent, boolean modal) {
+    public NewSubEventDialog(java.awt.Frame parent, SubEvent s, boolean modal) {
         super(parent, modal);
+        sep = new SubEventPanel(s);
         initComponents();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
@@ -149,11 +151,12 @@ public class NewSubEventDialog extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(NewSubEventDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        final MainManager manager;
+        manager = MainManager.getInstance();
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                NewSubEventDialog dialog = new NewSubEventDialog(new javax.swing.JFrame(), true);
+                NewSubEventDialog dialog = new NewSubEventDialog(new javax.swing.JFrame(), manager.getSubEventManager().getSelectedSubEvent(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

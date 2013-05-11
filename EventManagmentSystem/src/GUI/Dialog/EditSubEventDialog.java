@@ -25,7 +25,6 @@ public class EditSubEventDialog extends javax.swing.JDialog {
     private boolean confirm;
     private SubEvent selectedSubEvent;
     private MainManager manager;
-    private SubEventPanel sep = new SubEventPanel();
     private TimeSchedule tempTimeSchedule;
     /**
      * Creates new form EditSubEventDialog
