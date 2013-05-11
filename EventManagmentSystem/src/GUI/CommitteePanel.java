@@ -14,6 +14,7 @@ import BackEnd.UserSystem.User;
 import GUI.Dialog.BudgetDialog;
 import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTaskDialog;
+import GUI.Reportable.NewReportableDialog;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Calendar;
@@ -95,6 +96,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         removeMemberButton = new javax.swing.JButton();
         addToBudgetButton = new javax.swing.JButton();
         removeMemberFromBudgetButton = new javax.swing.JButton();
+        reportButton = new javax.swing.JButton();
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\edit1.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -267,6 +269,15 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
+        reportButton.setFont(dd.getStandardText());
+        reportButton.setMinimumSize(dd.getBigButtonDimension());
+        reportButton.setText("View Report");
+        reportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,7 +296,6 @@ public class CommitteePanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(budgetButton)
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(addMemberButton)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -293,8 +303,12 @@ public class CommitteePanel extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(addToBudgetButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(removeMemberFromBudgetButton)))
-                                .addGap(70, 70, 70)
+                                        .addComponent(removeMemberFromBudgetButton))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(budgetButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(reportButton)))
+                                .addGap(50, 50, 50)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,7 +338,8 @@ public class CommitteePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headLabel)
                     .addComponent(headNameLabel)
-                    .addComponent(budgetButton))
+                    .addComponent(budgetButton)
+                    .addComponent(reportButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(committeeHeadChangeButton)
@@ -809,6 +824,12 @@ if(memberList.getSelectedIndex() >= 0)
         }
     }//GEN-LAST:event_addBudgetAccessLabelMouseClicked
 
+    private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
+        // TODO add your handling code here:
+        NewReportableDialog nrd = new NewReportableDialog(null,true);
+        nrd.setVisible(true);
+    }//GEN-LAST:event_reportButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addBudgetAccessLabel;
     private javax.swing.JButton addMemberButton;
@@ -832,6 +853,7 @@ if(memberList.getSelectedIndex() >= 0)
     private javax.swing.JLabel removeMemberLabel;
     private javax.swing.JButton removeTaskButton;
     private javax.swing.JLabel removeTaskLabel;
+    private javax.swing.JButton reportButton;
     private javax.swing.JList taskList;
     private javax.swing.JProgressBar taskProgressBar;
     private javax.swing.JScrollPane taskScrollPane;
