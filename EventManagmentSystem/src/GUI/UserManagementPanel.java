@@ -29,15 +29,18 @@ import javax.swing.event.ListSelectionListener;
 public class UserManagementPanel extends javax.swing.JPanel {
     private MainManager manager;
     private JList userList;
+    private DesignDefault dd;
     /**
      * Creates new form UserManagementPanel
      */
     public UserManagementPanel() {
+        dd = DesignDefault.getInstance();
         initComponents();
         ChangeUserPanel.setLayout(new BorderLayout());
         manager = MainManager.getInstance();
         updateLabels();
         initUserList();
+        this.setBackground(dd.getPanelBGColor());
     }
     
     public void initUserList()
@@ -123,19 +126,19 @@ public class UserManagementPanel extends javax.swing.JPanel {
 
         ChangeInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        firstNameLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        firstNameLabel.setFont(dd.getHeaderText());
         firstNameLabel.setText("First name: ");
 
-        lastNameLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lastNameLabel.setFont(dd.getHeaderText());
         lastNameLabel.setText("Last name: ");
 
-        emailLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        emailLabel.setFont(dd.getHeaderText());
         emailLabel.setText("Email:");
 
-        phoneNumberLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        phoneNumberLabel.setFont(dd.getHeaderText());
         phoneNumberLabel.setText("Phone #:");
 
-        addressLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        addressLabel.setFont(dd.getHeaderText());
         addressLabel.setText("Address:");
 
         firstNameField.setText("First Name");
@@ -183,7 +186,9 @@ public class UserManagementPanel extends javax.swing.JPanel {
             }
         });
 
+        passwordButton.setFont(dd.getStandardText());
         passwordButton.setText("Change Password");
+        passwordButton.setMinimumSize(dd.getBigButtonDimension());
         passwordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordButtonActionPerformed(evt);
@@ -198,7 +203,9 @@ public class UserManagementPanel extends javax.swing.JPanel {
 
         countryField.setText("Country");
 
+        jButton1.setFont(dd.getStandardText());
         jButton1.setText("Save Changes");
+        jButton1.setMinimumSize(dd.getBigButtonDimension());
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveChangesButtonPerformed(evt);
@@ -249,7 +256,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
                         .addComponent(passwordButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         ChangeInfoPanelLayout.setVerticalGroup(
             ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,26 +317,29 @@ public class UserManagementPanel extends javax.swing.JPanel {
 
         UserInfoPanelHolder.add(ChangeUserPanel, "changeUser");
 
+        changeInfoButton.setFont(dd.getStandardText());
         changeInfoButton.setText("Edit Account Info");
+        changeInfoButton.setMinimumSize(dd.getBigButtonDimension());
         changeInfoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeInfoButtonActionPerformed(evt);
             }
         });
 
+        changeUserButton.setFont(dd.getStandardText());
         changeUserButton.setText("Select Another User");
+        changeUserButton.setMinimumSize(dd.getBigButtonDimension());
         changeUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeUserButtonActionPerformed(evt);
             }
         });
 
-        currentUserLabel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        currentUserLabel.setFont(dd.getStandardText());
         currentUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         currentUserLabel.setText("Current User: <UserName>");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(dd.getHeaderText());
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("User Management");
 
@@ -355,7 +365,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(changeInfoButton)
                     .addComponent(changeUserButton)
