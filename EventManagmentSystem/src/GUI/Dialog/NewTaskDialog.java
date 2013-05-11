@@ -6,6 +6,8 @@ package GUI.Dialog;
 
 import BackEnd.EventSystem.Task;
 import BackEnd.EventSystem.TimeSchedule;
+import BackEnd.ManagerSystem.MainManager;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +20,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
      */
     
     private boolean confirm;
+    private MainManager manager;
     Task task;
     public NewTaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -26,6 +29,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         confirm = false;
         task = new Task();
+        manager = MainManager.getInstance();
     }
     
     public boolean getConfirm()
@@ -169,10 +173,27 @@ public class NewTaskDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public boolean checkNames()
+    {
+        for (Task t : manager.getCommitteeManager().getSelectedCommittee().getTaskList())
+        {
+            if(t.getTitle().toLowerCase().trim().equals(t.getTitle().toLowerCase().trim()))
+                return false;
+        }
+        return true;
+    }
+    
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        confirm = true;
-        dispose();
+        if(!checkNames())
+        {
+            JOptionPane.showMessageDialog(null, "Duplicate task name, please choose another." , "Duplicate Task", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            confirm = true;
+            dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
