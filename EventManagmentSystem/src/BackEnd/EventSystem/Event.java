@@ -92,6 +92,43 @@ public class Event extends ScheduleItem implements Reportable {
         return participantList;
     }
     
+    public ArrayList<User> getChairList() {
+        ArrayList<User> chairList = new ArrayList<User>();
+        
+        for (Committee c : getCommitteeList())
+            if (c.getChair() != null)
+                chairList.add(c.getChair());
+        
+        return chairList;
+    }
+    
+    public ArrayList<User> getCommitteeBudgetMemberList() {
+        ArrayList<User> budgetMembers = new ArrayList<User>();
+        
+        for (Committee c : getCommitteeList()) {
+            for (User u : c.getBudgetAccessList()) {
+                if (!budgetMembers.contains(u))
+                    budgetMembers.add(u);
+            }
+        }
+        
+        return budgetMembers;
+    }
+    
+    public ArrayList<User> getCommitteeMemberList() {
+        ArrayList<User> committeeMembers = new ArrayList<User>();
+        
+        for (Committee c : getCommitteeList()) {
+            for (User u : c.getMemberList()) {
+                // User could be part of more than one committee.
+                if (!committeeMembers.contains(u))
+                    committeeMembers.add(u);
+            }
+        }
+        
+        return committeeMembers;
+    }
+    
     public boolean equals(Event event) {
         if (this.getEVENT_ID() == event.getEVENT_ID()
                 && this.getOrganizerList().equals(event.getOrganizerList())

@@ -4,6 +4,8 @@
  */
 package GUI;
 import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.Committee;
+import BackEnd.UserSystem.User;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.LoginDialog;
@@ -148,13 +150,34 @@ public class Home extends javax.swing.JFrame {
                 add(main);
                 activePanel = (Component)main;
             }
-            /*else if (PrivilegeManager.hasEventPrivilege(manager.getUserManager().getSelectedUser(), 
-                    manager.getEventManager().getSelectedEvent())){
-                m.getUserManagementPanel().setNonAdminView();
-                add(m);
-            }*/
-            else {
+            else if (manager.getEventManager().getSelectedEvent().getOrganizerList().contains(
+                    manager.getLogInManager().getLoggedInUser())) {
+                main.getUserManagementPanel().setNonAdminView();
+                add(main);
+                activePanel = (Component)main;
+            }
+            else if (manager.getEventManager().getSelectedEvent().getChairList().contains(
+                    manager.getLogInManager().getLoggedInUser())) {
+                
+                // Will edit.
+                for (Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()) {
+                    if (c.getChair().equals(manager.getLogInManager().getLoggedInUser()))
+                        committeeMain.getCommitteePanel().setCommittee(c);
+                }
+                
                 committeeMain.getCommitteePanel().setChairView();
+                add(committeeMain);
+                activePanel = (Component)committeeMain;
+            }
+            else /*if (manager.getEventManager().getSelectedEvent().getChairList().contains(
+                    manager.getLogInManager().getLoggedInUser()))*/ {
+                
+               /* for (Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()) {
+                    if (c.getBudgetAccessList().contains(manager.getLogInManager().getLoggedInUser()))
+                        committeeMain.getCommitteePanel().setCommittee(c);
+                }*/
+                
+                committeeMain.getCommitteePanel().setBudgetAccessMemberView();
                 add(committeeMain);
                 activePanel = (Component)committeeMain;
             }
