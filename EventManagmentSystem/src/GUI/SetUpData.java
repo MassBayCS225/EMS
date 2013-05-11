@@ -163,7 +163,6 @@ public class SetUpData {
                             "new test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
                 }
             }
-            System.out.println(manager.getEventManager().getSelectedEvent().getCommitteeList().get(0) + manager.getEventManager().getSelectedEvent().getCommitteeList().get(0).getBudget().toString());
             System.out.println("Committees created.");
         } catch (Exception ex3) {
             System.out.println("Can't add committees.");
