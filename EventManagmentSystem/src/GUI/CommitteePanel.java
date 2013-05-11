@@ -27,14 +27,17 @@ public class CommitteePanel extends javax.swing.JPanel {
      * Creates new form CommitteePanel
      */
     private MainManager manager;
+    private DesignDefault dd;
     
     public CommitteePanel() {
+        dd = DesignDefault.getInstance();
         initComponents();
         manager = MainManager.getInstance();
         MembersCellRenderer memberRenderer = new MembersCellRenderer();
         TasksCellRenderer taskRenderer = new TasksCellRenderer();
         memberList.setCellRenderer(memberRenderer);
         taskList.setCellRenderer(taskRenderer);
+        this.setBackground(dd.getPanelBGColor());
         
     }
 
@@ -145,7 +148,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(153, 204, 255));
         setMinimumSize(new java.awt.Dimension(387, 327));
 
-        headerLabel.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        headerLabel.setFont(dd.getHeaderText());
         headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         headerLabel.setText("Committee Name");
         headerLabel.setPreferredSize(new java.awt.Dimension(200, 25));
@@ -163,13 +166,13 @@ public class CommitteePanel extends javax.swing.JPanel {
         });
         memberScrollPane.setViewportView(memberList);
 
-        membersLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        membersLabel.setFont(dd.getStandardText());
         membersLabel.setText("Members");
 
-        headLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        headLabel.setFont(dd.getHeaderText());
         headLabel.setText("Head: ");
 
-        headNameLabel.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
+        headNameLabel.setFont(dd.getHeaderText());
         headNameLabel.setText("committee head");
 
         taskList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
@@ -185,12 +188,13 @@ public class CommitteePanel extends javax.swing.JPanel {
         });
         taskScrollPane.setViewportView(taskList);
 
-        tasksLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        tasksLabel.setFont(dd.getStandardText());
         tasksLabel.setText("Tasks");
 
         taskProgressBar.setOrientation(1);
 
-        budgetButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        budgetButton.setFont(dd.getStandardText());
+        budgetButton.setSize(dd.getBigButtonDimension());
         budgetButton.setText("View Budget");
         budgetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,7 +204,8 @@ public class CommitteePanel extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        committeeHeadChangeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        committeeHeadChangeButton.setFont(dd.getStandardText());
+        committeeHeadChangeButton.setSize(dd.getBigButtonDimension());
         committeeHeadChangeButton.setText("change");
         committeeHeadChangeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +213,8 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
-        removeTaskButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        removeTaskButton.setFont(dd.getSmallText());
+        removeTaskButton.setSize(dd.getSmallButtonDimension());
         removeTaskButton.setText("-");
         removeTaskButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +222,8 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
-        addTaskButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addTaskButton.setFont(dd.getSmallText());
+        addTaskButton.setSize(dd.getSmallButtonDimension());
         addTaskButton.setText("+");
         addTaskButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +231,8 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
-        addMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addMemberButton.setFont(dd.getSmallText());
+        addMemberButton.setSize(dd.getSmallButtonDimension());
         addMemberButton.setText("+");
         addMemberButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,7 +240,8 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
-        removeMemberButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        removeMemberButton.setFont(dd.getSmallText());
+        removeMemberButton.setSize(dd.getSmallButtonDimension());
         removeMemberButton.setText("-");
         removeMemberButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +249,8 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
-        addToBudgetButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        addToBudgetButton.setFont(dd.getSmallText());
+        addToBudgetButton.setSize(dd.getSmallButtonDimension());
         addToBudgetButton.setText("+");
         addToBudgetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,6 +258,8 @@ public class CommitteePanel extends javax.swing.JPanel {
             }
         });
 
+        removeMemberFromBudgetButton.setFont(dd.getSmallText());
+        removeMemberFromBudgetButton.setSize(dd.getSmallButtonDimension());
         removeMemberFromBudgetButton.setText("-");
         removeMemberFromBudgetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,7 +292,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                                             .addComponent(removeMemberButton)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(addToBudgetButton)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(removeMemberFromBudgetButton)))
                                 .addGap(70, 70, 70)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +318,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -843,6 +855,7 @@ if(memberList.getSelectedIndex() >= 0)
                                                    boolean isSelected,
                                                    boolean cellHasFocus) 
           {
+              this.setFont(dd.getStandardText());
               if(value instanceof User)
               {
                 User u = (User)value;
@@ -864,7 +877,7 @@ if(memberList.getSelectedIndex() >= 0)
                 }
                 if(isSelected)
                 {
-                     setBackground(Color.LIGHT_GRAY);
+                     setBackground(dd.getListSelectionColor());
                 }
               }
               return this;
@@ -883,6 +896,7 @@ if(memberList.getSelectedIndex() >= 0)
                                                    boolean isSelected,
                                                    boolean cellHasFocus) 
           {
+              this.setFont(dd.getStandardText());
               if(value instanceof Task)
               {
                 Task t = (Task)value;
@@ -898,7 +912,7 @@ if(memberList.getSelectedIndex() >= 0)
                 }
                 if(isSelected)
                 {
-                     setBackground(Color.LIGHT_GRAY);
+                     setBackground(dd.getListSelectionColor());
                 }
               }
               return this;
