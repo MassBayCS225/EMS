@@ -380,6 +380,37 @@ public class CommitteePanel extends javax.swing.JPanel {
         bd.setVisible(true);
     }//GEN-LAST:event_budgetButtonActionPerformed
 
+    public void addTaskToList(Task t)
+    {
+                TimeSchedule ts = t.getTimeSchedule();
+                User u = manager.getLogInManager().getLoggedInUser();
+                Event e = manager.getEventManager().getSelectedEvent();
+                Committee c = manager.getCommitteeManager().getSelectedCommittee();
+                try
+                {
+                    manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
+                    manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
+                    manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
+                    manager.getTaskManager().editTimeSchedule(ts, u, e, c);
+//                    int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
+//                    int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
+//                    int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+//                    int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
+//                    int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
+//                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute, u, e, c);
+//                    year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
+//                    month = ts.getEndDateTimeCalendar().get(Calendar.MONTH)+1;
+//                    day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
+//                    hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
+//                    minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);  
+//                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute, u, e, c);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+    }
+    
     private void taskListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taskListMouseClicked
         // TODO add your handling code here:
         if(evt.getClickCount() == 2)
@@ -390,37 +421,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             if(td.getConfirm())
             {
                 //UPDATE ALL TASK INFO
-                Task t = td.createTask();
-                User u = manager.getLogInManager().getLoggedInUser();
-                Event e = manager.getEventManager().getSelectedEvent();
-                Committee c = manager.getCommitteeManager().getSelectedCommittee();
-                try
-                {
-                    manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
-                    manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
-                    manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
-//                    for(User us : t.getResponsibleList())
-//                    {
-//                        manager.getTaskManager().addResponsible(us, u, e, c);
-//                    }
-                    TimeSchedule ts = t.getTimeSchedule();
-                    int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
-                    int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
-                    int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
-                    int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
-                    int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
-                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute, u, e, c);
-                    year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
-                    month = ts.getEndDateTimeCalendar().get(Calendar.MONTH)+1;
-                    day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
-                    hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
-                    minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);  
-                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute, u, e, c);
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                }
+                addTaskToList(td.createTask());
             }
         updateInfo();
         }
