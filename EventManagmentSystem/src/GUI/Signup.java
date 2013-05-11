@@ -5,6 +5,7 @@
 package GUI;
 
 import BackEnd.ManagerSystem.MainManager;
+import BackEnd.ManagerSystem.ManagerExceptions.DuplicateEmailException;
 import BackEnd.ManagerSystem.UserManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
@@ -77,11 +78,11 @@ public class Signup extends javax.swing.JPanel {
         cancelButton = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
         reenterPassWordField = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        nameAsterisk = new javax.swing.JLabel();
+        emailAsterisk = new javax.swing.JLabel();
+        passwordAsterisk = new javax.swing.JLabel();
+        reEnterPasswordAsterisk = new javax.swing.JLabel();
+        requiredFields = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -216,15 +217,15 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("*");
+        nameAsterisk.setText("*");
 
-        jLabel2.setText("*");
+        emailAsterisk.setText("*");
 
-        jLabel3.setText("*");
+        passwordAsterisk.setText("*");
 
-        jLabel4.setText("*");
+        reEnterPasswordAsterisk.setText("*");
 
-        jLabel5.setText("* Indicates required fields");
+        requiredFields.setText("* Indicates required fields");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -238,7 +239,7 @@ public class Signup extends javax.swing.JPanel {
                     .add(layout.createSequentialGroup()
                         .add(nameLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(nameAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(phoneNumberLabel)
                     .add(addressLabel)
                     .add(layout.createSequentialGroup()
@@ -263,20 +264,20 @@ public class Signup extends javax.swing.JPanel {
                             .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                                 .add(emailLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(emailAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                                 .add(passwordLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(passwordAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                                 .add(reenterPasswordLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(reEnterPasswordAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(org.jdesktop.layout.GroupLayout.LEADING, emailField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, passwordField)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, reenterPassWordField)))
                     .add(layout.createSequentialGroup()
-                        .add(jLabel5)
+                        .add(requiredFields)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(cancelButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -298,10 +299,10 @@ public class Signup extends javax.swing.JPanel {
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                 .add(emailLabel)
-                                .add(jLabel2))
+                                .add(emailAsterisk))
                             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                 .add(nameLabel)
-                                .add(jLabel1)))
+                                .add(nameAsterisk)))
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -309,13 +310,13 @@ public class Signup extends javax.swing.JPanel {
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 50, Short.MAX_VALUE)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(passwordLabel)
-                                    .add(jLabel3))
+                                    .add(passwordAsterisk))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(passwordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(reenterPasswordLabel)
-                                    .add(jLabel4))
+                                    .add(reEnterPasswordAsterisk))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(reenterPassWordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -326,7 +327,7 @@ public class Signup extends javax.swing.JPanel {
                                             .add(cancelButton)))
                                     .add(layout.createSequentialGroup()
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                        .add(jLabel5)))
+                                        .add(requiredFields)))
                                 .add(269, 269, 269))
                             .add(layout.createSequentialGroup()
                                 .add(firstNameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -417,10 +418,13 @@ public class Signup extends javax.swing.JPanel {
                 if (userManager.getUserList().isEmpty()) {
                     newUser.setAdminPrivilege(true);
                 }
-                newUser = userManager.createUser(newUser);
-                userManager.getUserList().add(newUser);
-                parentDialog.dispose();
-
+                try {
+                    newUser = userManager.createUser(newUser);
+                    userManager.getUserList().add(newUser);
+                    parentDialog.dispose();
+                } catch (DuplicateEmailException error) {
+                    JOptionPane.showMessageDialog(this, "Email address already exists in the system");
+                }
             } catch (PasswordMismatchError error) {
                 JOptionPane.showMessageDialog(this, "Passwords do not match.");
             } catch (IllegalCharacterException error) {
@@ -541,24 +545,24 @@ public class Signup extends javax.swing.JPanel {
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField cityField;
     private javax.swing.JTextField countryField;
+    private javax.swing.JLabel emailAsterisk;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel informationLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField lastNameField;
+    private javax.swing.JLabel nameAsterisk;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel passwordAsterisk;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JTextField phoneNumberField;
     private javax.swing.JLabel phoneNumberLabel;
+    private javax.swing.JLabel reEnterPasswordAsterisk;
     private javax.swing.JPasswordField reenterPassWordField;
     private javax.swing.JLabel reenterPasswordLabel;
+    private javax.swing.JLabel requiredFields;
     private javax.swing.JLabel signinLabel;
     private javax.swing.JButton signupButton;
     private javax.swing.JLabel signupLabel;
