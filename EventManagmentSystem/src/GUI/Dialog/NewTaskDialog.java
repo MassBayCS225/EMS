@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.Task;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.ManagerSystem.MainManager;
+import GUI.DesignDefault;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,9 +22,13 @@ public class NewTaskDialog extends javax.swing.JDialog {
     
     private boolean confirm;
     private MainManager manager;
+    private DesignDefault dd;
     Task task;
     public NewTaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        dd = DesignDefault.getInstance();
+        this.setTitle("New Task");
+        this.setBackground(dd.getDialogBGColor());
         initComponents();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
@@ -68,25 +73,27 @@ public class NewTaskDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Task Name");
 
-        jLabel2.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        jLabel2.setFont(dd.getStandardText());
         jLabel2.setText("Description");
 
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setRows(5);
         jScrollPane1.setViewportView(descriptionTextArea);
 
-        dueDate.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        dueDate.setFont(dd.getStandardText());
         dueDate.setText("Due Date");
 
-        saveButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        saveButton.setFont(dd.getStandardText());
         saveButton.setText("Save");
+        saveButton.setMinimumSize(dd.getBigButtonDimension());
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
 
-        closeButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        closeButton.setFont(dd.getStandardText());
+        closeButton.setMinimumSize(dd.getBigButtonDimension());
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,17 +101,18 @@ public class NewTaskDialog extends javax.swing.JDialog {
             }
         });
 
-        startDate.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        startDate.setFont(dd.getStandardText());
         startDate.setText("StartDate");
 
-        startDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        startDateLabel.setFont(dd.getStandardText());
         startDateLabel.setText(" MM/DD/YY - 00:00 AM");
 
-        dueDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        dueDateLabel.setFont(dd.getStandardText());
         dueDateLabel.setText("MM/DD/YY - 00:00 AM");
 
-        editDueButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        editDueButton.setFont(dd.getStandardText());
         editDueButton.setText("Edit");
+        editDueButton.setMinimumSize(dd.getBigButtonDimension());
         editDueButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editDueButtonActionPerformed(evt);
@@ -163,7 +171,7 @@ public class NewTaskDialog extends javax.swing.JDialog {
                     .addComponent(dueDateLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(editDueButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(closeButton))

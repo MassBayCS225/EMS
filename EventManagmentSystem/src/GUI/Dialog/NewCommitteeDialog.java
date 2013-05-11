@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.User;
+import GUI.DesignDefault;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,8 +22,12 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
     private User chair;
     private boolean confirm;
     private MainManager manager;
+    private DesignDefault dd;
     public NewCommitteeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        dd = DesignDefault.getInstance();
+        this.setTitle("New Committee");
+        this.setBackground(dd.getDialogBGColor());
         initComponents();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
@@ -61,17 +66,21 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        nameLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        nameLabel.setFont(dd.getHeaderText());
         nameLabel.setText("Committee Name:");
 
+        saveButton.setFont(dd.getStandardText());
         saveButton.setText("Save");
+        saveButton.setMinimumSize(dd.getBigButtonDimension());
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
 
+        cancelButton.setFont(dd.getStandardText());
         cancelButton.setText("Cancel");
+        cancelButton.setMinimumSize(dd.getBigButtonDimension());
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -86,28 +95,29 @@ public class NewCommitteeDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 57, Short.MAX_VALUE)
                         .addComponent(nameLabel)
                         .addGap(29, 29, 29)
                         .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105))))
+                        .addGap(105, 105, 105))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancelButton)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
-                    .addComponent(cancelButton)))
+                    .addComponent(cancelButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
