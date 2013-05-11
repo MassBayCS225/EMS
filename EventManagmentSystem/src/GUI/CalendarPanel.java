@@ -80,6 +80,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                     selectedColumn = target.getSelectedColumn();
 
                     CalendarEvent selectedCellValue = (CalendarEvent) target.getValueAt(selectedRow, selectedColumn);
+                    manager.getSubEventManager().setSelectedSubEvent(selectedCellValue.getSubEventList().get(0));
                     updateDetailsList(selectedCellValue);
                 }
             }
@@ -92,6 +93,8 @@ public class CalendarPanel extends javax.swing.JPanel {
     
     public void updateDetailsList(CalendarEvent ce)
     {
+        if (!ce.getSubEventList().isEmpty())
+            manager.getSubEventManager().setSelectedSubEvent(ce.getSubEventList().get(0));
         Object[] tempDetailsList = new Object[ce.getSubEventList().size()];
         for (int i = 0; i < tempDetailsList.length; i++)
         {
@@ -141,18 +144,25 @@ public class CalendarPanel extends javax.swing.JPanel {
                     ArrayList<SubEvent> events = new ArrayList<SubEvent>();
                      int tempMillis; // temporary value used in for loop that saves a time in milliseconds
                      int tempMonth;
+                     int tempYear;
                      for (int i = 0; i < manager.getEventManager().getSelectedEvent().getSubEventList().size(); i++){
                       tempMillis = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH); // set the date for the current element
                       tempMonth = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(Calendar.MONTH);
+                      tempYear = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(Calendar.YEAR);
                        //System.out.println("Event Days: " + tempMillis); 
                       //System.out.println("Event Days: " + tempMillis);
                       // if you want to check end time, use getEndTime() instead of getStartTime
-                      if (tempMillis == day && tempMonth == tempCalendar.get(tempCalendar.MONTH)){
+                      if (tempMillis == day && tempMonth == tempCalendar.get(tempCalendar.MONTH) && tempYear == tempCalendar.get(tempCalendar.YEAR)){
                           //System.out.println("YES!");
                             events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
                         tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH - 1)); // reset the day back to original
                       }
                     }
+                     if (events.isEmpty())
+                     {
+                         events.add(new SubEvent());
+                     }
+                     
                      
                      CalendarEvent cEvent = new CalendarEvent(day, events);
                     //System.out.println(tempCalendar);
@@ -163,7 +173,9 @@ public class CalendarPanel extends javax.swing.JPanel {
                     CalendarTable.setValueAt(cEvent, weekOfMonth, dayOfWeek);
 
                 } else {
-                    CalendarTable.setValueAt("-", weekOfMonth, dayOfWeek);
+                    ArrayList<SubEvent> tempList = new ArrayList<SubEvent>();
+                    tempList.add(new SubEvent());
+                    CalendarTable.setValueAt(new CalendarEvent(-1, tempList), weekOfMonth, dayOfWeek);
                 }
                 calendarSlot++;
             }
@@ -206,6 +218,8 @@ public class CalendarPanel extends javax.swing.JPanel {
         yearLabel = new javax.swing.JLabel();
         removeEventButton = new javax.swing.JButton();
         editSubEventButton = new javax.swing.JButton();
+        nextYearButton = new javax.swing.JButton();
+        lastYearButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 204, 255));
 
@@ -254,10 +268,10 @@ public class CalendarPanel extends javax.swing.JPanel {
         );
         detailsPanelLayout.setVerticalGroup(
             detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
 
-        addEventButton.setText("Add a Sub Event");
+        addEventButton.setText("Add an Event");
         addEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEventButtonActionPerformed(evt);
@@ -293,17 +307,33 @@ public class CalendarPanel extends javax.swing.JPanel {
         yearLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         yearLabel.setText("year");
 
-        removeEventButton.setText("Remove a Sub Event");
+        removeEventButton.setText("Remove Event");
         removeEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeEventButtonActionPerformed(evt);
             }
         });
 
-        editSubEventButton.setText("Edit Sub Event");
+        editSubEventButton.setText("Edit Event");
         editSubEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editSubEventButtonActionPerformed(evt);
+            }
+        });
+
+        nextYearButton.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
+        nextYearButton.setText(">");
+        nextYearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextYearButtonActionPerformed(evt);
+            }
+        });
+
+        lastYearButton.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
+        lastYearButton.setText("<");
+        lastYearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastYearButtonActionPerformed(evt);
             }
         });
 
@@ -319,9 +349,13 @@ public class CalendarPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(lastMonthButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(120, 120, 120)
+                        .addComponent(lastYearButton)
+                        .addGap(18, 18, 18)
                         .addComponent(yearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(nextYearButton)
+                        .addGap(120, 120, 120)
                         .addComponent(nextMonthButton)
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
@@ -345,7 +379,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(47, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2)
@@ -354,12 +388,15 @@ public class CalendarPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(monthLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yearLabel)
-                        .addGap(0, 4, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(yearLabel)
+                            .addComponent(nextYearButton)
+                            .addComponent(lastYearButton))
+                        .addGap(0, 2, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addEventButton)
@@ -392,7 +429,13 @@ public class CalendarPanel extends javax.swing.JPanel {
 
     private void addEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEventButtonActionPerformed
         // TODO add your handling code here:
-        NewSubEventDialog nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), true);
+        NewSubEventDialog nsed;
+        if (selectedSubEvent != null)
+        {
+            nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), selectedSubEvent, true);
+        }
+        else
+            nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), new SubEvent(), true);
         nsed.setVisible(true);
         if(nsed.getConfirm())
         {
@@ -447,6 +490,17 @@ public class CalendarPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please select a Sub Event to edit first");
     }//GEN-LAST:event_editSubEventButtonActionPerformed
 
+    private void lastYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastYearButtonActionPerformed
+
+        year --;
+        populateCalendar();
+    }//GEN-LAST:event_lastYearButtonActionPerformed
+
+    private void nextYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextYearButtonActionPerformed
+        year ++;
+        populateCalendar();
+    }//GEN-LAST:event_nextYearButtonActionPerformed
+
    public void hideSubEventButtons() {
         addEventButton.setVisible(false);
         removeEventButton.setVisible(false);
@@ -462,8 +516,10 @@ public class CalendarPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton lastMonthButton;
+    private javax.swing.JButton lastYearButton;
     private javax.swing.JLabel monthLabel;
     private javax.swing.JButton nextMonthButton;
+    private javax.swing.JButton nextYearButton;
     private javax.swing.JButton removeEventButton;
     private javax.swing.JLabel yearLabel;
     // End of variables declaration//GEN-END:variables
@@ -476,23 +532,29 @@ setLineWrap(true);
 setWrapStyleWord(true);
 }
 
-public Component getTableCellRendererComponent(JTable table,
-Object value, boolean isSelected, boolean hasFocus, int row,
-int column) {
+    public Component getTableCellRendererComponent(JTable table,
+            Object value, boolean isSelected, boolean hasFocus, int row,
+            int column) {
 
-if (isSelected) {
-setForeground(Color.BLACK);
-setBackground(table.getSelectionBackground());
-} else {
-setForeground(Color.BLACK);
-setBackground(table.getBackground());
-}
+        if (isSelected) {
+            setForeground(Color.BLACK);
+            setBackground(table.getSelectionBackground());
+        } else {
+            if (value.toString().split("\n").length != 1) {
+                setBackground(Color.GREEN);
+            } else if (value.toString().equals("")) {
+                setBackground(Color.LIGHT_GRAY);
+            } else {
+                setForeground(Color.BLACK);
+                setBackground(table.getBackground());
+            }
+        }
 
-setText((value == null)
-? ""
-: value.toString());
-return this;
-}
+            setText((value == null)
+                    ? ""
+                    : value.toString());
+            return this;
+        }
     }
 
 class DetailsListSelectionListener implements ListSelectionListener {

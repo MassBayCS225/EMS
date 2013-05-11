@@ -39,25 +39,23 @@ public class CalendarEvent {
         return subEventList;
     }
     
-    public String toString()
-    {
+    public String toString() {
         String events = "";
-        if (subEventList.size() <= 3)
-        {
-            for (int i = 0; i < subEventList.size(); i++)
-            {
-                events += "\n" + subEventList.get(i).getTitle();
+        if (day != -1) {
+            events += "" + day;
+            if (subEventList.size() <= 3) {
+                for (int i = 0; i < subEventList.size(); i++) {
+                    events += "\n" + subEventList.get(i).getTitle();
+                }
+            } else {
+                for (int i = 0; i < 3; i++) {
+                    events += "\n" + subEventList.get(i).getTitle();
+                }
+                events += "\n...";
             }
         }
-        else
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                events += "\n" + subEventList.get(i).getTitle();
-            }
-            events += "\n...";
-        }
-        return "" + day + " " + events;
+        return events;
+
     }
     
     
