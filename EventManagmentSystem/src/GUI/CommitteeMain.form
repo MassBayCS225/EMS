@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -64,23 +64,21 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel11" min="-2" pref="111" max="-2" attributes="0"/>
-                          <EmptySpace pref="549" max="32767" attributes="0"/>
+                          <EmptySpace pref="546" max="32767" attributes="0"/>
                           <Component id="ChangeHomeButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="SwitchingPanelHolder" pref="719" max="32767" attributes="0"/>
+                          <Component id="SwitchingPanelHolder" pref="716" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="emailPanel" pref="183" max="32767" attributes="1"/>
-                      <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="committeesPanel" alignment="0" max="32767" attributes="1"/>
-                          <Component id="tasksPanel" alignment="0" max="32767" attributes="1"/>
-                          <Component id="participantsPanel" alignment="0" max="32767" attributes="1"/>
-                          <Component id="reportsPanel" alignment="0" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="emailPanel" pref="186" max="32767" attributes="1"/>
+                      <Component id="reportsPanel" alignment="1" pref="186" max="32767" attributes="1"/>
+                      <Component id="participantsPanel" alignment="1" pref="186" max="32767" attributes="1"/>
+                      <Component id="committeesPanel" alignment="1" pref="186" max="32767" attributes="1"/>
+                      <Component id="tasksPanel" alignment="0" pref="186" max="32767" attributes="1"/>
                   </Group>
               </Group>
           </Group>
@@ -91,13 +89,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="tasksPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="committeesPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="participantsPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="reportsPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="emailPanel" min="-2" pref="84" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -117,6 +115,15 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="tasksPanel">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[171, 89]"/>
+            </Property>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="setSize(171,95);"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -125,7 +132,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jProgressBar1" alignment="0" pref="163" max="32767" attributes="0"/>
+                          <Component id="jProgressBar1" alignment="0" pref="166" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -157,19 +164,27 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="committeesPanel">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[171, 81]"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="setSize(171,95);"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="105" max="32767" attributes="0"/>
+                      <Component id="changeCommitteesButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" pref="132" max="-2" attributes="0"/>
-                      <EmptySpace pref="41" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="102" max="32767" attributes="0"/>
-                      <Component id="changeCommitteesButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -205,6 +220,14 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="participantsPanel">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[171, 81]"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="setSize(171,95);"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -212,10 +235,10 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" pref="124" max="-2" attributes="0"/>
-                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                      <EmptySpace pref="52" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="102" max="32767" attributes="0"/>
+                      <EmptySpace pref="105" max="32767" attributes="0"/>
                       <Component id="changeUserManagementButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -253,6 +276,14 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="reportsPanel">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[171, 95]"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="setSize(171,95);"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -262,10 +293,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="116" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="119" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jComboBox4" alignment="0" pref="163" max="32767" attributes="0"/>
-                          <Component id="jButton6" alignment="1" min="-2" pref="69" max="-2" attributes="0"/>
+                          <Component id="jComboBox4" alignment="0" pref="166" max="32767" attributes="0"/>
+                          <Component id="jButton6" alignment="1" min="-2" pref="74" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -319,9 +350,12 @@
         <Container class="javax.swing.JPanel" name="emailPanel">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[158, 95]"/>
+              <Dimension value="[171, 95]"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="setSize(171,95);"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -329,11 +363,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="126" max="32767" attributes="0"/>
+                      <EmptySpace pref="129" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="104" max="32767" attributes="0"/>
-                      <Component id="changeEmailButton" min="-2" pref="69" max="-2" attributes="0"/>
+                      <EmptySpace pref="103" max="32767" attributes="0"/>
+                      <Component id="changeEmailButton" min="-2" pref="73" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -374,7 +408,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Candara" size="16" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Event Calendar"/>
+            <Property name="text" type="java.lang.String" value="Manage Event"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="SwitchingPanelHolder">
@@ -410,7 +444,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="719" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="716" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">

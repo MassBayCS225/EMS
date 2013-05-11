@@ -88,6 +88,9 @@ public class CommitteeMain extends javax.swing.JPanel {
         jPanel1.setMinimumSize(new java.awt.Dimension(950, 750));
         jPanel1.setPreferredSize(new java.awt.Dimension(950, 750));
 
+        tasksPanel.setPreferredSize(new java.awt.Dimension(171, 89));
+        tasksPanel.setRequestFocusEnabled(false);
+
         jLabel5.setFont(new java.awt.Font("Candara", 1, 14));
         jLabel5.setText("Tasks Progress");
 
@@ -99,7 +102,7 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(tasksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
                 .addContainerGap())
         );
         tasksPanelLayout.setVerticalGroup(
@@ -111,6 +114,8 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
+
+        committeesPanel.setPreferredSize(new java.awt.Dimension(171, 81));
 
         jLabel6.setFont(new java.awt.Font("Candara", 1, 14));
         jLabel6.setText("Committee Details");
@@ -126,14 +131,14 @@ public class CommitteeMain extends javax.swing.JPanel {
         committeesPanel.setLayout(committeesPanelLayout);
         committeesPanelLayout.setHorizontalGroup(
             committeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, committeesPanelLayout.createSequentialGroup()
+                .addContainerGap(105, Short.MAX_VALUE)
+                .addComponent(changeCommitteesButton)
+                .addContainerGap())
             .addGroup(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, committeesPanelLayout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
-                .addComponent(changeCommitteesButton)
-                .addContainerGap())
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         committeesPanelLayout.setVerticalGroup(
             committeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,6 +149,8 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addComponent(changeCommitteesButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        participantsPanel.setPreferredSize(new java.awt.Dimension(171, 81));
 
         jLabel7.setFont(new java.awt.Font("Candara", 1, 14));
         jLabel7.setText("Personal Account");
@@ -162,9 +169,9 @@ public class CommitteeMain extends javax.swing.JPanel {
             .addGroup(participantsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, participantsPanelLayout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
+                .addContainerGap(105, Short.MAX_VALUE)
                 .addComponent(changeUserManagementButton)
                 .addContainerGap())
         );
@@ -177,6 +184,8 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addComponent(changeUserManagementButton)
                 .addContainerGap())
         );
+
+        reportsPanel.setPreferredSize(new java.awt.Dimension(171, 95));
 
         jLabel4.setFont(new java.awt.Font("Candara", 1, 14));
         jLabel4.setText("Reports");
@@ -199,9 +208,9 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addGroup(reportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(reportsPanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 116, Short.MAX_VALUE))
-                    .addComponent(jComboBox4, 0, 163, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 119, Short.MAX_VALUE))
+                    .addComponent(jComboBox4, 0, 166, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         reportsPanelLayout.setVerticalGroup(
@@ -216,7 +225,7 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        emailPanel.setPreferredSize(new java.awt.Dimension(158, 95));
+        emailPanel.setPreferredSize(new java.awt.Dimension(171, 95));
 
         changeEmailButton.setText("Email");
         changeEmailButton.addActionListener(new java.awt.event.ActionListener() {
@@ -235,10 +244,10 @@ public class CommitteeMain extends javax.swing.JPanel {
             .addGroup(emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, emailPanelLayout.createSequentialGroup()
-                .addContainerGap(104, Short.MAX_VALUE)
-                .addComponent(changeEmailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(103, Short.MAX_VALUE)
+                .addComponent(changeEmailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         emailPanelLayout.setVerticalGroup(
@@ -252,7 +261,7 @@ public class CommitteeMain extends javax.swing.JPanel {
         );
 
         jLabel11.setFont(new java.awt.Font("Candara", 1, 16));
-        jLabel11.setText("Event Calendar");
+        jLabel11.setText("Manage Event");
 
         SwitchingPanelHolder.setMaximumSize(new java.awt.Dimension(2147483647, 500));
         SwitchingPanelHolder.setMinimumSize(new java.awt.Dimension(640, 720));
@@ -266,7 +275,7 @@ public class CommitteeMain extends javax.swing.JPanel {
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 719, Short.MAX_VALUE)
+            .addGap(0, 716, Short.MAX_VALUE)
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,19 +300,18 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 549, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE)
                         .addComponent(ChangeHomeButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(SwitchingPanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
+                        .addComponent(SwitchingPanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(emailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(committeesPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tasksPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(participantsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(reportsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(emailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                    .addComponent(reportsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                    .addComponent(participantsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                    .addComponent(committeesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                    .addComponent(tasksPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,13 +319,13 @@ public class CommitteeMain extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(tasksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(committeesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(participantsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(reportsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(emailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -328,6 +336,12 @@ public class CommitteeMain extends javax.swing.JPanel {
                         .addComponent(SwitchingPanelHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
+
+        setSize(171,95);
+        setSize(171,95);
+        setSize(171,95);
+        setSize(171,95);
+        setSize(171,95);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
