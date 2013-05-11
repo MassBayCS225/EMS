@@ -101,6 +101,9 @@
           <Dimension value="[160, 80]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tasksPanel.setBackground(dd.getPanelBGColor());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -110,7 +113,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="51" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="68" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jProgressBar1" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -125,7 +128,7 @@
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="31" max="32767" attributes="0"/>
+                  <EmptySpace pref="35" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -133,8 +136,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="14" style="1"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="dd.getStandardText()" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Tasks Progress"/>
           </Properties>
@@ -155,6 +158,9 @@
           <Dimension value="[160, 80]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="committeesPanel.setBackground(dd.getPanelBGColor());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -175,7 +181,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
                   <Component id="changeCommitteesButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -184,8 +190,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="14" style="1"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="dd.getStandardText()" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Committees"/>
           </Properties>
@@ -197,6 +203,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeCommitteesButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="changeCommitteesButton.setFont(dd.getStandardText());&#xa;changeCommitteesButton.setMinimumSize(dd.getBigButtonDimension());"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -212,6 +221,9 @@
           <Dimension value="[160, 80]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="participantsPanel.setBackground(dd.getPanelBGColor());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -232,7 +244,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
                   <Component id="changeUserManagementButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -241,8 +253,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="14" style="1"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="dd.getStandardText()" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Participants"/>
           </Properties>
@@ -254,6 +266,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeUserManagementButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="changeUserManagementButton.setFont(dd.getStandardText());&#xa;changeUserManagementButton.setMinimumSize(dd.getBigButtonDimension());"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -269,6 +284,9 @@
           <Dimension value="[160, 80]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="reportsPanel.setBackground(dd.getPanelBGColor());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -289,7 +307,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
                   <Component id="jButton6" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -298,8 +316,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="14" style="1"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="dd.getStandardText()" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Reports"/>
           </Properties>
@@ -311,6 +329,10 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton6.setMinimumSize(dd.getBigButtonDimension());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jButton6.setFont(dd.getStandardText());"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -326,6 +348,9 @@
           <Dimension value="[160, 160]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="budgetPanel.setBackground(dd.getPanelBGColor());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -386,6 +411,10 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeBudgetButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="changeBudgetButton.setMinimumSize(dd.getBigButtonDimension());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="changeBudgetButton.setFont(dd.getStandardText());"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -401,6 +430,9 @@
           <Dimension value="[160, 80]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="emailPanel.setBackground(dd.getPanelBGColor());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -435,6 +467,10 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeEmailButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="changeEmailButton.setMinimumSize(dd.getBigButtonDimension());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="changeEmailButton.setFont(dd.getStandardText());"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
