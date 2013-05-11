@@ -5,6 +5,7 @@
 package GUI.Dialog;
 
 import BackEnd.EventSystem.Income;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,14 @@ public class NewIncomeDialog extends javax.swing.JDialog {
     public Income createIncome()
     {
         Income i = new Income();
-        i.setValue(new Double(amountField.getText()));
+        if(amountField.getText().trim().length() > 0)
+        {
+            i.setValue(new Double(amountField.getText()));
+        }
+        else
+        {
+            i.setValue(0.0);
+        }
         i.setDescription(descriptionField.getText());
         return i;
     }
@@ -124,8 +132,25 @@ public class NewIncomeDialog extends javax.swing.JDialog {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        confirm = true;
-        this.dispose();
+        Income i = createIncome();
+        
+        if(i.getDescription().trim().isEmpty())
+        {
+            JOptionPane.showMessageDialog(
+                    null, "Income must have a name, please enter a valid name.", "No Income Name", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else if (i.getValue() == 0.0)
+        {
+            JOptionPane.showMessageDialog(
+                    null, "Income must have a value, please enter a valid value.", "No Income Value", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else
+        {
+            confirm = true;
+            this.dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
