@@ -447,6 +447,13 @@ public class CalendarPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please select a Sub Event to edit first");
     }//GEN-LAST:event_editSubEventButtonActionPerformed
 
+   public void hideSubEventButtons() {
+        addEventButton.setVisible(false);
+        removeEventButton.setVisible(false);
+        editSubEventButton.setVisible(false);
+    } 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CalendarTable;
     private javax.swing.JButton addEventButton;
