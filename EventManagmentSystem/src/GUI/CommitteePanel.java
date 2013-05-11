@@ -206,49 +206,49 @@ public class CommitteePanel extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/edit1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\edit1.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
         });
 
-        addMemberLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/add1.png"))); // NOI18N
+        addMemberLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\add1.png")); // NOI18N
         addMemberLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addMemberLabelMouseClicked(evt);
             }
         });
 
-        removeMemberLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/remove1.png"))); // NOI18N
+        removeMemberLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\remove1.png")); // NOI18N
         removeMemberLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 removeMemberLabelMouseClicked(evt);
             }
         });
 
-        addTaskLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/add1.png"))); // NOI18N
+        addTaskLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\add1.png")); // NOI18N
         addTaskLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addTaskLabelMouseClicked(evt);
             }
         });
 
-        removeTaskLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/remove1.png"))); // NOI18N
+        removeTaskLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\remove1.png")); // NOI18N
         removeTaskLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 removeTaskLabelMouseClicked(evt);
             }
         });
 
-        removeBudgetAccessLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/remove1.png"))); // NOI18N
+        removeBudgetAccessLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\remove1.png")); // NOI18N
         removeBudgetAccessLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 removeBudgetAccessLabelMouseClicked(evt);
             }
         });
 
-        addBudgetAccessLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/add1.png"))); // NOI18N
+        addBudgetAccessLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sid\\Documents\\GitHub\\EMS\\EventManagmentSystem\\add1.png")); // NOI18N
         addBudgetAccessLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addBudgetAccessLabelMouseClicked(evt);

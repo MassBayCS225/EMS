@@ -341,7 +341,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/edit1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\edit1.png"/>
         </Property>
       </Properties>
       <Events>
@@ -351,7 +351,7 @@
     <Component class="javax.swing.JLabel" name="addMemberLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/add1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\add1.png"/>
         </Property>
       </Properties>
       <Events>
@@ -361,7 +361,7 @@
     <Component class="javax.swing.JLabel" name="removeMemberLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/remove1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\remove1.png"/>
         </Property>
       </Properties>
       <Events>
@@ -371,7 +371,7 @@
     <Component class="javax.swing.JLabel" name="addTaskLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/add1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\add1.png"/>
         </Property>
       </Properties>
       <Events>
@@ -381,7 +381,7 @@
     <Component class="javax.swing.JLabel" name="removeTaskLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/remove1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\remove1.png"/>
         </Property>
       </Properties>
       <Events>
@@ -391,7 +391,7 @@
     <Component class="javax.swing.JLabel" name="removeBudgetAccessLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/remove1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\remove1.png"/>
         </Property>
       </Properties>
       <Events>
@@ -401,7 +401,7 @@
     <Component class="javax.swing.JLabel" name="addBudgetAccessLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GUI/Images/add1.png"/>
+          <Image iconType="2" name="C:\Users\Sid\Documents\GitHub\EMS\EventManagmentSystem\add1.png"/>
         </Property>
       </Properties>
       <Events>
