@@ -50,12 +50,11 @@ public class PrintInfo {
         
         System.out.println("ORGANIZERS");
         MainManager manager = MainManager.getInstance();
-        manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
-        System.out.println(manager.getEventManager().getSelectedEvent().getOrganizerList());
-        
-        
-        System.out.println("PARTICIPANTS");
-        System.out.println(manager.getEventManager().getSelectedEvent().getParticipantList());
+        for (int i = 0; i < manager.getEventManager().getEventList().size(); i++){
+            manager.getEventManager().setSelectedEvent(manager.getEventManager().getEventList().get(0));
+            System.out.println(manager.getEventManager().getSelectedEvent().getOrganizerList());
+            System.out.println("PARTICIPANTS");
+            System.out.println(manager.getEventManager().getSelectedEvent().getParticipantList());
+        }
     }
-    
 }

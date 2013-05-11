@@ -671,6 +671,7 @@ public class EventManager {
 
     private ArrayList<User> rebuildCommitteeMemberList(int committeeID, ArrayList<Participant> userList)
             throws DoesNotExistException {
+        
         ArrayList<User> memberList = new ArrayList<User>();
         ArrayList<Integer> memberIDList = committeesTable.getCommitteeMembers(committeeID);
 
@@ -684,6 +685,7 @@ public class EventManager {
 
     private ArrayList<User> rebuildBudgetAccessList(int committeeID, ArrayList<Participant> userList)
             throws DoesNotExistException {
+        
         ArrayList<User> budgetAccessList = new ArrayList<User>();
         ArrayList<Integer> budgetAccessIDList = committeesTable.getBudgetAccessList(committeeID);
 
@@ -697,6 +699,7 @@ public class EventManager {
 
     private ArrayList<Task> rebuildTaskList(int committeeID, ArrayList<Participant> userList)
             throws DoesNotExistException {
+        
         ArrayList<Task> taskList = new ArrayList<Task>();
         for (Integer taskID : committeesTable.getTaskList(committeeID)) {
             taskList.add(rebuildTask(taskID, userList));
@@ -707,6 +710,7 @@ public class EventManager {
 
     private Task rebuildTask(int taskID, ArrayList<Participant> userList)
             throws DoesNotExistException {
+        
         Task task = new Task(taskID, tasksTable.getTitle(taskID));
         task.setLocation(new Location(tasksTable.getStreet(taskID), tasksTable.getCity(taskID),
                 tasksTable.getState(taskID), tasksTable.getZipcode(taskID), tasksTable.getCountry(taskID),
@@ -722,6 +726,7 @@ public class EventManager {
 
     private ArrayList<User> rebuildResponsibleList(int taskID, ArrayList<Participant> userList)
             throws DoesNotExistException {
+        
         ArrayList<User> responsibleList = new ArrayList<User>();
         ArrayList<Integer> responsibleIDList = tasksTable.getAuthority(taskID);
 
@@ -733,7 +738,9 @@ public class EventManager {
         return responsibleList;
     }
 
-    private ArrayList<Income> rebuildIncomeList(int committeeID) throws DoesNotExistException {
+    private ArrayList<Income> rebuildIncomeList(int committeeID)
+            throws DoesNotExistException {
+        
         ArrayList<Income> incomeList = new ArrayList<Income>();
         ArrayList<Integer> incomeIDList = committeesTable.getIncome(committeeID);
 
@@ -743,12 +750,13 @@ public class EventManager {
         return incomeList;
     }
 
-    private Income rebuildIncome(int incomeID) throws DoesNotExistException {
-        Income income = new Income(incomeID, incomeTable.getValue(incomeID), incomeTable.getDescription(incomeID));
-        return income;
+    private Income rebuildIncome(int incomeID)
+            throws DoesNotExistException {
+        return new Income(incomeID, incomeTable.getValue(incomeID), incomeTable.getDescription(incomeID));
     }
 
-    private ArrayList<Expense> rebuildExpenseList(int committeeID) throws DoesNotExistException {
+    private ArrayList<Expense> rebuildExpenseList(int committeeID)
+            throws DoesNotExistException {
 
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
         ArrayList<Integer> expenseIDList = committeesTable.getExpense(committeeID);
@@ -761,7 +769,6 @@ public class EventManager {
 
     private Expense rebuildExpense(int expenseID)
             throws DoesNotExistException {
-        Expense expense = new Expense(expenseID, expenseTable.getValue(expenseID), expenseTable.getDescription(expenseID));
-        return expense;
+        return new Expense(expenseID, expenseTable.getValue(expenseID), expenseTable.getDescription(expenseID));
     }
 }

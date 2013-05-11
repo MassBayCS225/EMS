@@ -110,18 +110,23 @@ public class PhoneNumber{
      * It sets all the digits of the phone number.
      * @param digits The digits of the phone number
      */
-    public void setDigits(String digits){
-        this.digits = formatPhoneNumber(digits);
-        verifyPhoneNumberLength(this.digits);
-        verifyNumeric(this.digits);
-        for(int i = 0; i < this.digits.length(); i++){
-            if(i < AREA_CODE_LENGTH)
-                areaCode[i] = this.digits.charAt(i);
-            else if(i < AREA_CODE_LENGTH + EXCHANGE_NUMBER_LENGTH)
-                exchangeNumber[i - AREA_CODE_LENGTH] = this.digits.charAt(i);
-            else
-                localNumber[i - (AREA_CODE_LENGTH + EXCHANGE_NUMBER_LENGTH)] = 
-                        this.digits.charAt(i);
+    public void setDigits(String digits) {
+        if (digits.equals("")) {
+            digits = "";
+        } else {
+            this.digits = formatPhoneNumber(digits);
+            verifyPhoneNumberLength(this.digits);
+            verifyNumeric(this.digits);
+            for (int i = 0; i < this.digits.length(); i++) {
+                if (i < AREA_CODE_LENGTH) {
+                    areaCode[i] = this.digits.charAt(i);
+                } else if (i < AREA_CODE_LENGTH + EXCHANGE_NUMBER_LENGTH) {
+                    exchangeNumber[i - AREA_CODE_LENGTH] = this.digits.charAt(i);
+                } else {
+                    localNumber[i - (AREA_CODE_LENGTH + EXCHANGE_NUMBER_LENGTH)] =
+                            this.digits.charAt(i);
+                }
+            }
         }
     }
     
