@@ -55,20 +55,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="committeeListLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="committeeListScrollPane" min="-2" pref="370" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="addCommitteeButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="removeCommitteeButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <Component id="committeePanelHolder" alignment="0" min="-2" pref="443" max="-2" attributes="0"/>
+                  <Component id="committeePanelHolder" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="146" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="addCommitteeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="removeCommitteeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="166" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
