@@ -15,6 +15,7 @@
                   <KeyStroke key="Ctrl+P"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Print"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printMenuItemActionPerformed"/>
@@ -23,6 +24,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="printPreviewMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Print Preview"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printPreviewMenuItemActionPerformed"/>
@@ -36,6 +38,7 @@
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveMenuItemActionPerformed"/>
@@ -120,6 +123,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="committeeReportsMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Committee"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="committeeReportsMenuItemActionPerformed"/>
@@ -128,6 +132,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="registrationReportsMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Registration"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrationReportsMenuItemActionPerformed"/>
@@ -136,6 +141,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="budgetReportsMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Budget"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="budgetReportsMenuItemActionPerformed"/>
@@ -147,6 +153,21 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Database"/>
               </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Import"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Export"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
             </Menu>
           </SubComponents>
         </Menu>
