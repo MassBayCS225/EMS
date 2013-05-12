@@ -146,40 +146,23 @@ public class Home extends javax.swing.JFrame {
         {
             main = new Main();
             committeeMain = new CommitteeMain();
-            if (manager.getLogInManager().getLoggedInUser().getAdminPrivilege()) {
+            
+            User loggedInUser = manager.getLogInManager().getLoggedInUser();
+            Event selectedEvent = manager.getEventManager().getSelectedEvent();
+            
+            if (loggedInUser.getAdminPrivilege()) {
                 add(main);
                 activePanel = (Component)main;
             }
-            else if (manager.getEventManager().getSelectedEvent().getOrganizerList().contains(
-                    manager.getLogInManager().getLoggedInUser())) {
+            else if (selectedEvent.getOrganizerList().contains(
+                    loggedInUser)) {
                 main.getUserManagementPanel().setNonAdminView();
                 add(main);
                 activePanel = (Component)main;
             }
-            else if (manager.getEventManager().getSelectedEvent().getChairList().contains(
-                    manager.getLogInManager().getLoggedInUser())) {
-                
-                // Will edit.
-                for (Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()) {
-                    if (c.getChair().equals(manager.getLogInManager().getLoggedInUser()))
-                        committeeMain.getCommitteePanel().setCommittee(c);
-                }
-                
-                committeeMain.getCommitteePanel().setChairView();
-                add(committeeMain);
-                activePanel = (Component)committeeMain;
-            }
-            else /*if (manager.getEventManager().getSelectedEvent().getChairList().contains(
-                    manager.getLogInManager().getLoggedInUser()))*/ {
-                
-               /* for (Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()) {
-                    if (c.getBudgetAccessList().contains(manager.getLogInManager().getLoggedInUser()))
-                        committeeMain.getCommitteePanel().setCommittee(c);
-                }*/
-                
-                committeeMain.getCommitteePanel().setBudgetAccessMemberView();
-                add(committeeMain);
-                activePanel = (Component)committeeMain;
+            else {
+                main.setParticipantView();
+                add(main);
             }
         }
         catch (Exception e)
