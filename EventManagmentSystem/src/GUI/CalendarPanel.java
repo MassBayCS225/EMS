@@ -196,6 +196,12 @@ public class CalendarPanel extends javax.swing.JPanel {
     return new DateFormatSymbols().getMonths()[month];
     }
 
+    public void setParticipantView() {
+        addEventButton.setVisible(false);
+        removeEventButton.setVisible(false);
+        editSubEventButton.setVisible(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
