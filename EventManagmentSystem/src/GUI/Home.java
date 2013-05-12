@@ -154,8 +154,7 @@ public class Home extends javax.swing.JFrame {
                 add(main);
                 activePanel = (Component)main;
             }
-            else if (selectedEvent.getOrganizerList().contains(
-                    loggedInUser)) {
+            else if (selectedEvent.getOrganizerList().contains(loggedInUser)) {
                 main.getUserManagementPanel().setNonAdminView();
                 add(main);
                 activePanel = (Component)main;
@@ -163,6 +162,7 @@ public class Home extends javax.swing.JFrame {
             else {
                 main.setParticipantView();
                 add(main);
+                activePanel = (Component)main;
             }
         }
         catch (Exception e)
