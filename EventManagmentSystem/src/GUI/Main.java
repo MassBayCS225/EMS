@@ -63,6 +63,12 @@ public class Main extends javax.swing.JPanel {
         return ump;
     }
 
+    public void setCommitteeView() {
+        mainPanel.setParticipantView();
+        ump.setNonAdminView();
+        budgetPanel.setVisible(false);
+    }
+    
     public void setParticipantView() {
         mainPanel.setParticipantView();
         ump.setNonAdminView();
