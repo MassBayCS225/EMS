@@ -145,7 +145,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         committeePanelHolder.setBackground(java.awt.SystemColor.activeCaption);
         committeePanelHolder.setLayout(new java.awt.CardLayout());
 
-        noPanel.setBackground(new java.awt.Color(153, 204, 255));
+        noPanel.setBackground(new java.awt.Color(128, 128, 128));
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 18));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
