@@ -407,6 +407,7 @@ public class Home extends javax.swing.JFrame {
         logIn();    //show login dialog
         addPanel(); //add the appropriate panel
         this.validate();    //repaint everything
+        this.repaint();
     }//GEN-LAST:event_logOutMenuItemActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
