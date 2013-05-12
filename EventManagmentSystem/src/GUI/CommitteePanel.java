@@ -14,7 +14,7 @@ import BackEnd.UserSystem.User;
 import GUI.Dialog.BudgetDialog;
 import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTaskDialog;
-import GUI.Reportable.NewReportableDialog;
+import GUI.Reportable.CommitteeDialog;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Calendar;
@@ -826,8 +826,8 @@ if(memberList.getSelectedIndex() >= 0)
 
     private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
         // TODO add your handling code here:
-        NewReportableDialog nrd = new NewReportableDialog(null,true);
-        nrd.setVisible(true);
+        CommitteeDialog cd = new CommitteeDialog(null,true);
+        cd.setVisible(true);
     }//GEN-LAST:event_reportButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
