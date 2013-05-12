@@ -13,7 +13,7 @@ import java.util.Iterator;
  *
  * @author Shaunt
  */
-public class CommitteeDialog extends javax.swing.JDialog {
+public class CommitteeReport extends javax.swing.JDialog {
 
     /**
      * Creates new form CommitteeDialog
@@ -21,7 +21,7 @@ public class CommitteeDialog extends javax.swing.JDialog {
     
     Committee committee;
     MainManager manager;
-    public CommitteeDialog(java.awt.Frame parent, boolean modal) {
+    public CommitteeReport(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
             manager = MainManager.getInstance();
@@ -106,20 +106,20 @@ public class CommitteeDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CommitteeDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CommitteeReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CommitteeDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CommitteeReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CommitteeDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CommitteeReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CommitteeDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CommitteeReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CommitteeDialog dialog = new CommitteeDialog(new javax.swing.JFrame(), true);
+                CommitteeReport dialog = new CommitteeReport(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

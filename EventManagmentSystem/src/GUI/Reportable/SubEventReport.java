@@ -4,7 +4,7 @@
  */
 package GUI.Reportable;
 
-import BackEnd.EventSystem.Event;
+import BackEnd.EventSystem.SubEvent;
 import BackEnd.ManagerSystem.MainManager;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,34 +13,37 @@ import java.util.Iterator;
  *
  * @author Shaunt
  */
-public class EventDialog extends javax.swing.JDialog {
+public class SubEventReport extends javax.swing.JDialog {
 
     /**
-     * Creates new form EventDialog
+     * Creates new form SubEventDialog
      */
-    MainManager manager;
-    Event event;
     
-    public EventDialog(java.awt.Frame parent, boolean modal) {
+    
+    MainManager manager;
+    SubEvent subEvent;
+    
+    public SubEventReport(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         manager = MainManager.getInstance();
-        event = manager.getEventManager().getSelectedEvent();
+        subEvent = manager.getSubEventManager().getSelectedSubEvent();
         updateInfo();
     }
     
         public void updateInfo() {
         try {
-            for (Iterator t = event.getReport().iterator(); t.hasNext();) {
-                for (Iterator d = ((ArrayList) t.next()).iterator(); d.hasNext();) {
-                    jTextArea1.setText((String) d.next());
-                }
+
+
+                jTextArea1.setText((String) subEvent.getReport().get(2));
+                jTextArea1.setText((String) subEvent.getReport().get(3));
+                jTextArea1.setText((String) subEvent.getReport().get(4));
+                jTextArea1.setText((String) subEvent.getReport().get(4));
+                jTextArea1.setText((String) subEvent.getReport().get(4));
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -67,17 +70,17 @@ public class EventDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(118, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(116, 116, 116))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(57, 57, 57)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,20 +103,20 @@ public class EventDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EventDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SubEventReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EventDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SubEventReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EventDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SubEventReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EventDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SubEventReport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EventDialog dialog = new EventDialog(new javax.swing.JFrame(), true);
+                SubEventReport dialog = new SubEventReport(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
