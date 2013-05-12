@@ -287,7 +287,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             .addGap(0, 380, Short.MAX_VALUE)
         );
 
-        addEventButton.setText("Add Sub Event");
+        addEventButton.setText("Add Event");
         addEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEventButtonActionPerformed(evt);
@@ -329,14 +329,14 @@ public class CalendarPanel extends javax.swing.JPanel {
         yearLabel.setMinimumSize(new java.awt.Dimension(100, 25));
         yearLabel.setPreferredSize(new java.awt.Dimension(100, 25));
 
-        removeEventButton.setText("Remove Sub Event");
+        removeEventButton.setText("Remove Event");
         removeEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeEventButtonActionPerformed(evt);
             }
         });
 
-        editSubEventButton.setText("Edit Sub Event");
+        editSubEventButton.setText("Edit Event");
         editSubEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editSubEventButtonActionPerformed(evt);
@@ -403,14 +403,12 @@ public class CalendarPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(nextMonthButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nextMonthButton))
                     .addComponent(monthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(lastMonthButton)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lastMonthButton)))
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,8 +424,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(editSubEventButton)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(removeEventButton)))
+                                .addComponent(removeEventButton))
                             .addComponent(addEventButton)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)

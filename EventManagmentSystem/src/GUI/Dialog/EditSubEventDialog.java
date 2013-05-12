@@ -10,10 +10,9 @@ import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import BackEnd.UserSystem.Location;
 import EMS_Database.DoesNotExistException;
-import GUI.SubEventPanel;
+import GUI.DesignDefault;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -26,11 +25,13 @@ public class EditSubEventDialog extends javax.swing.JDialog {
     private SubEvent selectedSubEvent;
     private MainManager manager;
     private TimeSchedule tempTimeSchedule;
+    private DesignDefault dd;
     /**
      * Creates new form EditSubEventDialog
      */
     public EditSubEventDialog(java.awt.Frame parent, SubEvent se, boolean modal) {
         super(parent, modal);
+        dd = DesignDefault.getInstance();
         selectedSubEvent = se;
         tempTimeSchedule = se.getTimeSchedule();
         initComponents();
@@ -89,34 +90,37 @@ public class EditSubEventDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        saveSubEventButton.setText("Save Sub Event");
+        saveSubEventButton.setText("Save");
         saveSubEventButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveSubEventButtonActionPerformed(evt);
             }
         });
 
-        cancelChangesButton.setText("Cancel Changes");
+        cancelChangesButton.setText("Cancel");
         cancelChangesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelChangesButtonActionPerformed(evt);
             }
         });
 
+        locationLabel.setFont(dd.getStandardText());
         locationLabel.setText("Location:");
 
-        headerLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        headerLabel.setFont(dd.getHeaderText());
         headerLabel.setText("SubEvent Name");
 
+        descriptionTextArea.setFont(dd.getStandardText());
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setRows(5);
         descriptionTextArea.setText("Description of this event.\nDoesn't do anything yet.");
         descriptionScrollPane.setViewportView(descriptionTextArea);
 
-        startDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        startDateLabel.setFont(dd.getStandardText());
         startDateLabel.setText("Start Date: MM/DD/YY - 00:00 AM");
 
-        editTimeScheduleButton.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
+        editTimeScheduleButton.setFont(dd.getStandardText());
+        editTimeScheduleButton.setMinimumSize(dd.getBigButtonDimension());
         editTimeScheduleButton.setText("edit");
         editTimeScheduleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,7 +128,7 @@ public class EditSubEventDialog extends javax.swing.JDialog {
             }
         });
 
-        dueDateLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        dueDateLabel.setFont(dd.getStandardText());
         dueDateLabel.setText("Due Date : MM/DD/YY - 00:00 AM");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,7 +144,7 @@ public class EditSubEventDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(headerLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
+                                .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,19 +152,19 @@ public class EditSubEventDialog extends javax.swing.JDialog {
                                 .addGap(83, 83, 83)
                                 .addComponent(locationField, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(locationLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(saveSubEventButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cancelChangesButton))
                             .addComponent(startDateLabel)
                             .addComponent(dueDateLabel)
                             .addComponent(editTimeScheduleButton))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveSubEventButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancelChangesButton))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headerLabel)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
