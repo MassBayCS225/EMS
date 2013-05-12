@@ -15,6 +15,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.UndoManager;
+import java.util.ArrayList;
 
 /**
  *
@@ -149,6 +150,17 @@ public class Home extends javax.swing.JFrame {
             
             User loggedInUser = manager.getLogInManager().getLoggedInUser();
             Event selectedEvent = manager.getEventManager().getSelectedEvent();
+            ArrayList<User> allCommitteeMembers = new ArrayList<User>();
+            
+            for (int i = 0; i < selectedEvent.getCommitteeList().size(); i++) {
+                Committee committee = selectedEvent.getCommitteeList().get(i);
+
+                for (int j = 0; j < committee.getMemberListWithChair().size(); j++){
+                    User committeeMember = committee.getMemberListWithChair().get(j);
+                    if (!allCommitteeMembers.contains(committeeMember))
+                        allCommitteeMembers.add(committeeMember);
+                }
+            }
             
             if (loggedInUser.getAdminPrivilege()) {
                 add(main);
@@ -156,6 +168,11 @@ public class Home extends javax.swing.JFrame {
             }
             else if (selectedEvent.getOrganizerList().contains(loggedInUser)) {
                 main.getUserManagementPanel().setNonAdminView();
+                add(main);
+                activePanel = (Component)main;
+            }
+            else if (allCommitteeMembers.contains(loggedInUser)) {
+                main.setCommitteeView();
                 add(main);
                 activePanel = (Component)main;
             }

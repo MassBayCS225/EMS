@@ -6,6 +6,8 @@ package GUI;
 import GUI.Dialog.NewCommitteeDialog;
 import javax.swing.*;
 import BackEnd.EventSystem.Committee;
+import BackEnd.EventSystem.Event;
+import BackEnd.UserSystem.User;
 import BackEnd.ManagerSystem.MainManager;
 import java.awt.CardLayout;
 /**
@@ -61,6 +63,11 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             committeePanel.setVisible(true);
             noPanel.setVisible(false);
         }
+    }
+    
+    public void setNonAdminOrganizerView() {
+        addCommitteeButton.setVisible(false);
+        removeCommitteeButton.setVisible(false);
     }
     
     /**
@@ -175,9 +182,25 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
     private void committeeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_committeeListValueChanged
         // TODO add your handling code here:
+        Event selectedEvent = manager.getEventManager().getSelectedEvent();
+        User loggedInUser = manager.getLogInManager().getLoggedInUser();
+        
         if(committeeList.getSelectedIndex() >= 0){
-            Committee c = manager.getEventManager().getSelectedEvent().getCommitteeList().get(committeeList.getSelectedIndex());
+            Committee c = selectedEvent.getCommitteeList().get(committeeList.getSelectedIndex());
             manager.getCommitteeManager().setSelectedCommittee(c);
+            
+            if (!loggedInUser.getAdminPrivilege() && !selectedEvent.getOrganizerList().contains(loggedInUser)) {
+                if (c.getChair().equals(loggedInUser)) {
+                    committeePanel.setChairView();
+                } else if (c.getBudgetAccessList().contains(loggedInUser)) {
+                    committeePanel.setBudgetAccessMemberView();
+                } else if (c.getMemberList().contains(loggedInUser)) {
+                    committeePanel.setCommitteeMemberView();
+                } else {
+                    committeePanel.setCommitteeMemberView();
+                }
+            }
+            
             committeePanel.updateInfo();
         }
     }//GEN-LAST:event_committeeListValueChanged
