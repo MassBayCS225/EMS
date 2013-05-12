@@ -92,6 +92,12 @@ public class CalendarPanel extends javax.swing.JPanel {
         populateCalendar();
     }
     
+     public void setParticipantView() {
+        addEventButton.setVisible(false);
+        removeEventButton.setVisible(false);
+        editSubEventButton.setVisible(false);
+    } 
+    
     public void updateDetailsList(CalendarEvent ce)
     {
         if (!ce.getSubEventList().isEmpty())

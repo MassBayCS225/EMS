@@ -24,6 +24,7 @@ public class MainPanel extends javax.swing.JPanel {
     JPanel calendarSelectionPanel;
     JButton selectCalendarButton, selectEventDetailsButton, registerForEventButton;
     JPanel calendarSwitchingPanel;
+    private CalendarPanel cp;
 
     /**
      * Creates new form MainPanel
@@ -48,7 +49,7 @@ public class MainPanel extends javax.swing.JPanel {
         calendarSelectionPanel.add(selectEventDetailsButton);
         calendarSelectionPanel.add(registerForEventButton);
 
-        CalendarPanel cp = new CalendarPanel();
+        cp = new CalendarPanel();
         EventDetailsPanel edp = new EventDetailsPanel();
         calendarSwitchingPanel.add(cp, "calendar");
         calendarSwitchingPanel.add(edp, "eventDetails");
@@ -56,6 +57,10 @@ public class MainPanel extends javax.swing.JPanel {
         add(calendarSelectionPanel, BorderLayout.SOUTH);
     }
 
+    public void setParticipantView() {
+        cp.setParticipantView();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
