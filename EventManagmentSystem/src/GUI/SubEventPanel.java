@@ -96,7 +96,7 @@ public class SubEventPanel extends javax.swing.JPanel {
 
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setRows(5);
-        descriptionTextArea.setText("Description of this event.\nDoesn't do anything yet.");
+        descriptionTextArea.setText("Description of this event.");
         descriptionScrollPane.setViewportView(descriptionTextArea);
 
         locationLabel.setText("Location:");
@@ -162,7 +162,7 @@ public class SubEventPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(locationLabel)
                     .addComponent(locationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
