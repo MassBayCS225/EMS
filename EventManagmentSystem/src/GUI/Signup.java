@@ -99,10 +99,12 @@ public class Signup extends javax.swing.JPanel {
 
         firstNameField.setText(FIRST_NAME_FIELD);
         firstNameField.setPreferredSize(new java.awt.Dimension(380, 28));
-        firstNameField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                firstNameFieldFocusGained(evt);
+        firstNameField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                firstNameFieldMouseClicked(evt);
             }
+        });
+        firstNameField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 firstNameFieldFocusLost(evt);
             }
@@ -258,7 +260,7 @@ public class Signup extends javax.swing.JPanel {
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(layout.createSequentialGroup()
-                        .add(0, 2, Short.MAX_VALUE)
+                        .add(0, 0, Short.MAX_VALUE)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, signinLabel)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
@@ -282,7 +284,7 @@ public class Signup extends javax.swing.JPanel {
                         .add(cancelButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(signupButton)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -307,7 +309,7 @@ public class Signup extends javax.swing.JPanel {
                             .add(layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 50, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(passwordLabel)
                                     .add(passwordAsterisk))
@@ -445,12 +447,6 @@ public class Signup extends javax.swing.JPanel {
         parentDialog.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void firstNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusGained
-        if (firstNameField.getText().equals(FIRST_NAME_FIELD)) {
-            firstNameField.setText("");
-        }
-    }//GEN-LAST:event_firstNameFieldFocusGained
-
     private void firstNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusLost
         if (firstNameField.getText().equals("") || firstNameField.getText().equals(FIRST_NAME_FIELD)) {
             firstNameField.setText(FIRST_NAME_FIELD);
@@ -540,6 +536,13 @@ public class Signup extends javax.swing.JPanel {
             countryField.setText(COUNTRY_FIELD);
         }
     }//GEN-LAST:event_countryFieldFocusLost
+
+    private void firstNameFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_firstNameFieldMouseClicked
+        if (firstNameField.getText().equals(FIRST_NAME_FIELD)) {
+            firstNameField.setText("");
+        }
+    }//GEN-LAST:event_firstNameFieldMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
     private javax.swing.JButton cancelButton;
