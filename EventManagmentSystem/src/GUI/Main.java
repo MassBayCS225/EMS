@@ -5,11 +5,13 @@
 package GUI;
 
 import BackEnd.EventSystem.Committee;
+import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import GUI.Reportable.EventDialog;
 import java.awt.CardLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,6 +22,7 @@ public class Main extends javax.swing.JPanel {
     
     private MainManager manager;
     private UserManagementPanel ump;
+    private MainPanel mainPanel;
     private DesignDefault dd;
     /**
      * Creates new form Main
@@ -27,7 +30,7 @@ public class Main extends javax.swing.JPanel {
     public Main() throws PrivilegeInsufficientException {
         dd = DesignDefault.getInstance();
         initComponents();
-        MainPanel mainPanel = new MainPanel();
+        mainPanel = new MainPanel();
         BudgetPanel bp = new BudgetPanel();
         ump = new UserManagementPanel();
         CommitteeListPanel clp = new CommitteeListPanel();
@@ -60,6 +63,15 @@ public class Main extends javax.swing.JPanel {
         return ump;
     }
 
+    public void setParticipantView() {
+        mainPanel.setParticipantView();
+        ump.setNonAdminView();
+        budgetPanel.setVisible(false);
+        committeesPanel.setVisible(false);
+        reportsPanel.setVisible(false);
+        tasksPanel.setVisible(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
