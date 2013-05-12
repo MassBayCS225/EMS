@@ -514,7 +514,7 @@ public class Signup extends javax.swing.JPanel {
     }//GEN-LAST:event_stateFieldFocusLost
 
     private void zipCodeFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipCodeFieldFocusGained
-        if (zipCodeField.equals(ZIP_CODE_FIELD)) {
+        if (zipCodeField.getText().equals(ZIP_CODE_FIELD)) {
             zipCodeField.setText("");
         }
     }//GEN-LAST:event_zipCodeFieldFocusGained
