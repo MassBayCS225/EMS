@@ -16,13 +16,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author sara
  */
-public class Expenses extends javax.swing.JPanel {
+public class CommitteeBudgetExpense extends javax.swing.JPanel {
 
     /**
      * Creates new form Expenses
      */
     private MainManager manager;
-    public Expenses() {
+    public CommitteeBudgetExpense() {
         initComponents();
         manager = MainManager.getInstance();
         updateInfo();

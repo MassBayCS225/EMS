@@ -31,7 +31,7 @@ public class Main extends javax.swing.JPanel {
         dd = DesignDefault.getInstance();
         initComponents();
         mainPanel = new MainPanel();
-        BudgetPanel bp = new BudgetPanel();
+        TotalBudgetPanel bp = new TotalBudgetPanel();
         ump = new UserManagementPanel();
         CommitteeListPanel clp = new CommitteeListPanel();
         EmailPanel ep = new EmailPanel();
