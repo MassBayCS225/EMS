@@ -58,7 +58,7 @@ public class MainPanel extends javax.swing.JPanel {
     }
 
     public void setParticipantView() {
-        cp.setParticipantView();
+        cp.hideEventButtons();
     }
     
     /**
