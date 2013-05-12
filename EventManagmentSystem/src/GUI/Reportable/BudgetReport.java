@@ -26,6 +26,7 @@ public class BudgetReport extends javax.swing.JDialog {
         initComponents();
         manager = MainManager.getInstance();
         budget = manager.getBudgetManager().getSelectedBudget();
+        setLocationRelativeTo(null);
         updateInfo();
     }
     

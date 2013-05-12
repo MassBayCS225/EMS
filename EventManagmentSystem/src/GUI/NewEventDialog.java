@@ -24,6 +24,7 @@ public class NewEventDialog extends javax.swing.JDialog {
         initComponents();
         event = new Event();
         confirm = false;
+        setLocationRelativeTo(null);
     }
     
     public boolean getConfirm()

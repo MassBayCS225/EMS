@@ -26,6 +26,7 @@ public class EventReport extends javax.swing.JDialog {
         initComponents();
         manager = MainManager.getInstance();
         event = manager.getEventManager().getSelectedEvent();
+        setLocationRelativeTo(null);
         updateInfo();
     }
     
