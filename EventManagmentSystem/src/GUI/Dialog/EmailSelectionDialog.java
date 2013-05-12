@@ -38,6 +38,7 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
         committeeList.setModel(committeeModel);
         confirm = false;
         updateInfo();
+        setLocationRelativeTo(null);
     }
     
     public boolean getConfirm()
