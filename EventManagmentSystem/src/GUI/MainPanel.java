@@ -57,7 +57,7 @@ public class MainPanel extends javax.swing.JPanel {
         add(calendarSelectionPanel, BorderLayout.SOUTH);
     }
 
-    public void setParticipantView() {
+    public void setNonAdminOrganizerView() {
         cp.hideEventButtons();
     }
     

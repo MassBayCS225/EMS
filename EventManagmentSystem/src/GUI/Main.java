@@ -22,6 +22,7 @@ public class Main extends javax.swing.JPanel {
     
     private MainManager manager;
     private UserManagementPanel ump;
+    private CommitteeListPanel clp;
     private MainPanel mainPanel;
     private DesignDefault dd;
     /**
@@ -33,7 +34,7 @@ public class Main extends javax.swing.JPanel {
         mainPanel = new MainPanel();
         TotalBudgetPanel bp = new TotalBudgetPanel();
         ump = new UserManagementPanel();
-        CommitteeListPanel clp = new CommitteeListPanel();
+        clp = new CommitteeListPanel();
         EmailPanel ep = new EmailPanel();
         SwitchingPanelHolder.add(mainPanel, "home");
         SwitchingPanelHolder.add(clp, "committees");
@@ -64,15 +65,14 @@ public class Main extends javax.swing.JPanel {
     }
 
     public void setCommitteeView() {
-        mainPanel.setParticipantView();
+        mainPanel.setNonAdminOrganizerView();
+        clp.setNonAdminOrganizerView();
         ump.setNonAdminView();
         budgetPanel.setVisible(false);
     }
     
     public void setParticipantView() {
-        mainPanel.setParticipantView();
-        ump.setNonAdminView();
-        budgetPanel.setVisible(false);
+        setCommitteeView();
         committeesPanel.setVisible(false);
         reportsPanel.setVisible(false);
         tasksPanel.setVisible(false);
