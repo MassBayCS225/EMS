@@ -4,36 +4,34 @@
  */
 package GUI;
 
-import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 /**
  *
  * @author sara
  */
-public class CommitteeBudget extends javax.swing.JPanel {
+public class TotalBudgetPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form CommitteeBudget
+     * Creates new form TotalBudgetPanel
      */
     private MainManager manager;
-    private IncomePanel income;
-    private Expenses expense;
+    private TotalBudgetIncome budgetIncome;
+    private TotalBudgetExpense budgetExpense;
     
-    public CommitteeBudget() {
+    public TotalBudgetPanel() {
         initComponents();
+        
         manager = MainManager.getInstance();
         
-        income = new IncomePanel();
-        expense = new Expenses();
+        budgetIncome = new TotalBudgetIncome();
+        budgetExpense = new TotalBudgetExpense();
         
-        incomePanel.add(income);
-        expensePanel.add(expense);
+        incomePanel.add(budgetIncome);
+        expensePanel.add(budgetExpense);
                 
         incomePanel.setVisible(true);
-        expensePanel.setVisible(true); 
+        expensePanel.setVisible(true);
     }
 
     /**
@@ -46,22 +44,16 @@ public class CommitteeBudget extends javax.swing.JPanel {
     private void initComponents() {
 
         budgetLabel = new javax.swing.JLabel();
+        reportButton = new javax.swing.JButton();
         incomePanel = new javax.swing.JPanel();
         expensePanel = new javax.swing.JPanel();
-        reportButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(760, 620));
 
         budgetLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        budgetLabel.setText("Budget");
+        budgetLabel.setText("Total Budget");
         budgetLabel.setBounds(new java.awt.Rectangle(2, 2, 2, 2));
-
-        incomePanel.setBackground(new java.awt.Color(255, 255, 255));
-        incomePanel.setPreferredSize(new java.awt.Dimension(390, 500));
-
-        expensePanel.setBackground(new java.awt.Color(255, 255, 255));
-        expensePanel.setPreferredSize(new java.awt.Dimension(390, 500));
 
         reportButton.setText("Report");
         reportButton.addActionListener(new java.awt.event.ActionListener() {
@@ -70,35 +62,39 @@ public class CommitteeBudget extends javax.swing.JPanel {
             }
         });
 
+        incomePanel.setBackground(new java.awt.Color(255, 255, 255));
+        incomePanel.setPreferredSize(new java.awt.Dimension(370, 600));
+
+        expensePanel.setBackground(new java.awt.Color(255, 255, 255));
+        expensePanel.setPreferredSize(new java.awt.Dimension(370, 580));
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(0, 6, Short.MAX_VALUE)
-                        .add(incomePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(expensePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(budgetLabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(reportButton)))
+                .addContainerGap()
+                .add(incomePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(expensePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
+            .add(layout.createSequentialGroup()
+                .add(budgetLabel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(reportButton)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(reportButton)
-                    .add(budgetLabel))
+                    .add(budgetLabel)
+                    .add(reportButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(expensePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-                    .add(incomePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .add(expensePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                    .add(incomePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

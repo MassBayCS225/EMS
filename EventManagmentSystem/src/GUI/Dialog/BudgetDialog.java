@@ -5,7 +5,7 @@
 package GUI.Dialog;
 
 //import GUI.BudgetPanel;
-import GUI.CommitteeBudget;
+import GUI.CommitteeBudgetPanel;
 
 /**
  *
@@ -16,12 +16,12 @@ public class BudgetDialog extends javax.swing.JDialog {
     /**
      * Creates new form BudgetDialog
      */
-    CommitteeBudget budgetPanel;
+    CommitteeBudgetPanel budgetPanel;
     public BudgetDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        budgetPanel = new CommitteeBudget();
+        budgetPanel = new CommitteeBudgetPanel();
         budgetPanel.setSize(800,600);
         add(budgetPanel);
         setSize(800,600);
