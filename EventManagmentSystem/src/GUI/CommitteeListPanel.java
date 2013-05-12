@@ -10,6 +10,7 @@ import BackEnd.EventSystem.Event;
 import BackEnd.UserSystem.User;
 import BackEnd.ManagerSystem.MainManager;
 import java.awt.CardLayout;
+import java.awt.Color;
 /**
  *
  * @author Sid
@@ -21,6 +22,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
      */
     private MainManager manager;
     private CommitteePanel committeePanel;
+    private NoPrivilegePanel npp;
     private DesignDefault dd;
     public CommitteeListPanel() {
         dd = DesignDefault.getInstance();
@@ -28,10 +30,13 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         manager = MainManager.getInstance();
         committeePanel = new CommitteePanel();
         committeePanel.setSize(500,600);
+        npp = new NoPrivilegePanel();
+        
         committeePanelHolder.add(committeePanel, "committee");
         committeePanelHolder.add(noPanel, "no");
+        committeePanelHolder.add(npp, "noPriv");
         updateInfo();
-        if(committeeList.getModel().getSize() == 0)
+        /*if(committeeList.getModel().getSize() == 0)
         {
             CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
             cl.show(committeePanelHolder, "no");
@@ -41,7 +46,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
             cl.show(committeePanelHolder, "committee");
             committeeList.setSelectedIndex(0);
-        }
+        }*/
         this.setBackground(dd.getPanelBGColor());
         this.setSize(dd.getPanelDimension());
     }
@@ -57,11 +62,20 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         {
             noPanel.setVisible(true);  
             committeePanel.setVisible(false);
+            npp.setVisible(false);
+            
+            CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
+            cl.show(committeePanelHolder, "no");
         }
         else
         {
             committeePanel.setVisible(true);
             noPanel.setVisible(false);
+            npp.setVisible(false);
+            
+            CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
+            cl.show(committeePanelHolder, "committee");
+            committeeList.setSelectedIndex(0);
         }
     }
     
@@ -95,7 +109,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         committeeListScrollPane.setBackground(new java.awt.Color(153, 153, 153));
         committeeListScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        committeeList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        committeeList.setFont(new java.awt.Font("Candara", 0, 12));
         committeeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         committeeList.setMaximumSize(new java.awt.Dimension(100, 370));
         committeeList.setPreferredSize(new java.awt.Dimension(100, 370));
@@ -133,7 +147,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
         noPanel.setBackground(new java.awt.Color(153, 204, 255));
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 18));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("No committees Created Yet");
@@ -189,6 +203,8 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             Committee c = selectedEvent.getCommitteeList().get(committeeList.getSelectedIndex());
             manager.getCommitteeManager().setSelectedCommittee(c);
             
+            committeePanel.updateInfo();
+            
             if (!loggedInUser.getAdminPrivilege() && !selectedEvent.getOrganizerList().contains(loggedInUser)) {
                 if (c.getChair().equals(loggedInUser)) {
                     committeePanel.setChairView();
@@ -197,11 +213,13 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 } else if (c.getMemberList().contains(loggedInUser)) {
                     committeePanel.setCommitteeMemberView();
                 } else {
-                    committeePanel.setCommitteeMemberView();
+                    noPanel.setVisible(false);  
+                    committeePanel.setVisible(false);
+                    npp.setVisible(true);   
                 }
             }
             
-            committeePanel.updateInfo();
+            //committeePanel.updateInfo();
         }
     }//GEN-LAST:event_committeeListValueChanged
 
