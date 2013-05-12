@@ -7,7 +7,7 @@ package GUI;
 import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
-import GUI.Reportable.NewReportableDialog;
+import GUI.Reportable.EventDialog;
 import java.awt.CardLayout;
 import javax.swing.DefaultComboBoxModel;
 
@@ -408,8 +408,8 @@ public class Main extends javax.swing.JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        NewReportableDialog nrd = new NewReportableDialog(null, true);
-        nrd.setVisible(true);
+        EventDialog ed = new EventDialog(null, true);
+        ed.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void changeCommitteesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCommitteesButtonActionPerformed
