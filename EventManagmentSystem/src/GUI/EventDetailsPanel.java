@@ -4,17 +4,24 @@
  */
 package GUI;
 
+import BackEnd.ManagerSystem.MainManager;
+
 /**
  *
  * @author Karina
  */
 public class EventDetailsPanel extends javax.swing.JPanel {
 
+    private MainManager manager;
     /**
      * Creates new form EventDetailsPanel
      */
     public EventDetailsPanel() {
         initComponents();
+        manager = MainManager.getInstance();
+        eventNameLabel.setText(manager.getEventManager().getSelectedEvent().getTitle());
+        descriptionTextArea.setText(manager.getEventManager().getSelectedEvent().getDescription());
+        locationArea.setText(manager.getEventManager().getSelectedEvent().getLocation().toString());
     }
 
     /**
@@ -26,20 +33,92 @@ public class EventDetailsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        eventNameLabel = new javax.swing.JLabel();
+        mainEventLabel = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descriptionTextArea = new javax.swing.JTextArea();
+        locationLabel = new javax.swing.JLabel();
+        locationArea = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(128, 128, 128));
         setMinimumSize(new java.awt.Dimension(640, 480));
         setPreferredSize(new java.awt.Dimension(640, 480));
+
+        eventNameLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        eventNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        eventNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        eventNameLabel.setText("Name of Event");
+
+        mainEventLabel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        mainEventLabel.setForeground(new java.awt.Color(255, 255, 255));
+        mainEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainEventLabel.setText("Main Event:");
+
+        descriptionLabel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        descriptionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        descriptionLabel.setText("Description:");
+
+        descriptionTextArea.setEditable(false);
+        descriptionTextArea.setBackground(new java.awt.Color(204, 204, 204));
+        descriptionTextArea.setColumns(20);
+        descriptionTextArea.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        descriptionTextArea.setRows(5);
+        jScrollPane1.setViewportView(descriptionTextArea);
+
+        locationLabel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        locationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        locationLabel.setText("Location:");
+
+        locationArea.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        locationArea.setForeground(new java.awt.Color(255, 255, 255));
+        locationArea.setText("The location of this event");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(mainEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eventNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(descriptionLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(locationLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(locationArea, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainEventLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(eventNameLabel)
+                .addGap(18, 18, 18)
+                .addComponent(descriptionLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(locationLabel)
+                    .addComponent(locationArea))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JTextArea descriptionTextArea;
+    private javax.swing.JLabel eventNameLabel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel locationArea;
+    private javax.swing.JLabel locationLabel;
+    private javax.swing.JLabel mainEventLabel;
     // End of variables declaration//GEN-END:variables
 }

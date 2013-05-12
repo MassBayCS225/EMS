@@ -90,13 +90,11 @@ public class MainPanel extends javax.swing.JPanel {
 
     private void selectCalendarButtonActionPerformed(java.awt.event.ActionEvent evt) {
         CardLayout cl = (CardLayout) (calendarSwitchingPanel.getLayout());
-        System.out.println("HELLO");
         cl.show(calendarSwitchingPanel, "calendar");
     }
 
     private void selectEventDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         CardLayout cl = (CardLayout) (calendarSwitchingPanel.getLayout());
-        System.out.println("HELLOL");
         cl.show(calendarSwitchingPanel, "eventDetails");
     }
 
