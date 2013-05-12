@@ -28,6 +28,7 @@ public class SubEventReport extends javax.swing.JDialog {
         initComponents();
         manager = MainManager.getInstance();
         subEvent = manager.getSubEventManager().getSelectedSubEvent();
+        setLocationRelativeTo(null);
         updateInfo();
     }
     

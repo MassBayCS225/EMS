@@ -25,6 +25,7 @@ public class TaskReport extends javax.swing.JDialog {
         initComponents();
         manager = MainManager.getInstance();
         task = manager.getTaskManager().getSelectedTask();
+        setLocationRelativeTo(null);
         updateInfo();
     }
     

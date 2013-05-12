@@ -26,6 +26,7 @@ public class CommitteeReport extends javax.swing.JDialog {
         initComponents();
             manager = MainManager.getInstance();
         committee = manager.getCommitteeManager().getSelectedCommittee();
+        setLocationRelativeTo(null);
         updateInfo();
     }
     

@@ -66,6 +66,7 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         endYear.setModel(yearModelE);
         startDay.setModel(dayModelS);
         endDay.setModel(dayModelE);
+        setLocationRelativeTo(null);
         updateInfo(t);
     }
     
