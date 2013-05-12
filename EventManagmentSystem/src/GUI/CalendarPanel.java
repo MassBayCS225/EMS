@@ -106,7 +106,6 @@ public class CalendarPanel extends javax.swing.JPanel {
         for (int i = 0; i < tempDetailsList.length; i++)
         {
             tempDetailsList[i] = ce.getSubEventList().get(i);
-            System.out.println(ce.getSubEventList().get(i));
         }
         
         detailsList.setListData(tempDetailsList);
@@ -119,8 +118,6 @@ public class CalendarPanel extends javax.swing.JPanel {
     }
     
     public void populateCalendar() {
-        System.out.println(month);
-        System.out.println(year);
         tempCalendar.set(year, month, 1); // sets the current month to its first day
         tempCalendar.set(Calendar.HOUR_OF_DAY, 0);
         tempCalendar.set(Calendar.MINUTE, 0);
@@ -136,7 +133,6 @@ public class CalendarPanel extends javax.swing.JPanel {
         int maxDaysInMonth = tempCalendar.getActualMaximum(tempCalendar.DAY_OF_MONTH); // gets the max number of days in a month
 
         for (int weekOfMonth = 0, calendarSlot = 0, day = 1; weekOfMonth < 6; weekOfMonth++) { // weekOfMonth is also the row number
-            //System.out.println("WEEK: " + weekOfMonth);
             for (int dayOfWeek = 0; dayOfWeek < maxDaysInWeek; dayOfWeek++) { // dayOfWeek is also the column number
 
                 if ((weekOfMonth == 0 && dayOfWeek + 1 >= firstDayInMonth) || // if in week 0, check to make sure you add only if at the proper point in the week
@@ -157,11 +153,8 @@ public class CalendarPanel extends javax.swing.JPanel {
                       tempMillis = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH); // set the date for the current element
                       tempMonth = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(Calendar.MONTH);
                       tempYear = manager.getEventManager().getSelectedEvent().getSubEventList().get(i).getTimeSchedule().getStartDateTimeCalendar().get(Calendar.YEAR);
-                       //System.out.println("Event Days: " + tempMillis); 
-                      //System.out.println("Event Days: " + tempMillis);
                       // if you want to check end time, use getEndTime() instead of getStartTime
                       if (tempMillis == day && tempMonth == tempCalendar.get(tempCalendar.MONTH) && tempYear == tempCalendar.get(tempCalendar.YEAR)){
-                          //System.out.println("YES!");
                             events.add(manager.getEventManager().getSelectedEvent().getSubEventList().get(i));
                         tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH - 1)); // reset the day back to original
                       }
@@ -173,11 +166,9 @@ public class CalendarPanel extends javax.swing.JPanel {
                      
                      
                      CalendarEvent cEvent = new CalendarEvent(day, events);
-                    //System.out.println(tempCalendar);
                     tempCalendar.set(Calendar.DAY_OF_MONTH, tempCalendar.get(tempCalendar.DAY_OF_MONTH) + 1);
                     //String dayString = "" + day;
                     day++;
-                    System.out.println(cEvent);
                     calendarTable.setValueAt(cEvent, weekOfMonth, dayOfWeek);
 
                 } else {
@@ -487,7 +478,6 @@ public class CalendarPanel extends javax.swing.JPanel {
             }
             catch (Exception e)
             {
-                System.out.println("Can't create Sub Event");
                 e.printStackTrace();
             }
         }
@@ -521,7 +511,6 @@ public class CalendarPanel extends javax.swing.JPanel {
                     populateCalendar();
                     updateDetailsList((CalendarEvent) calendarTable.getValueAt(selectedRow, selectedColumn));
                 } catch (Exception e) {
-                    System.out.println("Can't create Sub Event");
                     e.printStackTrace();
                 }
             }
