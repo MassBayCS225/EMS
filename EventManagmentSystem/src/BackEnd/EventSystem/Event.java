@@ -2,6 +2,7 @@ package BackEnd.EventSystem;
 
 import BackEnd.UserSystem.User;
 import BackEnd.UserSystem.Participant;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -92,11 +93,11 @@ public class Event extends ScheduleItem implements Reportable {
         return participantList;
     }
     
-    public double getEventTotalBudget(){
-        return getEventTotalIncome() + getEventTotalExpense();
+    public double getTotalEventBudget(){
+        return getTotalEventIncome() + getTotalEventExpense();
     }
     
-    public double getEventTotalIncome(){
+    public double getTotalEventIncome(){
         double income = 0;
         for (int i = 0; i < committeeList.size(); i++){
             income += committeeList.get(i).getBudget().getTotalIncome();
@@ -104,12 +105,24 @@ public class Event extends ScheduleItem implements Reportable {
         return income;
     }
     
-    public double getEventTotalExpense(){
+    public double getTotalEventExpense(){
         double expense = 0;
         for (int i = 0; i < committeeList.size(); i++){
             expense += committeeList.get(i).getBudget().getTotalExpense();
         }
         return expense;
+    }
+    
+    public int getTotalTaskProgress(){
+        double completed = 0;
+        double total = 0;
+        int[] taskCompletion = new int[2];
+        for (int i = 0; i < committeeList.size(); i++){
+            taskCompletion = committeeList.get(i).getTaskCompletion();
+            completed += taskCompletion[0];
+            total += taskCompletion[1];
+        }
+        return (int)(100 * completed / total);
     }
     
     public boolean equals(Event event) {

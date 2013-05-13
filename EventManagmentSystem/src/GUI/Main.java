@@ -4,14 +4,11 @@
  */
 package GUI;
 
-import BackEnd.EventSystem.Committee;
-import BackEnd.ManagerSystem.EventManager;
+import BackEnd.EventSystem.Event;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import GUI.Reportable.EventReport;
 import java.awt.CardLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -25,6 +22,8 @@ public class Main extends javax.swing.JPanel {
     private CommitteeListPanel clp;
     private MainPanel mainPanel;
     private DesignDefault dd;
+    private Event selectedEvent;
+
     /**
      * Creates new form Main
      */
@@ -37,31 +36,29 @@ public class Main extends javax.swing.JPanel {
         ump = new UserManagementPanel();
         clp = new CommitteeListPanel();
         EmailPanel ep = new EmailPanel();
+
         SwitchingPanelHolder.add(mainPanel, "home");
         SwitchingPanelHolder.add(clp, "committees");
         SwitchingPanelHolder.add(ep, "email");
         SwitchingPanelHolder.add(bp, "budget");
         SwitchingPanelHolder.add(ump, "userManagement");
+
         manager = MainManager.getInstance();
+        selectedEvent = manager.getEventManager().getSelectedEvent();
         this.setSize(dd.getFrameDimension());
         this.setBackground(dd.getBGColor());
         updateInfo();
     }
-    
-    public void updateInfo()
-    {
-        
-        DefaultComboBoxModel listModel = new DefaultComboBoxModel();
-        listModel.removeAllElements();
-        for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
-            listModel.addElement(c.getTitle());
-        }
-        //committeesComboBox.setModel(listModel);
-        
+
+    public void updateInfo() {
+        Event event = manager.getEventManager().getSelectedEvent();
+        taskProgressValueLabel.setText(selectedEvent.getTotalTaskProgress() + "%");
+        expenseValueLabel.setText("$" + selectedEvent.getTotalEventExpense());
+        incomeValueLabel.setText("$" + selectedEvent.getTotalEventIncome());
+        totalValueLabel.setText("$" + selectedEvent.getTotalEventBudget());
     }
-    
-    public UserManagementPanel getUserManagementPanel()
-    {
+
+    public UserManagementPanel getUserManagementPanel() {
         return ump;
     }
 
@@ -71,14 +68,14 @@ public class Main extends javax.swing.JPanel {
         ump.setNonAdminView();
         budgetPanel.setVisible(false);
     }
-    
+
     public void setParticipantView() {
         setCommitteeView();
         committeesPanel.setVisible(false);
         reportsPanel.setVisible(false);
         tasksPanel.setVisible(false);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,7 +87,7 @@ public class Main extends javax.swing.JPanel {
 
         tasksPanel = new javax.swing.JPanel();
         taskProgressLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        taskProgressValueLabel = new javax.swing.JLabel();
         committeesPanel = new javax.swing.JPanel();
         committeesLabel = new javax.swing.JLabel();
         changeCommitteesButton = new javax.swing.JButton();
@@ -110,8 +107,8 @@ public class Main extends javax.swing.JPanel {
         expenseValueLabel = new javax.swing.JLabel();
         totalValueLabel = new javax.swing.JLabel();
         emailPanel = new javax.swing.JPanel();
-        changeEmailButton = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
+        emailButton = new javax.swing.JButton();
+        contactLabel = new javax.swing.JLabel();
         eventManagementLabel = new javax.swing.JLabel();
         SwitchingPanelHolder = new javax.swing.JPanel();
         ChangeHomeButton = new javax.swing.JButton();
@@ -121,6 +118,16 @@ public class Main extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(960, 680));
         setMinimumSize(new java.awt.Dimension(960, 680));
         setPreferredSize(new java.awt.Dimension(960, 680));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                formPropertyChange(evt);
+            }
+        });
 
         tasksPanel.setBackground(dd.getPanelBGColor());
         tasksPanel.setMaximumSize(new java.awt.Dimension(160, 80));
@@ -130,7 +137,7 @@ public class Main extends javax.swing.JPanel {
         taskProgressLabel.setFont(dd.getStandardText());
         taskProgressLabel.setText("Task Progress");
 
-        jLabel1.setText("jLabel1");
+        taskProgressValueLabel.setText("temp");
 
         org.jdesktop.layout.GroupLayout tasksPanelLayout = new org.jdesktop.layout.GroupLayout(tasksPanel);
         tasksPanel.setLayout(tasksPanelLayout);
@@ -140,8 +147,8 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(tasksPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(taskProgressLabel)
-                    .add(jLabel1))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(taskProgressValueLabel))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         tasksPanelLayout.setVerticalGroup(
             tasksPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -149,7 +156,7 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(taskProgressLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jLabel1)
+                .add(taskProgressValueLabel)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -177,7 +184,7 @@ public class Main extends javax.swing.JPanel {
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(committeesLabel)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanelLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .add(changeCommitteesButton)
@@ -219,7 +226,7 @@ public class Main extends javax.swing.JPanel {
                 .add(accountManagementLabel)
                 .addContainerGap(46, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, participantsPanelLayout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(changeUserManagementButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 72, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -260,7 +267,7 @@ public class Main extends javax.swing.JPanel {
             .add(reportsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(eventReportLabel)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, reportsPanelLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .add(viewEventButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -286,9 +293,9 @@ public class Main extends javax.swing.JPanel {
         budgetLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         budgetLabel.setText("Budget");
 
-        incomeLabel.setText("Income:");
+        incomeLabel.setText("Income :");
 
-        expenseLabel.setText("Expenses:");
+        expenseLabel.setText("Expenses :");
 
         changeBudgetButton.setFont(dd.getStandardText());
         changeBudgetButton.setText("Details");
@@ -300,13 +307,13 @@ public class Main extends javax.swing.JPanel {
             }
         });
 
-        totalLabel.setText("jLabel2");
+        totalLabel.setText("Total :");
 
-        incomeValueLabel.setText("jLabel3");
+        incomeValueLabel.setText("temp");
 
-        expenseValueLabel.setText("jLabel4");
+        expenseValueLabel.setText("temp");
 
-        totalValueLabel.setText("jLabel5");
+        totalValueLabel.setText("temp");
 
         org.jdesktop.layout.GroupLayout budgetPanelLayout = new org.jdesktop.layout.GroupLayout(budgetPanel);
         budgetPanel.setLayout(budgetPanelLayout);
@@ -316,7 +323,7 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, budgetPanelLayout.createSequentialGroup()
-                        .add(0, 69, Short.MAX_VALUE)
+                        .add(0, 0, Short.MAX_VALUE)
                         .add(changeBudgetButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(budgetPanelLayout.createSequentialGroup()
                         .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -333,7 +340,7 @@ public class Main extends javax.swing.JPanel {
                                 .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(totalValueLabel)
                                     .add(expenseValueLabel))))
-                        .add(0, 0, Short.MAX_VALUE)))
+                        .add(0, 56, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         budgetPanelLayout.setVerticalGroup(
@@ -341,7 +348,7 @@ public class Main extends javax.swing.JPanel {
             .add(budgetPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(budgetLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(18, 18, 18)
                 .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(incomeLabel)
                     .add(incomeValueLabel))
@@ -353,7 +360,7 @@ public class Main extends javax.swing.JPanel {
                 .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(totalLabel)
                     .add(totalValueLabel))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 25, Short.MAX_VALUE)
                 .add(changeBudgetButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -365,18 +372,18 @@ public class Main extends javax.swing.JPanel {
         emailPanel.setMinimumSize(new java.awt.Dimension(160, 80));
         emailPanel.setPreferredSize(new java.awt.Dimension(160, 80));
 
-        changeEmailButton.setFont(dd.getStandardText());
-        changeEmailButton.setText("Email");
-        changeEmailButton.setPreferredSize(new java.awt.Dimension(71, 23));
-        changeEmailButton.setMinimumSize(dd.getBigButtonDimension());
-        changeEmailButton.addActionListener(new java.awt.event.ActionListener() {
+        emailButton.setFont(dd.getStandardText());
+        emailButton.setText("Email");
+        emailButton.setPreferredSize(new java.awt.Dimension(71, 23));
+        emailButton.setMinimumSize(dd.getBigButtonDimension());
+        emailButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeEmailButtonActionPerformed(evt);
+                emailButtonActionPerformed(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        jLabel8.setText("Contact");
+        contactLabel.setFont(dd.getStandardText());
+        contactLabel.setText("Contact");
 
         org.jdesktop.layout.GroupLayout emailPanelLayout = new org.jdesktop.layout.GroupLayout(emailPanel);
         emailPanel.setLayout(emailPanelLayout);
@@ -384,21 +391,21 @@ public class Main extends javax.swing.JPanel {
             emailPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel8)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .add(contactLabel)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
-                .add(changeEmailButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(emailButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         emailPanelLayout.setVerticalGroup(
             emailPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel8)
+                .add(contactLabel)
                 .add(18, 18, 18)
-                .add(changeEmailButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .add(emailButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         setSize(71,23);
@@ -439,40 +446,43 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(0, 2, Short.MAX_VALUE))
-                    .add(layout.createSequentialGroup()
                         .add(ChangeHomeButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(224, 224, 224)
                         .add(eventManagementLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(logOutButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(logOutButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, tasksPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, participantsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, reportsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(budgetPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(emailPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(reportsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, tasksPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, budgetPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(participantsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                     .add(layout.createSequentialGroup()
-                        .add(tasksPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(committeesPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(participantsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(reportsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(committeesPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(18, 18, 18)
+                        .add(tasksPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(18, 18, 18)
                         .add(budgetPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(18, 18, 18)
+                        .add(participantsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(18, 18, 18)
                         .add(emailPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -486,13 +496,13 @@ public class Main extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
-        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
+    private void emailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailButtonActionPerformed
+        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "email");
-    }//GEN-LAST:event_changeEmailButtonActionPerformed
+    }//GEN-LAST:event_emailButtonActionPerformed
 
     private void changeBudgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeBudgetButtonActionPerformed
-        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
+        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "budget");
     }//GEN-LAST:event_changeBudgetButtonActionPerformed
 
@@ -503,23 +513,31 @@ public class Main extends javax.swing.JPanel {
     }//GEN-LAST:event_viewEventButtonActionPerformed
 
     private void changeCommitteesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCommitteesButtonActionPerformed
-        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
+        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "committees");
     }//GEN-LAST:event_changeCommitteesButtonActionPerformed
 
     private void ChangeHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeHomeButtonActionPerformed
-        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
+        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "home");
     }//GEN-LAST:event_ChangeHomeButtonActionPerformed
 
     private void changeUserManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUserManagementButtonActionPerformed
-        CardLayout cl = (CardLayout)(SwitchingPanelHolder.getLayout());
+        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "userManagement");
     }//GEN-LAST:event_changeUserManagementButtonActionPerformed
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
         home.logOut();
     }//GEN-LAST:event_logOutButtonActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        updateInfo();
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
+        updateInfo();
+    }//GEN-LAST:event_formPropertyChange
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChangeHomeButton;
@@ -529,10 +547,11 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JPanel budgetPanel;
     private javax.swing.JButton changeBudgetButton;
     private javax.swing.JButton changeCommitteesButton;
-    private javax.swing.JButton changeEmailButton;
     private javax.swing.JButton changeUserManagementButton;
     private javax.swing.JLabel committeesLabel;
     private javax.swing.JPanel committeesPanel;
+    private javax.swing.JLabel contactLabel;
+    private javax.swing.JButton emailButton;
     private javax.swing.JPanel emailPanel;
     private javax.swing.JLabel eventManagementLabel;
     private javax.swing.JLabel eventReportLabel;
@@ -540,12 +559,11 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JLabel expenseValueLabel;
     private javax.swing.JLabel incomeLabel;
     private javax.swing.JLabel incomeValueLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JButton logOutButton;
     private javax.swing.JPanel participantsPanel;
     private javax.swing.JPanel reportsPanel;
     private javax.swing.JLabel taskProgressLabel;
+    private javax.swing.JLabel taskProgressValueLabel;
     private javax.swing.JPanel tasksPanel;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JLabel totalValueLabel;
