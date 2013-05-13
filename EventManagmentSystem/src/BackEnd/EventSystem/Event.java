@@ -92,6 +92,26 @@ public class Event extends ScheduleItem implements Reportable {
         return participantList;
     }
     
+    public double getEventTotalBudget(){
+        return getEventTotalIncome() + getEventTotalExpense();
+    }
+    
+    public double getEventTotalIncome(){
+        double income = 0;
+        for (int i = 0; i < committeeList.size(); i++){
+            income += committeeList.get(i).getBudget().getTotalIncome();
+        }
+        return income;
+    }
+    
+    public double getEventTotalExpense(){
+        double expense = 0;
+        for (int i = 0; i < committeeList.size(); i++){
+            expense += committeeList.get(i).getBudget().getTotalExpense();
+        }
+        return expense;
+    }
+    
     public boolean equals(Event event) {
         if (this.getEVENT_ID() == event.getEVENT_ID()
                 && this.getOrganizerList().equals(event.getOrganizerList())

@@ -24,28 +24,28 @@ public class BudgetItem {
     }
     
     public BudgetItem(double value, String description) {
-        this.value = value;
+        setValue(value);
         this.description = description;
         date = new Timestamp(0);
     }
     
     public BudgetItem(int budgetItemID, double value, String description) {
         BUDGET_ITEM_ID = budgetItemID;
-        this.value = value;
+        setValue(value);
         this.description = description;
         
     }
     
     public BudgetItem(int budgetItemID, BudgetItem budgetItem){
         this.BUDGET_ITEM_ID = budgetItemID;
-        this.value = budgetItem.getValue();
+        setValue(budgetItem.getValue());
         this.description = budgetItem.getDescription();
         this.date = budgetItem.getDate();
     }
     
 
     public void setValue(double value) {
-        this.value = value;
+        this.value = Math.abs(value);
     }
 
     public void setDescription(String description) {
@@ -88,7 +88,7 @@ public class BudgetItem {
     public int getBUDGET_ITEM_ID(){
         return BUDGET_ITEM_ID;
     }
-
+    
     public double getValue() {
         return value;
     }
@@ -101,8 +101,6 @@ public class BudgetItem {
         return date;
     }
     
-    
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -123,16 +121,9 @@ public class BudgetItem {
         }
         return true;
     }
-    
-    
 
     @Override
     public String toString() {
         return "BudgetItem{" + "value=" + value + ", description=" + description + ", date=" + date + '}';
     }
-    
-    
-    
-    
-    
 }
