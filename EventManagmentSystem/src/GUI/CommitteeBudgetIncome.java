@@ -4,12 +4,12 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Budget;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Income;
+import BackEnd.ManagerSystem.BudgetManager;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.NewIncomeDialog;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,14 +18,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CommitteeBudgetIncome extends javax.swing.JPanel {
 
+    Budget selectedBudget;
     /**
      * Creates new form IncomePanel
      */
     private MainManager manager;
     public CommitteeBudgetIncome() {
-        initComponents();
         manager = MainManager.getInstance();
+        selectedBudget = manager.getBudgetManager().getSelectedBudget();
+        initComponents();
         updateInfo();
+        
     }
     
     public void updateInfo()
@@ -44,7 +47,7 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
                     });
             }
         }
-        
+        incomeTotalLabel.setText("Total : $" + selectedBudget.getTotalIncome());
     }
     
     public DefaultTableModel getTableModel()
@@ -64,6 +67,7 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
         incomeTable = new javax.swing.JTable();
         addIncomeButton = new javax.swing.JButton();
         deleteIncomeButton = new javax.swing.JButton();
+        incomeTotalLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(395, 500));
@@ -119,6 +123,11 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
             }
         });
 
+        incomeTotalLabel.setText("Total : $" + selectedBudget.getTotalIncome());
+        incomeTotalLabel.setMaximumSize(new java.awt.Dimension(275, 15));
+        incomeTotalLabel.setMinimumSize(new java.awt.Dimension(275, 15));
+        incomeTotalLabel.setPreferredSize(new java.awt.Dimension(275, 15));
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,18 +142,21 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
                     .add(layout.createSequentialGroup()
                         .addContainerGap()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                             .add(layout.createSequentialGroup()
                                 .add(incomeLabel)
-                                .add(0, 0, Short.MAX_VALUE))
-                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(incomeTotalLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(incomeLabel)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(incomeLabel)
+                    .add(incomeTotalLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(12, 12, 12)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(addIncomeButton)
@@ -191,6 +203,7 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
     private javax.swing.JButton deleteIncomeButton;
     private javax.swing.JLabel incomeLabel;
     private javax.swing.JTable incomeTable;
+    private javax.swing.JLabel incomeTotalLabel;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,6 +13,7 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -113,13 +114,19 @@ public class MainPanel extends javax.swing.JPanel {
     private class RegisterForEventButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent event) {
-            System.out.println("Registering for event");
             EventManager eventManager = MainManager.getInstance().getEventManager();
             User loggedInUser = MainManager.getInstance().getLogInManager().getLoggedInUser();
             try{
-            eventManager.createParticipant(loggedInUser, loggedInUser);
+                if (eventManager.getSelectedEvent().getParticipantList().contains(loggedInUser)){
+                    JOptionPane.showMessageDialog(null, "Already registered for this event!");
+                }
+                else{
+                    eventManager.createParticipant(loggedInUser, loggedInUser);
+                    JOptionPane.showMessageDialog(null, "Registration successful!");
+                }
             }
             catch (DoesNotExistException e){
+                e.printStackTrace();
             }
         }
     }
