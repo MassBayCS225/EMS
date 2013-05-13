@@ -53,9 +53,9 @@ public class Main extends javax.swing.JPanel {
     public void updateInfo() {
         Event event = manager.getEventManager().getSelectedEvent();
         taskProgressValueLabel.setText(selectedEvent.getTotalTaskProgress() + "%");
-        expenseValueLabel.setText("$" + selectedEvent.getTotalEventExpense());
-        incomeValueLabel.setText("$" + selectedEvent.getTotalEventIncome());
-        totalValueLabel.setText("$" + selectedEvent.getTotalEventBudget());
+        expenseValueLabel.setText("$" + String.format("%,.2f", selectedEvent.getTotalEventExpense()));
+        incomeValueLabel.setText("$" + String.format("%,.2f", selectedEvent.getTotalEventIncome()));
+        totalValueLabel.setText("$" + String.format("%,.2f", selectedEvent.getTotalEventBudget()));
     }
 
     public UserManagementPanel getUserManagementPanel() {

@@ -47,7 +47,7 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
                     });
             }
         }
-        incomeTotalLabel.setText("Total : $" + selectedBudget.getTotalIncome());
+        incomeTotalLabel.setText("Total : $" + String.format("%,.2f", selectedBudget.getTotalIncome()));
     }
     
     public DefaultTableModel getTableModel()
