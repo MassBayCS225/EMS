@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -197,11 +198,20 @@ public class EmailPanel extends javax.swing.JPanel {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
 	ArrayList<String> toList = new ArrayList<String>(Arrays.asList(toField.getText().split(";")));
-	try {
-	    Email.send(manager.getLogInManager().getLoggedInUser().getEmailAddress(), toList, subjectField.getText(), messageArea.getText(), (manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName()));
-	} catch (Exception ex) {
-	    Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
-	}
+	if (toField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Please type an email address in the to box.");   
+        }
+        else{
+            try {
+                Email.send(manager.getLogInManager().getLoggedInUser().getEmailAddress(), toList, subjectField.getText(), messageArea.getText(), (manager.getLogInManager().getLoggedInUser().getFirstName() + " " + manager.getLogInManager().getLoggedInUser().getLastName()));
+                JOptionPane.showMessageDialog(null, "Your message has been sent.");
+                toField.setText("");
+                subjectField.setText("");
+                messageArea.setText("");
+            } catch (Exception ex) {
+                Logger.getLogger(EmailPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void discardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discardButtonActionPerformed
