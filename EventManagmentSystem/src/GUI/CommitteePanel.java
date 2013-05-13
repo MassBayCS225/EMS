@@ -42,12 +42,12 @@ public class CommitteePanel extends javax.swing.JPanel {
         
     }
 
-    public void setChairView() {
+  /*  public void setChairView() {
         committeeHeadChangeButton.setVisible(false);
-    }
+    }*/
     
     public void setCommitteeMemberView() {
-        setChairView();
+        committeeHeadChangeButton.setVisible(false);
         budgetButton.setVisible(false);
         addToBudgetButton.setVisible(false);
         removeMemberFromBudgetButton.setVisible(false);
@@ -440,15 +440,26 @@ public class CommitteePanel extends javax.swing.JPanel {
     
     private void taskListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taskListMouseClicked
         // TODO add your handling code here:
+        Event selectedEvent = manager.getEventManager().getSelectedEvent();
+        Committee selectedCommittee = manager.getCommitteeManager().getSelectedCommittee();
+        User loggedInUser = manager.getLogInManager().getLoggedInUser();
+        
         if(evt.getClickCount() == 2)
         {
-            manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getMaxSelectionIndex()));
-            TaskDialog td = new TaskDialog((JFrame)SwingUtilities.windowForComponent(this), true);
-            td.setVisible(true);
-            if(td.getConfirm())
-            {
-                //UPDATE ALL TASK INFO
-                addTaskToList(td.createTask());
+            if (loggedInUser.getAdminPrivilege() || selectedEvent.getOrganizerList().contains(loggedInUser) ||
+                selectedCommittee.getChair().equals(loggedInUser)) {
+                manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getMaxSelectionIndex()));
+                TaskDialog td = new TaskDialog((JFrame) SwingUtilities.windowForComponent(this), true);
+                td.setVisible(true);
+                if (td.getConfirm()) {
+                    //UPDATE ALL TASK INFO
+                    addTaskToList(td.createTask());
+                }
+            }
+            else {
+                TaskDialog td = new TaskDialog((JFrame) SwingUtilities.windowForComponent(this), true);
+                td.setToViewOnly();
+                td.setVisible(true);
             }
         updateInfo();
         }
