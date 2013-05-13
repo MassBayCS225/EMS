@@ -30,7 +30,6 @@ public class Home extends javax.swing.JFrame {
     private UndoManager undo = new UndoManager();
     private MainManager manager;
     private Main main;
-    private CommitteeMain committeeMain;
     private Component activePanel;
     public static boolean programReady = true;
     /**
@@ -148,7 +147,6 @@ public class Home extends javax.swing.JFrame {
         try
         {
             main = new Main(this);
-            committeeMain = new CommitteeMain();
             
             User loggedInUser = manager.getLogInManager().getLoggedInUser();
             Event selectedEvent = manager.getEventManager().getSelectedEvent();
@@ -173,16 +171,16 @@ public class Home extends javax.swing.JFrame {
                 add(main);
                 activePanel = (Component)main;
             }
-            else if (allCommitteeMembers.contains(loggedInUser)) {
+            else /*if (allCommitteeMembers.contains(loggedInUser))*/ {
                 main.setCommitteeView();
                 add(main);
                 activePanel = (Component)main;
             }
-            else {
-                main.setParticipantView();
-                add(main);
-                activePanel = (Component)main;
-            }
+//            else {
+//                main.setParticipantView();
+//                add(main);
+//                activePanel = (Component)main;
+//            }
         }
         catch (Exception e)
         {
