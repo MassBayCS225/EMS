@@ -68,6 +68,18 @@ public class Committee implements Reportable {
         return completed;
     }
     
+    public int[] getTaskCompletion(){
+        int completed = 0;
+        int total = taskList.size();
+        for (int i = 0; i < total; i++){
+            if (taskList.get(i).getCompleted()){
+                completed++;
+            }
+        }
+        int[] taskCompletion = {completed, total};
+        return taskCompletion;
+    }
+    
     /**
      * Sets the committee ID to the given committee ID value.
      * @param committee_id The committee ID.
