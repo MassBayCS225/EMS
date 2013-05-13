@@ -169,7 +169,6 @@ public class Main extends javax.swing.JPanel {
         committeesLabel.setText("Committees");
 
         changeCommitteesButton.setFont(dd.getStandardText());
-        changeCommitteesButton.setMinimumSize(dd.getBigButtonDimension());
         changeCommitteesButton.setText("Manage");
         changeCommitteesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,7 +183,7 @@ public class Main extends javax.swing.JPanel {
             .add(committeesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(committeesLabel)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, committeesPanelLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .add(changeCommitteesButton)
@@ -196,7 +195,7 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(committeesLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 21, Short.MAX_VALUE)
-                .add(changeCommitteesButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(changeCommitteesButton)
                 .addContainerGap())
         );
 
@@ -226,7 +225,7 @@ public class Main extends javax.swing.JPanel {
                 .add(accountManagementLabel)
                 .addContainerGap(46, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, participantsPanelLayout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(78, Short.MAX_VALUE)
                 .add(changeUserManagementButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 72, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -267,7 +266,7 @@ public class Main extends javax.swing.JPanel {
             .add(reportsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(eventReportLabel)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, reportsPanelLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .add(viewEventButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -290,7 +289,7 @@ public class Main extends javax.swing.JPanel {
         budgetPanel.setMinimumSize(new java.awt.Dimension(160, 160));
         budgetPanel.setPreferredSize(new java.awt.Dimension(160, 160));
 
-        budgetLabel.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        budgetLabel.setFont(new java.awt.Font("Candara", 1, 14));
         budgetLabel.setText("Budget");
 
         incomeLabel.setText("Income :");
@@ -323,7 +322,7 @@ public class Main extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, budgetPanelLayout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
+                        .add(0, 69, Short.MAX_VALUE)
                         .add(changeBudgetButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(budgetPanelLayout.createSequentialGroup()
                         .add(budgetPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -392,7 +391,7 @@ public class Main extends javax.swing.JPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(contactLabel)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, emailPanelLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .add(emailButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -410,7 +409,7 @@ public class Main extends javax.swing.JPanel {
 
         setSize(71,23);
 
-        eventManagementLabel.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
+        eventManagementLabel.setFont(new java.awt.Font("Candara", 1, 16));
         eventManagementLabel.setText("Event Management");
 
         SwitchingPanelHolder.setMaximumSize(new java.awt.Dimension(760, 620));
@@ -444,16 +443,14 @@ public class Main extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(layout.createSequentialGroup()
                         .add(ChangeHomeButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(224, 224, 224)
                         .add(eventManagementLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(logOutButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .add(logOutButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(SwitchingPanelHolder, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -512,11 +509,6 @@ public class Main extends javax.swing.JPanel {
         ed.setVisible(true);
     }//GEN-LAST:event_viewEventButtonActionPerformed
 
-    private void changeCommitteesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCommitteesButtonActionPerformed
-        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
-        cl.show(SwitchingPanelHolder, "committees");
-    }//GEN-LAST:event_changeCommitteesButtonActionPerformed
-
     private void ChangeHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeHomeButtonActionPerformed
         CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "home");
@@ -538,6 +530,11 @@ public class Main extends javax.swing.JPanel {
     private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
         updateInfo();
     }//GEN-LAST:event_formPropertyChange
+
+private void changeCommitteesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCommitteesButtonActionPerformed
+        CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
+        cl.show(SwitchingPanelHolder, "committees");
+}//GEN-LAST:event_changeCommitteesButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChangeHomeButton;
