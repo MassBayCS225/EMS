@@ -1,1 +1,6 @@
 General bugs:
+
+Log-in screen: 
+
+Input: Incorrect log-in information is entered.
+Output: "Clo..." button. 
