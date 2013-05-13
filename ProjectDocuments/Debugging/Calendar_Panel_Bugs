@@ -1,1 +1,6 @@
 Calendar Panel Bugs:
+
+Main event information not displayed on the calendar.
+
+Rightmost column (Saturday) and bottom row is smaller in size than all the other respective colums and rows.
+
