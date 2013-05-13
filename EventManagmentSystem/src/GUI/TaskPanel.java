@@ -64,6 +64,15 @@ public class TaskPanel extends javax.swing.JPanel {
         
         return task;
     }
+    
+    public void setToViewOnly() {
+        changeNameButton.setVisible(false);
+        descriptionTextArea.enable(false);
+        editTimeScheduleButton.setVisible(false);
+        completeCheckBox.enable(false);
+        addMemberButton.setVisible(false);
+        removeMemberButton.setVisible(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,7 +115,7 @@ public class TaskPanel extends javax.swing.JPanel {
         });
         memberScrollPane.setViewportView(membersList);
 
-        membersLabel.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        membersLabel.setFont(new java.awt.Font("Candara", 0, 12));
         membersLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         membersLabel.setText("Members");
 
@@ -175,13 +184,13 @@ public class TaskPanel extends javax.swing.JPanel {
                             .addComponent(editTimeScheduleButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(membersLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(memberScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(membersLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(memberScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(addMemberButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
                                 .addComponent(removeMemberButton))))
-                    .addComponent(descriptionScrollPane, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(descriptionScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

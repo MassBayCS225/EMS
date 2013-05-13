@@ -205,10 +205,10 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             
             committeePanel.updateInfo();
             
-            if (!loggedInUser.getAdminPrivilege() && !selectedEvent.getOrganizerList().contains(loggedInUser)) {
-                if (c.getChair().equals(loggedInUser)) {
-                    committeePanel.setChairView();
-                } else if (c.getBudgetAccessList().contains(loggedInUser)) {
+            if (!loggedInUser.getAdminPrivilege() 
+                    && !selectedEvent.getOrganizerList().contains(loggedInUser)
+                    && !c.getChair().equals(loggedInUser)) {
+                if (c.getBudgetAccessList().contains(loggedInUser)) {
                     committeePanel.setBudgetAccessMemberView();
                 } else if (c.getMemberList().contains(loggedInUser)) {
                     committeePanel.setCommitteeMemberView();
