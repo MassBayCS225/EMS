@@ -32,34 +32,24 @@ public class Home extends javax.swing.JFrame {
     private Main main;
     private CommitteeMain committeeMain;
     private Component activePanel;
+    public static boolean programReady = true;
     /**
      *
      */
-    
-    
-    
     public Home() {
         initComponents();
         manager = MainManager.getInstance();
         /* Added following line to center dialog. -Ketty */
         setLocationRelativeTo(null);
-        
-        while(checkForUsers())      //CHECK IF WE HAVE USERS
-        {  createFirstUser();  }
-        
-        while (checkLogIn())        //CHECK FOR LOGIN
-        {  logIn();  }
-        
-        if(checkForEvents())        //CHECK IF WE HAVE EVENTS
-        {  createFirstEvent();  }
-        
-        else
-        {  loadEvent();  }
-        
+        while (checkLogIn()) {//CHECK FOR LOGIN
+            logIn();
+        }
+        while (checkForEvents()) {//CHECK IF WE HAVE EVENTS
+            createFirstEvent();
+        }
+        loadEvent();
         /* Changed this try block. -Ketty */
         addPanel();
-        
-            
         setVisible(true);
     }
     public void setEvent(Event e){
@@ -81,7 +71,7 @@ public class Home extends javax.swing.JFrame {
     }
     public void createFirstUser()
     {
-             JOptionPane.showMessageDialog(this, "There are no users in the user list.  Please create an administrator account first.");
+            JOptionPane.showMessageDialog(this, "There are no users in the user list.  Please create an administrator account first.");
             SignupDialog sd = new SignupDialog(this, true);
             sd.setVisible(true);
     }
@@ -141,11 +131,23 @@ public class Home extends javax.swing.JFrame {
            }
     }
     
+    public void logOut(){
+        remove(activePanel); //Remove whatever panel we're showing
+        setVisible(false);
+        repaint(); //Repaint to get grey background
+        manager.getLogInManager().logOut();
+        logIn();    //show login dialog
+        addPanel(); //add the appropriate panel
+        setVisible(true);
+        validate();    //repaint everything
+        repaint();
+    }
+    
     public void addPanel()
     {
         try
         {
-            main = new Main();
+            main = new Main(this);
             committeeMain = new CommitteeMain();
             
             User loggedInUser = manager.getLogInManager().getLoggedInUser();
@@ -418,13 +420,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_budgetReportsMenuItemActionPerformed
 
     private void logOutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMenuItemActionPerformed
-        // TODO add your handling code here:
-        this.remove(activePanel); //Remove whatever panel we're showing
-        this.repaint(); //Repaint to get grey background
-        logIn();    //show login dialog
-        addPanel(); //add the appropriate panel
-        this.validate();    //repaint everything
-        this.repaint();
+        logOut();
     }//GEN-LAST:event_logOutMenuItemActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

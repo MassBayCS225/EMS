@@ -26,6 +26,7 @@ public class Signup extends javax.swing.JPanel {
 
     private UserManager userManager;
     private JDialog parentDialog;
+    private boolean firstRun;
     private final String FIRST_NAME_FIELD = "First";
     private final String LAST_NAME_FIELD = "Last";
     private final String PHONE_NUMBER_FIELD = "(XXX) XXX - XXXX";
@@ -39,11 +40,16 @@ public class Signup extends javax.swing.JPanel {
      * Creates new form Signup
      */
     public Signup(JDialog parentDialog) {
-        initComponents();
-
         this.parentDialog = parentDialog;
         MainManager mainManager = MainManager.getInstance();
         userManager = mainManager.getUserManager();
+        firstRun = true;
+        if (userManager.getUserList().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "This first account you create will be an administrator.");
+        }
+        initComponents();
+
+        
     }
 
     /**
@@ -99,12 +105,10 @@ public class Signup extends javax.swing.JPanel {
 
         firstNameField.setText(FIRST_NAME_FIELD);
         firstNameField.setPreferredSize(new java.awt.Dimension(380, 28));
-        firstNameField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                firstNameFieldMouseClicked(evt);
-            }
-        });
         firstNameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                firstNameFieldFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 firstNameFieldFocusLost(evt);
             }
@@ -257,34 +261,31 @@ public class Signup extends javax.swing.JPanel {
                     .add(countryField))
                 .add(18, 18, 18)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, signinLabel)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                                .add(emailLabel)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(emailAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                                .add(passwordLabel)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(passwordAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                                .add(reenterPasswordLabel)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(reEnterPasswordAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, emailField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, passwordField)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, reenterPassWordField)))
+                .add(18, 30, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, signinLabel)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                        .add(emailLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(emailAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                        .add(passwordLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(passwordAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                        .add(reenterPasswordLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(reEnterPasswordAsterisk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, emailField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, passwordField)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, reenterPassWordField)
                     .add(layout.createSequentialGroup()
                         .add(requiredFields)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(cancelButton)
+                        .add(signupButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(signupButton)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .add(cancelButton)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -309,7 +310,7 @@ public class Signup extends javax.swing.JPanel {
                             .add(layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(emailField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 50, Short.MAX_VALUE)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(passwordLabel)
                                     .add(passwordAsterisk))
@@ -537,11 +538,15 @@ public class Signup extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_countryFieldFocusLost
 
-    private void firstNameFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_firstNameFieldMouseClicked
-        if (firstNameField.getText().equals(FIRST_NAME_FIELD)) {
+    private void firstNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusGained
+        if (firstRun){
+            firstRun = false;
+            firstNameField.selectAll();
+        }
+        else if (firstNameField.getText().equals(FIRST_NAME_FIELD)){
             firstNameField.setText("");
         }
-    }//GEN-LAST:event_firstNameFieldMouseClicked
+    }//GEN-LAST:event_firstNameFieldFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;

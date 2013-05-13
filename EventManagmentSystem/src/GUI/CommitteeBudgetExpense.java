@@ -4,12 +4,11 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Budget;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Expense;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.NewExpenseDialog;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,13 +17,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CommitteeBudgetExpense extends javax.swing.JPanel {
 
+    Budget selectedBudget;
     /**
      * Creates new form Expenses
      */
     private MainManager manager;
     public CommitteeBudgetExpense() {
-        initComponents();
         manager = MainManager.getInstance();
+        selectedBudget = manager.getBudgetManager().getSelectedBudget();
+        initComponents();
         updateInfo();
     }
     
@@ -44,7 +45,7 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
                     });
             }
         }
-        
+        expenseTotalLabel.setText("Total : $" + selectedBudget.getTotalExpense());
     }
     
     public DefaultTableModel getTableModel()
@@ -64,6 +65,7 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
         expensesTable = new javax.swing.JTable();
         addExpenseButton = new javax.swing.JButton();
         deleteExpenseButton = new javax.swing.JButton();
+        expenseTotalLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(395, 500));
@@ -119,6 +121,11 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
             }
         });
 
+        expenseTotalLabel.setText("Total : $" + selectedBudget.getTotalExpense());
+        expenseTotalLabel.setMaximumSize(new java.awt.Dimension(275, 15));
+        expenseTotalLabel.setMinimumSize(new java.awt.Dimension(275, 15));
+        expenseTotalLabel.setPreferredSize(new java.awt.Dimension(275, 15));
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,25 +133,26 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .add(layout.createSequentialGroup()
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(deleteExpenseButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(addExpenseButton))
                     .add(layout.createSequentialGroup()
                         .add(expensesLabel)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                            .add(layout.createSequentialGroup()
-                                .add(0, 0, Short.MAX_VALUE)
-                                .add(deleteExpenseButton)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(addExpenseButton)))
-                        .addContainerGap())))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(expenseTotalLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 275, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(expensesLabel)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(expensesLabel)
+                    .add(expenseTotalLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(12, 12, 12)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(addExpenseButton)
@@ -187,6 +195,7 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addExpenseButton;
     private javax.swing.JButton deleteExpenseButton;
+    private javax.swing.JLabel expenseTotalLabel;
     private javax.swing.JLabel expensesLabel;
     private javax.swing.JTable expensesTable;
     private javax.swing.JScrollPane jScrollPane1;

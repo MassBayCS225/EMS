@@ -19,8 +19,10 @@ public class LoginDialog extends javax.swing.JDialog {
     /**
      * Creates new form LoginDialog
      */
+    private boolean firstRun;
     private boolean confirm;
     private MainManager manager;
+    private final String EMAIL_FIELD = "email@domain.com";
     private final String PASSWORD_FIELD = "<P455w0rd>";
 
     public LoginDialog(java.awt.Frame parent, boolean modal) {
@@ -30,6 +32,7 @@ public class LoginDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         confirm = false;
         manager = MainManager.getInstance();
+        firstRun = true;
     }
 
     public boolean getConfirm() {
@@ -74,17 +77,10 @@ public class LoginDialog extends javax.swing.JDialog {
         jLabel2.setText("Password");
 
         emailField.setText("email@domain.com");
-        emailField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                emailFieldMouseClicked(evt);
-            }
-        });
-        emailField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
-            }
-        });
         emailField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailFieldFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 emailFieldFocusLost(evt);
             }
@@ -160,9 +156,6 @@ public class LoginDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-    }//GEN-LAST:event_emailFieldActionPerformed
-
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         confirm = true;
         this.dispose();
@@ -189,7 +182,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
     private void emailFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusLost
         if (emailField.getText().equals("")) {
-            emailField.setText("email@domain.com");
+            emailField.setText(EMAIL_FIELD);
         }
     }//GEN-LAST:event_emailFieldFocusLost
 
@@ -200,11 +193,15 @@ public class LoginDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_passwordFieldFocusLost
 
-private void emailFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_emailFieldMouseClicked
-        if (emailField.getText().equals("email@domain.com")) {
+    private void emailFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusGained
+        if (firstRun){
+            firstRun = false;
+            emailField.selectAll();
+        }
+        else if (emailField.getText().equals(EMAIL_FIELD)) {
             emailField.setText("");
         }
-}//GEN-LAST:event_emailFieldMouseClicked
+    }//GEN-LAST:event_emailFieldFocusGained
 
     /**
      * @param args the command line arguments
