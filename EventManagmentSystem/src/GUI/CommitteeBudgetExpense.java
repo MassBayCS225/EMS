@@ -45,7 +45,7 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
                     });
             }
         }
-        expenseTotalLabel.setText("Total : $" + selectedBudget.getTotalExpense());
+        expenseTotalLabel.setText("Total : $" + String.format("%,.2f", selectedBudget.getTotalExpense()));
     }
     
     public DefaultTableModel getTableModel()
