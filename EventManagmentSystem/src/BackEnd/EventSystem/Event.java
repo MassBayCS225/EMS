@@ -94,7 +94,7 @@ public class Event extends ScheduleItem implements Reportable {
     }
     
     public double getTotalEventBudget(){
-        return getTotalEventIncome() + getTotalEventExpense();
+        return getTotalEventIncome() - getTotalEventExpense();
     }
     
     public double getTotalEventIncome(){
