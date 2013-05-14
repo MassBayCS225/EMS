@@ -510,6 +510,7 @@ public class Main extends javax.swing.JPanel {
     }//GEN-LAST:event_emailButtonActionPerformed
 
     private void changeBudgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeBudgetButtonActionPerformed
+        bp.updateInfo();
         CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "budget");
     }//GEN-LAST:event_changeBudgetButtonActionPerformed
