@@ -224,7 +224,7 @@ private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             confirm = true;
-            this.dispose();
+            this.dispose(); 
         }
 }//GEN-LAST:event_emailFieldKeyPressed
 
