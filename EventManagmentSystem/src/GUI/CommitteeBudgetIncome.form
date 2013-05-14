@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
@@ -38,7 +38,7 @@
                           <Component id="jScrollPane1" alignment="0" pref="375" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="incomeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="50" max="32767" attributes="0"/>
+                              <EmptySpace pref="58" max="32767" attributes="0"/>
                               <Component id="incomeTotalLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -56,7 +56,7 @@
                   <Component id="incomeTotalLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="438" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="432" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="addIncomeButton" alignment="3" min="-2" max="-2" attributes="0"/>

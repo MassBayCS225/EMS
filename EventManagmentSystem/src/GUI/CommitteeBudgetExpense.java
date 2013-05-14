@@ -9,6 +9,7 @@ import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Expense;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.NewExpenseDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -48,8 +49,9 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
         expenseTotalLabel.setText("Total : $" + String.format("%,.2f", selectedBudget.getTotalExpense()));
     }
     
-    public DefaultTableModel getTableModel()
-    { return (DefaultTableModel)expensesTable.getModel(); }
+    public DefaultTableModel getTableModel(){ 
+        return (DefaultTableModel)expensesTable.getModel(); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -180,16 +182,22 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
 
     private void deleteExpenseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteExpenseButtonActionPerformed
         int selection = expensesTable.getSelectedRow();
-        Expense expense = manager.getCommitteeManager().getSelectedCommittee().getBudget().getExpenseList().get(selection);
-        try
-        {
-            manager.getBudgetManager().deleteExpense(expense, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+        
+        if(selection < 0){
+            JOptionPane.showMessageDialog(
+                    null, "Please select an expense to delete.", "No Expense Selected", JOptionPane.ERROR_MESSAGE);
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
+        else{
+            Expense expense = manager.getCommitteeManager().getSelectedCommittee().getBudget().getExpenseList().get(selection);
+            
+            try{
+                manager.getBudgetManager().deleteExpense(expense, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            updateInfo();
         }
-        updateInfo();
     }//GEN-LAST:event_deleteExpenseButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
