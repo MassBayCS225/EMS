@@ -10,6 +10,7 @@ import BackEnd.EventSystem.Income;
 import BackEnd.ManagerSystem.BudgetManager;
 import BackEnd.ManagerSystem.MainManager;
 import GUI.Dialog.NewIncomeDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -186,16 +187,21 @@ public class CommitteeBudgetIncome extends javax.swing.JPanel {
     private void deleteIncomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteIncomeButtonActionPerformed
         // TODO add your handling code here:
         int selection = incomeTable.getSelectedRow();
-        Income income = manager.getCommitteeManager().getSelectedCommittee().getBudget().getIncomeList().get(selection);
-        try
-        {
-            manager.getBudgetManager().deleteIncome(income, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+        if(selection < 0){
+            JOptionPane.showMessageDialog(
+                    null, "Please select an income to delete.", "No Income Selected", JOptionPane.ERROR_MESSAGE);
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
+        else{
+            Income income = manager.getCommitteeManager().getSelectedCommittee().getBudget().getIncomeList().get(selection);
+        
+            try{
+                manager.getBudgetManager().deleteIncome(income, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            updateInfo();
         }
-        updateInfo();
     }//GEN-LAST:event_deleteIncomeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

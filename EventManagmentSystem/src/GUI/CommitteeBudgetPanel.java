@@ -4,10 +4,7 @@
  */
 package GUI;
 
-import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -24,6 +21,7 @@ public class CommitteeBudgetPanel extends javax.swing.JPanel {
     
     public CommitteeBudgetPanel() {
         initComponents();
+        
         manager = MainManager.getInstance();
         
         income = new CommitteeBudgetIncome();
@@ -77,7 +75,7 @@ public class CommitteeBudgetPanel extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(0, 6, Short.MAX_VALUE)
+                        .add(0, 2, Short.MAX_VALUE)
                         .add(incomePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(expensePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
