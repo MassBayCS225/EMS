@@ -187,7 +187,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     public void populateSubEvents()
     {
         ArrayList<SubEvent> subEventList = manager.getEventManager().getSelectedEvent().getSubEventList();
-        subEventList.add(new SubEvent(12, "This is an event"));
+        subEventList.add(new SubEvent(12, "This is an event."));
     }
     
     public String getMonthString(int month) {
@@ -498,7 +498,7 @@ public class CalendarPanel extends javax.swing.JPanel {
 
     private void removeEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEventButtonActionPerformed
         if (selectedSubEvent != null) {
-            int choice = JOptionPane.showConfirmDialog(null, "Do you want to remove " + selectedSubEvent.getDescription() + "?");
+            int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + selectedSubEvent.getTitle() + "?");
             if (choice == JOptionPane.YES_OPTION) {
                 try {
                     manager.getEventManager().deleteSubEvent(selectedSubEvent);
@@ -511,7 +511,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                 updateDetailsList((CalendarEvent) calendarTable.getValueAt(selectedRow, selectedColumn));
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Please select a Sub Event to remove first");
+            JOptionPane.showMessageDialog(null, "Please select a sub-event to remove first.");
         }
     }//GEN-LAST:event_removeEventButtonActionPerformed
 
@@ -529,7 +529,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             }
         }
         else
-            JOptionPane.showMessageDialog(null, "Please select a Sub Event to edit first");
+            JOptionPane.showMessageDialog(null, "Please select a sub-event to edit first.");
     }//GEN-LAST:event_editSubEventButtonActionPerformed
 
     private void lastYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastYearButtonActionPerformed
