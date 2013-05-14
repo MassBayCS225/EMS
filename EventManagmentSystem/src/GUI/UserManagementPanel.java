@@ -100,11 +100,6 @@ public class UserManagementPanel extends javax.swing.JPanel {
         emailField = new javax.swing.JTextField();
         phoneNumberField = new javax.swing.JTextField();
         streetField = new javax.swing.JTextField();
-        firstNameButton = new javax.swing.JButton();
-        lastNameButton = new javax.swing.JButton();
-        phoneNumberButton = new javax.swing.JButton();
-        emailButton = new javax.swing.JButton();
-        addressButton = new javax.swing.JButton();
         passwordButton = new javax.swing.JButton();
         cityField = new javax.swing.JTextField();
         stateField = new javax.swing.JTextField();
@@ -151,41 +146,6 @@ public class UserManagementPanel extends javax.swing.JPanel {
 
         streetField.setText("Street");
 
-        firstNameButton.setText("Change");
-        firstNameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstNameButtonActionPerformed(evt);
-            }
-        });
-
-        lastNameButton.setText("Change");
-        lastNameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lastNameButtonActionPerformed(evt);
-            }
-        });
-
-        phoneNumberButton.setText("Change");
-        phoneNumberButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneNumberButtonActionPerformed(evt);
-            }
-        });
-
-        emailButton.setText("Change");
-        emailButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailButtonActionPerformed(evt);
-            }
-        });
-
-        addressButton.setText("Change");
-        addressButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressButtonActionPerformed(evt);
-            }
-        });
-
         passwordButton.setFont(dd.getStandardText());
         passwordButton.setText("Change Password");
         passwordButton.setMinimumSize(dd.getBigButtonDimension());
@@ -218,7 +178,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
             ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
                         .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lastNameLabel)
@@ -229,34 +189,18 @@ public class UserManagementPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                                .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(phoneNumberButton))
-                            .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                                .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(firstNameButton))
-                            .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(emailButton))
-                            .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                                .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lastNameButton))
+                            .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(stateField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                                .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(addressButton))))
-                    .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                        .addComponent(passwordButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                            .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton1)
+                                .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(passwordButton))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         ChangeInfoPanelLayout.setVerticalGroup(
             ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,23 +208,19 @@ public class UserManagementPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(firstNameLabel)
-                    .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(firstNameButton))
+                    .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lastNameLabel)
-                    .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lastNameButton))
+                    .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailLabel)
-                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailButton))
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(phoneNumberLabel)
-                    .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(phoneNumberButton))
+                    .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addressLabel)
@@ -292,14 +232,12 @@ public class UserManagementPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addressButton))
+                .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordButton)
                     .addComponent(jButton1))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         UserInfoPanelHolder.add(ChangeInfoPanel, "changeInfo");
@@ -390,108 +328,6 @@ public class UserManagementPanel extends javax.swing.JPanel {
         cl.show(UserInfoPanelHolder, "changeUser");
     }//GEN-LAST:event_changeUserButtonActionPerformed
 
-    private void firstNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameButtonActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Do you want to change the first name to " + firstNameField.getText() + "?");
-        if (choice == JOptionPane.YES_OPTION)
-        {
-            try 
-            {
-                manager.getUserManager().editFirstName(firstNameField.getText(), manager.getLogInManager().getLoggedInUser());
-            } 
-            catch (PrivilegeInsufficientException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            catch (DoesNotExistException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            updateLabels();
-        }
-    }//GEN-LAST:event_firstNameButtonActionPerformed
-
-    private void lastNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameButtonActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Do you want to change the last name to " + lastNameField.getText() + "?");
-        if (choice == JOptionPane.YES_OPTION)
-        {
-            try 
-            {
-                manager.getUserManager().editLastName(lastNameField.getText(), manager.getLogInManager().getLoggedInUser());
-            } 
-            catch (PrivilegeInsufficientException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            catch (DoesNotExistException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            updateLabels();
-        }
-    }//GEN-LAST:event_lastNameButtonActionPerformed
-
-    private void emailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailButtonActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Do you want to change the email to " + emailField.getText() + "?");
-        if (choice == JOptionPane.YES_OPTION)
-        {
-            try 
-            {
-                manager.getUserManager().editEmailAddress(emailField.getText(), manager.getLogInManager().getLoggedInUser());
-            } 
-            catch (PrivilegeInsufficientException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            catch (DoesNotExistException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            updateLabels();
-        }
-    }//GEN-LAST:event_emailButtonActionPerformed
-
-    private void phoneNumberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberButtonActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Do you want to change the phone number to " + phoneNumberField.getText() + "?");
-        if (choice == JOptionPane.YES_OPTION)
-        {
-            PhoneNumber tempPhoneNumber = new PhoneNumber(phoneNumberField.getText());
-            try 
-            {
-                manager.getUserManager().editPhoneNumber(tempPhoneNumber, manager.getLogInManager().getLoggedInUser());
-            } 
-            catch (PrivilegeInsufficientException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            catch (DoesNotExistException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            updateLabels();
-        }
-    }//GEN-LAST:event_phoneNumberButtonActionPerformed
-
-    private void addressButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressButtonActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Do you want to change the address to " + streetField.getText() + ", " + cityField.getText() + ", " + stateField.getText() + ", " + zipcodeField.getText() + ", " + countryField.getText() + "?");
-        if (choice == JOptionPane.YES_OPTION)
-        {
-            Address tempAddress = new Address(streetField.getText(), cityField.getText(), stateField.getText(), zipcodeField.getText(), countryField.getText());
-            try 
-            {
-                manager.getUserManager().editAddress(tempAddress, manager.getLogInManager().getLoggedInUser());
-            } 
-            catch (PrivilegeInsufficientException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            catch (DoesNotExistException ex) 
-            {
-                Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            updateLabels();
-        }
-    }//GEN-LAST:event_addressButtonActionPerformed
-
     private void saveChangesButtonPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonPerformed
         // TODO add your handling code here:
         int choice = JOptionPane.showConfirmDialog(null, "Do you want to save these changes?");
@@ -523,26 +359,21 @@ public class UserManagementPanel extends javax.swing.JPanel {
     private javax.swing.JPanel ChangeInfoPanel;
     private javax.swing.JPanel ChangeUserPanel;
     private javax.swing.JPanel UserInfoPanelHolder;
-    private javax.swing.JButton addressButton;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JButton changeInfoButton;
     private javax.swing.JButton changeUserButton;
     private javax.swing.JTextField cityField;
     private javax.swing.JTextField countryField;
     private javax.swing.JLabel currentUserLabel;
-    private javax.swing.JButton emailButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
-    private javax.swing.JButton firstNameButton;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JButton lastNameButton;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JButton passwordButton;
-    private javax.swing.JButton phoneNumberButton;
     private javax.swing.JTextField phoneNumberField;
     private javax.swing.JLabel phoneNumberLabel;
     private javax.swing.JTextField stateField;
