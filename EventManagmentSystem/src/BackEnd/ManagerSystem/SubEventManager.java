@@ -1,10 +1,8 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.SubEvent;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.UserSystem.Location;
-import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.impl.SubEvent_Table;
 
@@ -20,12 +18,19 @@ public class SubEventManager {
 
     private SubEvent_Table subEventsTable;
     private SubEvent selectedSubEvent;
+    private LoginManager logInManager;
+    private EventManager eventManager;
 
     /**
      * initializes the sub event manager, and connects to the sub event database
      */
     public SubEventManager() {
         subEventsTable = new SubEvent_Table();
+    }
+
+    public void connectManagers(LoginManager logInManager, EventManager eventManager) {
+        this.logInManager = logInManager;
+        this.eventManager = eventManager;
     }
 
     /**
@@ -60,15 +65,15 @@ public class SubEventManager {
      * privilege
      *
      * @param title the title to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editTitle(String title, User loggedInUser, Event selectedEvent)
+    public void editTitle(String title)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent())) {
             selectedSubEvent.setTitle(title);
             subEventsTable.setTitle(selectedSubEvent.getSUB_EVENT_ID(), title);
         }
@@ -79,15 +84,15 @@ public class SubEventManager {
      * sufficient privilege
      *
      * @param description the description to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editDescription(String description, User loggedInUser, Event selectedEvent)
+    public void editDescription(String description)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent())) {
             selectedSubEvent.setDescription(description);
             subEventsTable.setDescription(selectedSubEvent.getSUB_EVENT_ID(), description);
         }
@@ -98,15 +103,15 @@ public class SubEventManager {
      * privilege
      *
      * @param location the location to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editLocation(Location location, User loggedInUser, Event selectedEvent)
+    public void editLocation(Location location)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent())) {
             selectedSubEvent.setLocation(location);
             subEventsTable.setDetails(selectedSubEvent.getSUB_EVENT_ID(), location.getDetails());
             subEventsTable.setStreet(selectedSubEvent.getSUB_EVENT_ID(), location.getStreet());
@@ -122,15 +127,15 @@ public class SubEventManager {
      * sufficient privilege
      *
      * @param timeSchedule the time schedule to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editTimeSchedule(TimeSchedule timeSchedule, User loggedInUser, Event selectedEvent)
+    public void editTimeSchedule(TimeSchedule timeSchedule)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent())) {
             selectedSubEvent.getTimeSchedule().setStartDateTime(timeSchedule.getStartDateTimeTimestamp());
             subEventsTable.setStartDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getStartDateTimeTimestamp());
             selectedSubEvent.getTimeSchedule().setEndDateTime(timeSchedule.getStartDateTimeTimestamp());
@@ -147,15 +152,15 @@ public class SubEventManager {
      * @param day the day to change to
      * @param hour the hour to change to
      * @param minute the minute to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent)
+    public void editStartDateTime(int year, int month, int day, int hour, int minute)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent())) {
             selectedSubEvent.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
             subEventsTable.setStartDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getStartDateTimeTimestamp());
         }
@@ -170,15 +175,15 @@ public class SubEventManager {
      * @param day the day to change to
      * @param hour the hour to change to
      * @param minute the minute to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent)
+    public void editEndDateTime(int year, int month, int day, int hour, int minute)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent())) {
             selectedSubEvent.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
             subEventsTable.setEndDate(selectedSubEvent.getSUB_EVENT_ID(), selectedSubEvent.getTimeSchedule().getEndDateTimeTimestamp());
         }

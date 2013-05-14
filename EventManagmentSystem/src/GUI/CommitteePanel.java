@@ -417,10 +417,10 @@ public class CommitteePanel extends javax.swing.JPanel {
                 Committee c = manager.getCommitteeManager().getSelectedCommittee();
                 try
                 {
-                    manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
-                    manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
-                    manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
-                    manager.getTaskManager().editTimeSchedule(ts, u, e, c);
+                    manager.getTaskManager().editCompleted(t.getCompleted());
+                    manager.getTaskManager().editTitle(t.getTitle());
+                    manager.getTaskManager().editDescription(t.getDescription());
+                    manager.getTaskManager().editTimeSchedule(ts);
 //                    int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
 //                    int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
 //                    int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
@@ -486,7 +486,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             {
                 manager.getCommitteeManager().removeMember(
                         manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(
-                        memberList.getSelectedIndex()), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                        memberList.getSelectedIndex()));
             }
             catch (Exception e)
             {
@@ -536,7 +536,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             {
                 try
                 {
-                    manager.getCommitteeManager().addMember(u, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    manager.getCommitteeManager().addMember(u);
                 }
                 catch (Exception e)
                 {
@@ -559,24 +559,24 @@ public class CommitteePanel extends javax.swing.JPanel {
                 User u = manager.getLogInManager().getLoggedInUser();
                 Event e = manager.getEventManager().getSelectedEvent();
                 Committee c = manager.getCommitteeManager().getSelectedCommittee();
-                manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, u, e));
-                manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
-                manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
-                manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
-                manager.getTaskManager().addResponsible(u, u, e, c);
+                manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t));
+                manager.getTaskManager().editTitle(t.getTitle());
+                manager.getTaskManager().editCompleted(t.getCompleted());
+                manager.getTaskManager().editDescription(t.getDescription());
+                manager.getTaskManager().addResponsible(u);
                     TimeSchedule ts = t.getTimeSchedule();
                     int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
                     int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
                     int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
                     int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
                     int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
-                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute, u, e, c);
+                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute);
                     year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
                     month = ts.getEndDateTimeCalendar().get(Calendar.MONTH)+1;
                     day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
                     hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
                     minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);  
-                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute, u, e, c);                
+                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute);                
             }
             catch (Exception e)
             {
@@ -595,7 +595,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         {
             try
             {
-            manager.getCommitteeManager().editChair(fmd.createUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getCommitteeManager().editChair(fmd.createUser());
             }
             catch (Exception e)
             {
@@ -612,7 +612,7 @@ public class CommitteePanel extends javax.swing.JPanel {
             try
             {
                 manager.getCommitteeManager().addBudgetAccess(
-                     manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+                     manager.getUserManager().getSelectedUser());
             }
             catch (Exception e)
             {
@@ -642,7 +642,7 @@ if(memberList.getSelectedIndex() >= 0)
             try
             {
                 manager.getCommitteeManager().removeBudgetAccess(
-                        manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+                        manager.getUserManager().getSelectedUser());
             }
             catch (Exception e)
             {
@@ -665,7 +665,7 @@ if(memberList.getSelectedIndex() >= 0)
         {
             try
             {
-            manager.getCommitteeManager().editChair(fmd.createUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getCommitteeManager().editChair(fmd.createUser());
             }
             catch (Exception e)
             {
@@ -690,7 +690,7 @@ if(memberList.getSelectedIndex() >= 0)
             {
                 try
                 {
-                    manager.getCommitteeManager().addMember(u, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                    manager.getCommitteeManager().addMember(u);
                 }
                 catch (Exception e)
                 {
@@ -718,7 +718,7 @@ if(memberList.getSelectedIndex() >= 0)
             {
                 manager.getCommitteeManager().removeMember(
                         manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(
-                        memberList.getSelectedIndex()), manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
+                        memberList.getSelectedIndex()));
             }
             catch (Exception e)
             {
@@ -741,24 +741,24 @@ if(memberList.getSelectedIndex() >= 0)
                 User u = manager.getLogInManager().getLoggedInUser();
                 Event e = manager.getEventManager().getSelectedEvent();
                 Committee c = manager.getCommitteeManager().getSelectedCommittee();
-                manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t, u, e));
-                manager.getTaskManager().editTitle(t.getTitle(), u, e, c);
-                manager.getTaskManager().editCompleted(t.getCompleted(), u, e, c);
-                manager.getTaskManager().editDescription(t.getDescription(), u, e, c);
-                manager.getTaskManager().addResponsible(u, u, e, c);
+                manager.getTaskManager().setSelectedTask(manager.getCommitteeManager().createTask(t));
+                manager.getTaskManager().editTitle(t.getTitle());
+                manager.getTaskManager().editCompleted(t.getCompleted());
+                manager.getTaskManager().editDescription(t.getDescription());
+                manager.getTaskManager().addResponsible(u);
                     TimeSchedule ts = t.getTimeSchedule();
                     int year = ts.getStartDateTimeCalendar().get(Calendar.YEAR);
                     int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH)+1;
                     int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
                     int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
                     int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
-                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute, u, e, c);
+                    manager.getTaskManager().editStartDateTime(year, month, day, hour, minute);
                     year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
                     month = ts.getEndDateTimeCalendar().get(Calendar.MONTH)+1;
                     day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
                     hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
                     minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);  
-                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute, u, e, c);                
+                    manager.getTaskManager().editEndDateTime(year, month, day, hour, minute);                
             }
             catch (Exception e)
             {
@@ -801,7 +801,7 @@ if(memberList.getSelectedIndex() >= 0)
             try
             {
                 manager.getCommitteeManager().removeBudgetAccess(
-                        manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+                        manager.getUserManager().getSelectedUser());
             }
             catch (Exception e)
             {
@@ -823,7 +823,7 @@ if(memberList.getSelectedIndex() >= 0)
             try
             {
                 manager.getCommitteeManager().addBudgetAccess(
-                     manager.getUserManager().getSelectedUser(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+                     manager.getUserManager().getSelectedUser());
             }
             catch (Exception e)
             {

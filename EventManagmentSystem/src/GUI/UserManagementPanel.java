@@ -366,19 +366,19 @@ public class UserManagementPanel extends javax.swing.JPanel {
             Address tempAddress = new Address(streetField.getText(), cityField.getText(), stateField.getText(), zipcodeField.getText(), countryField.getText());
             try 
             {
-                manager.getUserManager().editFirstName(firstNameField.getText(), manager.getLogInManager().getLoggedInUser());
-                manager.getUserManager().editLastName(lastNameField.getText(), manager.getLogInManager().getLoggedInUser());
-                manager.getUserManager().editEmailAddress(emailField.getText(), manager.getLogInManager().getLoggedInUser());
-                manager.getUserManager().editPhoneNumber(tempPhoneNumber, manager.getLogInManager().getLoggedInUser());
-                manager.getUserManager().editAddress(tempAddress, manager.getLogInManager().getLoggedInUser());
+                manager.getUserManager().editFirstName(firstNameField.getText());
+                manager.getUserManager().editLastName(lastNameField.getText());
+                manager.getUserManager().editEmailAddress(emailField.getText());
+                manager.getUserManager().editPhoneNumber(tempPhoneNumber);
+                manager.getUserManager().editAddress(tempAddress);
                 if(adminBox.isSelected())
-                    manager.getUserManager().editAdminPrivilege(true, manager.getLogInManager().getLoggedInUser());
+                    manager.getUserManager().editAdminPrivilege(true);
                 else
-                    manager.getUserManager().editAdminPrivilege(false, manager.getLogInManager().getLoggedInUser());
+                    manager.getUserManager().editAdminPrivilege(false);
                 if(eventBox.isSelected())
-                    manager.getUserManager().editEventCreationPrivilege(true, manager.getLogInManager().getLoggedInUser());
+                    manager.getUserManager().editEventCreationPrivilege(true);
                 else
-                    manager.getUserManager().editEventCreationPrivilege(false, manager.getLogInManager().getLoggedInUser());
+                    manager.getUserManager().editEventCreationPrivilege(false);
             } 
             catch (PrivilegeInsufficientException ex) 
             {

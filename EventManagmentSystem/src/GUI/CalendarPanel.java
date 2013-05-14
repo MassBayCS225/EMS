@@ -472,7 +472,7 @@ public class CalendarPanel extends javax.swing.JPanel {
         {
             try
             {
-                manager.getEventManager().createSubEvent(nsed.createEvent(), manager.getLogInManager().getLoggedInUser());
+                manager.getEventManager().createSubEvent(nsed.createEvent());
                 populateCalendar();
                 updateDetailsList((CalendarEvent) calendarTable.getValueAt(selectedRow, selectedColumn));
             }
@@ -488,7 +488,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             int choice = JOptionPane.showConfirmDialog(null, "Do you want to remove " + selectedSubEvent.getDescription() + "?");
             if (choice == JOptionPane.YES_OPTION) {
                 try {
-                    manager.getEventManager().deleteSubEvent(selectedSubEvent, manager.getLogInManager().getLoggedInUser());
+                    manager.getEventManager().deleteSubEvent(selectedSubEvent);
                 } catch (PrivilegeInsufficientException ex) {
                     Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DoesNotExistException ex) {
