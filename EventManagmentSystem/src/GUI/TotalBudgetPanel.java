@@ -20,10 +20,7 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
     
     public TotalBudgetPanel() {
         initComponents();
-        updateInfo();
-    }
-    
-    public void updateInfo(){
+        
         budgetIncome = new TotalBudgetIncome();
         budgetExpense = new TotalBudgetExpense();
         
@@ -32,6 +29,11 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
                 
         incomePanel.setVisible(true);
         expensePanel.setVisible(true);
+    }
+    
+    public void updateInfo(){
+        budgetIncome.updateInfo();
+        budgetExpense.updateInfo();
     }
     
     /**

@@ -47,25 +47,18 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Component id="emailPanel" min="-2" max="-2" attributes="0"/>
-                              <Component id="reportPanel" min="-2" max="-2" attributes="0"/>
-                              <Component id="committeesPanel" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="participantsPanel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                      <Component id="emailPanel" min="-2" max="-2" attributes="0"/>
+                      <Component id="reportPanel" min="-2" max="-2" attributes="0"/>
+                      <Component id="committeesPanel" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="tasksPanel" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="budgetPanel" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Component id="participantsPanel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="tasksPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="budgetPanel" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
