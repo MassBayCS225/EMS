@@ -90,6 +90,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     
 
         populateCalendar();
+        lastYearButton.setEnabled(false);
     }
     
      public void hideEventButtons() {
@@ -437,6 +438,10 @@ public class CalendarPanel extends javax.swing.JPanel {
             year --;
             month = 11;
         }
+        if(month == 0 && year == 2013)
+        {
+            lastMonthButton.setEnabled(false);
+        }
         populateCalendar();
     }//GEN-LAST:event_lastMonthButtonActionPerformed
 
@@ -447,6 +452,7 @@ public class CalendarPanel extends javax.swing.JPanel {
             year ++;
             month = 0;
         }
+        lastMonthButton.setEnabled(true);
         populateCalendar();
     }//GEN-LAST:event_nextMonthButtonActionPerformed
 
@@ -521,13 +527,22 @@ public class CalendarPanel extends javax.swing.JPanel {
 
     private void lastYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastYearButtonActionPerformed
 
+        
         year --;
         populateCalendar();
+        if(year == 2013)
+        {
+            lastYearButton.setEnabled(false);
+        }
     }//GEN-LAST:event_lastYearButtonActionPerformed
 
     private void nextYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextYearButtonActionPerformed
         year ++;
         populateCalendar();
+        if(year > 2013)
+        {
+            lastYearButton.setEnabled(true);
+        }
     }//GEN-LAST:event_nextYearButtonActionPerformed
 
    public void hideSubEventButtons() {
