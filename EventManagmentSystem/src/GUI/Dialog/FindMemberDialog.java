@@ -5,6 +5,7 @@
 package GUI.Dialog;
 
 import BackEnd.ManagerSystem.MainManager;
+import BackEnd.UserSystem.Participant;
 import BackEnd.UserSystem.User;
 import GUI.DesignDefault;
 import javax.swing.DefaultListModel;
@@ -37,9 +38,9 @@ public class FindMemberDialog extends javax.swing.JDialog {
     public void updateInfo()
     {
         DefaultListModel model = new DefaultListModel();
-        for(User u : manager.getEventManager().getSelectedEvent().getOrganizerList())
+        for(Participant p : manager.getEventManager().getSelectedEvent().getParticipantList())
         {
-            model.addElement(u.getFirstName() + " " + u.getLastName());
+            model.addElement(p.getFirstName() + " " + p.getLastName());
         }
         memberList.setModel(model);
         

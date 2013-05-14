@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import BackEnd.EventSystem.Budget;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Expense;
@@ -18,6 +17,7 @@ import BackEnd.ManagerSystem.ManagerExceptions.DuplicateEmailException;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import BackEnd.UserSystem.Address;
 import BackEnd.UserSystem.IllegalCharacterException;
+import BackEnd.UserSystem.Participant;
 import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
@@ -97,9 +97,7 @@ public class SetUpData {
             for (User tu : uList) {
                 manager.getUserManager().setSelectedUser(
                         (manager.getUserManager().createUser(tu)));
-                manager.getEventManager().addOrganizer(
-                        manager.getUserManager().getSelectedUser(),
-                        manager.getLogInManager().getLoggedInUser());
+                manager.getEventManager().createParticipant((Participant)tu, null);
             }
             System.out.println("Users created.");
         } catch (Exception ex2) {

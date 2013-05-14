@@ -109,7 +109,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         committeeListScrollPane.setBackground(new java.awt.Color(153, 153, 153));
         committeeListScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        committeeList.setFont(new java.awt.Font("Candara", 0, 12));
+        committeeList.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
         committeeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         committeeList.setMaximumSize(new java.awt.Dimension(100, 370));
         committeeList.setPreferredSize(new java.awt.Dimension(100, 370));
@@ -126,7 +126,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
         addCommitteeButton.setFont(dd.getSmallText());
         addCommitteeButton.setSize(dd.getSmallButtonDimension());
-        addCommitteeButton.setText("+");
+        addCommitteeButton.setText("Add Committee");
         addCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCommitteeButtonActionPerformed(evt);
@@ -135,7 +135,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
         removeCommitteeButton.setFont(dd.getSmallText());
         removeCommitteeButton.setSize(dd.getSmallButtonDimension());
-        removeCommitteeButton.setText("-");
+        removeCommitteeButton.setText("Remove Committee");
         removeCommitteeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeCommitteeButtonActionPerformed(evt);
@@ -147,7 +147,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
         noPanel.setBackground(new java.awt.Color(128, 128, 128));
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 18));
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("No committees Created Yet");
@@ -160,19 +160,19 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(addCommitteeButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(removeCommitteeButton)))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(committeeListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(removeCommitteeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(committeeListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(addCommitteeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE))
         );
@@ -187,10 +187,10 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                         .addComponent(committeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(committeePanelHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addCommitteeButton)
-                    .addComponent(removeCommitteeButton))
-                .addGap(0, 170, Short.MAX_VALUE))
+                .addComponent(addCommitteeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(removeCommitteeButton)
+                .addGap(0, 141, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
