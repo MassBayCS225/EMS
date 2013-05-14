@@ -4,10 +4,8 @@
  */
 package GUI;
 
-import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.ManagerExceptions.DuplicateEmailException;
-import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import BackEnd.ManagerSystem.UserManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
@@ -17,7 +15,6 @@ import BackEnd.UserSystem.ZipCodeInvalidFormatException;
 import BackEnd.UserSystem.ZipCodeInvalidLengthException;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
-import EMS_Database.DoesNotExistException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -426,7 +423,6 @@ public class Signup extends javax.swing.JPanel {
                 }
                 try {
                     newUser = userManager.createUser(newUser);
-                    userManager.getUserList().add(newUser);
                     parentDialog.dispose();
                 } catch (DuplicateEmailException error) {
                     JOptionPane.showMessageDialog(this, "Email address already exists in the system");
