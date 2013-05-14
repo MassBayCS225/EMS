@@ -67,9 +67,9 @@ public class TaskPanel extends javax.swing.JPanel {
     
     public void setToViewOnly() {
         changeNameButton.setVisible(false);
-        descriptionTextArea.enable(false);
+        descriptionTextArea.setEnabled(false);
         editTimeScheduleButton.setVisible(false);
-        completeCheckBox.enable(false);
+        completeCheckBox.setEnabled(false);
         addMemberButton.setVisible(false);
         removeMemberButton.setVisible(false);
     }

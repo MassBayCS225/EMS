@@ -203,15 +203,17 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             Committee c = selectedEvent.getCommitteeList().get(committeeList.getSelectedIndex());
             manager.getCommitteeManager().setSelectedCommittee(c);
             
-            committeePanel.updateInfo();
+            //committeePanel.updateInfo();
             
             if (!loggedInUser.getAdminPrivilege() 
                     && !selectedEvent.getOrganizerList().contains(loggedInUser)
                     && !c.getChair().equals(loggedInUser)) {
                 if (c.getBudgetAccessList().contains(loggedInUser)) {
                     committeePanel.setBudgetAccessMemberView();
+                    npp.setVisible(false);
                 } else if (c.getMemberList().contains(loggedInUser)) {
                     committeePanel.setCommitteeMemberView();
+                    npp.setVisible(false);
                 } else {
                     noPanel.setVisible(false);  
                     committeePanel.setVisible(false);
@@ -219,7 +221,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                 }
             }
             
-            //committeePanel.updateInfo();
+            committeePanel.updateInfo();
         }
     }//GEN-LAST:event_committeeListValueChanged
 
