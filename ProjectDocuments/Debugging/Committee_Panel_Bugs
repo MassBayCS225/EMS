@@ -1,0 +1,10 @@
+ADD INCOME
+     BUTTON-
+"Cancel" button does not work.
+     JTEXTFIELD-
+Committees displays as "Committee..."
+ADD EXPENSE
+     BUTTON-
+"Cancel" button does not work.
+
+View Report button is blank when clicked.
