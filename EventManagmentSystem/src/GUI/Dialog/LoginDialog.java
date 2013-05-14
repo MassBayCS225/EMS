@@ -9,6 +9,7 @@ import BackEnd.ManagerSystem.MainManager;
 import GUI.Signup;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -85,6 +86,11 @@ public class LoginDialog extends javax.swing.JDialog {
                 emailFieldFocusLost(evt);
             }
         });
+        emailField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                emailFieldKeyPressed(evt);
+            }
+        });
 
         passwordField.setText(PASSWORD_FIELD);
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +104,11 @@ public class LoginDialog extends javax.swing.JDialog {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 passwordFieldFocusLost(evt);
+            }
+        });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
             }
         });
 
@@ -202,6 +213,20 @@ public class LoginDialog extends javax.swing.JDialog {
             emailField.setText("");
         }
     }//GEN-LAST:event_emailFieldFocusGained
+
+private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            confirm = true;
+            this.dispose();
+        }
+}//GEN-LAST:event_passwordFieldKeyPressed
+
+private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            confirm = true;
+            this.dispose();
+        }
+}//GEN-LAST:event_emailFieldKeyPressed
 
     /**
      * @param args the command line arguments
