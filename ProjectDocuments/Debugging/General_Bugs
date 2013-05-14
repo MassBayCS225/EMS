@@ -8,16 +8,16 @@ CREATE A NEW EVENT-
 	3. "close" button and the upper right close button do the same thing: return to the previous pop-up screen. See Suggestion 3.
 	4. After using the "edit" button then choosing a value from the START TIME DROP DOWN MENU:
 	    a) Accidentaly choosing "Month" as an option and saving, sets the month to December and the year to the year before.
-	    b) Accidentaly choosing "Day" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Day.error for exception.
-	    c) Accidentaly choosing "Year" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Year.error for exception.
+	    b) Accidentaly choosing "Day" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Day.exception.
+	    c) Accidentaly choosing "Year" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Year.exception.
     	    d) Accidentaly choosing "Hour" as an option and saving, sets the hour to midnight if the AM radio button is chosen, midday otherwise.
-    	    e) Accidentaly choosing "Minute" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Minute.error for exception.
+    	    e) Accidentaly choosing "Minute" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Minute.exception.
 	5. After using the "edit" button then choosing a value from the END TIME DROP DOWN MENU:
-	    a) Accidentaly choosing "Month" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Month.error for exception.
-	    b) Accidentaly choosing "Day" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Day.error for exception.
-	    c) Accidentaly choosing "Year" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Year.error for exception.
+	    a) Accidentaly choosing "Month" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Month.exception.
+	    b) Accidentaly choosing "Day" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Day.exception.
+	    c) Accidentaly choosing "Year" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Year.exception.
     	    d) Accidentaly choosing "Hour" as an option and saving, sets the hour to midnight if the AM radio button is chosen, midday otherwise.
-    	    e) Accidentaly choosing "Minute" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Minute.error for exception.
+    	    e) Accidentaly choosing "Minute" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Minute.exception.
 
     END TIME DROP DOWN MENU-
 	It allows for an event to end prior to a start time.
@@ -25,8 +25,8 @@ CREATE A NEW EVENT-
 
 FRAME-
 
-1. Logging out then immediately logging in with incorrect information causes the program to display an empty JFrame window.
-See Logout_Login.png for the image and Logout_Login.error for the compiler error.
+1. Logging out then immediately logging in with incorrect information causes the program to display an empty JFrame window and throws an NullPointerException.
+See Logout_Login.png for the image and Logout_Login.exception.
 
 
 
