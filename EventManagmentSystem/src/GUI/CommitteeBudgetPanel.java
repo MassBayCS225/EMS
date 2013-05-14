@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import GUI.Reportable.BudgetReport;
+
 /**
  *
  * @author sara
@@ -96,7 +98,8 @@ public class CommitteeBudgetPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
-        // TODO add your handling code here:
+        BudgetReport budgetReport = new BudgetReport(null,true);
+        budgetReport.setVisible(true);
     }//GEN-LAST:event_reportButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
