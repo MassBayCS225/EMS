@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import GUI.Reportable.BudgetReport;
+
 /**
  *
  * @author sara
@@ -18,7 +20,10 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
     
     public TotalBudgetPanel() {
         initComponents();
-        
+        updateInfo();
+    }
+    
+    public void updateInfo(){
         budgetIncome = new TotalBudgetIncome();
         budgetExpense = new TotalBudgetExpense();
         
@@ -28,7 +33,7 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
         incomePanel.setVisible(true);
         expensePanel.setVisible(true);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,7 +99,8 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
-        // TODO add your handling code here:
+        BudgetReport budgetReport = new BudgetReport(null,true);
+        budgetReport.setVisible(true);
     }//GEN-LAST:event_reportButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
