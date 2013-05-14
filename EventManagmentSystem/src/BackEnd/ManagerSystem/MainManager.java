@@ -42,13 +42,20 @@ public class MainManager {
                     userManager.getUserList(), userManager.getUsersTable(), taskManager.getTasksTable(),
                     subEventManager.getSubEventsTable(), committeeManager.getCommitteesTable(),
                     budgetItemManager.getIncomeTable(), budgetItemManager.getExpenseTable());
+            userManager.connectManagers(logInManager);
+            taskManager.connectManagers(logInManager, eventManager, committeeManager);
+            subEventManager.connectManagers(logInManager, eventManager);
+            committeeManager.connectManagers(logInManager, eventManager);
+            budgetItemManager.connectManagers(logInManager, eventManager, committeeManager);
+            budgetManager.connectManagers(logInManager, eventManager, committeeManager);
+            eventManager.connectManagers(logInManager, userManager);
 
         } catch (DoesNotExistException e) {
             e.printStackTrace();
         }
     }
 
-    private static class Main {
+    public static class Main {
 
         public static MainManager instance = new MainManager();
     }

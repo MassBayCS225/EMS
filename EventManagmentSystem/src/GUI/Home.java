@@ -86,9 +86,9 @@ public class Home extends javax.swing.JFrame {
                     Event event = ned.createEvent();
                 
                         manager.getEventManager().setSelectedEvent(manager.getEventManager().createEvent(
-                                event, manager.getLogInManager().getLoggedInUser()));
+                                event));
                         manager.getEventManager().editDescription(
-                                event.getDescription(), manager.getLogInManager().getLoggedInUser());
+                                event.getDescription());
                         TimeSchedule ts = event.getTimeSchedule();
                         int hour = ts.getStartDateTimeCalendar().get(Calendar.HOUR);
                         int minute = ts.getStartDateTimeCalendar().get(Calendar.MINUTE);
@@ -96,15 +96,14 @@ public class Home extends javax.swing.JFrame {
                         int month = ts.getStartDateTimeCalendar().get(Calendar.MONTH);
                         int day = ts.getStartDateTimeCalendar().get(Calendar.DAY_OF_MONTH);
                         manager.getEventManager().editStartDateTime(
-                                year, month, day, hour, minute, manager.getLogInManager().getLoggedInUser());
+                                year, month, day, hour, minute);
                         hour = ts.getEndDateTimeCalendar().get(Calendar.HOUR);
                         minute = ts.getEndDateTimeCalendar().get(Calendar.MINUTE);
                         year = ts.getEndDateTimeCalendar().get(Calendar.YEAR);
                         month = ts.getEndDateTimeCalendar().get(Calendar.MONTH);
                         day = ts.getEndDateTimeCalendar().get(Calendar.DAY_OF_MONTH);  
                         manager.getEventManager().editEndDateTime(
-                                year, month, day, hour, minute, manager.getLogInManager().getLoggedInUser());
-                System.out.println("CREATED AN EVENT");
+                                year, month, day, hour, minute);
                 }
             }
             catch (Exception e)
@@ -136,53 +135,73 @@ public class Home extends javax.swing.JFrame {
         Home home = new Home();
     }
     
-    public void addPanel()
-    {
-        try
-        {
+    public void addPanel() {
+        try {
             main = new Main(this);
-            
+
             User loggedInUser = manager.getLogInManager().getLoggedInUser();
             Event selectedEvent = manager.getEventManager().getSelectedEvent();
             ArrayList<User> allCommitteeMembers = new ArrayList<User>();
-            
+
             for (int i = 0; i < selectedEvent.getCommitteeList().size(); i++) {
                 Committee committee = selectedEvent.getCommitteeList().get(i);
 
-                for (int j = 0; j < committee.getMemberListWithChair().size(); j++){
+                for (int j = 0; j < committee.getMemberListWithChair().size(); j++) {
                     User committeeMember = committee.getMemberListWithChair().get(j);
-                    if (!allCommitteeMembers.contains(committeeMember))
+                    if (!allCommitteeMembers.contains(committeeMember)) {
                         allCommitteeMembers.add(committeeMember);
+                    }
                 }
             }
-            
+
             if (loggedInUser.getAdminPrivilege()) {
                 add(main);
-                activePanel = (Component)main;
-            }
-            else if (selectedEvent.getOrganizerList().contains(loggedInUser)) {
-                main.getUserManagementPanel().setNonAdminView();
-                add(main);
-                activePanel = (Component)main;
-            }
-            else if (allCommitteeMembers.contains(loggedInUser)) {
-                main.setCommitteeView();
-                add(main);
-                activePanel = (Component)main;
-            }
-            else {
-                main.setParticipantView();
-                add(main);
-                activePanel = (Component)main;
+                activePanel = (Component) main;
+            } else {
+                ArrayList<User> committeeChairList = new ArrayList<User>();
+                ArrayList<Committee> committeeList = selectedEvent.getCommitteeList();
+                for (int i = 0; i < committeeList.size(); i++) {
+                    committeeChairList.add(committeeList.get(i).getChair());
+                }
+                if (committeeChairList.contains(loggedInUser)) {
+                    main.getUserManagementPanel().setNonAdminView();
+                    add(main);
+                    activePanel = (Component) main;
+                } else if (allCommitteeMembers.contains(loggedInUser)) {
+                    main.setCommitteeView();
+                    add(main);
+                    activePanel = (Component) main;
+                } else {
+                    main.setParticipantView();
+                    add(main);
+                    activePanel = (Component) main;
+                }
+                /*
+                 if(true){
+                 }
+                 else if (selectedEvent.getOrganizerList().contains(loggedInUser)) {
+                 main.getUserManagementPanel().setNonAdminView();
+                 add(main);
+                 activePanel = (Component)main;
+                 }
+                 else if (allCommitteeMembers.contains(loggedInUser)) {
+                 main.setCommitteeView();
+                 add(main);
+                 activePanel = (Component)main;
+                 }
+                 else {
+                 main.setParticipantView();
+                 add(main);
+                 activePanel = (Component)main;
+                 }*/
             }
         }
-        catch (Exception e)
-        {
+         catch (Exception e) {
             System.out.println("CAN'T CREATE HOME\n" + e);
             e.printStackTrace();
         }
     }
-    
+
     
     
     

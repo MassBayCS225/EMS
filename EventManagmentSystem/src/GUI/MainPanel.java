@@ -31,14 +31,16 @@ import javax.swing.SwingUtilities;
  */
 public class MainPanel extends javax.swing.JPanel {
 
-    JPanel calendarSelectionPanel;
-    JButton selectCalendarButton, selectEventDetailsButton, registerForEventButton;
-    //JButton clearEventButton;
-    JPanel calendarSwitchingPanel;
+    private JPanel calendarSelectionPanel;
+    private JButton selectCalendarButton, selectEventDetailsButton, registerForEventButton;
+    //private JButton clearEventButton;
+    private JPanel calendarSwitchingPanel;
     private CalendarPanel cp;
-    EventManager eventManager;
-    User loggedInUser;
-    ArrayList<Participant> participantList;
+    private EventManager eventManager;
+    private User loggedInUser;
+    private ArrayList<User> organizerList;
+    private ArrayList<Participant> participantList;
+    
     private final String REGISTER = "Register for Event";
     private final String UNREGISTER = "Unregister";
 
@@ -49,7 +51,8 @@ public class MainPanel extends javax.swing.JPanel {
         eventManager = MainManager.getInstance().getEventManager();
         loggedInUser = MainManager.getInstance().getLogInManager().getLoggedInUser();
         participantList = eventManager.getSelectedEvent().getParticipantList();
-
+        organizerList = eventManager.getSelectedEvent().getOrganizerList();
+        
         initComponents();
         setLayout(new BorderLayout());
         calendarSelectionPanel = new JPanel();
@@ -57,10 +60,6 @@ public class MainPanel extends javax.swing.JPanel {
 
         selectCalendarButton = new JButton("Calendar");
         selectEventDetailsButton = new JButton("Event Details");
-
-        EventManager eventManager = MainManager.getInstance().getEventManager();
-        User loggedInUser = MainManager.getInstance().getLogInManager().getLoggedInUser();
-        ArrayList<Participant> participantList = eventManager.getSelectedEvent().getParticipantList();
 
         if (participantList.contains(loggedInUser)) {
             registerForEventButton = new JButton(UNREGISTER);
@@ -155,11 +154,13 @@ public class MainPanel extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 if (participantList.contains(loggedInUser)) {
-                    participantList.remove(loggedInUser);
+                    eventManager.deleteParticipant(loggedInUser);
+                    eventManager.removeOrganizer(loggedInUser);
                     JOptionPane.showMessageDialog(null, "Successfully unregistered.");
                     registerForEventButton.setText(REGISTER);
                 } else {
-                    eventManager.createParticipant(loggedInUser, loggedInUser);
+                    eventManager.createParticipant(loggedInUser);
+                    eventManager.addOrganizer(loggedInUser);
                     JOptionPane.showMessageDialog(null, "Registration successful!");
                     registerForEventButton.setText(UNREGISTER);
                 }

@@ -4,8 +4,10 @@
  */
 package GUI;
 
+import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
 import BackEnd.ManagerSystem.ManagerExceptions.DuplicateEmailException;
+import BackEnd.ManagerSystem.PrivilegeInsufficientException;
 import BackEnd.ManagerSystem.UserManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
@@ -15,6 +17,7 @@ import BackEnd.UserSystem.ZipCodeInvalidFormatException;
 import BackEnd.UserSystem.ZipCodeInvalidLengthException;
 import BackEnd.UserSystem.PhoneNumber;
 import BackEnd.UserSystem.User;
+import EMS_Database.DoesNotExistException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -49,7 +52,7 @@ public class Signup extends javax.swing.JPanel {
         }
         initComponents();
 
-        
+
     }
 
     /**
@@ -539,11 +542,10 @@ public class Signup extends javax.swing.JPanel {
     }//GEN-LAST:event_countryFieldFocusLost
 
     private void firstNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusGained
-        if (firstRun){
+        if (firstRun) {
             firstRun = false;
             firstNameField.selectAll();
-        }
-        else if (firstNameField.getText().equals(FIRST_NAME_FIELD)){
+        } else if (firstNameField.getText().equals(FIRST_NAME_FIELD)) {
             firstNameField.setText("");
         }
     }//GEN-LAST:event_firstNameFieldFocusGained

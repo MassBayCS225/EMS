@@ -1,7 +1,5 @@
 package BackEnd.ManagerSystem;
 
-import BackEnd.EventSystem.Committee;
-import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Task;
 import BackEnd.EventSystem.TimeSchedule;
 import BackEnd.UserSystem.Location;
@@ -22,12 +20,21 @@ public class TaskManager {
 
     private Tasks_Table tasksTable;
     private Task selectedTask;
+    private LoginManager logInManager;
+    private EventManager eventManager;
+    private CommitteeManager committeeManager;
 
     /**
      * initializes the task manager, and connects to the task database
      */
     public TaskManager() {
         tasksTable = new Tasks_Table();
+    }
+
+    public void connectManagers(LoginManager logInManager, EventManager eventManager, CommitteeManager committeeManager) {
+        this.logInManager = logInManager;
+        this.eventManager = eventManager;
+        this.committeeManager = committeeManager;
     }
 
     /**
@@ -62,16 +69,17 @@ public class TaskManager {
      * in user has sufficient privilege
      *
      * @param responsible the user to add to the list
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void addResponsible(User responsible, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void addResponsible(User responsible)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.getResponsibleList().add(responsible);
             ArrayList<Integer> newResponsibleList = tasksTable.getAuthority(selectedTask.getTASK_ID());
             newResponsibleList.add(responsible.getUserId());
@@ -84,16 +92,17 @@ public class TaskManager {
      * logged in user has sufficient privilege
      *
      * @param responsible the user to remove
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void removeResponsible(User responsible, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void removeResponsible(User responsible)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.getResponsibleList().remove(responsible);
             ArrayList<Integer> newResponsibleList = tasksTable.getAuthority(selectedTask.getTASK_ID());
             newResponsibleList.remove(new Integer(responsible.getUserId())); //!!HERE
@@ -105,16 +114,17 @@ public class TaskManager {
      * edits the title of the selected task if the user has sufficient privilege
      *
      * @param title the title to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editTitle(String title, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editTitle(String title)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.setTitle(title);
             tasksTable.setTitle(selectedTask.getTASK_ID(), title);
         }
@@ -125,16 +135,17 @@ public class TaskManager {
      * sufficient privilege
      *
      * @param completed the status to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editCompleted(boolean completed, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editCompleted(boolean completed)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.setCompleted(completed);
             tasksTable.setComplete(selectedTask.getTASK_ID(), completed == true ? 1 : 0);
         }
@@ -145,16 +156,17 @@ public class TaskManager {
      * privilege
      *
      * @param description the description to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editDescription(String description)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.setDescription(description);
             tasksTable.setDescription(selectedTask.getTASK_ID(), description);
         }
@@ -165,16 +177,17 @@ public class TaskManager {
      * privilege
      *
      * @param location the location to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editLocation(Location location, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editLocation(Location location)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.setLocation(location);
             tasksTable.setDetails(selectedTask.getTASK_ID(), location.getDetails());
             tasksTable.setStreet(selectedTask.getTASK_ID(), location.getStreet());
@@ -190,16 +203,17 @@ public class TaskManager {
      * privilege
      *
      * @param timeSchedule the time schedule to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editTimeSchedule(TimeSchedule timeSchedule, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editTimeSchedule(TimeSchedule timeSchedule)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.getTimeSchedule().setStartDateTime(timeSchedule.getStartDateTimeTimestamp());
             tasksTable.setStartDate(selectedTask.getTASK_ID(), selectedTask.getTimeSchedule().getStartDateTimeTimestamp());
             selectedTask.getTimeSchedule().setEndDateTime(timeSchedule.getStartDateTimeTimestamp());
@@ -216,16 +230,17 @@ public class TaskManager {
      * @param day the day to change to
      * @param hour the hour to change to
      * @param minute the minute to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editStartDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editStartDateTime(int year, int month, int day, int hour, int minute)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.getTimeSchedule().setStartDateTime(year, month, day, hour, minute);
             tasksTable.setStartDate(selectedTask.getTASK_ID(), selectedTask.getTimeSchedule().getStartDateTimeTimestamp());
         }
@@ -240,16 +255,17 @@ public class TaskManager {
      * @param day the day to change to
      * @param hour the hour to change to
      * @param minute the minute to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editEndDateTime(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editEndDateTime(int year, int month, int day, int hour, int minute)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasTaskPrivilege(loggedInUser, selectedEvent, selectedCommittee, selectedTask)) {
+        if (PrivilegeManager.hasTaskPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee(),
+                selectedTask)) {
             selectedTask.getTimeSchedule().setEndDateTime(year, month, day, hour, minute);
             tasksTable.setEndDate(selectedTask.getTASK_ID(), selectedTask.getTimeSchedule().getEndDateTimeTimestamp());
         }
