@@ -248,34 +248,32 @@ public class CommitteeListPanel extends javax.swing.JPanel {
 
     private void removeCommitteeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCommitteeButtonActionPerformed
         // TODO add your handling code here:
-        if(committeeList.getSelectedIndex() >=0)
-        {
-            Committee c = (Committee)committeeList.getModel().getElementAt(committeeList.getSelectedIndex());
+        
+        if (committeeList.getSelectedIndex() >= 0) {
+            Committee c = (Committee) committeeList.getModel().getElementAt(committeeList.getSelectedIndex());
             //System.out.println(c);
-            try
-            {
-                manager.getEventManager().deleteCommittee(c);
-            }
-            catch (Exception e)
-            {
+            int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + c.getTitle() + "?");
+            if (choice == JOptionPane.YES_OPTION) {
+                try {
+                    manager.getEventManager().deleteCommittee(c);
+                } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
-            }
-            int lastSelect = committeeList.getSelectedIndex();
-            updateInfo();
-            if(committeeList.getModel().getSize() > 0)
-            {
-                if(lastSelect > 1)
-                committeeList.setSelectedIndex(lastSelect-1);
-                else
-                {
-                     committeeList.setSelectedIndex(0);
+                }
+                int lastSelect = committeeList.getSelectedIndex();
+                updateInfo();
+                if (committeeList.getModel().getSize() > 0) {
+                    if (lastSelect > 1) {
+                        committeeList.setSelectedIndex(lastSelect - 1);
+                    } else {
+                        committeeList.setSelectedIndex(0);
+                    }
                 }
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Select a committee first.", "No Committee Selected.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a committee first.", "No Committee Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removeCommitteeButtonActionPerformed
 
