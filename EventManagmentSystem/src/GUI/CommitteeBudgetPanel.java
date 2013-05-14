@@ -4,8 +4,6 @@
  */
 package GUI;
 
-import BackEnd.ManagerSystem.MainManager;
-
 /**
  *
  * @author sara
@@ -15,14 +13,11 @@ public class CommitteeBudgetPanel extends javax.swing.JPanel {
     /**
      * Creates new form CommitteeBudget
      */
-    private MainManager manager;
     private CommitteeBudgetIncome income;
     private CommitteeBudgetExpense expense;
     
     public CommitteeBudgetPanel() {
         initComponents();
-        
-        manager = MainManager.getInstance();
         
         income = new CommitteeBudgetIncome();
         expense = new CommitteeBudgetExpense();

@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import BackEnd.ManagerSystem.MainManager;
+//import BackEnd.ManagerSystem.MainManager;
 
 /**
  *
@@ -15,14 +15,14 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
     /**
      * Creates new form TotalBudgetPanel
      */
-    private MainManager manager;
+    //private MainManager manager;
     private TotalBudgetIncome budgetIncome;
     private TotalBudgetExpense budgetExpense;
     
     public TotalBudgetPanel() {
         initComponents();
         
-        manager = MainManager.getInstance();
+        //manager = MainManager.getInstance();
         
         budgetIncome = new TotalBudgetIncome();
         budgetExpense = new TotalBudgetExpense();
