@@ -197,11 +197,11 @@ public class EditSubEventDialog extends javax.swing.JDialog {
     private void saveSubEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSubEventButtonActionPerformed
         try {
             manager.getSubEventManager().setSelectedSubEvent(selectedSubEvent);
-            manager.getSubEventManager().editTimeSchedule(tempTimeSchedule, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
-            manager.getSubEventManager().editLocation(new Location(locationField.getText()), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
-            manager.getSubEventManager().editTitle(nameField.getText(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
-            manager.getSubEventManager().editDescription(descriptionTextArea.getText(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
-            manager.getSubEventManager().editLocation(new Location(locationLabel.getText()), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent());
+            manager.getSubEventManager().editTimeSchedule(tempTimeSchedule);
+            manager.getSubEventManager().editLocation(new Location(locationField.getText()));
+            manager.getSubEventManager().editTitle(nameField.getText());
+            manager.getSubEventManager().editDescription(descriptionTextArea.getText());
+            manager.getSubEventManager().editLocation(new Location(locationLabel.getText()));
 
             confirm = true;
             this.dispose();

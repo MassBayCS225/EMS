@@ -1,10 +1,7 @@
 package BackEnd.ManagerSystem;
 
 import BackEnd.EventSystem.BudgetItem;
-import BackEnd.EventSystem.Committee;
-import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Income;
-import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
 import EMS_Database.impl.Expense_Table;
 import EMS_Database.impl.Income_Table;
@@ -22,6 +19,9 @@ public class BudgetItemManager {
     private Income_Table incomeTable;
     private Expense_Table expenseTable;
     private BudgetItem selectedBudgetItem;
+    private LoginManager logInManager;
+    private EventManager eventManager;
+    private CommitteeManager committeeManager;
 
     /**
      * initializes the budget item manager, and connects to the budget item
@@ -30,6 +30,12 @@ public class BudgetItemManager {
     public BudgetItemManager() {
         incomeTable = new Income_Table();
         expenseTable = new Expense_Table();
+    }
+
+    public void connectManagers(LoginManager logInManager, EventManager eventManager, CommitteeManager committeeManager) {
+        this.logInManager = logInManager;
+        this.eventManager = eventManager;
+        this.committeeManager = committeeManager;
     }
 
     /**
@@ -72,16 +78,16 @@ public class BudgetItemManager {
      * edits the value of the selected budget item
      *
      * @param value the value to change it to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editValue(int value, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editValue(int value)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasBudgetPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee())) {
             selectedBudgetItem.setValue(value);
             if (selectedBudgetItem instanceof Income) {
                 incomeTable.setValue(selectedBudgetItem.getBUDGET_ITEM_ID(), value);
@@ -95,16 +101,16 @@ public class BudgetItemManager {
      * edits the description of the selected budget item
      *
      * @param description the description to change it to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected commitee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editDescription(String description, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editDescription(String description)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasBudgetPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee())) {
             selectedBudgetItem.setDescription(description);
             if (selectedBudgetItem instanceof Income) {
                 incomeTable.setDescription(selectedBudgetItem.getBUDGET_ITEM_ID(), description);
@@ -122,16 +128,16 @@ public class BudgetItemManager {
      * @param day the day to change to
      * @param hour the hour to change to
      * @param minute the minute to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
-     * @param selectedCommittee the currently selected committee
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editDate(int year, int month, int day, int hour, int minute, User loggedInUser, Event selectedEvent, Committee selectedCommittee)
+    public void editDate(int year, int month, int day, int hour, int minute)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasBudgetPrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasBudgetPrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                committeeManager.getSelectedCommittee())) {
             selectedBudgetItem.setDate(year, month, day, hour, minute);
             if (selectedBudgetItem instanceof Income) {
                 incomeTable.setDate(selectedBudgetItem.getBUDGET_ITEM_ID(), selectedBudgetItem.getDate());

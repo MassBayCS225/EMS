@@ -59,12 +59,11 @@ public class SetUpData {
 
         //Try to create Event
         try {
-            manager.getEventManager().createEvent(e, u);
-            System.out.println("Event Created.");
             manager.getUserManager().setSelectedUser(u);
             manager.getLogInManager().setLoggedInUser("AB@AB.com", "ab");
-            manager.getEventManager().addOrganizer(manager.getUserManager().getSelectedUser(),
-                    manager.getLogInManager().getLoggedInUser());
+            manager.getEventManager().createEvent(e);
+            System.out.println("Event Created.");
+            manager.getEventManager().addOrganizer(manager.getUserManager().getSelectedUser());
         } catch (PrivilegeInsufficientException error){
             System.out.println("Can't create event : Privilege insufficient");
             error.printStackTrace();
@@ -98,8 +97,7 @@ public class SetUpData {
             for (User tu : uList) {
                 temporaryUser = manager.getUserManager().createUser(tu);
                 manager.getUserManager().setSelectedUser((temporaryUser));
-                manager.getEventManager().createParticipant((Participant)temporaryUser,
-                        manager.getLogInManager().getLoggedInUser());
+                manager.getEventManager().createParticipant((Participant)temporaryUser);
             }
             System.out.println("Users created.");
         } catch (Exception ex2) {
@@ -122,12 +120,10 @@ public class SetUpData {
         try {
             for (Committee tc : list) {
                 manager.getCommitteeManager().setSelectedCommittee(
-                        manager.getEventManager().createCommittee(tc, manager.getLogInManager().getLoggedInUser()));
+                        manager.getEventManager().createCommittee(tc));
 
                 manager.getCommitteeManager().addMember(
-                        manager.getUserManager().getSelectedUser(),
-                        manager.getLogInManager().getLoggedInUser(),
-                        manager.getEventManager().getSelectedEvent());
+                        manager.getUserManager().getSelectedUser());
                 //manager.getCommitteeManager().editChair(manager.g, manager.getUserManager().getSelectedUser(), manager.getEventManager().getSelectedEvent());
 
                 for (int i = 1; i < 4; i++) {
@@ -135,15 +131,10 @@ public class SetUpData {
 
                     manager.getTaskManager().setSelectedTask(
                             manager.getCommitteeManager().createTask(
-                                t,
-                                manager.getLogInManager().getLoggedInUser(),
-                                manager.getEventManager().getSelectedEvent()));
+                                t));
 
                     manager.getTaskManager().editTitle(
-                            "Task " + i,
-                            manager.getLogInManager().getLoggedInUser(),
-                            manager.getEventManager().getSelectedEvent(),
-                            manager.getCommitteeManager().getSelectedCommittee());
+                            "Task " + i);
                 }
 
                 manager.getBudgetManager().setSelectedBudget(
@@ -151,16 +142,12 @@ public class SetUpData {
 
                 for (int i = 1; i < 4; i++) {
                     manager.getBudgetItemManager().setSelectedBudgetItem(
-                            manager.getBudgetManager().createIncome(
-                            new Income(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
+                            manager.getBudgetManager().createIncome(new Income()));
 
-                    manager.getBudgetItemManager().editDescription(
-                            "new test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                    manager.getBudgetItemManager().editDescription("new test" + i);
                     manager.getBudgetItemManager().setSelectedBudgetItem(
-                            manager.getBudgetManager().createExpense(
-                            new Expense(), manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee()));
-                    manager.getBudgetItemManager().editDescription(
-                            "new test" + i, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                            manager.getBudgetManager().createExpense(new Expense()));
+                    manager.getBudgetItemManager().editDescription("new test" + i);
                 }
             }
             System.out.println("Committees created.");
@@ -209,7 +196,7 @@ public class SetUpData {
         sList.add(se6);
         try {
             for (SubEvent ts : sList) {
-                manager.getSubEventManager().setSelectedSubEvent(manager.getEventManager().createSubEvent(ts, u));
+                manager.getSubEventManager().setSelectedSubEvent(manager.getEventManager().createSubEvent(ts));
             }
             System.out.println("SubEvents created.");
         } catch (Exception ex4) {
