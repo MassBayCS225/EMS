@@ -502,7 +502,9 @@ public class CommitteePanel extends javax.swing.JPanel {
         {
             try
             {
-                manager.getCommitteeManager().getSelectedCommittee().getTaskList().remove(taskList.getSelectedIndex());
+                Task task = manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getSelectedIndex());
+                manager.getCommitteeManager().deleteTask(task);
+                //manager.getCommitteeManager().getSelectedCommittee().getTaskList().remove(taskList.getSelectedIndex());
             }
             catch (Exception e)
             {
