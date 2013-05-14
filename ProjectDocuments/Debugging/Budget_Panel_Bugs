@@ -2,5 +2,7 @@ Amounts over a million dollars are not shown properly due to lack of space to di
 Also a problem for values larger than ten million. 
 
 BUTTON-
-    "Report" button does not work.
+    "Report" button does not do anything.
+
+
 

@@ -12,8 +12,8 @@ ADD EVENT-
 	c) If a blank Calendar date is chosen after 2012, an exception is thrown. See Invalid_Day_2.exception.
 
 	4. After using the "edit" button then choosing a value from the START TIME DROP DOWN MENU:
-//DONE	    a) Accidentaly choosing "Month" as an option and saving, sets the month to December and the year to the year before.
-/* Incomplete	b) Accidentaly choosing "Day" as an option and saving, throws an exception. See Suggestion 2 below and Invalid_Day_2.exception.
+//DONE		a) Accidentaly choosing "Month" as an option and saving, sets the month to December and the year to the year before.
+		b) Accidentaly choosing "Day" as an option and saving, throws an exception. See Suggestion 2 below and Invalid_Day_2.exception.
 	    	c) Accidentaly choosing "Year" as an option and saving, throws an exception. See Suggestion 2 below and Invalid_Year.exception.
     	    	d) Accidentaly choosing "Hour" as an option and saving, sets the hour to midnight if the AM radio button is chosen, midday otherwise.
     	    	e) Accidentaly choosing "Minute" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Minute.exception.
@@ -23,7 +23,7 @@ ADD EVENT-
 	    c) Accidentaly choosing "Year" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Year.exception.
     	    d) Accidentaly choosing "Hour" as an option and saving, sets the hour to midnight if the AM radio button is chosen, midday otherwise.
     	    e) Accidentaly choosing "Minute" as an option and saving, throws an exception. See Suggestion 4 below and Invalid_Minute.exception.
-End Incomplete*/
+
     END TIME DROP DOWN MENU
 	It allows for an event to end prior to a start time.
 
