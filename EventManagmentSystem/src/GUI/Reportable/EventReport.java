@@ -32,11 +32,22 @@ public class EventReport extends javax.swing.JDialog {
     
         public void updateInfo() {
         try {
-            for (Iterator t = event.getReport().iterator(); t.hasNext();) {
-                for (Iterator d = ((ArrayList) t.next()).iterator(); d.hasNext();) {
-                    jTextArea1.setText((String) d.next());
+            
+        for (Iterator t = event.getReport().iterator(); t.hasNext();) {
+                if(t.next() instanceof String) {
+                } else {
+                    for (Iterator d = ((ArrayList) t.next()).iterator(); d.hasNext();) {
+                        jTextArea1.setText(jTextArea1.getText() + "\n" + (String) d.next());
+                    }
                 }
             }
+
+            jTextArea1.setText(jTextArea1.getText() + "\n" + (String) event.getReport().get(4));
+            jTextArea1.setText(jTextArea1.getText() + "\n" + (String) event.getReport().get(5));
+            jTextArea1.setText(jTextArea1.getText() + "\n" + (String) event.getReport().get(6));
+            jTextArea1.setText(jTextArea1.getText() + "\n" + (String) event.getReport().get(7));
+            jTextArea1.setText(jTextArea1.getText() + "\n" + (String) event.getReport().get(8));
+
 
 
         } catch (Exception e) {
@@ -58,8 +69,6 @@ public class EventReport extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jScrollPane1.setFocusable(false);
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
@@ -68,17 +77,17 @@ public class EventReport extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(118, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(116, 116, 116))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 797, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();

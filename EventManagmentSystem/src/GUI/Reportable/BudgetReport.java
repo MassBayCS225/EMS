@@ -32,15 +32,19 @@ public class BudgetReport extends javax.swing.JDialog {
     
         public void updateInfo() {
         try {
+            
             for (Iterator t = budget.getReport().iterator(); t.hasNext();) {
+                if(t.next() instanceof String) {
+                } else {
                 for (Iterator d = ((ArrayList) t.next()).iterator(); d.hasNext();) {
-                    jTextArea1.setText((String) d.next());
+                    jTextArea1.setText(jTextArea1.getText() + "\n" + (String) d.next());
+                }
                 }
             }
-
-            jTextArea1.setText((String) budget.getReport().get(2));
-            jTextArea1.setText((String) budget.getReport().get(3));
-            jTextArea1.setText((String) budget.getReport().get(4));
+            for(int i = 2; i < 5; i ++) {
+                jTextArea1.setText(jTextArea1.getText() + "\n" + (String) budget.getReport().get(i));
+            }
+            
 
         } catch (Exception e) {
             e.printStackTrace();

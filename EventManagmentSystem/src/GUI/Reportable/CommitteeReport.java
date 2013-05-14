@@ -32,18 +32,22 @@ public class CommitteeReport extends javax.swing.JDialog {
     
         public void updateInfo() {
         try {
+            for(int i = 0; i < 2; i ++) {
             for (Iterator t = committee.getReport().iterator(); t.hasNext();) {
+                if(t.next() instanceof String) {
+                } else {
                 for (Iterator d = ((ArrayList) t.next()).iterator(); d.hasNext();) {
-                    jTextArea1.setText((String) d.next());
+                    jTextArea1.setText(jTextArea1.getText() + "\n" + (String) d.next());
+                }
                 }
             }
+            
+            }
+            for(int i = 2; i < 6;i++) {
+            jTextArea1.setText(jTextArea1.getText() + "\n" + (String) committee.getReport().get(i));
+            }
 
-            jTextArea1.setText((String) committee.getReport().get(2));
-            jTextArea1.setText((String) committee.getReport().get(3));
-            jTextArea1.setText((String) committee.getReport().get(4));
-            jTextArea1.setText((String) committee.getReport().get(5));
-            jTextArea1.setText((String) committee.getReport().get(6));
-            jTextArea1.setText((String) committee.getReport().get(7));
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,16 +79,16 @@ public class CommitteeReport extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

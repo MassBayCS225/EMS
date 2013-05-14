@@ -35,12 +35,9 @@ public class SubEventReport extends javax.swing.JDialog {
         public void updateInfo() {
         try {
 
-
-                jTextArea1.setText((String) subEvent.getReport().get(2));
-                jTextArea1.setText((String) subEvent.getReport().get(3));
-                jTextArea1.setText((String) subEvent.getReport().get(4));
-                jTextArea1.setText((String) subEvent.getReport().get(4));
-                jTextArea1.setText((String) subEvent.getReport().get(4));
+                for(int i = 0; i < 8;i++) {
+                    jTextArea1.setText(jTextArea1.getText() + "\n" + (String) subEvent.getReport().get(i));
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,16 +69,16 @@ public class SubEventReport extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(22, 22, 22)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
 
         pack();
