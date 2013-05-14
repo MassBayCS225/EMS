@@ -1,6 +1,7 @@
 EVENT REPORT PANEL-
     BUTTON- "View" displays true when no one is registered for the event and a commitee has been added.
 	    "View" displays event_report.error when no one is registered for the event and a sub event has been added.
+	    "View" displays 1 when no one is registered for the event(don't not know why yet).
 
 EVENT MANAGEMENT PANEL-
     Main event location not displayed on the Event Details.
@@ -14,3 +15,8 @@ SUB EVENT DETAILS PANEL-
          an exception is thrown. See Edit_Ghost_Sub_Event.exception.
     5. If a user clicks on the Sub Event Details and there are no events, then clicks the "Remove Event" button, then clicks the yes option,
          an exception is thrown. See Remove_Ghost_Sub_Event.exception.
+
+USER MANAGEMENT PANEL-
+    1. Admin may remove himself from being an admin, an action that can't be undone. It throws an exception. See Remove_Admin_Privileges.exception.
+    2. A regular user after given administrator privileges can do the same as above as well as demoting the main admin to a regular user. See above.
+
