@@ -25,18 +25,17 @@ public class NewIncomeDialog extends javax.swing.JDialog {
         confirm = false;
     }
     
-    public boolean getConfirm()
-    { return confirm; }
+    public boolean getConfirm(){ 
+        return confirm; 
+    }
     
     public Income createIncome()
     {
         Income i = new Income();
-        if(amountField.getText().trim().length() > 0)
-        {
+        if(amountField.getText().trim().length() > 0){
             i.setValue(new Double(amountField.getText()));
         }
-        else
-        {
+        else{
             i.setValue(0.0);
         }
         i.setDescription(descriptionField.getText());
@@ -51,19 +50,20 @@ public class NewIncomeDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        amountLabel = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        newIncomeLabel = new javax.swing.JLabel();
         descriptionField = new javax.swing.JTextField();
         amountField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(400, 200));
 
-        jLabel1.setText("Description:");
+        descriptionLabel.setText("Description:");
 
-        jLabel2.setText("Amount");
+        amountLabel.setText("Amount:");
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,8 +74,8 @@ public class NewIncomeDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancel");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Add a new Income");
+        newIncomeLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        newIncomeLabel.setText("Add a New Income");
 
         amountField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
@@ -84,43 +84,40 @@ public class NewIncomeDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(jLabel3)
-                        .addGap(0, 112, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(descriptionLabel)
+                            .addComponent(amountLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(descriptionField)))
+                            .addComponent(descriptionField)
+                            .addComponent(amountField)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelButton)))
+                        .addGap(0, 201, Short.MAX_VALUE)
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(newIncomeLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(newIncomeLabel)
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(descriptionLabel)
+                    .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amountLabel)
+                    .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(cancelButton))
@@ -134,20 +131,17 @@ public class NewIncomeDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         Income i = createIncome();
         
-        if(i.getDescription().trim().isEmpty())
-        {
+        if(i.getDescription().trim().isEmpty()){
             JOptionPane.showMessageDialog(
-                    null, "Income must have a name, please enter a valid name.", "No Income Name", JOptionPane.ERROR_MESSAGE);
+                    null, "Income must have a description.", "No Income Description", JOptionPane.ERROR_MESSAGE);
         }
         
-        else if (i.getValue() == 0.0)
-        {
+        else if (i.getValue() == 0.0){
             JOptionPane.showMessageDialog(
-                    null, "Income must have a value, please enter a valid value.", "No Income Value", JOptionPane.ERROR_MESSAGE);
+                    null, "Income must have a value.", "No Income Value", JOptionPane.ERROR_MESSAGE);
         }
         
-        else
-        {
+        else{
             confirm = true;
             this.dispose();
         }
@@ -196,11 +190,11 @@ public class NewIncomeDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField amountField;
+    private javax.swing.JLabel amountLabel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField descriptionField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JLabel newIncomeLabel;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
