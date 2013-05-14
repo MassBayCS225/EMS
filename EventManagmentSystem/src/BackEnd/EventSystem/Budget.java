@@ -40,7 +40,7 @@ public class Budget implements Reportable{
     
     
     public double getTotalBudget() {
-        return getTotalIncome() + getTotalExpense();
+        return getTotalIncome() - getTotalExpense();
     }
     
     public double getTotalIncome() {
@@ -55,7 +55,7 @@ public class Budget implements Reportable{
 
         double total = 0;
         for (int i = 0; i < expenseList.size(); i++) {
-            total -= expenseList.get(i).getValue();
+            total += expenseList.get(i).getValue();
         }
         return total;
     }

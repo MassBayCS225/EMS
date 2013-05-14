@@ -93,11 +93,13 @@ public class SetUpData {
         uList.add(new User("Juliett", "Kilo", "JK@JK.com", "jk", "jk"));
 
         //add users
+        User temporaryUser;
         try {
             for (User tu : uList) {
-                manager.getUserManager().setSelectedUser(
-                        (manager.getUserManager().createUser(tu)));
-                manager.getEventManager().createParticipant((Participant)tu, null);
+                temporaryUser = manager.getUserManager().createUser(tu);
+                manager.getUserManager().setSelectedUser((temporaryUser));
+                manager.getEventManager().createParticipant((Participant)temporaryUser,
+                        manager.getLogInManager().getLoggedInUser());
             }
             System.out.println("Users created.");
         } catch (Exception ex2) {

@@ -131,15 +131,9 @@ public class Home extends javax.swing.JFrame {
     }
     
     public void logOut(){
-        remove(activePanel); //Remove whatever panel we're showing
-        setVisible(false);
-        repaint(); //Repaint to get grey background
+        dispose();
         manager.getLogInManager().logOut();
-        logIn();    //show login dialog
-        addPanel(); //add the appropriate panel
-        setVisible(true);
-        validate();    //repaint everything
-        repaint();
+        Home home = new Home();
     }
     
     public void addPanel()
@@ -171,16 +165,16 @@ public class Home extends javax.swing.JFrame {
                 add(main);
                 activePanel = (Component)main;
             }
-            else /*if (allCommitteeMembers.contains(loggedInUser))*/ {
+            else if (allCommitteeMembers.contains(loggedInUser)) {
                 main.setCommitteeView();
                 add(main);
                 activePanel = (Component)main;
             }
-//            else {
-//                main.setParticipantView();
-//                add(main);
-//                activePanel = (Component)main;
-//            }
+            else {
+                main.setParticipantView();
+                add(main);
+                activePanel = (Component)main;
+            }
         }
         catch (Exception e)
         {
