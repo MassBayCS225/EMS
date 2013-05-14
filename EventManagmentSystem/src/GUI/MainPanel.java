@@ -4,17 +4,26 @@
  */
 package GUI;
 
+import BackEnd.EventSystem.Event;
 import BackEnd.ManagerSystem.EventManager;
 import BackEnd.ManagerSystem.MainManager;
+import BackEnd.ManagerSystem.PrivilegeInsufficientException;
+import BackEnd.UserSystem.Participant;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
+import EMS_Database.DuplicateInsertionException;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -24,13 +33,23 @@ public class MainPanel extends javax.swing.JPanel {
 
     JPanel calendarSelectionPanel;
     JButton selectCalendarButton, selectEventDetailsButton, registerForEventButton;
+    //JButton clearEventButton;
     JPanel calendarSwitchingPanel;
     private CalendarPanel cp;
+    EventManager eventManager;
+    User loggedInUser;
+    ArrayList<Participant> participantList;
+    private final String REGISTER = "Register for Event";
+    private final String UNREGISTER = "Unregister";
 
     /**
      * Creates new form MainPanel
      */
     public MainPanel() {
+        eventManager = MainManager.getInstance().getEventManager();
+        loggedInUser = MainManager.getInstance().getLogInManager().getLoggedInUser();
+        participantList = eventManager.getSelectedEvent().getParticipantList();
+
         initComponents();
         setLayout(new BorderLayout());
         calendarSelectionPanel = new JPanel();
@@ -38,17 +57,36 @@ public class MainPanel extends javax.swing.JPanel {
 
         selectCalendarButton = new JButton("Calendar");
         selectEventDetailsButton = new JButton("Event Details");
-        registerForEventButton = new JButton("Register for Event");
+
+        EventManager eventManager = MainManager.getInstance().getEventManager();
+        User loggedInUser = MainManager.getInstance().getLogInManager().getLoggedInUser();
+        ArrayList<Participant> participantList = eventManager.getSelectedEvent().getParticipantList();
+
+        if (participantList.contains(loggedInUser)) {
+            registerForEventButton = new JButton(UNREGISTER);
+        } else {
+            registerForEventButton = new JButton(REGISTER);
+        }
+
+        Dimension dimension = new Dimension(150, 25);
+        registerForEventButton.setPreferredSize(dimension);
 
         selectCalendarButton.addActionListener(new CalendarButtonListener());
         selectEventDetailsButton.addActionListener(new CalendarButtonListener());
         registerForEventButton.addActionListener(new RegisterForEventButtonListener());
+
 
         calendarSwitchingPanel.setLayout(new CardLayout());
 
         calendarSelectionPanel.add(selectCalendarButton);
         calendarSelectionPanel.add(selectEventDetailsButton);
         calendarSelectionPanel.add(registerForEventButton);
+  
+        /*
+        clearEventButton = new JButton("Clear Event");
+        clearEventButton.addActionListener(new ClearEventButtonListener());
+        calendarSelectionPanel.add(clearEventButton);
+        */
 
         cp = new CalendarPanel();
         EventDetailsPanel edp = new EventDetailsPanel();
@@ -61,7 +99,7 @@ public class MainPanel extends javax.swing.JPanel {
     public void setNonAdminOrganizerView() {
         cp.hideEventButtons();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,23 +149,45 @@ public class MainPanel extends javax.swing.JPanel {
         }
     }
 
-    private class RegisterForEventButtonListener implements ActionListener {
+    private class RegisterForEventButtonListener
+            implements ActionListener {
 
         public void actionPerformed(ActionEvent event) {
-            EventManager eventManager = MainManager.getInstance().getEventManager();
-            User loggedInUser = MainManager.getInstance().getLogInManager().getLoggedInUser();
-            try{
-                if (eventManager.getSelectedEvent().getParticipantList().contains(loggedInUser)){
-                    JOptionPane.showMessageDialog(null, "Already registered for this event!");
-                }
-                else{
+            try {
+                if (participantList.contains(loggedInUser)) {
+                    participantList.remove(loggedInUser);
+                    JOptionPane.showMessageDialog(null, "Successfully unregistered.");
+                    registerForEventButton.setText(REGISTER);
+                } else {
                     eventManager.createParticipant(loggedInUser, loggedInUser);
                     JOptionPane.showMessageDialog(null, "Registration successful!");
+                    registerForEventButton.setText(UNREGISTER);
                 }
-            }
-            catch (DoesNotExistException e){
+            } catch (DoesNotExistException e) {
                 e.printStackTrace();
             }
         }
     }
+    /*
+    private class ClearEventButtonListener
+            implements ActionListener {
+
+        public void actionPerformed(ActionEvent event) {
+            try {
+                eventManager.deleteEvent(loggedInUser);
+                eventManager.setSelectedEvent(eventManager.createEvent(new Event(), loggedInUser));
+                JFrame homeFrame = (JFrame)SwingUtilities.windowForComponent((Component)event.getSource());
+                homeFrame.validate();
+                homeFrame.repaint();
+                // event.getSource().getParent().getParent().validate();
+            } catch (PrivilegeInsufficientException e) {
+                e.printStackTrace();
+            } catch (DuplicateInsertionException e) {
+                e.printStackTrace();
+            } catch (DoesNotExistException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    */
 }

@@ -168,7 +168,7 @@ public class EventManager {
                 deleteParticipant(selectedEvent.getParticipantList().get(k), loggedInUser);
             }
             eventsTable.removeEvent(selectedEvent.getEVENT_ID());
-            eventList.remove(selectedEvent.getEVENT_ID());
+            eventList.remove(selectedEvent);
             selectedEvent = null;
         }
     }
@@ -398,14 +398,14 @@ public class EventManager {
             throws DoesNotExistException {
 
         Participant newParticipant = null;
-        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());;
+        ArrayList<Integer> newParticipantList = eventsTable.getParticipantList(selectedEvent.getEVENT_ID());
         if (loggedInUser == null) {
             newParticipant = new Participant(usersTable.createUser(new InputUser(participant)), participant);
             newParticipantList.add(newParticipant.getUserId());
             selectedEvent.getParticipantList().add(newParticipant);
         } else {
-            newParticipantList.add(loggedInUser.getUserId());
-            selectedEvent.getParticipantList().add(loggedInUser);
+            newParticipantList.add(participant.getUserId());
+            selectedEvent.getParticipantList().add(participant);
         }
         eventsTable.setParticipantList(selectedEvent.getEVENT_ID(), newParticipantList);
         return newParticipant;

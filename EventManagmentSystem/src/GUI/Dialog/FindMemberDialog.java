@@ -43,7 +43,6 @@ public class FindMemberDialog extends javax.swing.JDialog {
             model.addElement(p.getFirstName() + " " + p.getLastName());
         }
         memberList.setModel(model);
-        
     }
     
     public boolean getConfirm()
@@ -51,9 +50,9 @@ public class FindMemberDialog extends javax.swing.JDialog {
     
     public User createUser()
     {
-        return manager.getEventManager().getSelectedEvent().getOrganizerList().get(memberList.getSelectedIndex());
+        return (User)manager.getEventManager().getSelectedEvent().getParticipantList().get(memberList.getSelectedIndex());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
