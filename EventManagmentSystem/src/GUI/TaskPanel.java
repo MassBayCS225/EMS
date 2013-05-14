@@ -11,6 +11,7 @@ import GUI.Dialog.FindMemberDialog;
 import GUI.Dialog.NewTimeStampDialog;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import java.awt.Color;
 
 /**
  *
@@ -68,6 +69,7 @@ public class TaskPanel extends javax.swing.JPanel {
     public void setToViewOnly() {
         changeNameButton.setVisible(false);
         descriptionTextArea.setEnabled(false);
+        descriptionTextArea.setDisabledTextColor(Color.black);
         editTimeScheduleButton.setVisible(false);
         completeCheckBox.setEnabled(false);
         addMemberButton.setVisible(false);

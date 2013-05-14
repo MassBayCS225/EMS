@@ -42,9 +42,16 @@ public class CommitteePanel extends javax.swing.JPanel {
         
     }
 
-  /*  public void setChairView() {
-        committeeHeadChangeButton.setVisible(false);
-    }*/
+    public void resetView() {
+        committeeHeadChangeButton.setVisible(true);
+        budgetButton.setVisible(true);
+        addToBudgetButton.setVisible(true);
+        removeMemberFromBudgetButton.setVisible(true);
+        addMemberButton.setVisible(true);
+        removeMemberButton.setVisible(true);
+        addTaskButton.setVisible(true);
+        removeTaskButton.setVisible(true);
+    }
     
     public void setCommitteeMemberView() {
         committeeHeadChangeButton.setVisible(false);
