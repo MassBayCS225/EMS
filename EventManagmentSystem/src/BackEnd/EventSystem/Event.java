@@ -218,6 +218,11 @@ public class Event extends ScheduleItem implements Reportable {
         report.add(subEvent);
         report.add(committee);
         report.add(participant);
+        report.add("" + this.getTitle());
+        report.add("" + this.getLocation());
+        report.add("" + this.getDescription());
+        report.add("" + this.getTimeSchedule().getStartDateTimeCalendar().getTime().getDay());
+        report.add("" + this.getTimeSchedule().getEndDateTimeCalendar().getTime().getDay());
 
         return report;
     }

@@ -269,10 +269,12 @@ public class Committee implements Reportable {
             
         }
         
+        report.add(budget);
+        report.add(member);
         report.add("" + taskList.size());
         report.add("" + budget.getTotalBudget());
-        report.add("" + budget.getExpenseList());
-        report.add("" + budget.getIncomeList());
+        report.add("" + budget.getTotalExpense());
+        report.add("" + budget.getTotalIncome());
         report.add("" + this.getTitle());
         report.add("" + this.isFinished());
         
