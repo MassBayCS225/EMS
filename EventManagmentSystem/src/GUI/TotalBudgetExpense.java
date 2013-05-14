@@ -7,9 +7,6 @@ package GUI;
 import BackEnd.EventSystem.Committee;
 import BackEnd.EventSystem.Expense;
 import BackEnd.ManagerSystem.MainManager;
-import GUI.Dialog.NewExpenseDialog;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,8 +21,8 @@ public class TotalBudgetExpense extends javax.swing.JPanel {
     private MainManager manager;
     
     public TotalBudgetExpense() {
-        initComponents();
         manager = MainManager.getInstance();
+        initComponents();
         updateInfo();
     }
     
@@ -47,11 +44,11 @@ public class TotalBudgetExpense extends javax.swing.JPanel {
             }
         }
         }
-        
     }
     
-    public DefaultTableModel getTableModel()
-    { return (DefaultTableModel)expensesTable.getModel(); }
+    public DefaultTableModel getTableModel(){ 
+        return (DefaultTableModel)expensesTable.getModel(); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

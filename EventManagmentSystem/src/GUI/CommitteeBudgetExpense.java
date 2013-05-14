@@ -18,11 +18,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CommitteeBudgetExpense extends javax.swing.JPanel {
 
-    Budget selectedBudget;
     /**
      * Creates new form Expenses
      */
     private MainManager manager;
+    private Budget selectedBudget;
+    
     public CommitteeBudgetExpense() {
         manager = MainManager.getInstance();
         selectedBudget = manager.getBudgetManager().getSelectedBudget();
