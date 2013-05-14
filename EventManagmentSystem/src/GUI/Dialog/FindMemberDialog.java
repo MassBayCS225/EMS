@@ -38,9 +38,9 @@ public class FindMemberDialog extends javax.swing.JDialog {
     public void updateInfo()
     {
         DefaultListModel model = new DefaultListModel();
-        for(Participant p : manager.getEventManager().getSelectedEvent().getParticipantList())
+        for(User u : manager.getEventManager().getSelectedEvent().getOrganizerList())
         {
-            model.addElement(p.getFirstName() + " " + p.getLastName());
+            model.addElement(u);
         }
         memberList.setModel(model);
     }
@@ -50,7 +50,7 @@ public class FindMemberDialog extends javax.swing.JDialog {
     
     public User createUser()
     {
-        return (User)manager.getEventManager().getSelectedEvent().getParticipantList().get(memberList.getSelectedIndex());
+        return (User)memberList.getSelectedValue();
     }
     
     /**

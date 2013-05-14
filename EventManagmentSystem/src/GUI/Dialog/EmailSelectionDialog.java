@@ -48,9 +48,8 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
     {
         memberModel.clear();
         committeeModel.clear();
-        for(Participant p : manager.getEventManager().getSelectedEvent().getParticipantList())
+        for(User  u : manager.getEventManager().getSelectedEvent().getOrganizerList())
         {
-            User u = (User)p;
             memberModel.addElement(u);
         }
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList())

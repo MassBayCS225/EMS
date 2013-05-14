@@ -97,7 +97,7 @@ public class SetUpData {
             for (User tu : uList) {
                 temporaryUser = manager.getUserManager().createUser(tu);
                 manager.getUserManager().setSelectedUser((temporaryUser));
-                manager.getEventManager().createParticipant((Participant)temporaryUser);
+                manager.getEventManager().addOrganizer(temporaryUser);
             }
             System.out.println("Users created.");
         } catch (Exception ex2) {
