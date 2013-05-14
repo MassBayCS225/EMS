@@ -24,6 +24,8 @@ public class CommitteeListPanel extends javax.swing.JPanel {
     private CommitteePanel committeePanel;
     private NoPrivilegePanel npp;
     private DesignDefault dd;
+    private CardLayout cl;
+    
     public CommitteeListPanel() {
         dd = DesignDefault.getInstance();
         initComponents();
@@ -35,6 +37,9 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         committeePanelHolder.add(committeePanel, "committee");
         committeePanelHolder.add(noPanel, "no");
         committeePanelHolder.add(npp, "noPriv");
+        
+        cl = (CardLayout)committeePanelHolder.getLayout();
+        
         updateInfo();
         /*if(committeeList.getModel().getSize() == 0)
         {
@@ -62,18 +67,14 @@ public class CommitteeListPanel extends javax.swing.JPanel {
         {
             noPanel.setVisible(true);  
             committeePanel.setVisible(false);
-            npp.setVisible(false);
             
-            CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
             cl.show(committeePanelHolder, "no");
         }
         else
         {
             committeePanel.setVisible(true);
             noPanel.setVisible(false);
-            npp.setVisible(false);
             
-            CardLayout cl = (CardLayout)committeePanelHolder.getLayout();
             cl.show(committeePanelHolder, "committee");
             committeeList.setSelectedIndex(0);
         }
@@ -203,8 +204,6 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             Committee c = selectedEvent.getCommitteeList().get(committeeList.getSelectedIndex());
             manager.getCommitteeManager().setSelectedCommittee(c);
             
-            //committeePanel.updateInfo();
-            
             if (!loggedInUser.getAdminPrivilege() 
                     && !selectedEvent.getOrganizerList().contains(loggedInUser)
                     && !c.getChair().equals(loggedInUser)) {
@@ -220,6 +219,8 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                     npp.setVisible(true);   
                 }
             }
+            else
+                committeePanel.resetView();
             
             committeePanel.updateInfo();
         }
