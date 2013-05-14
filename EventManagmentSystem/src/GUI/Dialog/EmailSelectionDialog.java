@@ -6,8 +6,8 @@ package GUI.Dialog;
 
 import BackEnd.EventSystem.Committee;
 import BackEnd.ManagerSystem.MainManager;
+import BackEnd.UserSystem.Participant;
 import BackEnd.UserSystem.User;
-import GUI.EmailPanel;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.DefaultListModel;
@@ -48,8 +48,9 @@ public class EmailSelectionDialog extends javax.swing.JDialog {
     {
         memberModel.clear();
         committeeModel.clear();
-        for(User u : manager.getEventManager().getSelectedEvent().getOrganizerList())
+        for(Participant p : manager.getEventManager().getSelectedEvent().getParticipantList())
         {
+            User u = (User)p;
             memberModel.addElement(u);
         }
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList())
