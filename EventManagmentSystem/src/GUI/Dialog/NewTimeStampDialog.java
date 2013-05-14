@@ -7,6 +7,7 @@ package GUI.Dialog;
 import BackEnd.EventSystem.TimeSchedule;
 import javax.swing.DefaultComboBoxModel;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,8 +54,6 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
             yearModelS.addElement(i);
             yearModelE.addElement(i);
         }
-        minModelS.addElement("Minute");
-        minModelE.addElement("Minute");
         for(int i = 0; i < 60; i++)
         {
             minModelS.addElement(i);
@@ -79,23 +78,23 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         if(start.get(Calendar.HOUR_OF_DAY) > 12)
         {
             int hour = start.get(Calendar.HOUR_OF_DAY) - 12;
-            startHour.setSelectedIndex(hour);
+            startHour.setSelectedIndex(hour-1);
             startPmRadioButton.setSelected(true);
         }
         else
         {
-            startHour.setSelectedIndex(start.get(Calendar.HOUR_OF_DAY));
+            startHour.setSelectedIndex(start.get(Calendar.HOUR_OF_DAY)-1);
             startAmRadioButton.setSelected(true);
         }
         if(end.get(Calendar.HOUR_OF_DAY) > 12)
         {
             int hour = end.get(Calendar.HOUR_OF_DAY) - 12;
-            endHour.setSelectedIndex(hour);
+            endHour.setSelectedIndex(hour-1);
             endPmRadioButton.setSelected(true);
         }
         else
         {
-            endHour.setSelectedIndex(end.get(Calendar.HOUR_OF_DAY));
+            endHour.setSelectedIndex(end.get(Calendar.HOUR_OF_DAY)-1);
             endAmRadioButton.setSelected(true);
         }
         startYear.setSelectedIndex(start.get(Calendar.YEAR)-2012);
@@ -117,13 +116,13 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         {
             hour += 12;
         }
-        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), hour, startMinute.getSelectedIndex()-1);
+        t.setStartDateTime(startYear.getSelectedIndex()+2012, startMonth.getSelectedIndex(), startDay.getSelectedIndex(), hour+1, startMinute.getSelectedIndex());
         hour = endHour.getSelectedIndex();
         if(endPmRadioButton.isSelected())
         {
             hour += 12;
         }
-        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), hour, endMinute.getSelectedIndex()-1);
+        t.setEndDateTime(endYear.getSelectedIndex()+2012, endMonth.getSelectedIndex(), endDay.getSelectedIndex(), hour+1, endMinute.getSelectedIndex());
         return t;
     }
     /**
@@ -159,9 +158,10 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         startAmRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         startHour.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
-        startHour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hour", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        startHour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 
         startMinute.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         startMinute.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Minute" }));
@@ -176,7 +176,7 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
         startMonth.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
         endHour.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
-        endHour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hour", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        endHour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 
         endMinute.setFont(new java.awt.Font("Candara", 0, 11)); // NOI18N
         endMinute.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Minute" }));
@@ -344,8 +344,23 @@ public class NewTimeStampDialog extends javax.swing.JDialog {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        confirm = true;
-        this.dispose();
+        if(startDay.getSelectedIndex() == 0 || endDay.getSelectedIndex() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "Please select a day.", "No Day Selected", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (startMonth.getSelectedIndex() == 0 || endMonth.getSelectedIndex() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "Please select a month.", "No Month  Selected", JOptionPane.ERROR_MESSAGE);            
+        }
+        else if(startYear.getSelectedIndex() == 0 || endYear.getSelectedIndex() == 0)
+        {
+               JOptionPane.showMessageDialog(null, "Please select a year.", "No Year Selected", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            confirm = true;
+            this.dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
