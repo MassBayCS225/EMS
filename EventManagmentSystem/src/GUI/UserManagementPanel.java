@@ -72,11 +72,21 @@ public class UserManagementPanel extends javax.swing.JPanel {
         cityField.setText(manager.getUserManager().getSelectedUser().getAddress().getCity());
         zipcodeField.setText(manager.getUserManager().getSelectedUser().getAddress().getZipCode());
         countryField.setText(manager.getUserManager().getSelectedUser().getAddress().getCountry());
+        if(manager.getUserManager().getSelectedUser().getAdminPrivilege())
+            adminBox.setSelected(true);
+        else
+            adminBox.setSelected(false);
+        if(manager.getUserManager().getSelectedUser().getEventCreationPrivilege())
+            eventBox.setSelected(true);
+        else
+            eventBox.setSelected(false);
     }
 
     public void setNonAdminView() {
         changeInfoButton.setVisible(false);
         changeUserButton.setVisible(false);
+        adminBox.setVisible(false);
+        eventBox.setVisible(false);
     }
     
     /**
@@ -106,6 +116,8 @@ public class UserManagementPanel extends javax.swing.JPanel {
         zipcodeField = new javax.swing.JTextField();
         countryField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        adminBox = new javax.swing.JCheckBox();
+        eventBox = new javax.swing.JCheckBox();
         ChangeUserPanel = new javax.swing.JPanel();
         changeInfoButton = new javax.swing.JButton();
         changeUserButton = new javax.swing.JButton();
@@ -172,6 +184,15 @@ public class UserManagementPanel extends javax.swing.JPanel {
             }
         });
 
+        adminBox.setText("Admin Privileges");
+        adminBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminBoxActionPerformed(evt);
+            }
+        });
+
+        eventBox.setText("Event Creation Privileges");
+
         javax.swing.GroupLayout ChangeInfoPanelLayout = new javax.swing.GroupLayout(ChangeInfoPanel);
         ChangeInfoPanel.setLayout(ChangeInfoPanelLayout);
         ChangeInfoPanelLayout.setHorizontalGroup(
@@ -179,27 +200,31 @@ public class UserManagementPanel extends javax.swing.JPanel {
             .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lastNameLabel)
+                    .addComponent(emailLabel)
+                    .addComponent(firstNameLabel)
+                    .addComponent(phoneNumberLabel)
+                    .addComponent(addressLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
-                        .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lastNameLabel)
-                            .addComponent(emailLabel)
-                            .addComponent(firstNameLabel)
-                            .addComponent(phoneNumberLabel)
-                            .addComponent(addressLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(stateField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton1)
-                                .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(passwordButton))
+                        .addComponent(passwordButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(stateField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(ChangeInfoPanelLayout.createSequentialGroup()
+                            .addComponent(adminBox)
+                            .addGap(18, 18, 18)
+                            .addComponent(eventBox))))
                 .addContainerGap(143, Short.MAX_VALUE))
         );
         ChangeInfoPanelLayout.setVerticalGroup(
@@ -233,11 +258,15 @@ public class UserManagementPanel extends javax.swing.JPanel {
                 .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordButton)
-                    .addComponent(jButton1))
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addComponent(adminBox)
+                    .addComponent(eventBox))
+                .addGap(18, 18, 18)
+                .addGroup(ChangeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(passwordButton))
+                .addGap(33, 33, 33))
         );
 
         UserInfoPanelHolder.add(ChangeInfoPanel, "changeInfo");
@@ -342,6 +371,14 @@ public class UserManagementPanel extends javax.swing.JPanel {
                 manager.getUserManager().editEmailAddress(emailField.getText(), manager.getLogInManager().getLoggedInUser());
                 manager.getUserManager().editPhoneNumber(tempPhoneNumber, manager.getLogInManager().getLoggedInUser());
                 manager.getUserManager().editAddress(tempAddress, manager.getLogInManager().getLoggedInUser());
+                if(adminBox.isSelected())
+                    manager.getUserManager().editAdminPrivilege(true, manager.getLogInManager().getLoggedInUser());
+                else
+                    manager.getUserManager().editAdminPrivilege(false, manager.getLogInManager().getLoggedInUser());
+                if(eventBox.isSelected())
+                    manager.getUserManager().editEventCreationPrivilege(true, manager.getLogInManager().getLoggedInUser());
+                else
+                    manager.getUserManager().editEventCreationPrivilege(false, manager.getLogInManager().getLoggedInUser());
             } 
             catch (PrivilegeInsufficientException ex) 
             {
@@ -352,14 +389,21 @@ public class UserManagementPanel extends javax.swing.JPanel {
                 Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateLabels();
+            
         }
     }//GEN-LAST:event_saveChangesButtonPerformed
+
+    private void adminBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminBoxActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_adminBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChangeInfoPanel;
     private javax.swing.JPanel ChangeUserPanel;
     private javax.swing.JPanel UserInfoPanelHolder;
     private javax.swing.JLabel addressLabel;
+    private javax.swing.JCheckBox adminBox;
     private javax.swing.JButton changeInfoButton;
     private javax.swing.JButton changeUserButton;
     private javax.swing.JTextField cityField;
@@ -367,6 +411,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
     private javax.swing.JLabel currentUserLabel;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JCheckBox eventBox;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JButton jButton1;
