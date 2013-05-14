@@ -77,17 +77,19 @@ public class UserManagementPanel extends javax.swing.JPanel {
         firstNameField.setText(selectedUser.getFirstName());
         lastNameField.setText(selectedUser.getLastName());
         emailField.setText(selectedUser.getEmailAddress());
-        
+
         setFieldsToDefaultString();
-        
-        if(selectedUser.getAdminPrivilege())
+
+        if (selectedUser.getAdminPrivilege()) {
             adminBox.setSelected(true);
-        else
+        } else {
             adminBox.setSelected(false);
-        if(selectedUser.getEventCreationPrivilege())
+        }
+        if (selectedUser.getEventCreationPrivilege()) {
             eventBox.setSelected(true);
-        else
+        } else {
             eventBox.setSelected(false);
+        }
     }
 
     public void setNonAdminView() {
@@ -499,16 +501,19 @@ public class UserManagementPanel extends javax.swing.JPanel {
                 manager.getUserManager().editEmailAddress(emailField.getText());
                 manager.getUserManager().editPhoneNumber(setPhoneNumberToSystemValue());
                 manager.getUserManager().editAddress(setAddressToSystemValue());
-                if(adminBox.isSelected())
-                    manager.getUserManager().editAdminPrivilege(true);
-                else
-                    manager.getUserManager().editAdminPrivilege(false);
-                if(eventBox.isSelected())
-                    manager.getUserManager().editEventCreationPrivilege(true);
-                else
-                    manager.getUserManager().editEventCreationPrivilege(false);
-            } 
-            catch (PrivilegeInsufficientException ex) 
+                if (manager.getLogInManager().getLoggedInUser().getAdminPrivilege()) {
+                    if (adminBox.isSelected()) {
+                        manager.getUserManager().editAdminPrivilege(true);
+                    } else {
+                        manager.getUserManager().editAdminPrivilege(false);
+                    }
+                    if (eventBox.isSelected()) {
+                        manager.getUserManager().editEventCreationPrivilege(true);
+                    } else {
+                        manager.getUserManager().editEventCreationPrivilege(false);
+                    }
+                }
+            } catch (PrivilegeInsufficientException ex) 
             {
                 Logger.getLogger(UserManagementPanel.class.getName()).log(Level.SEVERE, null, ex);
             } 
