@@ -28,8 +28,16 @@ import javax.swing.event.ListSelectionListener;
  */
 public class UserManagementPanel extends javax.swing.JPanel {
     private MainManager manager;
+    private User selectedUser;
+    private Address selectedUserAddress;
     private JList userList;
     private DesignDefault dd;
+    private final String PHONE_NUMBER_FIELD = "(XXX) XXX - XXXX";
+    private final String STREET_FIELD = "Street";
+    private final String CITY_FIELD = "City";
+    private final String STATE_FIELD = "State";
+    private final String ZIP_CODE_FIELD = "Zip Code";
+    private final String COUNTRY_FIELD = "Country";
     /**
      * Creates new form UserManagementPanel
      */
@@ -61,22 +69,22 @@ public class UserManagementPanel extends javax.swing.JPanel {
     }
     
     public void updateLabels()
-    {
-        currentUserLabel.setText("Currently Editing User: < " + manager.getUserManager().getSelectedUser().getFirstName() + " " + manager.getUserManager().getSelectedUser().getLastName() + " >");
-        firstNameField.setText(manager.getUserManager().getSelectedUser().getFirstName());
-        lastNameField.setText(manager.getUserManager().getSelectedUser().getLastName());
-        emailField.setText(manager.getUserManager().getSelectedUser().getEmailAddress());
-        phoneNumberField.setText(manager.getUserManager().getSelectedUser().getPhoneNumber().toString());
-        streetField.setText(manager.getUserManager().getSelectedUser().getAddress().getStreet());
-        stateField.setText(manager.getUserManager().getSelectedUser().getAddress().getState());
-        cityField.setText(manager.getUserManager().getSelectedUser().getAddress().getCity());
-        zipcodeField.setText(manager.getUserManager().getSelectedUser().getAddress().getZipCode());
-        countryField.setText(manager.getUserManager().getSelectedUser().getAddress().getCountry());
-        if(manager.getUserManager().getSelectedUser().getAdminPrivilege())
+    {   
+        selectedUser = manager.getUserManager().getSelectedUser();
+        selectedUserAddress = selectedUser.getAddress();
+        
+        currentUserLabel.setText("Currently Editing User: < " + selectedUser.getFirstName() + " " + selectedUser.getLastName() + " >");
+        firstNameField.setText(selectedUser.getFirstName());
+        lastNameField.setText(selectedUser.getLastName());
+        emailField.setText(selectedUser.getEmailAddress());
+        
+        setFieldsToDefaultString();
+        
+        if(selectedUser.getAdminPrivilege())
             adminBox.setSelected(true);
         else
             adminBox.setSelected(false);
-        if(manager.getUserManager().getSelectedUser().getEventCreationPrivilege())
+        if(selectedUser.getEventCreationPrivilege())
             eventBox.setSelected(true);
         else
             eventBox.setSelected(false);
@@ -87,6 +95,80 @@ public class UserManagementPanel extends javax.swing.JPanel {
         changeUserButton.setVisible(false);
         adminBox.setVisible(false);
         eventBox.setVisible(false);
+    }
+    
+    private PhoneNumber setPhoneNumberToSystemValue() {
+        PhoneNumber tempPhoneNumber = new PhoneNumber();
+        
+        if (phoneNumberField.getText().equals(PHONE_NUMBER_FIELD))
+            tempPhoneNumber = new PhoneNumber("");
+        else
+            tempPhoneNumber = new PhoneNumber(phoneNumberField.getText());            
+        
+        return tempPhoneNumber;
+    }
+    
+    private Address setAddressToSystemValue() {
+        Address tempAddress = new Address();
+        
+        if (streetField.getText().equals(STREET_FIELD))
+            tempAddress.setStreet("");
+        else
+            tempAddress.setStreet(streetField.getText());
+        
+        if (stateField.getText().equals(STATE_FIELD))
+            tempAddress.setState("");
+        else
+            tempAddress.setState(stateField.getText());
+        
+        if (cityField.getText().equals(CITY_FIELD))
+            tempAddress.setCity("");
+        else
+            tempAddress.setCity(cityField.getText());
+        
+        if (zipcodeField.getText().equals(ZIP_CODE_FIELD))
+            tempAddress.setZipCode("");
+        else
+            tempAddress.setZipCode(zipcodeField.getText());
+        
+        if (countryField.getText().equals(COUNTRY_FIELD))
+            tempAddress.setCountry("");
+        else
+            tempAddress.setCountry(countryField.getText());
+        
+        return tempAddress;
+    }
+    
+    private void setFieldsToDefaultString() {
+        if (selectedUser.getPhoneNumber().toString().equals(""))
+            phoneNumberField.setText(PHONE_NUMBER_FIELD);
+        else
+            phoneNumberField.setText(selectedUser.getPhoneNumber().toString());
+        
+        if (selectedUserAddress.getStreet().equals(""))
+            streetField.setText(STREET_FIELD);
+        else
+            streetField.setText(selectedUserAddress.getStreet());
+        
+        if (selectedUserAddress.getState().equals(""))
+            stateField.setText(STATE_FIELD);
+        else
+            stateField.setText(selectedUserAddress.getState());
+        
+        if (selectedUserAddress.getCity().equals(""))
+            cityField.setText(CITY_FIELD);
+        else
+            cityField.setText(selectedUserAddress.getCity());
+        
+        if (selectedUserAddress.getZipCode().equals(""))
+            zipcodeField.setText(ZIP_CODE_FIELD);
+        else
+            zipcodeField.setText(selectedUserAddress.getZipCode());
+        
+        if (selectedUserAddress.getCountry().equals(""))
+            countryField.setText(selectedUserAddress.getCountry());
+        else
+            countryField.setText(selectedUserAddress.getCountry());
     }
     
     /**
@@ -155,8 +237,24 @@ public class UserManagementPanel extends javax.swing.JPanel {
         emailField.setText("Email");
 
         phoneNumberField.setText("Phone Number");
+        phoneNumberField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                phoneNumberFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                phoneNumberFieldFocusLost(evt);
+            }
+        });
 
         streetField.setText("Street");
+        streetField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                streetFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                streetFieldFocusLost(evt);
+            }
+        });
 
         passwordButton.setFont(dd.getStandardText());
         passwordButton.setText("Change Password");
@@ -168,12 +266,44 @@ public class UserManagementPanel extends javax.swing.JPanel {
         });
 
         cityField.setText("City");
+        cityField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cityFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cityFieldFocusLost(evt);
+            }
+        });
 
         stateField.setText("State");
+        stateField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                stateFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                stateFieldFocusLost(evt);
+            }
+        });
 
         zipcodeField.setText("Zipcode");
+        zipcodeField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                zipcodeFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                zipcodeFieldFocusLost(evt);
+            }
+        });
 
         countryField.setText("Country");
+        countryField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                countryFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                countryFieldFocusLost(evt);
+            }
+        });
 
         jButton1.setFont(dd.getStandardText());
         jButton1.setText("Save Changes");
@@ -317,13 +447,13 @@ public class UserManagementPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                     .addComponent(UserInfoPanelHolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(changeInfoButton)
                         .addGap(18, 18, 18)
                         .addComponent(changeUserButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
                         .addComponent(currentUserLabel)))
                 .addContainerGap())
         );
@@ -362,15 +492,13 @@ public class UserManagementPanel extends javax.swing.JPanel {
         int choice = JOptionPane.showConfirmDialog(null, "Do you want to save these changes?");
         if(choice == JOptionPane.YES_OPTION)
         {
-            PhoneNumber tempPhoneNumber = new PhoneNumber(phoneNumberField.getText());
-            Address tempAddress = new Address(streetField.getText(), cityField.getText(), stateField.getText(), zipcodeField.getText(), countryField.getText());
             try 
             {
                 manager.getUserManager().editFirstName(firstNameField.getText());
                 manager.getUserManager().editLastName(lastNameField.getText());
                 manager.getUserManager().editEmailAddress(emailField.getText());
-                manager.getUserManager().editPhoneNumber(tempPhoneNumber);
-                manager.getUserManager().editAddress(tempAddress);
+                manager.getUserManager().editPhoneNumber(setPhoneNumberToSystemValue());
+                manager.getUserManager().editAddress(setAddressToSystemValue());
                 if(adminBox.isSelected())
                     manager.getUserManager().editAdminPrivilege(true);
                 else
@@ -397,6 +525,88 @@ public class UserManagementPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_adminBoxActionPerformed
+
+private void phoneNumberFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFieldFocusGained
+        if (phoneNumberField.getText().equals(PHONE_NUMBER_FIELD)) {
+            phoneNumberField.setText("");
+        }
+}//GEN-LAST:event_phoneNumberFieldFocusGained
+
+private void phoneNumberFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFieldFocusLost
+        if (phoneNumberField.getText().equals("") || phoneNumberField.getText().equals(PHONE_NUMBER_FIELD)) {
+            phoneNumberField.setText(PHONE_NUMBER_FIELD);
+        }
+}//GEN-LAST:event_phoneNumberFieldFocusLost
+
+private void streetFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_streetFieldFocusGained
+// TODO add your handling code here:
+        if (streetField.getText().equals(STREET_FIELD)) {
+            streetField.setText("");
+        }
+}//GEN-LAST:event_streetFieldFocusGained
+
+private void streetFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_streetFieldFocusLost
+// TODO add your handling code here:
+        if (streetField.getText().equals("") || streetField.getText().equals(STREET_FIELD)) {
+            streetField.setText(STREET_FIELD);
+        }
+}//GEN-LAST:event_streetFieldFocusLost
+
+private void cityFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cityFieldFocusGained
+// TODO add your handling code here:
+        if (cityField.getText().equals(CITY_FIELD)) {
+            cityField.setText("");
+        }
+}//GEN-LAST:event_cityFieldFocusGained
+
+private void cityFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cityFieldFocusLost
+// TODO add your handling code here:
+        if (cityField.getText().equals("") || cityField.getText().equals(CITY_FIELD)) {
+            cityField.setText(CITY_FIELD);
+        }
+}//GEN-LAST:event_cityFieldFocusLost
+
+private void stateFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stateFieldFocusGained
+// TODO add your handling code here:
+        if (stateField.getText().equals(STATE_FIELD)) {
+            stateField.setText("");
+        }
+}//GEN-LAST:event_stateFieldFocusGained
+
+private void stateFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stateFieldFocusLost
+// TODO add your handling code here:
+        if (stateField.getText().equals("") || stateField.getText().equals(STATE_FIELD)) {
+            stateField.setText(STATE_FIELD);
+        }
+}//GEN-LAST:event_stateFieldFocusLost
+
+private void zipcodeFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipcodeFieldFocusGained
+// TODO add your handling code here:
+        if (zipcodeField.getText().equals(ZIP_CODE_FIELD)) {
+            zipcodeField.setText("");
+        }
+}//GEN-LAST:event_zipcodeFieldFocusGained
+
+private void zipcodeFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipcodeFieldFocusLost
+// TODO add your handling code here:
+        if (zipcodeField.getText().equals("") || zipcodeField.getText().equals(ZIP_CODE_FIELD)) {
+            zipcodeField.setText(ZIP_CODE_FIELD);
+        }
+}//GEN-LAST:event_zipcodeFieldFocusLost
+
+private void countryFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFieldFocusGained
+// TODO add your handling code here:
+        if (countryField.getText().equals(COUNTRY_FIELD)) {
+            countryField.setText("");
+        }
+}//GEN-LAST:event_countryFieldFocusGained
+
+private void countryFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFieldFocusLost
+// TODO add your handling code here:
+        if (countryField.getText().equals("") || countryField.getText().equals(COUNTRY_FIELD)) {
+            countryField.setText(COUNTRY_FIELD);
+        }
+}//GEN-LAST:event_countryFieldFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChangeInfoPanel;
