@@ -91,7 +91,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lastNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -103,43 +103,22 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="streetField" min="-2" pref="400" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="phoneNumberField" min="-2" pref="400" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="phoneNumberButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="firstNameField" min="-2" pref="400" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="firstNameButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="emailField" min="-2" pref="400" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="emailButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="lastNameField" min="-2" pref="400" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lastNameButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="phoneNumberField" min="-2" pref="400" max="-2" attributes="0"/>
+                                  <Component id="firstNameField" min="-2" pref="400" max="-2" attributes="0"/>
+                                  <Component id="emailField" min="-2" pref="400" max="-2" attributes="0"/>
+                                  <Component id="lastNameField" min="-2" pref="400" max="-2" attributes="0"/>
                                   <Component id="cityField" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
                                   <Component id="stateField" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
                                   <Component id="zipcodeField" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                                       <Component id="countryField" min="-2" pref="400" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="addressButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="passwordButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="passwordButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="56" max="32767" attributes="0"/>
+                      <EmptySpace pref="143" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -150,25 +129,21 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="firstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="firstNameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="firstNameButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lastNameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lastNameButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="emailLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="emailField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="emailButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="phoneNumberLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="phoneNumberField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="phoneNumberButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -182,16 +157,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="zipcodeField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="countryField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="addressButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="countryField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="passwordButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                      <EmptySpace pref="76" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -261,46 +233,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Street"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="firstNameButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="firstNameButtonActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="lastNameButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lastNameButtonActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="phoneNumberButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="phoneNumberButtonActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="emailButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailButtonActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="addressButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addressButtonActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="passwordButton">
               <Properties>
