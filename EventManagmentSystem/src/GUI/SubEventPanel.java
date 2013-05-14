@@ -69,6 +69,7 @@ public class SubEventPanel extends javax.swing.JPanel {
         SubEvent e = new SubEvent(nameField.getText());
         e.setTimeSchedule(tempTimeSchedule);
         e.setLocation(new Location(locationField.getText()));
+        e.setDescription(descriptionTextArea.getText());
         //TimeSchedule t = new TimeSchedule((int)yearSelect.getSelectedItem(),monthSelect.getSelectedIndex(), daySelect.getSelectedIndex(), );
         return e;
     }
