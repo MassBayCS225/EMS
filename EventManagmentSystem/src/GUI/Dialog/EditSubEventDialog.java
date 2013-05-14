@@ -149,22 +149,23 @@ public class EditSubEventDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
+                                .addComponent(locationLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(locationField, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(locationLabel)
                             .addComponent(startDateLabel)
                             .addComponent(dueDateLabel)
                             .addComponent(editTimeScheduleButton))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 178, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(saveSubEventButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelChangesButton))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
+                        .addComponent(cancelChangesButton)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(68, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headerLabel)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -201,7 +202,7 @@ public class EditSubEventDialog extends javax.swing.JDialog {
             manager.getSubEventManager().editLocation(new Location(locationField.getText()));
             manager.getSubEventManager().editTitle(nameField.getText());
             manager.getSubEventManager().editDescription(descriptionTextArea.getText());
-            manager.getSubEventManager().editLocation(new Location(locationLabel.getText()));
+            manager.getSubEventManager().editLocation(new Location(locationField.getText()));
 
             confirm = true;
             this.dispose();
@@ -229,7 +230,7 @@ public class EditSubEventDialog extends javax.swing.JDialog {
         descriptionTextArea.setText(selectedSubEvent.getDescription());
         dueDateLabel.setText("Due date: " + tempTimeSchedule.getEndDateTimeTimestamp().toString());
         startDateLabel.setText("Start date: " + tempTimeSchedule.getStartDateTimeTimestamp().toString());
-        locationLabel.setText(selectedSubEvent.getLocation().getDetails());
+        locationField.setText(selectedSubEvent.getLocation().getDetails());
     }
     
     private void updateLabels()
