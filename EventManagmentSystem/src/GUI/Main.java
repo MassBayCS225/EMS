@@ -23,6 +23,8 @@ public class Main extends javax.swing.JPanel {
     private MainPanel mainPanel;
     private DesignDefault dd;
     private Event selectedEvent;
+    private TotalBudgetPanel bp;
+    private EmailPanel ep;
 
     /**
      * Creates new form Main
@@ -32,10 +34,10 @@ public class Main extends javax.swing.JPanel {
         dd = DesignDefault.getInstance();
         initComponents();
         mainPanel = new MainPanel();
-        TotalBudgetPanel bp = new TotalBudgetPanel();
+        bp = new TotalBudgetPanel();
         ump = new UserManagementPanel();
         clp = new CommitteeListPanel();
-        EmailPanel ep = new EmailPanel();
+        ep = new EmailPanel();
 
         SwitchingPanelHolder.add(mainPanel, "home");
         SwitchingPanelHolder.add(clp, "committees");
