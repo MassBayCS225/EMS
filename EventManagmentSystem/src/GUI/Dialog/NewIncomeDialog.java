@@ -59,7 +59,6 @@ public class NewIncomeDialog extends javax.swing.JDialog {
         amountField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(400, 200));
 
         descriptionLabel.setText("Description:");
 
@@ -73,6 +72,11 @@ public class NewIncomeDialog extends javax.swing.JDialog {
         });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         newIncomeLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         newIncomeLabel.setText("Add a New Income");
@@ -118,7 +122,7 @@ public class NewIncomeDialog extends javax.swing.JDialog {
                     .addComponent(amountLabel)
                     .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(saveButton)
                     .addComponent(cancelButton))
                 .addContainerGap())
@@ -146,6 +150,10 @@ public class NewIncomeDialog extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
