@@ -1,7 +1,6 @@
 package BackEnd.ManagerSystem;
 
 import BackEnd.EventSystem.Committee;
-import BackEnd.EventSystem.Event;
 import BackEnd.EventSystem.Task;
 import BackEnd.UserSystem.User;
 import EMS_Database.DoesNotExistException;
@@ -24,6 +23,8 @@ public class CommitteeManager {
     private Committees_Table committeesTable;
     private Tasks_Table tasksTable;
     private Committee selectedCommittee;
+    private LoginManager logInManager;
+    private EventManager eventManager;
 
     /**
      * initializes the committee manager, and connects to the committee database
@@ -33,6 +34,11 @@ public class CommitteeManager {
     public CommitteeManager(Tasks_Table tasksTable) {
         committeesTable = new Committees_Table();
         this.tasksTable = tasksTable;
+    }
+
+    public void connectManagers(LoginManager logInManager, EventManager eventManager) {
+        this.logInManager = logInManager;
+        this.eventManager = eventManager;
     }
 
     /**
@@ -67,15 +73,16 @@ public class CommitteeManager {
      * privilege
      *
      * @param title the title
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editTitle(String title, User loggedInUser, Event selectedEvent)
+    public void editTitle(String title)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.setTitle(title);
             committeesTable.setTitle(selectedCommittee.getCOMMITTEE_ID(), title);
         }
@@ -86,15 +93,16 @@ public class CommitteeManager {
      * privilege
      *
      * @param chair the chair to change to
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void editChair(User chair, User loggedInUser, Event selectedEvent)
+    public void editChair(User chair)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.setChair(chair);
             committeesTable.setChairman(selectedCommittee.getCOMMITTEE_ID(), chair.getUserId());
         }
@@ -110,10 +118,13 @@ public class CommitteeManager {
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void addBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent)
+    public void addBudgetAccess(User budgetAccess)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.getBudgetAccessList().add(budgetAccess);
             ArrayList<Integer> newBudgetAccessList = committeesTable.getBudgetAccessList(selectedCommittee.getCOMMITTEE_ID());
             newBudgetAccessList.add(budgetAccess.getUserId());
@@ -126,15 +137,16 @@ public class CommitteeManager {
      * privilege
      *
      * @param budgetAccess the user to remove
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void removeBudgetAccess(User budgetAccess, User loggedInUser, Event selectedEvent)
+    public void removeBudgetAccess(User budgetAccess)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.getBudgetAccessList().remove(budgetAccess);
             ArrayList<Integer> newBudgetAccessList = committeesTable.getBudgetAccessList(selectedCommittee.getCOMMITTEE_ID());
             newBudgetAccessList.remove(new Integer(budgetAccess.getUserId()));
@@ -147,15 +159,16 @@ public class CommitteeManager {
      * privilege
      *
      * @param member the member to add
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void addMember(User member, User loggedInUser, Event selectedEvent)
+    public void addMember(User member)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.getMemberList().add(member);
             ArrayList<Integer> newMemberList = committeesTable.getCommitteeMembers(selectedCommittee.getCOMMITTEE_ID());
             newMemberList.add(member.getUserId());
@@ -168,18 +181,19 @@ public class CommitteeManager {
      * privilege
      *
      * @param member the member to remove
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void removeMember(User member, User loggedInUser, Event selectedEvent)
+    public void removeMember(User member)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.getMemberList().remove(member);
             ArrayList<Integer> newMemberList = committeesTable.getCommitteeMembers(selectedCommittee.getCOMMITTEE_ID());
-            newMemberList.remove(new Integer(member.getUserId())); //!!HERE
+            newMemberList.remove(new Integer(member.getUserId()));
             committeesTable.setCommitteeMembers(selectedCommittee.getCOMMITTEE_ID(), newMemberList);
         }
     }
@@ -195,11 +209,14 @@ public class CommitteeManager {
      * @throws DoesNotExistException
      * @throws DuplicateInsertionException
      */
-    public Task createTask(Task task, User loggedInUser, Event selectedEvent)
+    public Task createTask(Task task)
             throws PrivilegeInsufficientException, DoesNotExistException, DuplicateInsertionException {
 
         Task newTask = null;
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             ArrayList<Integer> responsibleIDList = new ArrayList<Integer>();
             for (User responsible : task.getResponsibleList()) {
                 responsibleIDList.add(responsible.getUserId());
@@ -224,15 +241,16 @@ public class CommitteeManager {
      * privilege
      *
      * @param task the task to delete
-     * @param loggedInUser the currently logged in user
-     * @param selectedEvent the currently selected event
      * @throws PrivilegeInsufficientException
      * @throws DoesNotExistException
      */
-    public void deleteTask(Task task, User loggedInUser, Event selectedEvent)
+    public void deleteTask(Task task)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
-        if (PrivilegeManager.hasCommitteePrivilege(loggedInUser, selectedEvent, selectedCommittee)) {
+        if (PrivilegeManager.hasCommitteePrivilege(
+                logInManager.getLoggedInUser(),
+                eventManager.getSelectedEvent(),
+                selectedCommittee)) {
             selectedCommittee.getTaskList().remove(task);
             ArrayList<Integer> newTaskList = committeesTable.getTaskList(selectedCommittee.getCOMMITTEE_ID());
             newTaskList.remove(new Integer(task.getTASK_ID()));

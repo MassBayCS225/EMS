@@ -10,7 +10,6 @@ import BackEnd.EventSystem.Event;
 import BackEnd.UserSystem.User;
 import BackEnd.ManagerSystem.MainManager;
 import java.awt.CardLayout;
-import java.awt.Color;
 /**
  *
  * @author Sid
@@ -235,7 +234,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             {
                 manager.getCommitteeManager().setSelectedCommittee(
                         manager.getEventManager().createCommittee(
-                        cd.createCommittee(),manager.getLogInManager().getLoggedInUser()));
+                        cd.createCommittee()));
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -255,7 +254,7 @@ public class CommitteeListPanel extends javax.swing.JPanel {
             //System.out.println(c);
             try
             {
-                manager.getEventManager().deleteCommittee(c, manager.getUserManager().getSelectedUser());
+                manager.getEventManager().deleteCommittee(c);
             }
             catch (Exception e)
             {

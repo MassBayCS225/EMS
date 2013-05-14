@@ -25,14 +25,19 @@ public class UserManager {
     private ArrayList<Participant> userList;
     private User selectedUser;
     private UserData_Table usersTable;
-    
+    private LoginManager logInManager;
 
     public UserManager()
             throws DoesNotExistException {
-    
+
         usersTable = new UserData_Table();
         userList = new ArrayList<Participant>();
         rebuildUserList();
+    }
+
+    public void connectManagers(LoginManager logInManager) {
+        System.out.println("trying to connect");
+        this.logInManager = logInManager;
     }
 
     public UserData_Table getUsersTable() {
@@ -93,7 +98,7 @@ public class UserManager {
 
     public User createUser(User user)
             throws DuplicateEmailException {
-        
+
         if (usersTable.checkEmail(user.getEmailAddress())) {
             throw new DuplicateEmailException("Email address already exists in the system");
         } else {
@@ -109,75 +114,83 @@ public class UserManager {
         usersTable.removeUser(selectedUser.getUserId());
     }
 
-    public void editFirstName(String firstName, User loggedInUser)
+    public void editFirstName(String firstName)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setFirstName(firstName);
             usersTable.setFirstName(selectedUser.getUserId(), firstName);
         }
     }
 
-    public void editLastName(String lastName, User loggedInUser)
+    public void editLastName(String lastName)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setLastName(lastName);
             usersTable.setLastName(selectedUser.getUserId(), lastName);
         }
     }
 
-    public void editEmailAddress(String emailAddress, User loggedInUser)
+    public void editEmailAddress(String emailAddress)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setEmailAddress(emailAddress);
             usersTable.setEmail(selectedUser.getUserId(), emailAddress);
         }
     }
 
-    public void editAddress(Address address, User loggedInUser)
+    public void editAddress(Address address)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setAddress(address);
             usersTable.setAddress(selectedUser.getUserId(), address);
         }
     }
 
-    public void editPhoneNumber(PhoneNumber phoneNumber, User loggedInUser)
+    public void editPhoneNumber(PhoneNumber phoneNumber)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPhoneNumber(phoneNumber);
             usersTable.setPhone(selectedUser.getUserId(), phoneNumber.toString());
         }
     }
 
-    public void editPassword(String password, String passwordMatch, User loggedInUser)
+    public void editPassword(String password, String passwordMatch)
             throws IllegalCharacterException, PasswordMismatchError,
             PrivilegeInsufficientException, DoesNotExistException,
             InvalidKeyException, UnsupportedEncodingException,
             IllegalBlockSizeException, BadPaddingException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasUserPrivilege(loggedInUser, selectedUser)) {
             selectedUser.setPassword(password, passwordMatch);
-            usersTable.setPwd(selectedUser.getUserId(),password);
+            usersTable.setPwd(selectedUser.getUserId(), password);
         }
     }
 
-    public void editAdminPrivilege(boolean adminPrivilege, User loggedInUser)
+    public void editAdminPrivilege(boolean adminPrivilege)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
             selectedUser.setAdminPrivilege(adminPrivilege);
             usersTable.setLevel(selectedUser.getUserId(), adminPrivilege == true ? 1 : 0);
         }
     }
 
-    public void editEventCreationPrivilege(boolean eventCreationPrivilege, User loggedInUser)
+    public void editEventCreationPrivilege(boolean eventCreationPrivilege)
             throws PrivilegeInsufficientException, DoesNotExistException {
 
+        User loggedInUser = logInManager.getLoggedInUser();
         if (PrivilegeManager.hasAdminPrivilege(loggedInUser)) {
             selectedUser.setEventCreationPrivilege(eventCreationPrivilege);
             usersTable.setLevel(selectedUser.getUserId(), eventCreationPrivilege == true ? 1 : 0);

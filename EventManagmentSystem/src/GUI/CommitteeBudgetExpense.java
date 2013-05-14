@@ -171,7 +171,7 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
             try
             {
                 Expense e = ned.createExpense();
-                manager.getBudgetManager().createExpense(e, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                manager.getBudgetManager().createExpense(e);
             }
             catch (Exception e)
             {
@@ -192,7 +192,7 @@ public class CommitteeBudgetExpense extends javax.swing.JPanel {
             Expense expense = manager.getCommitteeManager().getSelectedCommittee().getBudget().getExpenseList().get(selection);
             
             try{
-                manager.getBudgetManager().deleteExpense(expense, manager.getLogInManager().getLoggedInUser(), manager.getEventManager().getSelectedEvent(), manager.getCommitteeManager().getSelectedCommittee());
+                manager.getBudgetManager().deleteExpense(expense);
             }
             catch(Exception e){
                 e.printStackTrace();
