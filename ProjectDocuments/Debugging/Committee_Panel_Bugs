@@ -1,4 +1,4 @@
-View Report button displays a blank window when clicked and throws a ClassCastException. See View_Empty_Report.exception.
+View Report button displays a blank window when clicked and throws a ClassCastException. See Committee_View_Empty_Report.exception.
 BUTTON-
 	1. If "change" button is clicked then immediately after the select button is clicked, An ArrayOutOfBoundsException is thrown. See Change_Ghost_Committee_Head.exception.
 
