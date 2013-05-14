@@ -28,6 +28,12 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
         incomePanel.setVisible(true);
         expensePanel.setVisible(true);
     }
+    
+    public void updateInfo()
+    {
+        budgetIncome.updateInfo();
+        budgetExpense.updateInfo();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

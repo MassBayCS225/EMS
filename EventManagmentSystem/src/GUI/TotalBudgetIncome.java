@@ -39,12 +39,14 @@ public class TotalBudgetIncome extends javax.swing.JPanel {
         if(manager.getEventManager().getSelectedEvent().getCommitteeList() != null)
         {
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
-            for(Income i : c.getBudget().getIncomeList())
+            Income i = new Income();
+            i.setDescription(c.getTitle());
+            i.setValue(c.getBudget().getTotalIncome());
             {
                 model.addRow(
                     new Object[]
                     {
-                        i.getBUDGET_ITEM_ID(),i.getDescription(),i.getValue()
+                        c.getTitle(),"TOTAL INCOMES",i.getValue()
                     });
             }
         }

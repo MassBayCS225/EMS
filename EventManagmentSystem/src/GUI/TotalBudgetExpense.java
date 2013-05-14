@@ -34,12 +34,13 @@ public class TotalBudgetExpense extends javax.swing.JPanel {
         if(manager.getEventManager().getSelectedEvent().getCommitteeList() != null)
         {
         for(Committee c : manager.getEventManager().getSelectedEvent().getCommitteeList()){
-            for(Expense e : c.getBudget().getExpenseList())
+            Expense e = new Expense();
+            e.setValue(c.getBudget().getTotalExpense());
             {
                 model.addRow(
                     new Object[]
                     {
-                        e.getBUDGET_ITEM_ID(),e.getDescription(),e.getValue()
+                        c.getTitle(),"TOTAL EXPENSES",e.getValue()
                     });
             }
         }

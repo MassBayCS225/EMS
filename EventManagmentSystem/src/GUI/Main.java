@@ -21,6 +21,7 @@ public class Main extends javax.swing.JPanel {
     private UserManagementPanel ump;
     private CommitteeListPanel clp;
     private MainPanel mainPanel;
+    private TotalBudgetPanel bp;
     private DesignDefault dd;
     private Event selectedEvent;
 
@@ -32,7 +33,7 @@ public class Main extends javax.swing.JPanel {
         dd = DesignDefault.getInstance();
         initComponents();
         mainPanel = new MainPanel();
-        TotalBudgetPanel bp = new TotalBudgetPanel();
+        bp = new TotalBudgetPanel();
         ump = new UserManagementPanel();
         clp = new CommitteeListPanel();
         EmailPanel ep = new EmailPanel();
@@ -508,6 +509,7 @@ public class Main extends javax.swing.JPanel {
     }//GEN-LAST:event_emailButtonActionPerformed
 
     private void changeBudgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeBudgetButtonActionPerformed
+        bp.updateInfo();
         CardLayout cl = (CardLayout) (SwitchingPanelHolder.getLayout());
         cl.show(SwitchingPanelHolder, "budget");
     }//GEN-LAST:event_changeBudgetButtonActionPerformed
