@@ -38,13 +38,9 @@ public class TaskReport extends javax.swing.JDialog {
                     jTextArea1.setText((String) d.next());
                 }
             }
-
-            jTextArea1.setText((String) task.getReport().get(1));
-            jTextArea1.setText((String) task.getReport().get(2));
-            jTextArea1.setText((String) task.getReport().get(3));
-            jTextArea1.setText((String) task.getReport().get(4));
-            jTextArea1.setText((String) task.getReport().get(5));
-            jTextArea1.setText((String) task.getReport().get(6));
+            for(int i = 1; i < 7;i++) {
+                jTextArea1.setText(jTextArea1.getText() + "\n" + (String) task.getReport().get(1));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
