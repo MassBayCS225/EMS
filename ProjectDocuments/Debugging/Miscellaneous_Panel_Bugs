@@ -1,7 +1,8 @@
 EVENT REPORT PANEL-
-    BUTTON- "View" displays true when no one is registered for the event and a commitee has been added.
-	    "View" displays event_report.error when no one is registered for the event and a sub event has been added.
-	    "View" displays 1 when no one is registered for the event(don't not know why yet).
+    VIEW BUTTON
+		It displays true when no one is registered for the event and a commitee has been added.
+	    It displays some event information and event_report_2.error when no one is registered for the event and a sub event has been added.
+	    RESOLVED- It displays 1 when no one is registered for the event(don't not know why yet).
 
 EVENT MANAGEMENT PANEL-
     Main event location not displayed on the Event Details.
