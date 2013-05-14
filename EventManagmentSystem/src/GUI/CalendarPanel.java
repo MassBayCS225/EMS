@@ -467,10 +467,17 @@ public class CalendarPanel extends javax.swing.JPanel {
         {
             SubEvent se = new SubEvent();
             TimeSchedule ts = new TimeSchedule();
-            CalendarEvent ce = (CalendarEvent)calendarTable.getModel().getValueAt(calendarTable.getSelectedRow(), calendarTable.getSelectedColumn());
-            ts.setStartDateTime(year, month+1, ce.getDay(), 0, 0);
-            ts.setEndDateTime(year, month+1,ce.getDay() , 0, 0);
-            se.setTimeSchedule(ts);
+            if(calendarTable.getSelectedRowCount() == 0 && calendarTable.getSelectedColumnCount() == 0)
+            {
+                se.setTimeSchedule(ts);
+            }
+            else
+            {
+                CalendarEvent ce = (CalendarEvent)calendarTable.getModel().getValueAt(calendarTable.getSelectedRow(), calendarTable.getSelectedColumn());
+                ts.setStartDateTime(year, month+1, ce.getDay(), 0, 0);
+                ts.setEndDateTime(year, month+1,ce.getDay() , 0, 0);
+                se.setTimeSchedule(ts);
+            }
             nsed = new NewSubEventDialog((JFrame)SwingUtilities.windowForComponent(this), se, true);
         }
         nsed.setVisible(true);
