@@ -452,6 +452,7 @@ public class CommitteePanel extends javax.swing.JPanel {
                 }
             }
             else {
+                manager.getTaskManager().setSelectedTask(selectedCommittee.getTaskList().get(taskList.getMaxSelectionIndex()));
                 TaskDialog td = new TaskDialog((JFrame) SwingUtilities.windowForComponent(this), true);
                 td.setToViewOnly();
                 td.setVisible(true);
