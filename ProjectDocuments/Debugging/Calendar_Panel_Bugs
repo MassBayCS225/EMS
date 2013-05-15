@@ -8,7 +8,7 @@ ADD EVENT-
 	2. After editing main event, it's time is showing some extra decimals after seconds(milliseconds?).
     ADD EVENT BUTTON-
 
-	a) After being clicked when no calendar dates are chosen throws ArraysIndexOutOfBoundsException. See Date_Not_Selected.exception.
+//FIXED	a) After being clicked when no calendar dates are chosen throws ArraysIndexOutOfBoundsException. See Date_Not_Selected.exception.
 //FIXED	b) If any Calendar date in the year 2012 or before is chosen, an exception is thrown. See Invalid_Year_2.exception.
 //FIXED	c) If a blank Calendar date is chosen after 2012, an exception is thrown. See Invalid_Day_2.exception.
 //FIXED
