@@ -46,7 +46,6 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         budgetLabel = new javax.swing.JLabel();
-        reportButton = new javax.swing.JButton();
         incomePanel = new javax.swing.JPanel();
         expensePanel = new javax.swing.JPanel();
 
@@ -56,13 +55,6 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
         budgetLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         budgetLabel.setText("Total Budget");
         budgetLabel.setBounds(new java.awt.Rectangle(2, 2, 2, 2));
-
-        reportButton.setText("Report");
-        reportButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reportButtonActionPerformed(evt);
-            }
-        });
 
         incomePanel.setBackground(new java.awt.Color(255, 255, 255));
         incomePanel.setPreferredSize(new java.awt.Dimension(370, 600));
@@ -82,33 +74,23 @@ public class TotalBudgetPanel extends javax.swing.JPanel {
                 .addContainerGap(8, Short.MAX_VALUE))
             .add(layout.createSequentialGroup()
                 .add(budgetLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(reportButton)
-                .addContainerGap())
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(budgetLabel)
-                    .add(reportButton))
+                .add(budgetLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(expensePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                    .add(expensePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
                     .add(incomePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
-        BudgetReport budgetReport = new BudgetReport(null,true);
-        budgetReport.setVisible(true);
-    }//GEN-LAST:event_reportButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel budgetLabel;
     private javax.swing.JPanel expensePanel;
     private javax.swing.JPanel incomePanel;
-    private javax.swing.JButton reportButton;
     // End of variables declaration//GEN-END:variables
 }
