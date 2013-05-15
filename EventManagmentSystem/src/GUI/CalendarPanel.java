@@ -187,7 +187,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     public void populateSubEvents()
     {
         ArrayList<SubEvent> subEventList = manager.getEventManager().getSelectedEvent().getSubEventList();
-        subEventList.add(new SubEvent(12, "This is an event."));
+        //subEventList.add(new SubEvent(12, "This is an event."));
     }
     
     public String getMonthString(int month) {
@@ -608,10 +608,13 @@ setWrapStyleWord(true);
         }
     }
 
-class DetailsListSelectionListener implements ListSelectionListener {
-    public void valueChanged(ListSelectionEvent e) {
-        selectedSubEvent = (SubEvent)detailsList.getSelectedValue();
-    }
+    class DetailsListSelectionListener implements ListSelectionListener {
+
+        public void valueChanged(ListSelectionEvent e) {
+            if (detailsList.getSelectedValue() != null) {
+                selectedSubEvent = (SubEvent) detailsList.getSelectedValue();
+            }
+        }
     }
 
     class listCellRenderer extends DefaultListCellRenderer {

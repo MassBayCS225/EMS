@@ -36,7 +36,6 @@ public class UserManager {
     }
 
     public void connectManagers(LoginManager logInManager) {
-        System.out.println("trying to connect");
         this.logInManager = logInManager;
     }
 
