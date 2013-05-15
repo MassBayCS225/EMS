@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import BackEnd.ManagerSystem.MainManager;
 import BackEnd.UserSystem.IllegalCharacterException;
 import BackEnd.UserSystem.PasswordMismatchError;
 import BackEnd.ManagerSystem.PrivilegeInsufficientException;
