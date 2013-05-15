@@ -181,12 +181,18 @@ public class Address {
    * Creates a string representation of the address.
    * @return A string representation of the address.
    */
-  @Override
-  public String toString(){
-    String info = street + "\n" + 
-                  city + ", " + state + 
-                  " " + zipCode + "\n" + 
-                  country;    
-    return info;
-  }
+    @Override
+    public String toString() {
+        if (city.equals("")
+                && state.equals("")) {
+            return "";
+        } else {
+
+            String info = street + "\n"
+                    + city + ", " + state
+                    + " " + zipCode + "\n"
+                    + country;
+            return info;
+        }
+    }
 }
