@@ -497,7 +497,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_addEventButtonActionPerformed
 
     private void removeEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEventButtonActionPerformed
-        if (selectedSubEvent != null) {
+        if (selectedSubEvent != null && !selectedSubEvent.getTitle().equals("")) {
             int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + selectedSubEvent.getTitle() + "?");
             if (choice == JOptionPane.YES_OPTION) {
                 try {
@@ -516,7 +516,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_removeEventButtonActionPerformed
 
     private void editSubEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSubEventButtonActionPerformed
-        if (selectedSubEvent != null) {
+        if (selectedSubEvent != null && !selectedSubEvent.getTitle().equals("")) {
             EditSubEventDialog esed = new EditSubEventDialog((JFrame) SwingUtilities.windowForComponent(this), selectedSubEvent, true);
             esed.setVisible(true);
             if (esed.getConfirm()) {
@@ -527,14 +527,14 @@ public class CalendarPanel extends javax.swing.JPanel {
                     e.printStackTrace();
                 }
             }
-        }
-        else
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a sub-event to edit first.");
+        }
     }//GEN-LAST:event_editSubEventButtonActionPerformed
 
     private void lastYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastYearButtonActionPerformed
 
-        
+
         year --;
         populateCalendar();
         if(year == 2013)
@@ -611,9 +611,7 @@ setWrapStyleWord(true);
     class DetailsListSelectionListener implements ListSelectionListener {
 
         public void valueChanged(ListSelectionEvent e) {
-            if (detailsList.getSelectedValue() != null) {
-                selectedSubEvent = (SubEvent) detailsList.getSelectedValue();
-            }
+            selectedSubEvent = (SubEvent) detailsList.getSelectedValue();
         }
     }
 
