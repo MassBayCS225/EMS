@@ -5,6 +5,9 @@
 package GUI;
 
 import BackEnd.ManagerSystem.MainManager;
+import GUI.Dialog.EditEventDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,10 +22,16 @@ public class EventDetailsPanel extends javax.swing.JPanel {
     public EventDetailsPanel() {
         initComponents();
         manager = MainManager.getInstance();
+        updateLabels();
+    }
+    
+    public void updateLabels()
+    {
         eventNameLabel.setText(manager.getEventManager().getSelectedEvent().getTitle());
         descriptionTextArea.setText(manager.getEventManager().getSelectedEvent().getDescription());
         locationArea.setText(manager.getEventManager().getSelectedEvent().getLocation().toString());
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,6 +49,7 @@ public class EventDetailsPanel extends javax.swing.JPanel {
         descriptionTextArea = new javax.swing.JTextArea();
         locationLabel = new javax.swing.JLabel();
         locationArea = new javax.swing.JLabel();
+        editEventButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(128, 128, 128));
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -74,6 +84,13 @@ public class EventDetailsPanel extends javax.swing.JPanel {
         locationArea.setForeground(new java.awt.Color(255, 255, 255));
         locationArea.setText("The location of this event");
 
+        editEventButton.setText("Edit this Event");
+        editEventButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editEventButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,7 +108,10 @@ public class EventDetailsPanel extends javax.swing.JPanel {
                                 .addComponent(locationLabel)
                                 .addGap(18, 18, 18)
                                 .addComponent(locationArea, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(editEventButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -109,12 +129,28 @@ public class EventDetailsPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(locationLabel)
                     .addComponent(locationArea))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(editEventButton)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void editEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEventButtonActionPerformed
+        EditEventDialog eed = new EditEventDialog((JFrame) SwingUtilities.windowForComponent(this), true);
+        eed.setVisible(true);
+        if (eed.getConfirm()) {
+            try {
+                updateLabels();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_editEventButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JTextArea descriptionTextArea;
+    private javax.swing.JButton editEventButton;
     private javax.swing.JLabel eventNameLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel locationArea;

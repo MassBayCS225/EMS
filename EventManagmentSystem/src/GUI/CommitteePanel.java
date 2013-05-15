@@ -18,6 +18,7 @@ import GUI.Reportable.CommitteeReport;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Calendar;
+
 /**
  *
  * @author Sid
@@ -470,54 +471,62 @@ public class CommitteePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_taskListMouseClicked
 
     private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
-        // TODO add your handling code here:
-  if(manager.getCommitteeManager().getSelectedCommittee().getChair().equals((User)memberList.getSelectedValue())) 
-        {
-            JOptionPane.showMessageDialog(null, "Can not remove chair.  Change chair first and then remove.", "Remove Chair Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(memberList.getSelectedIndex() < 0)
-        {
+        User selectedUser = (User) memberList.getSelectedValue();
+        
+        if (manager.getCommitteeManager().getSelectedCommittee().getChair().equals(selectedUser)) {
+            JOptionPane.showMessageDialog(null, "Chair cannot be removed. Please change the chair first and then remove.", "Remove Chair Error", JOptionPane.ERROR_MESSAGE);
+        } else if (memberList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(
-                    null, "Please select a Member to remove first", "No Member Selected", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            try
-            {
-                manager.getCommitteeManager().removeMember(
-                        manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(
-                        memberList.getSelectedIndex()));
-            }
-            catch (Exception e)
-            {
-                System.out.println(e);
+                    null, "Please select a member to remove first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + selectedUser.getFirstName() + " " + selectedUser.getLastName() + "?");
+            if (choice == JOptionPane.YES_OPTION) {
+                try {
+                    manager.getCommitteeManager().removeMember(
+                            manager.getCommitteeManager().getSelectedCommittee().getMemberList().get(
+                            memberList.getSelectedIndex()));
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
         updateInfo();
     }//GEN-LAST:event_removeMemberButtonActionPerformed
 
     private void removeTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTaskButtonActionPerformed
-        // TODO add your handling code here:    
-        if(taskList.getSelectedIndex() >= 0)
-        {
-            try
-            {
-                manager.getCommitteeManager().getSelectedCommittee().getTaskList().remove(taskList.getSelectedIndex());
-            }
-            catch (Exception e)
-            {
+
+        if (taskList.getSelectedIndex() >= 0) {
+            try {
+                Task selectedTask = manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getSelectedIndex());
+                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + selectedTask.getTitle() + "?");
+                if (choice == JOptionPane.YES_OPTION) {
+                    manager.getCommitteeManager().deleteTask(selectedTask);
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+        
+
+            /*
+             // TODO add your handling code here:    
+             if (taskList.getSelectedIndex() >= 0) {
+             try {
+             Task task = manager.getCommitteeManager().getSelectedCommittee().getTaskList().get(taskList.getSelectedIndex());
+             manager.getCommitteeManager().deleteTask(task);
+             //manager.getCommitteeManager().getSelectedCommittee().getTaskList().remove(taskList.getSelectedIndex());
+             } catch (Exception e)
+             {
+
+                
+             }
+             * */
             updateInfo();
-            if(taskList.getModel().getSize() >= 0)
-            {
+            if (taskList.getModel().getSize() >= 0) {
                 taskList.setSelectedIndex(0);
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(
-                    null, "Please select a Task to remove first.", "No Task Selected", JOptionPane.ERROR_MESSAGE);  
+                    null, "Please select a task to remove first.", "No Task Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removeTaskButtonActionPerformed
 
@@ -622,7 +631,7 @@ public class CommitteePanel extends javax.swing.JPanel {
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please select a a member first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a member first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addToBudgetButtonActionPerformed
 
@@ -637,23 +646,22 @@ public class CommitteePanel extends javax.swing.JPanel {
 
     private void removeMemberFromBudgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberFromBudgetButtonActionPerformed
         // TODO add your handling code here:
-if(memberList.getSelectedIndex() >= 0)
-        {
-            try
-            {
-                manager.getCommitteeManager().removeBudgetAccess(
-                        manager.getUserManager().getSelectedUser());
-            }
-            catch (Exception e)
-            {
+        User selectedUser = (User) memberList.getSelectedValue();
+
+        if (memberList.getSelectedIndex() >= 0) {
+            try {
+                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + selectedUser.getFirstName() + " " + selectedUser.getLastName() + "?");
+                if (choice == JOptionPane.YES_OPTION) {
+                    manager.getCommitteeManager().removeBudgetAccess(
+                            manager.getUserManager().getSelectedUser());
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             updateInfo();
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(
-                    null, "Please select a a member to remove from the budget list first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
+                    null, "Please select a member to remove from the budget-access list first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removeMemberFromBudgetButtonActionPerformed
 
@@ -705,12 +713,12 @@ if(memberList.getSelectedIndex() >= 0)
         // TODO add your handling code here:
         if(manager.getCommitteeManager().getSelectedCommittee().getChair().equals((User)memberList.getSelectedValue())) 
         {
-            JOptionPane.showMessageDialog(null, "Can not remove chair.  Change chair first and then remove.", "Remove Chair Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Chair cannot be removed. Please change the chair first and then remove.", "Remove Chair Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(memberList.getSelectedIndex() < 0)
         {
             JOptionPane.showMessageDialog(
-                    null, "Please select a Member to remove first", "No Member Selected", JOptionPane.ERROR_MESSAGE);
+                    null, "Please select a member to remove first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
         }
         else
         {
@@ -790,7 +798,7 @@ if(memberList.getSelectedIndex() >= 0)
         else
         {
             JOptionPane.showMessageDialog(
-                    null, "Please select a Task to remove first.", "No Task Selected", JOptionPane.ERROR_MESSAGE);  
+                    null, "Please select a task to remove first.", "No Task Selected", JOptionPane.ERROR_MESSAGE);  
         }
     }//GEN-LAST:event_removeTaskLabelMouseClicked
 
@@ -812,7 +820,7 @@ if(memberList.getSelectedIndex() >= 0)
         else
         {
             JOptionPane.showMessageDialog(
-                    null, "Please select a a member to remove from the budget list first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
+                    null, "Please select a member to remove from the budget-access list first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removeBudgetAccessLabelMouseClicked
 
@@ -834,7 +842,7 @@ if(memberList.getSelectedIndex() >= 0)
         else
         {
             JOptionPane.showMessageDialog(
-                    null, "Please select a a member first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
+                    null, "Please select a member first.", "No Member Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addBudgetAccessLabelMouseClicked
 

@@ -33,7 +33,7 @@ public class BudgetItem {
         BUDGET_ITEM_ID = budgetItemID;
         setValue(value);
         this.description = description;
-        
+        date = new Timestamp(0);
     }
     
     public BudgetItem(int budgetItemID, BudgetItem budgetItem){

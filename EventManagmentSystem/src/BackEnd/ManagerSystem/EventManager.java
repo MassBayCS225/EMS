@@ -137,6 +137,8 @@ public class EventManager {
             organizerIDList.add(loggedInUser.getUserId());
             subEventIDList = new ArrayList<Integer>();
             participantIDList = new ArrayList<Integer>();
+            participantIDList.add(loggedInUser.getUserId());
+            System.out.println(participantIDList);
             committeeIDList = new ArrayList<Integer>();
 
             newEvent = new Event(eventsTable.createEvent(new InputEventData(
@@ -238,7 +240,7 @@ public class EventManager {
 
         SubEvent newSubEvent = null;
         User loggedInUser = logInManager.getLoggedInUser();
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
 
             newSubEvent = new SubEvent(subEventsTable.createSubEvent(
                     new InputSubEventData(subEvent.getDescription(), subEvent.getLocation().getDetails(), subEvent.getTitle(),
@@ -268,7 +270,7 @@ public class EventManager {
             throws PrivilegeInsufficientException, DoesNotExistException {
 
         User loggedInUser = logInManager.getLoggedInUser();
-        if (PrivilegeManager.hasEventPrivilege(loggedInUser, selectedEvent)) {
+        if (PrivilegeManager.hasSubEventPrivilege(loggedInUser, selectedEvent)) {
 
             Integer subEventID = new Integer(subEvent.getSUB_EVENT_ID());
             ArrayList<Integer> newSubEventIDList = eventsTable.getSubEventList(selectedEvent.getEVENT_ID());
