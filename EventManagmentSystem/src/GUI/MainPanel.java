@@ -45,7 +45,7 @@ public class MainPanel extends javax.swing.JPanel {
     private final String UNREGISTER = "Unregister";
 
     /**
-     * Creates new form MainPanel
+     * Creates new form MainPanel and sets up the inner panels
      */
     public MainPanel() {
         eventManager = MainManager.getInstance().getEventManager();
@@ -95,6 +95,9 @@ public class MainPanel extends javax.swing.JPanel {
         add(calendarSelectionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Sets the view to that of a user who is not an admin
+     */
     public void setNonAdminOrganizerView() {
         cp.hideEventButtons();
     }
@@ -126,16 +129,25 @@ public class MainPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Switches the visible panel to the Calendar
+     */
     private void selectCalendarButtonActionPerformed(java.awt.event.ActionEvent evt) {
         CardLayout cl = (CardLayout) (calendarSwitchingPanel.getLayout());
         cl.show(calendarSwitchingPanel, "calendar");
     }
 
+    /**
+     * Switches the visible panel to the Event Details
+     */
     private void selectEventDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         CardLayout cl = (CardLayout) (calendarSwitchingPanel.getLayout());
         cl.show(calendarSwitchingPanel, "eventDetails");
     }
 
+    /**
+     * The listener for the buttons in the mainPanel to switch between the Calendar and Event Details
+     */
     private class CalendarButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -148,6 +160,9 @@ public class MainPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Registers/Unregisters a user for the main event based on their current status
+     */
     private class RegisterForEventButtonListener
             implements ActionListener {
 

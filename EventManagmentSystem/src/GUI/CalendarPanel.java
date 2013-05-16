@@ -52,7 +52,7 @@ public class CalendarPanel extends javax.swing.JPanel {
     int selectedColumn;
     
     /**
-     * Creates new form CalendarPanel
+     * Creates new form CalendarPanel, and adds the various components into it.
      */
     public CalendarPanel() {
         initComponents();
@@ -70,6 +70,10 @@ public class CalendarPanel extends javax.swing.JPanel {
         ListSelectionModel cellSelectionModel = calendarTable.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        /**
+     * Adds a mouseListener to the calendarTable that has mouseClicked set to select a cell on the table,
+     * and update the detailsList that shows up on the right
+     */
         calendarTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
@@ -93,12 +97,18 @@ public class CalendarPanel extends javax.swing.JPanel {
         lastYearButton.setEnabled(false);
     }
     
+    /**
+     * Hides certain buttons if the user's privilege level isn't high enough
+     */
      public void hideEventButtons() {
         addEventButton.setVisible(false);
         removeEventButton.setVisible(false);
         editSubEventButton.setVisible(false);
     } 
     
+     /**
+     * Updates the detailsList to display the events of the selected day on the Calendar
+     */
     public void updateDetailsList(CalendarEvent ce)
     {
         if (!ce.getSubEventList().isEmpty())
@@ -111,6 +121,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         
         detailsList.setListData(tempDetailsList);
         
+        /**
+     * Makes the list display one item per line
+     */
         detailsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         detailsList.setLayoutOrientation(JList.VERTICAL_WRAP);
         detailsList.setVisibleRowCount(-1);
@@ -118,6 +131,10 @@ public class CalendarPanel extends javax.swing.JPanel {
         detailsList.setCellRenderer(new listCellRenderer());
     }
     
+    /**
+     * The method that populates the Calendar with days based on the selected month, day and year,
+     * and assigns the corresponding events to those days.
+     */
     public void populateCalendar() {
         tempCalendar.set(year, month, 1); // sets the current month to its first day
         tempCalendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -133,6 +150,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         int firstDayInMonth = tempCalendar.get(tempCalendar.DAY_OF_WEEK); // gets the ordinal value of where the day falls in the week
         int maxDaysInMonth = tempCalendar.getActualMaximum(tempCalendar.DAY_OF_MONTH); // gets the max number of days in a month
 
+        /**
+     * The loops that go through each week of the month and each day of those weeks.
+     */
         for (int weekOfMonth = 0, calendarSlot = 0, day = 1; weekOfMonth < 6; weekOfMonth++) { // weekOfMonth is also the row number
             for (int dayOfWeek = 0; dayOfWeek < maxDaysInWeek; dayOfWeek++) { // dayOfWeek is also the column number
 
@@ -184,12 +204,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         yearLabel.setText("" + year);
     }
     
-    public void populateSubEvents()
-    {
-        ArrayList<SubEvent> subEventList = manager.getEventManager().getSelectedEvent().getSubEventList();
-        subEventList.add(new SubEvent(12, "This is an event."));
-    }
-    
+    /**
+     * Returns the string representation of the accepted month
+     */
     public String getMonthString(int month) {
     return new DateFormatSymbols().getMonths()[month];
     }
@@ -431,6 +448,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Switches to the previous month so long as the year will remain >= 2013
+     */
     private void lastMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastMonthButtonActionPerformed
         if (month > 0)
             month--;
@@ -445,6 +465,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         populateCalendar();
     }//GEN-LAST:event_lastMonthButtonActionPerformed
 
+    /**
+     * Switches to the next month
+     */
     private void nextMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMonthButtonActionPerformed
         if (month < 11)
             month++;
@@ -456,6 +479,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         populateCalendar();
     }//GEN-LAST:event_nextMonthButtonActionPerformed
 
+    /**
+     * Adds a subEvent to the Calendar using a dialog
+     */
     private void addEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEventButtonActionPerformed
         // TODO add your handling code here:
         NewSubEventDialog nsed;
@@ -496,8 +522,11 @@ public class CalendarPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addEventButtonActionPerformed
 
+    /**
+     * Removes the selected subEvent from the Calendar upon confirmation
+     */
     private void removeEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEventButtonActionPerformed
-        if (selectedSubEvent != null) {
+        if (selectedSubEvent != null && !selectedSubEvent.getTitle().equals("")) {
             int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + selectedSubEvent.getTitle() + "?");
             if (choice == JOptionPane.YES_OPTION) {
                 try {
@@ -515,8 +544,11 @@ public class CalendarPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_removeEventButtonActionPerformed
 
+    /**
+     * Edits the selected subEvent from the Calendar using a dialog
+     */
     private void editSubEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSubEventButtonActionPerformed
-        if (selectedSubEvent != null) {
+        if (selectedSubEvent != null && !selectedSubEvent.getTitle().equals("")) {
             EditSubEventDialog esed = new EditSubEventDialog((JFrame) SwingUtilities.windowForComponent(this), selectedSubEvent, true);
             esed.setVisible(true);
             if (esed.getConfirm()) {
@@ -527,14 +559,17 @@ public class CalendarPanel extends javax.swing.JPanel {
                     e.printStackTrace();
                 }
             }
-        }
-        else
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a sub-event to edit first.");
+        }
     }//GEN-LAST:event_editSubEventButtonActionPerformed
 
+    /**
+     * Switches to the previous year so long as it's >= 2013
+     */
     private void lastYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastYearButtonActionPerformed
 
-        
+
         year --;
         populateCalendar();
         if(year == 2013)
@@ -543,6 +578,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lastYearButtonActionPerformed
 
+    /**
+     * Switches to the next year
+     */
     private void nextYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextYearButtonActionPerformed
         year ++;
         populateCalendar();
@@ -552,6 +590,9 @@ public class CalendarPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_nextYearButtonActionPerformed
 
+    /**
+     * Hides the buttons related to the subEvent based on user privilege level
+     */
    public void hideSubEventButtons() {
         addEventButton.setVisible(false);
         removeEventButton.setVisible(false);
@@ -576,6 +617,10 @@ public class CalendarPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
+    /**
+     * The renderer for the CalendarTable. Deals with all the colors on selected and unselected
+     * days and colors in days that have subEvents on them.
+     */
 private class TextTableRenderer extends JTextArea implements TableCellRenderer {
 public TextTableRenderer() {
 setOpaque(true);
@@ -583,6 +628,9 @@ setLineWrap(true);
 setWrapStyleWord(true);
 }
 
+/**
+     * The component that actually renders the colors and writes the values in the cells of the table.
+     */
     public Component getTableCellRendererComponent(JTable table,
             Object value, boolean isSelected, boolean hasFocus, int row,
             int column) {
@@ -608,12 +656,18 @@ setWrapStyleWord(true);
         }
     }
 
-class DetailsListSelectionListener implements ListSelectionListener {
-    public void valueChanged(ListSelectionEvent e) {
-        selectedSubEvent = (SubEvent)detailsList.getSelectedValue();
-    }
-    }
+/**
+     * The listener for the details list that selects a subEvent from the list
+     */
+    class DetailsListSelectionListener implements ListSelectionListener {
 
+        public void valueChanged(ListSelectionEvent e) {
+            selectedSubEvent = (SubEvent) detailsList.getSelectedValue();
+        }
+    }
+/**
+     * The renderer for the detailsList that displays the subEvents using their titles
+     */
     class listCellRenderer extends DefaultListCellRenderer {
 
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
