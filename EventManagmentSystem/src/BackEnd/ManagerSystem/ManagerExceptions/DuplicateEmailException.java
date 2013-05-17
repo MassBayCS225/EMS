@@ -5,9 +5,10 @@
 package BackEnd.ManagerSystem.ManagerExceptions;
 
 /**
- * A custom exception class for a 
+ * A custom exception class for when a user tries to create an account,
+ * but the email address is already in use.
  *
- * @author Julian
+ * @author Julian Kuk
  */
 public class DuplicateEmailException extends Exception {
     public DuplicateEmailException(){

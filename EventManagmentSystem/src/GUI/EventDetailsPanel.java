@@ -25,6 +25,9 @@ public class EventDetailsPanel extends javax.swing.JPanel {
         updateLabels();
     }
     
+    /**
+     * Updates the labels to the relevant information for the event
+     */
     public void updateLabels()
     {
         eventNameLabel.setText(manager.getEventManager().getSelectedEvent().getTitle());
@@ -135,6 +138,9 @@ public class EventDetailsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Edits the main event using a dialog
+     */
     private void editEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEventButtonActionPerformed
         EditEventDialog eed = new EditEventDialog((JFrame) SwingUtilities.windowForComponent(this), true);
         eed.setVisible(true);
