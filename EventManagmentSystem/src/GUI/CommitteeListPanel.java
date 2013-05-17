@@ -218,8 +218,10 @@ public class CommitteeListPanel extends javax.swing.JPanel {
                     npp.setVisible(true);   
                 }
             }
-            else
+            else {
                 committeePanel.resetView();
+                npp.setVisible(false);
+            }
             
             committeePanel.updateInfo();
         }
